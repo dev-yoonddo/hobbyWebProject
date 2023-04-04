@@ -1,0 +1,301 @@
+@import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=IBM+Plex+Sans+KR:wght@300&family=Jua&family=Nanum+Gothic&family=Nanum+Gothic+Coding&family=Noto+Sans+KR:wght@500&family=Noto+Serif+KR:wght@200&display=swap');
+@import url('https://webfontworld.github.io/TheJamsil/TheJamsil.css');
+
+:root {
+  --colorOne: white;
+  --colorTwo: navy;
+  --fontFamily: 'Noto Sans KR', sans-serif;
+}
+
+body {
+  margin:0;
+  color:var(--colorOne);
+}
+
+.container{
+  width: 100%;
+  height: 800px;
+
+}
+#slide-main {
+  width: 100%;
+  height: 750px;
+  min-height: 750px;
+  background-image:linear-gradient(180deg, var(--colorOne) 0%, var(--colorTwo) 70%);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  font-family:var(--fontFamily);
+}
+
+#slide-in {
+  min-height: 450px;
+  margin: auto;
+  width: 100%;
+  max-width: 1050px;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+#slide-in:before {
+  height: 60%;
+  width: 50%;
+  background:var(--colorOne);
+  box-shadow: 0px 30px 139px 0px rgba(10, 22, 31, 0.26);
+  border-radius: 30px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  content:'';
+  transform-origin:left;
+  transform:rotateY(10deg);
+/*   animation:before 5s linear infinite; */
+}
+@keyframes before {
+  50% { transform:rotateY(10deg) translateY(-25px); }
+}
+
+#slide-in:after {
+  content:'';
+  width: 75%;
+  height: 85%;
+  border-radius: 30px;
+  background:var(--colorTwo);
+  box-shadow: 0 28px 79px 0 rgba(10, 22, 31, 0.35);
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform-origin:right;
+  transform: translateY(-50%) rotateY(-10deg);
+}
+
+#content {
+  width:90%;
+  height:100%;
+  min-height: 450px;
+  margin:0 auto;
+  position:relative;
+  z-index:9;
+  display:flex;
+}
+
+.slide {
+  display:none;
+  align-items:center;
+}
+
+.showing {
+  display:flex;
+  align-content:stretch;
+}
+
+.showing img {
+  animation:imgMove .75s ease-out forwards;
+}
+@keyframes imgMove {
+  0% { margin-left:-25%; opacity:0; }
+}
+
+.showing .car-details {
+  animation:deetsMove .75s ease-out forwards;
+  transform-origin:right;
+  transform:rotateY(-10deg);
+}
+@keyframes deetsMove {
+  0% { margin-left:25%; opacity:0; }
+}
+
+.slide img {
+  max-width:50%;
+}
+.slide h1 {
+  font-size:52px;
+  line-height:100%;
+  letter-spacing:2px;
+  margin:0;
+}
+
+.slide .c-info-item {
+  display:inline-block;
+  padding:20px 30px;
+  letter-spacing:2px;
+  font-size:20px;
+  border-right:1px dotted var(--colorOne);  
+}
+.slide .c-info-item:nth-child(2) {
+  border:none;
+}
+
+.slide h2 {
+  margin:0;
+  font-size:60px;
+  font-weight:300;
+  line-height:100%;
+  letter-spacing:2px;
+}
+
+.slide .btn {
+  background-color: var(--colorOne);
+  border: none;
+  color: var(--colorTwo);
+  padding-top: 10px;
+  border-radius: 50px;
+  min-height: 50px;
+  font-weight: 500;
+  font-size: 36px;
+  line-height:50px;
+  letter-spacing: 2px;
+  text-align:center;
+  max-width:75%;
+  margin-top:25px;
+}
+
+.slide .btn a:hover {
+  text-decoration:underline;
+}
+
+a {
+  text-decoration:none;
+  color:inherit;
+  width:100%;
+  line-height:50px;
+  display:inline-block;
+}
+
+.arrowBtn {
+  width:60px;
+  height:60px;
+  font-size:40px;
+  font-weight:900;
+  line-height:65px;
+  text-align:center;
+  background:var(--colorOne);
+  color:var(--colorTwo);
+  border:1px solid var(--ColorTwo);
+  position:absolute;
+  border-radius:50%;
+  cursor:pointer;
+  box-shadow:0 0 0 1px var(--colorTwo);
+  transition:.15s;
+  z-index:99;
+}
+
+.arrowBtn:nth-child(2) {
+  transform:translateX(-50%);
+}
+.arrowBtn:nth-child(3) {
+  right:0;
+  transform:translateX(50%);
+}
+
+@media screen and (max-width:1110px) {
+  #slide-in:before {
+    width:75%;
+    height:50%;
+    left: 0%; 
+    transform:none;
+    border-top-left-radius:0;
+    border-bottom-left-radius:0;
+  }
+  #slide-in:after {
+    height:40%;
+    top:5%;
+    transform:none;
+    border-top-right-radius:0;
+    border-bottom-right-radius:0;
+  }
+   
+  .showing {
+    flex-direction:column;
+    margin:0 auto;
+  }
+  
+  .slide img {
+    display:block;
+    width:100%;
+    max-width:100%;
+    margin:0 auto;
+  }
+  .slide .car-details {
+    display:block;
+    margin: 0 auto;
+    text-align:center;
+  }
+  .slide .btn {
+    margin:25px auto;
+  }
+  .arrowBtn:nth-child(2) {
+    top:25%;
+    transform:translateX(0%) scale(.75);
+  }
+  .arrowBtn:nth-child(3) {
+    right:0;
+    top:25%;
+    transform:translateX(0%) scale(.75);
+  }
+  @keyframes imgMove {
+    0% { margin-left:0; margin-top:-10%; opacity:0; }
+  }
+
+  @keyframes deetsMove {
+    0% { margin:0 auto; opacity:0; }
+  }
+}
+
+@media screen and (max-width:520px) {
+  .c-info-item {
+    border-bottom:1px dotted var(--colorOne);
+    border-right:0 !important;
+  }
+  .arrowBtn {
+    top:15% !important;
+  }
+  #slide-in:before {
+    display:none;
+  }
+  #slide-in:after {
+    display:none;
+  }
+}
+
+#animatedBackground {
+        width: 100%;
+        height: 200px;
+        left: 0;
+        display: flex; 
+        align-items:center;
+        justify-content:center;
+        background: url("http://twibbon.s3.amazonaws.com/238/63bb30c8-2649-465e-9df1-ab2f8e5f7ecc.jpg");
+        background-repeat: repeat;
+        background-position: 0 0;
+        background-size: auto auto;
+        animation: animatedBackground 500s linear infinite;
+    }
+
+    #animatedBackground div { 
+        float:left !important;
+        display: flex; 
+        align-items:center;
+        justify-content:center;
+        padding:0px 20px;
+        list-style-type: none; 
+        height:160px;
+        border-radius:20px;
+        width:18.5%;
+        margin:0% 1%;
+        color:#fff;
+        background-color:rgba(0, 0, 0, 0.8);
+    }
+
+    @keyframes animatedBackground {
+      from {
+        background-position: 0 0;
+      }
+    /*use negative width if you want it to flow right to left else and positive for left to right*/
+      to {
+        background-position: -10000px 0;
+      }
+    }
