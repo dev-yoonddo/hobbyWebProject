@@ -1,11 +1,170 @@
 @import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=IBM+Plex+Sans+KR:wght@300&family=Jua&family=Nanum+Gothic&family=Nanum+Gothic+Coding&family=Noto+Sans+KR:wght@500&family=Noto+Serif+KR:wght@200&display=swap');
 @import url('https://webfontworld.github.io/TheJamsil/TheJamsil.css');
-
 :root {
+	--text-color: #303030;
+	--background-color: #fcfcfc;
+	--accent-color: #303030;
+  --line-color: #c1c1c1;
+  --font-family: 'IBM Plex Sans KR', sans-serif;
+
   --colorOne: white;
-  --colorTwo: navy;
-  --fontFamily: 'Noto Sans KR', sans-serif;
+  --colorTwo: #A4C3FF;
 }
+
+/* header css */
+body{
+	padding: 0;
+	margin: 0px;
+  z-index: 1;
+  font-family: 'Nanum Gothic', sans-serif;
+}
+header{
+	width: 100%;
+	height: auto;
+	position: fixed;
+	z-index: 300;	
+	
+}
+nav{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding-right: 30px;
+	padding-left: 30px;
+}
+a{	
+	text-decoration: none;
+	color: var(--text-color);
+	font-family: var(--font-family);	
+}
+
+section{
+	color: var(--text-color);
+	padding: 0;
+	z-index: 1;
+}
+.active{
+	background-color: white;
+	transition-duration: 0.5s;
+	transition-timing-function: ease;
+	
+	-webkit-transition-duration:0.4s;
+	-webkit-transition-timing-function:ease;
+}
+.navbar{
+	height: auto;
+}
+.de-active{
+	background-color: none;
+	transition-duration: 0.5s;
+	transition-timing-function: ease;
+	
+	-webkit-transition-duration:0.4s;
+	-webkit-transition-timing-function:ease;
+}
+.navbar_left{
+	justify-content: flex-start;
+	padding-left: 0;
+	size: 20px;
+
+}
+.navbar_logo{
+	font-size: 20px;
+	color: var(--text-color);
+	padding-right: 10px;
+	
+}
+
+.navbar_menu{
+	display: flex;
+	list-style: none;
+	padding-left: 0;
+  float: left;
+  background: none;
+  color: var(--text-color);
+
+}
+.navbar_menu li{
+	padding: 5px 20px;
+	cursor: pointer;
+}
+
+#menu{
+	font-size: 15px;
+}
+.navbar_login{
+	list-style: none;
+	display: flex;
+	float: right;
+	size: 15px;
+  padding-left: 0;
+  background: none;
+}
+.navbar_login li{
+	padding: 0px 10px;
+	color: var(--accent-color);
+}
+
+.navbar_toggleBtn{
+	display: none;
+	width: 20px;
+	position: absolute;
+	right: 32px;
+	padding-bottom: 5px;
+	font-size: 20px;
+	color: #000000;
+  cursor: pointer;
+  transition: .3s ease-in-out;
+}
+.container{
+	z-index: 1;
+}
+.nav-up {
+    top: -70px; 
+}
+@media screen and (max-width: 760px) {
+	.navbar{
+		flex-direction: column;
+    padding: 15px;
+    background-color: white;
+	}
+	.navbar_left{
+		flex-direction: column;
+		padding-left: 30px;
+	}
+	.navbar_menu{
+		display: none;
+		flex-direction: column;
+		align-items: center;
+    width: 100%;
+	}
+	.navbar_menu li{
+		width: 100%;
+		text-align: center;
+		padding-top: 10px;
+		padding-bottom: 10px;
+	}
+	.navbar_login{
+		display: none;
+		justify-content: center;
+		width: 100%;
+	}
+	.navbar_toggleBtn{
+		display: block;
+	}
+	.navbar_menu.active,
+	.navbar_login.active {
+		display: flex;
+	}
+	section{
+		align-content: center;
+		align-items: center;
+		justify-content: center;
+	}
+}
+/* header css end */
+
+/* section css */
 
 body {
   margin:0;
@@ -25,7 +184,8 @@ body {
   position: relative;
   overflow: hidden;
   display: flex;
-  font-family:var(--fontFamily);
+	font-family: var(--font-family);	
+  font-weight: 900;
 }
 
 #slide-in {
@@ -38,32 +198,14 @@ body {
   position: relative;
 }
 
-#slide-in:before {
-  height: 60%;
-  width: 50%;
-  background:var(--colorOne);
-  box-shadow: 0px 30px 139px 0px rgba(10, 22, 31, 0.26);
-  border-radius: 30px;
-  position: absolute;
-  top: 0;
-  left: 0;
-  display: flex;
-  align-items: center;
-  content:'';
-  transform-origin:left;
-  transform:rotateY(10deg);
-/*   animation:before 5s linear infinite; */
-}
-@keyframes before {
-  50% { transform:rotateY(10deg) translateY(-25px); }
-}
+
 
 #slide-in:after {
   content:'';
-  width: 75%;
+  width: 90%;
   height: 85%;
   border-radius: 30px;
-  background:var(--colorTwo);
+  background: #8DA0D6;
   box-shadow: 0 28px 79px 0 rgba(10, 22, 31, 0.35);
   position: absolute;
   top: 50%;
@@ -192,6 +334,7 @@ a {
 }
 
 @media screen and (max-width:1110px) {
+  
   #slide-in:before {
     width:75%;
     height:50%;
@@ -243,6 +386,7 @@ a {
   @keyframes deetsMove {
     0% { margin:0 auto; opacity:0; }
   }
+  
 }
 
 @media screen and (max-width:520px) {
@@ -299,3 +443,5 @@ a {
         background-position: -10000px 0;
       }
     }
+
+/* section css end*/

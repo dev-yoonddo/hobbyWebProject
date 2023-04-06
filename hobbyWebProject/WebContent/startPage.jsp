@@ -4,8 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-<link rel="stylesheet" href="css/board.css?after">
+<title>TOGETHER</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
 <link href="https://fonts.googleapis.com/css?family=Teko:300,400,500,600,700&display=swap" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -29,7 +28,7 @@ section{
 	justify-content: center;
 }
 .start-text{
-	width: 600px;
+	width: 650px;
 	margin-top: 100px;
 	font-family: 'Noto Sans KR', sans-serif;
 	font-size: 30pt;
@@ -74,8 +73,7 @@ section{
 	margin-top: 0px;
 	white-space: nowrap;
 	will-change: transform;
-	animation: marquee3 3s linear infinite;
-	
+	animation: marquee3 3s linear infinite;	
 }
 #track4 {
 	width: 1300px;
@@ -104,7 +102,6 @@ section{
 
 </style>
 </head>
-
 <body>
 	<header>
 		<div id="animate-icon">
@@ -163,8 +160,6 @@ function typing(){
     }
 }
 setInterval(typing, 150)
-
-
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
