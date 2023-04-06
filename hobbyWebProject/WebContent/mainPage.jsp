@@ -216,7 +216,6 @@ section{
               <h2>$XX,XXX</h2>
             </div>
           </div>
-          
           <div class="btn"><a href="#">SHOP NOW</a></div>
         </div>
       </div>
