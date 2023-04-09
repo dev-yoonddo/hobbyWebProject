@@ -6,7 +6,9 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-	<script defer src="option/jquery/jquery.min.js"></script>
+<script defer src="option/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 
 </head>
 <style>
@@ -88,7 +90,7 @@ bCzShNzXcd
   const naverLogin = new naver.LoginWithNaverId(
    {
     clientId: "OJXUDvN3qv76O6QfBTAR",
-    callbackUrl: "http://localhost:8080/hobbyWebProject/mainPage.jsp",
+    callbackUrl: "http://localhost:8080/hobbyWebProject/login.jsp",
     loginButton: {color: "green", type: 4, height: 40}
     }
    );
@@ -128,7 +130,7 @@ bCzShNzXcd
       const logout=document.getElementById('btn_logout');
       logout.addEventListener('click',(e)=>{
         naverLogin.logout();
-    location.replace("http://localhost:8080/hobbyWebProject/mainPage.jsp");
+    location.replace("http://localhost:8080/hobbyWebProject/login.jsp");
       })
     }
 
