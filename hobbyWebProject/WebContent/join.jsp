@@ -93,13 +93,17 @@ body{
  <div class="login-wrapper">
         <h2>로그인
         </h2>
-        <form method="post" action="loginAction.jsp" role="form" id="login-form">
+        <form method="post" action="joinAction.jsp" role="form" id="login-form" onsubmit="return passwordCheck(this)">
             <input type="text" name="userID" id="userID" placeholder="아이디 입력">
-            <input type="password" name="userPassword" id="userPassword" placeholder="비밀번호 입력">
-            <label for="remember-check">
-                <input type="checkbox" id="remember-check">아이디 저장하기
-            </label>
-            <input type="submit" value="Login">
+            <input type="text" name="userName" id="userName" placeholder="이름 입력">
+            <input type="text" name="userBirth" id="userBirth" placeholder="생년월일 입력">
+            <input type="text" name="userPhone" id="userPhone" placeholder="핸드폰번호 입력">
+            <input type="password" name="userPassword" id="userPassword" placeholder="비밀번호 입력" onkeyup="passwordCheck2()">
+            <input type="password" name="userPassword1" id="userPassword1" placeholder="비밀번호 확인" onkeyup="passwordCheck2()">
+            <div class="check" style="text-align: center;">
+				<h5 id="passwordCheckMessage" style="color: red; font-size: 14px;"></h5>
+			</div>
+            <input type="submit" value="join">
         </form>
     </div>
 </section>
