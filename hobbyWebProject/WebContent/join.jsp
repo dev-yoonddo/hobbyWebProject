@@ -13,6 +13,7 @@
 <link href="https://fonts.googleapis.com/css?family=Teko:300,400,500,600,700&display=swap" rel="stylesheet">
 <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square.css" rel="stylesheet">
 <script type="text/javascript" src="js/script.js"></script>
+<script type="text/javascript" src="js/checkPW.js"></script>
 <script defer src="https://kit.fontawesome.com/f95555e5d8.js" crossorigin="anonymous"></script>
 <script defer src="option/jquery/jquery.min.js"></script>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
@@ -29,19 +30,19 @@ body{
     font-size: 14px;
     font-family: 'Roboto', sans-serif;
 }
-.login-wrapper{
+.join-wrapper{
     width: 400px;
     height: 350px;
     padding: 40px;
     box-sizing: border-box;
 }
 
-.login-wrapper > h2{
+.join-wrapper > h2{
     font-size: 24px;
     color: #6A24FE;
     margin-bottom: 20px;
 }
-#login-form > input{
+#join-form > input{
     width: 100%;
     height: 48px;
     padding: 0 10px;
@@ -50,16 +51,16 @@ body{
     border-radius: 6px;
     background-color: #F8F8F8;
 }
-#login-form > input::placeholder{
+#join-form > input::placeholder{
     color: #D2D2D2;
 }
-#login-form > input[type="submit"]{
+#join-form > input[type="submit"]{
     color: #fff;
     font-size: 16px;
     background-color: #6A24FE;
     margin-top: 20px;
 }
-#login-form > input[type="checkbox"]{
+#join-form > input[type="checkbox"]{
     display: none;
 }
 
@@ -90,10 +91,9 @@ body{
 </div>
 </header>
 <section>
- <div class="login-wrapper">
-        <h2>로그인
-        </h2>
-        <form method="post" action="joinAction.jsp" role="form" id="login-form" onsubmit="return passwordCheck(this)">
+ <div class="join-wrapper">
+        <h2>회원가입<h2>
+        <form method="post" action="joinAction.jsp" id="join-form" onsubmit="return passwordCheck(this)">
             <input type="text" name="userID" id="userID" placeholder="아이디 입력">
             <input type="text" name="userName" id="userName" placeholder="이름 입력">
             <input type="text" name="userBirth" id="userBirth" placeholder="생년월일 입력">

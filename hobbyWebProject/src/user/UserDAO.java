@@ -14,7 +14,7 @@ public class UserDAO {
 		
 		public UserDAO() {
 			try {
-			 	String dbURL = "jdbc:mysql://localhost:3306/hobbyWebProject?useUnicode=true&characterEncoding=UTF-8";
+			 	String dbURL = "jdbc:mysql://localhost:3306/hobbywebproject?serverTimezone=UTC";
 			 	String dbID = "root";
 			 	String dbPassword = "9228";
 			 	Class.forName("com.mysql.jdbc.Driver");

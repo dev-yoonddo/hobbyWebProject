@@ -14,7 +14,7 @@ public class CommentDAO {
 	
 	public CommentDAO() {
 		try {
-		 	String dbURL = "jdbc:mysql://localhost:3306/hobbyWebProject?serverTimezone=UTC";
+		 	String dbURL = "jdbc:mysql://localhost:3306/hobbywebproject?serverTimezone=UTC";
 		 	String dbID = "root";
 		 	String dbPassword = "9228";
 		 	Class.forName("com.mysql.jdbc.Driver");

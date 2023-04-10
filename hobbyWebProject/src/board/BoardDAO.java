@@ -13,7 +13,7 @@ public class BoardDAO {
 	
 	public BoardDAO() {
 		try {
-			 	String dbURL = "jdbc:mysql://localhost:3306/hobbyWebProject?useUnicode=true&characterEncoding=UTF-8";
+			 	String dbURL = "jdbc:mysql://localhost:3306/hobbywebproject?useUnicode=true&characterEncoding=UTF-8";
 			 	String dbID = "root";
 			 	String dbPassword = "9228";
 			 	Class.forName("com.mysql.jdbc.Driver");
