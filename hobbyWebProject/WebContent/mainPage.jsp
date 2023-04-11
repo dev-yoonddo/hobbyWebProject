@@ -47,6 +47,7 @@ if(session.getAttribute("userID") != null){
 				<%
 					}else{
 				%>
+				<li><a href="userUpdate.jsp"><i class="fa-solid fa-gear"></i></a></li>
 				<li><a href="logout.jsp">LOGOUT</a></li>
 				<%
 					}

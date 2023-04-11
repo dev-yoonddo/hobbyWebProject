@@ -1,7 +1,13 @@
 //password check
 function passwordCheck(obj) {
 //	alert('passwordCheck()');
-	
+	if(obj.userPassword.value != obj.userPassword1.value){
+		alert("비밀번호가 일치하지 않습니다");
+		obj.userPassword.value = '';
+		obj.userPassword1.value = '';
+		obj.userPassword.focus();
+		return false;
+	}
 //	입력한 비밀번호가 8자 이상 12자 이하인가 검사한다.
 	var len = obj.userPassword.value.trim().length;
 	if (len < 8 || len > 12) {
@@ -35,9 +41,9 @@ function passwordCheck(obj) {
 		obj.userPassword.focus();
 		return false;
 	}
+
 	return true;
 }
-
 function passwordCheck2() {
 	var userPassword = $('#userPassword').val();
 	var userPassword1 = $('#userPassword1').val();
