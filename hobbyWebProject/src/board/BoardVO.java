@@ -7,6 +7,9 @@ public class BoardVO {
 	private String boardDate;
 	private String boardContent;
 	private int boardAvailable;
+	private String boardCategory;
+	private int viewCount;
+	private int heartCount;
 	
 	
 	public int getBoardID() {
@@ -44,6 +47,24 @@ public class BoardVO {
 	}
 	public void setBoardAvailable(int boardAvailable) {
 		this.boardAvailable = boardAvailable;
+	}
+	public String getBoardCategory() {
+		return boardCategory;
+	}
+	public void setBoardCategory(String boardCategory) {
+		this.boardCategory = boardCategory;
+	}
+	public int getViewCount() {
+		return viewCount;
+	}
+	public void setViewCount(int viewCount) {
+		this.viewCount = viewCount;
+	}
+	public int getHeartCount() {
+		return heartCount;
+	}
+	public void setHeartCount(int heartCount) {
+		this.heartCount = heartCount;
 	}
 	
 	

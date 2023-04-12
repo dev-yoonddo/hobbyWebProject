@@ -65,10 +65,12 @@ function hasScrolled() {
 
 */
 
+//mainPage 슬라이드
 var btn = document.querySelectorAll('.arrowBtn')
 var slides = document.querySelectorAll('.slide').length - 1
 var slot = 0
 
+//왼쪽 버튼
 btn[0].addEventListener('click', function(e){
   if(play) {
     clearInterval(play)
@@ -86,7 +88,7 @@ btn[0].addEventListener('click', function(e){
   }   
 })
 
-
+//오른쪽 버튼
 btn[1].addEventListener('click', function(e){
   if(play) {
     clearInterval(play)
@@ -104,6 +106,7 @@ btn[1].addEventListener('click', function(e){
   }  
 })
 
+//자동으로 슬라이드
 function autoPlay() {
   e = document.querySelector('.showing')
   if(slot == slides) {
@@ -118,21 +121,21 @@ function autoPlay() {
 }
 var play = setInterval(autoPlay, 5000)
 
-//버튼 클릭 시 맨 위로 이동
+// mainPage 오른쪽 스크롤버튼
+
+//클릭 시 페이지 상단으로 이동
 $(function(){
     $('.moveTop').on('click', function(){
       window.scrollTo({ top: 0, behavior: "smooth" });  
     });
 });
 
-
-//버튼 클릭 시 페이지 하단으로 이동
+//클릭 시 페이지 하단으로 이동
 $(function(){
     $('.moveBottom').on('click', function(){
       window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
     });
 });
-
 
   });
 })(jQuery);

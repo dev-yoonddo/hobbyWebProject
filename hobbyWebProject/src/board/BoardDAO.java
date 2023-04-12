@@ -53,8 +53,8 @@ public class BoardDAO {
 	}
 	
 	//글 작성하기
-	public int write(String boardTitle, String userID, String boardContent) {
-		String SQL = "INSERT INTO board VALUES(?, ?, ?, ?, ?, ?)";
+	public int write(String boardTitle, String userID, String boardContent, String boardCategory, int viewCount, int heartCount) {
+		String SQL = "INSERT INTO board VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, getNext());
@@ -63,6 +63,9 @@ public class BoardDAO {
 			pstmt.setString(4, getDate());
 			pstmt.setString(5, boardContent);
 			pstmt.setInt(6, 1);
+			pstmt.setString(7, boardCategory);
+			pstmt.setInt(8, viewCount);
+			pstmt.setInt(9, heartCount);
 			//성공적으로 수행했다면 0이상의 결과 반환
 			return pstmt.executeUpdate();
 		} catch (Exception e) {
@@ -86,6 +89,9 @@ public class BoardDAO {
 				board.setBoardDate(rs.getString(4));
 				board.setBoardContent(rs.getString(5));
 				board.setBoardAvailable(rs.getInt(6));
+				board.setBoardCategory(rs.getString(7));
+				board.setViewCount(rs.getInt(8));
+				board.setHeartCount(rs.getInt(8));
 				list.add(board);
 			}
 		} catch (Exception e) {
@@ -125,7 +131,13 @@ public class BoardDAO {
 				board.setBoardDate(rs.getString(4));
 				board.setBoardContent(rs.getString(5));
 				board.setBoardAvailable(rs.getInt(6));
-
+				board.setBoardCategory(rs.getString(7));
+				int viewCount=rs.getInt(8);
+				board.setViewCount(viewCount);
+				viewCount++;
+				viewCountUpdate(viewCount,boardID);
+	
+				board.setHeartCount(rs.getInt(9));
 				return board;
 			}
 		} catch (Exception e) {
@@ -162,15 +174,39 @@ public class BoardDAO {
 		}
 		return -1; //데이터베이스 오류
 	}
-	
+	//좋아요
+	public int heart(int boardID) {
+		String SQL = "UPDATE board SET heartCount = heartCount + 1 WHERE boardID = ?";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt.setInt(1, boardID);
+			return pstmt.executeUpdate();
+		} catch(Exception e) {
+			e.printStackTrace();
+		} 
+		return -1;
+	}
+	//조회수
+	public int viewCountUpdate(int viewCount, int boardID) {
+		String SQL = "UPDATe board SET viewCount = ? WHERE boardID = ?";
+		try {
+			PreparedStatement pstmt=conn.prepareStatement(SQL);
+			pstmt.setInt(1, viewCount);//물음표의 순서
+			pstmt.setInt(2, boardID);
+			return pstmt.executeUpdate();//insert,delete,update			
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return -1;//데이터베이스 오류
+	}
 	//검색하기
-	public ArrayList<BoardVO> getSearch(String searchField, String searchText){//특정한 리스트를 받아서 반환
+	public ArrayList<BoardVO> getSearch(String searchField, String searchField2){//특정한 리스트를 받아서 반환
 	      ArrayList<BoardVO> list = new ArrayList<BoardVO>();
 	      String SQL ="SELECT * FROM board WHERE "+searchField.trim();
 	      try {
-	    	  if(searchText != null && !searchText.equals("") ){
-	                SQL +=" LIKE '%"+searchText.trim()+"%' ORDER BY boardID DESC LIMIT 10";
-	            }
+	    	  
+	                SQL +=" LIKE '%"+searchField2.trim()+"%' ORDER BY boardID DESC LIMIT 10";
+	            
 	            PreparedStatement pstmt=conn.prepareStatement(SQL);
 				rs=pstmt.executeQuery();//select
 	         while(rs.next()) {
@@ -181,6 +217,9 @@ public class BoardDAO {
 	        	board.setBoardDate(rs.getString(4));
 	        	board.setBoardContent(rs.getString(5));
 	        	board.setBoardAvailable(rs.getInt(6));
+	        	board.setBoardCategory(rs.getString(7));
+	        	board.setViewCount(rs.getInt(8));
+	        	board.setHeartCount(rs.getInt(9));
 	            list.add(board);//list에 해당 인스턴스를 담는다.
 	         }         
 	      } catch(Exception e) {
