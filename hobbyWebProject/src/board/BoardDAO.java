@@ -200,12 +200,12 @@ public class BoardDAO {
 		return -1;//데이터베이스 오류
 	}
 	//검색하기
-	public ArrayList<BoardVO> getSearch(String searchField, String searchField2){//특정한 리스트를 받아서 반환
+	public ArrayList<BoardVO> getSearch(String searchField2){//특정한 리스트를 받아서 반환
 	      ArrayList<BoardVO> list = new ArrayList<BoardVO>();
-	      String SQL ="SELECT * FROM board WHERE "+searchField.trim();
+	      String SQL ="SELECT * FROM board WHERE boardCategory";
 	      try {
 	    	  
-	                SQL +=" LIKE '%"+searchField2.trim()+"%' ORDER BY boardID DESC LIMIT 10";
+	                SQL +=" LIKE '%"+searchField2+"%' ORDER BY boardID DESC LIMIT 10";
 	            
 	            PreparedStatement pstmt=conn.prepareStatement(SQL);
 				rs=pstmt.executeQuery();//select

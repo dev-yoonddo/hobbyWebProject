@@ -88,33 +88,6 @@ height: 30px;
   background-color: #ffffff
 }
 
-.paginate {margin-top: 7px;}
-.paginate a.viewMore {display: block;cursor: pointer;text-align: center;padding: 12px;color: #3c63e0;}
-.paginate a.viewMore span {font-size: 14px;}
-.paginate a.viewMore span:after {display: inline-block;content:"";width: 11px;height:10px;margin: 0px 0 0 5px;vertical-align: middle;background:url(../images/common/common_sfix_icon.png) no-repeat -350px 0;}
-.paginate a.viewMore.open span:after {display: inline-block;content:"";width: 11px;height:10px;margin: 0px 0 0 5px;vertical-align: middle;background:url(../images/common/common_sfix_icon.png) no-repeat -400px 0;}
-
-.paginate.num {margin-top: 7px;text-align: center;}
-.paginate.num > a {display:inline-block;vertical-align:middle;overflow:hidden;width: 37px;height: 36px;font-size:0;text-indent:-120%;color:transparent;background: url("../images/common/common_sfix_icon.png");border: 1px solid #c8c8c8;}
-.paginate.num > a.first {background-position:-100px -350px;}
-.paginate.num > a.prev {background-position: -236px -188px;margin-right: -4px;border-right: none;}
-.paginate.num > a.next {background-position: -285px -188px;margin-left: -4px;border-left: none;}
-.paginate.num > a.last {background-position:-250px -350px;}
-.paginate.num > a.prev.inactive {background-position: -336px -188px;pointer-events: none;}
-.paginate.num > a.next.inactive {background-position: -385px -188px;pointer-events: none;}
-
-.paginate.num ol {display:inline-block;vertical-align:middle;}
-.paginate.num ol:after {display:block;content:"";clear:both;}
-.paginate.num ol li {float:left;margin-left: -1px;border-top: 1px solid #c8c8c8;border-bottom: 1px solid #c8c8c8;border-left: 1px solid #e7e7e7;border-right: 1px solid #e7e7e7;width: 37px;height: 36px;}
-.paginate.num ol li:first-child {margin-left:0;}
-.paginate.num ol li a {display:block;width: 100%;height: 100%;line-height: 33px;font-size: 15px;text-align: center;}
-.paginate.num ol li a:hover {text-decoration: none;}
-.paginate.num ol li.curpage {color: #ffffff;border: 1px solid #303030;background: #555555;}
-.paginate.num ol li.curpage a {color: #ffffff;}
-.paginate.num ol li.curpage + li {border-left: 1px solid #303030;}
-.paginate.num ol li:hover {color: #ffffff;border: 1px solid #303030;background: #555555;}
-.paginate.num ol li:hover + li {border-left: 1px solid #303030;}
-.paginate.num ol li:hover a {color: #ffffff;}
 </style>
 <body>
 <%
@@ -173,7 +146,7 @@ height: 30px;
 		//카테고리를 검색했을 때 테이블 상단에 선택한 카테고리를 출력
 		String category = request.getParameter("searchField2");
 		%>
-		<h4 style="font-weight: bold; color: #646464;"><%= category %></h4><br>
+		<h2 style="font-weight: bold; color: #646464;"><%= category %> | 회원들과 자유롭게 이야기하세요</h2><br>
 		
 		<div class="row">
 			<table style="text-align: center; border: 3px solid #ffffff; ">
@@ -189,8 +162,15 @@ height: 30px;
 				</thead>
 				<tbody>
 					<% //customerPage의 객체 이름과 같아야한다.
-						ArrayList<BoardVO> list = boardDAO.getSearch(request.getParameter("searchField"),
-								request.getParameter("searchField2"));
+						String search = request.getParameter("searchField2");
+						ArrayList<BoardVO> list = boardDAO.getSearch(search);
+						if(search == ""){
+							PrintWriter script = response.getWriter();
+							script.println("<script>");
+							script.println("alert('다시 선택해주세요')");
+							script.println("history.back()");
+							script.println("</script>");
+						}
 						if (list.size() == 0) {
 							PrintWriter script = response.getWriter();
 							script.println("<script>");
@@ -202,8 +182,7 @@ height: 30px;
 					%>
 					<tr>
 						<td style="background-color: #ffffff"><%= list.get(i).getBoardCategory() %></td>
-						<td><a href="
-						view.jsp?boardID=<%= list.get(i).getBoardID() %>"><%= list.get(i).getBoardTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></a></td>
+						<td><a href="view.jsp?boardID=<%= list.get(i).getBoardID() %>"><%= list.get(i).getBoardTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></a></td>
 						<td><%= list.get(i).getUserID() %></td>
 						<td><%= list.get(i).getBoardDate().substring(0 ,11) + list.get(i).getBoardDate().substring(11, 13) + "시" + list.get(i).getBoardDate().substring(14, 16) + "분" %></td>
 						<td><%=list.get(i).getViewCount()%></td>

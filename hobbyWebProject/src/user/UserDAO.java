@@ -14,7 +14,7 @@ public class UserDAO {
 		
 		public UserDAO() {
 			try {
-			 	String dbURL = "jdbc:mysql://localhost:3306/hobbywebproject?serverTimezone=UTC";
+			 	String dbURL = "jdbc:mysql://localhost:3306/hobbywebproject?useUnicode=true&characterEncoding=UTF-8";
 			 	String dbID = "root";
 			 	String dbPassword = "9228";
 			 	Class.forName("com.mysql.jdbc.Driver");
@@ -27,27 +27,27 @@ public class UserDAO {
 	
 //  회원정보
 	public int login(String userID, String userPassword) {
-		String SQL = "SELECT userPassword FROM USER WHERE userID = ?";
+		String SQL = "SELECT userPassword FROM user WHERE userID = ?";
 		try {
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
 				if(rs.getString(1).equals(userPassword))
-						return 1;
+					return 1; //로그인 성공
 				else 
-						return 0;	
+					return 0; //비밀번호 불일치
 			}
-			return -1;
+			return -1; //아이디가 존재하지 않음
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return -2;
+		return -2; //데이터베이스 오류
 	}
 	
 	public int join(UserVO user) {
 		try {
-			String SQL ="INSERT INTO USER VALUES (?, ?, ?, ?, ?)";
+			String SQL ="INSERT INTO user VALUES (?, ?, ?, ?, ?)";
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, user.getUserID());
 			pstmt.setString(2, user.getUserName());
@@ -62,7 +62,7 @@ public class UserDAO {
 	}
 	
 	public UserVO getUserVO(String userID) {//하나의 글 내용을 불러오는 함수
-		String SQL="SELECT * from USER where userID = ?";
+		String SQL="SELECT * FROM user WHERE userID = ?";
 		try {
 			PreparedStatement pstmt=conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);//물음표
@@ -83,7 +83,7 @@ public class UserDAO {
 	}
 	
 	public int update(String userID, String userName, String userBirth, String userPhone, String userPassword ) {
-		String SQL="UPDATE USER SET userName = ?, userBirth = ?, userPhone = ?, userPassword = ? WHERE userID = ?";//특정한 아이디에 해당하는 제목과 내용을 바꿔준다. 
+		String SQL="UPDATE user SET userName = ?, userBirth = ?, userPhone = ?, userPassword = ? WHERE userID = ?";//특정한 아이디에 해당하는 제목과 내용을 바꿔준다. 
 		try {
 			PreparedStatement pstmt=conn.prepareStatement(SQL);
 			pstmt.setString(1, userName);
@@ -99,7 +99,7 @@ public class UserDAO {
 	}
 	
 	public int delete(String userID) {
-		String SQL="DELETE FROM USER WHERE userID = ?";//특정한 아이디에 해당하는 제목과 내용을 바꿔준다. 
+		String SQL="DELETE FROM user WHERE userID = ?";
 		try {
 			PreparedStatement pstmt=conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);

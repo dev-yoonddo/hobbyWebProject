@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>JSP 게시판 웹 사이트</title>
+<title></title>
 </head>
 <body>
 	<%
@@ -24,9 +24,9 @@
 			script.println("</script>");
 		}
 	
-			UserDAO userDAO=new UserDAO();//하나의 인스턴스
+			UserDAO userDAO=new UserDAO();
 			int result=userDAO.delete(userID);
-			if(result == -1){//데이터 베이스 오류가 날 때
+			if(result == -1){//데이터 베이스 오류
 				PrintWriter script=response.getWriter();
 				script.println("<script>");
 				script.println("alert('회원탈퇴에 실패했습니다.')");
