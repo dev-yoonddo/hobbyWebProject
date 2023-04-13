@@ -167,7 +167,7 @@ height: 30px;
 						if(search == ""){
 							PrintWriter script = response.getWriter();
 							script.println("<script>");
-							script.println("alert('다시 선택해주세요')");
+							script.println("alert('옵션을 선택해주세요')");
 							script.println("history.back()");
 							script.println("</script>");
 						}
