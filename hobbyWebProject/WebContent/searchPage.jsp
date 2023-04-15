@@ -164,6 +164,7 @@ height: 30px;
 					<% //customerPage의 객체 이름과 같아야한다.
 						String search = request.getParameter("searchField2");
 						ArrayList<BoardVO> list = boardDAO.getSearch(search);
+						for (int i = 0; i < list.size(); i++) {
 						if(search == ""){
 							PrintWriter script = response.getWriter();
 							script.println("<script>");
@@ -178,7 +179,6 @@ height: 30px;
 							script.println("history.back()");
 							script.println("</script>");
 						}
-						for (int i = 0; i < list.size(); i++) {
 					%>
 					<tr>
 						<td style="background-color: #ffffff"><%= list.get(i).getBoardCategory() %></td>

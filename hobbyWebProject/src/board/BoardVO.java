@@ -1,5 +1,7 @@
 package board;
 
+import user.UserVO;
+
 public class BoardVO {
 	private int boardID;
 	private String boardTitle;
@@ -67,5 +69,5 @@ public class BoardVO {
 		this.heartCount = heartCount;
 	}
 	
-	
+
 }

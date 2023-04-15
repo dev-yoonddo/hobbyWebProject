@@ -5,7 +5,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class BoardDAO {
 	private Connection conn; //자바와 데이터베이스 연결
@@ -188,7 +190,7 @@ public class BoardDAO {
 	}
 	//조회수
 	public int viewCountUpdate(int viewCount, int boardID) {
-		String SQL = "UPDATe board SET viewCount = ? WHERE boardID = ?";
+		String SQL = "UPDATE board SET viewCount = ? WHERE boardID = ?";
 		try {
 			PreparedStatement pstmt=conn.prepareStatement(SQL);
 			pstmt.setInt(1, viewCount);//물음표의 순서
@@ -227,5 +229,51 @@ public class BoardDAO {
 	      }
 	      return list;//리스트 반환
 	   }
+	
+	//UserDAO의 delete 메서드가 실행되면 실행되는 메서드
+	//delete된 userID의 board데이터 리스트를 가져온다.
+	public List<BoardVO> getBoardVOsByUserID(String userID) {
+	    List<BoardVO> boardVOs = new ArrayList<>();
+	    String SQL = "SELECT boardID, boardAvailable FROM board WHERE userID = ?";
+	    try {
+	        PreparedStatement pstmt = conn.prepareStatement(SQL);
+	        pstmt.setString(1, userID);
+	        ResultSet rs = pstmt.executeQuery();
+	        
+	        while (rs.next()) { //user 한명이 여러개의 board를 생성하면 데이터가 1개 이상 나오기때문에 while을 사용한다.
+	            // Retrieve values from ResultSet and create BoardVO object for each row
+	            int boardID = rs.getInt("boardID");
+	            int boardAvailable = rs.getInt("boardAvailable");
+	            // You can retrieve other attributes here
+
+	            // Create BoardVO object
+	            BoardVO boardVO = new BoardVO();
+	            boardVO.setBoardID(boardID);
+	            boardVO.setBoardAvailable(boardAvailable);
+	            // Set other attributes in the BoardVO object
+
+	            // Add BoardVO object to the list
+	            boardVOs.add(boardVO);
+	        }
+	        rs.close();
+	        pstmt.close();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return boardVOs;
+	}
+	
+	public void updateBoardVO(BoardVO boardVO){
+	    String SQL = "UPDATE board SET boardAvailable = ? WHERE boardID = ?";
+	    try {
+	        PreparedStatement pstmt = conn.prepareStatement(SQL);
+	        pstmt.setInt(1, boardVO.getBoardAvailable());
+	        pstmt.setInt(2, boardVO.getBoardID());
+	        pstmt.executeUpdate();
+	        pstmt.close();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	}
 }
 

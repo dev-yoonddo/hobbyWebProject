@@ -4,7 +4,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class CommentDAO {
 
@@ -150,8 +152,50 @@ public class CommentDAO {
 		return -1; // 데이터베이스 오류
 	}
 	
+	//UserDAO의 delete 메서드가 실행되면 사용되는 메서드
+	//delete된 userID의 comment데이터 리스트를 가져온다.
+	public List<CommentVO> getCommentVOsByUserID(String userID) {
+	    List<CommentVO> commentVOs = new ArrayList<>();
+	    String SQL = "SELECT cmtID, cmtAvailable FROM comment WHERE userID = ?";
+
+	    try {
+	        PreparedStatement pstmt = conn.prepareStatement(SQL);
+	        pstmt.setString(1, userID);
+	        ResultSet rs = pstmt.executeQuery();
+
+	        while (rs.next()) {
+	        	int cmtID = rs.getInt("cmtID");
+	        	int cmtAvailable = rs.getInt("cmtAvailable");
+	        	
+	            CommentVO commentVO = new CommentVO();
+	            commentVO.setCmtID(cmtID);
+	            commentVO.setCmtAvailable(cmtAvailable);
+
+	            // Add CommentVO object to the list
+	            commentVOs.add(commentVO);
+	        }
+
+	        rs.close();
+	        pstmt.close();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return commentVOs;
+	}
 	
-	
+	public void updateCommentVO(CommentVO commentVO) {
+	    String SQL = "UPDATE comment SET cmtAvailable = ? WHERE cmtID = ?";
+
+	    try {
+	        PreparedStatement pstmt = conn.prepareStatement(SQL);
+	        pstmt.setInt(1, commentVO.getCmtAvailable());
+	        pstmt.setInt(2, commentVO.getCmtID());
+	        pstmt.executeUpdate();
+	        pstmt.close();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	}
 }
 	
 	

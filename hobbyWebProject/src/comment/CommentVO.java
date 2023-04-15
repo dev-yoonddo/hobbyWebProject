@@ -1,5 +1,7 @@
 package comment;
 
+import user.UserVO;
+
 public class CommentVO {
 	private String cmtContent;
 	private int cmtID;
@@ -45,8 +47,6 @@ public class CommentVO {
 	public void setCmtDate(String cmtDate) {
 		this.cmtDate = cmtDate;
 	}
-	
-	
 	
 	
 }

@@ -7,7 +7,8 @@ public class UserVO {
 	private String userName;
 	private String userBirth;
 	private String userPhone;	
-
+	private int userAvailable;
+	
 	public String getUserID() {
 		return userID;
 	}
@@ -47,7 +48,15 @@ public class UserVO {
 	public void setUserPhone(String userPhone) {
 		this.userPhone = userPhone;
 	}
+
+	public int getUserAvailable() {
+		return userAvailable;
+	}
+
+	public void setUserAvailable(int userAvailable) {
+		this.userAvailable = userAvailable;
+	}
+
 	
-	
-	
+
 }
