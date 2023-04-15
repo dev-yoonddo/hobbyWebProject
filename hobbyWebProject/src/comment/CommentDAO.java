@@ -154,7 +154,7 @@ public class CommentDAO {
 	
 	//UserDAO의 delete 메서드가 실행되면 사용되는 메서드
 	//delete된 userID의 comment데이터 리스트를 가져온다.
-	public List<CommentVO> getCommentVOsByUserID(String userID) {
+	public List<CommentVO> getDelCommentVOByUserID(String userID) {
 	    List<CommentVO> commentVOs = new ArrayList<>();
 	    String SQL = "SELECT cmtID, cmtAvailable FROM comment WHERE userID = ?";
 

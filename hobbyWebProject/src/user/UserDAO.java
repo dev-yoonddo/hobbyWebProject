@@ -148,14 +148,14 @@ public class UserDAO {
 			pstmt.close();
 	        if (result > 0) {
 	            BoardDAO boardDAO = new BoardDAO(); 
-	            List<BoardVO> boardVOList = boardDAO.getBoardVOsByUserID(userID);
+	            List<BoardVO> boardVOList = boardDAO.getDelBoardVOByUserID(userID);
 	            for (BoardVO boardVO : boardVOList) {
 	                boardVO.setBoardAvailable(0);
 	                boardDAO.updateBoardVO(boardVO);
 	            }
 
 	            CommentDAO commentDAO = new CommentDAO();
-	            List<CommentVO> commentVOList = commentDAO.getCommentVOsByUserID(userID);
+	            List<CommentVO> commentVOList = commentDAO.getDelCommentVOByUserID(userID);
 	            for (CommentVO commentVO : commentVOList) {
 	                commentVO.setCmtAvailable(0);
 	                commentDAO.updateCommentVO(commentVO);

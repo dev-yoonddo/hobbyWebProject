@@ -32,12 +32,12 @@
 			BoardDAO boardDAO=new BoardDAO();
 			CommentDAO commentDAO=new CommentDAO();
 			
-			List<BoardVO> boardVOList = boardDAO.getBoardVOsByUserID(userID);
+			List<BoardVO> boardVOList = boardDAO.getDelBoardVOByUserID(userID);
 		    for (BoardVO boardVO: boardVOList) {
 		        boardVO.setBoardAvailable(0);
 		        boardDAO.updateBoardVO(boardVO);
 		        // Delete associated comments for each board
-		        List<CommentVO> commentVOList = commentDAO.getCommentVOsByUserID(boardVO.getUserID());
+		        List<CommentVO> commentVOList = commentDAO.getDelCommentVOByUserID(boardVO.getUserID());
 		        for (CommentVO commentVO: commentVOList) {
 		            commentVO.setCmtAvailable(0);
 		            commentDAO.updateCommentVO(commentVO);

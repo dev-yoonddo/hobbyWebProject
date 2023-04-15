@@ -144,9 +144,13 @@ height: 30px;
 		<% 
 		BoardDAO boardDAO = new BoardDAO();
 		//카테고리를 검색했을 때 테이블 상단에 선택한 카테고리를 출력
-		String category = request.getParameter("searchField2");
+		String search = request.getParameter("searchField2");
+		String boardCategory = ""; // Define boardCategory variable
+		if (search != null && !search.isEmpty()) {
+		    boardCategory = search; // Set boardCategory to search if search is not empty
+		}
 		%>
-		<h2 style="font-weight: bold; color: #646464;"><%= category %> | 회원들과 자유롭게 이야기하세요</h2><br>
+		<h2 style="font-weight: bold; color: #646464;"><%= search %> | 회원들과 자유롭게 이야기하세요</h2><br>
 		
 		<div class="row">
 			<table style="text-align: center; border: 3px solid #ffffff; ">
@@ -162,7 +166,6 @@ height: 30px;
 				</thead>
 				<tbody>
 					<% //customerPage의 객체 이름과 같아야한다.
-						String search = request.getParameter("searchField2");
 						ArrayList<BoardVO> list = boardDAO.getSearch(search);
 						for (int i = 0; i < list.size(); i++) {
 						if(search == ""){
@@ -199,20 +202,20 @@ height: 30px;
 		        <ul class="paginate" id="paginate"></ul>
 		    </nav>
 		</div>
+		
 		<%
 			if(pageNumber != 1) {
 		%>
-			<button type="button" id="prev" class="btn-black" onclick="location.href='searchPage.jsp?pageNumber=<%=pageNumber - 1%>'"><span>&lt;</span></button>
+			<button type="button" id="prev" class="btn-black" onclick="history.back()"><span>&lt;</span></button>
 			
 		<% 
-			} if(boardDAO.nextPage(pageNumber + 1)){ 
+			} if(boardDAO.nextPage(pageNumber + 1,boardCategory) && (boardDAO.countBoardByCategory(boardCategory) >= 10) && boardCategory.equals(search)){ 
 		%>
-			<button type="button" id="next" class="btn-black" onclick="location.href='searchPage.jsp?pageNumber=<%=pageNumber + 1%>'"><span>&gt;</span></button>
-						
-		<%
-			}
-		%>	
-	
+			<button type="button" id="next" class="btn-black" onclick="location.href='searchPage.jsp?pageNumber=<%=pageNumber + 1%>&searchField2=<%=search%>'"><span>&gt;</span></button>
+		<%				
+		} 
+		%>
+		
 		<% 
 			if( userID != null ){
 		%>

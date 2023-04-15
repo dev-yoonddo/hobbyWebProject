@@ -39,7 +39,7 @@ public class BoardDAO {
 		return ""; //빈 문자열을 반환함으로써 데이터베이스 오류를 알려준다.
 	}
 	//글 번호
-	public int getNext() {
+	/*public int getNext() {
 		String SQL = "SELECT boardID FROM board ORDER BY boardID DESC";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
@@ -52,14 +52,29 @@ public class BoardDAO {
 			e.printStackTrace();
 		}
 		return -1; //데이터베이스 오류 : 게시물 번호로 적절하지 않은 -1 반환
+	}*/
+	public int getNext(String boardCategory) {
+	    String SQL = "SELECT MAX(boardID) FROM board WHERE boardCategory = ?";
+	    try (
+	         PreparedStatement pstmt = conn.prepareStatement(SQL)) {
+	        pstmt.setString(1, boardCategory);
+	        ResultSet rs = pstmt.executeQuery();
+	        if (rs.next()) {
+	            int maxBoardID = rs.getInt(1);
+	            return maxBoardID + 1;
+	        }
+	        return 1; // if this is the first post in the category
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return -1;
 	}
-	
 	//글 작성하기
 	public int write(String boardTitle, String userID, String boardContent, String boardCategory, int viewCount, int heartCount) {
 		String SQL = "INSERT INTO board VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
-			pstmt.setInt(1, getNext());
+			pstmt.setInt(1, getNext(boardCategory));
 			pstmt.setString(2, boardTitle);
 			pstmt.setString(3, userID);
 			pstmt.setString(4, getDate());
@@ -76,12 +91,12 @@ public class BoardDAO {
 		return -1; //데이터베이스 오류
 	}
 	//글 목록 출력
-	public ArrayList<BoardVO> getList(int pageNumber){
+	public ArrayList<BoardVO> getList(int pageNumber, String boardCategory){
 		String SQL = "SELECT * FROM board WHERE boardID < ? AND boardAvailable = 1 ORDER BY boardID DESC LIMIT 10";
 		ArrayList<BoardVO> list = new ArrayList<BoardVO>();
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
-			pstmt.setInt(1, getNext() - (pageNumber - 1) * 10);
+			pstmt.setInt(1, getNext(boardCategory) - (pageNumber - 1) * 10);
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
 				BoardVO board = new BoardVO();
@@ -102,12 +117,33 @@ public class BoardDAO {
 		return list; 
 	}
 	
-	//글이 많아졌을 때 다음페이지로 넘기기
-	public boolean nextPage(int pageNumber) {
-		String SQL = "SELECT * FROM board WHERE boardID < ? AND boardAvailable = 1";
-		try {
-			PreparedStatement pstmt = conn.prepareStatement(SQL);
-			pstmt.setInt(1, getNext() - (pageNumber - 1) * 10);
+	
+	public int countBoardByCategory(String boardCategory) {
+	    int count = 0;
+	    try {
+	        String SQL = "SELECT COUNT(*) FROM board WHERE boardCategory = ?";
+	        PreparedStatement pstmt = conn.prepareStatement(SQL);
+	        pstmt.setString(1, boardCategory);
+	        ResultSet rs = pstmt.executeQuery();
+	        if (rs.next()) {
+	            count = rs.getInt(1);
+	        }
+	        rs.close();
+	        pstmt.close();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return count;
+	}
+	//같은 카테고리인 글의 갯수가 10개 이상일 때 다음페이지로 넘기기
+	public boolean nextPage(int pageNumber, String boardCategory) {
+		int count = countBoardByCategory(boardCategory);
+	    if (count >= 10) {
+	        String SQL = "SELECT * FROM board WHERE boardID < ? AND boardAvailable = 1 AND boardCategory = ?";
+    	 try {
+	        PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt.setInt(1, getNext(boardCategory) - (pageNumber - 1) * 10);
+			pstmt.setString(2, boardCategory);
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
 				return true;
@@ -115,6 +151,7 @@ public class BoardDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+        }
 		return false; 
 		
 	}
@@ -202,16 +239,19 @@ public class BoardDAO {
 		return -1;//데이터베이스 오류
 	}
 	//검색하기
+	//boardAvailable = 1일때만 값 출력 : 게시글을 삭제했을때 & 회원탈퇴 했을때 게시글이 보이지 않는다.
 	public ArrayList<BoardVO> getSearch(String searchField2){//특정한 리스트를 받아서 반환
 	      ArrayList<BoardVO> list = new ArrayList<BoardVO>();
-	      String SQL ="SELECT * FROM board WHERE boardCategory";
+	      String SQL ="SELECT * FROM board WHERE boardAvailable = 1 AND boardCategory";
 	      try {
 	    	  
-	                SQL +=" LIKE '%"+searchField2+"%' ORDER BY boardID DESC LIMIT 10";
+	            SQL +=" LIKE '%"+searchField2+"%' ORDER BY boardID DESC LIMIT 10";
 	            
 	            PreparedStatement pstmt=conn.prepareStatement(SQL);
 				rs=pstmt.executeQuery();//select
-	         while(rs.next()) {
+	         
+				while(rs.next()) {
+	        	 
 	        	BoardVO board = new BoardVO();
 	        	board.setBoardID(rs.getInt(1));
 	        	board.setBoardTitle(rs.getString(2));
@@ -230,29 +270,27 @@ public class BoardDAO {
 	      return list;//리스트 반환
 	   }
 	
-	//UserDAO의 delete 메서드가 실행되면 실행되는 메서드
-	//delete된 userID의 board데이터 리스트를 가져온다.
-	public List<BoardVO> getBoardVOsByUserID(String userID) {
+	//UserDAO - delete에서 사용되는 메서드
+	//delete된 userID와 board의 userID가 같은 값의 리스트를 가져온다.
+	public List<BoardVO> getDelBoardVOByUserID(String userID) {
 	    List<BoardVO> boardVOs = new ArrayList<>();
-	    String SQL = "SELECT boardID, boardAvailable FROM board WHERE userID = ?";
+	    String SQL = "SELECT boardID, boardAvailable FROM board WHERE userID = ?";//userID가 작성한 board의 boardID와 boardAvailable의 값을 가져온다.
 	    try {
 	        PreparedStatement pstmt = conn.prepareStatement(SQL);
 	        pstmt.setString(1, userID);
 	        ResultSet rs = pstmt.executeQuery();
 	        
 	        while (rs.next()) { //user 한명이 여러개의 board를 생성하면 데이터가 1개 이상 나오기때문에 while을 사용한다.
-	            // Retrieve values from ResultSet and create BoardVO object for each row
 	            int boardID = rs.getInt("boardID");
 	            int boardAvailable = rs.getInt("boardAvailable");
-	            // You can retrieve other attributes here
+	            //여기서 다른 속성도 가져올 수 있다.
 
-	            // Create BoardVO object
+	            // BoardVO 객체 생성하고 가져온 속성을 BoardVO 객체에 저장한다.
 	            BoardVO boardVO = new BoardVO();
-	            boardVO.setBoardID(boardID);
+	            boardVO.setBoardID(boardID); 
 	            boardVO.setBoardAvailable(boardAvailable);
-	            // Set other attributes in the BoardVO object
 
-	            // Add BoardVO object to the list
+	            // boardVOs list에 boardVO object 추가
 	            boardVOs.add(boardVO);
 	        }
 	        rs.close();
@@ -263,6 +301,7 @@ public class BoardDAO {
 	    return boardVOs;
 	}
 	
+	//UserDAO - delete에서 삭제된 user와 관련된 정보를 업데이트 한다.
 	public void updateBoardVO(BoardVO boardVO){
 	    String SQL = "UPDATE board SET boardAvailable = ? WHERE boardID = ?";
 	    try {
