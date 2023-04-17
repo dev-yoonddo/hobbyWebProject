@@ -53,17 +53,18 @@ public class BoardDAO {
 		}
 		return -1; //데이터베이스 오류 : 게시물 번호로 적절하지 않은 -1 반환
 	}*/
-	public int getNext(String boardCategory) {
-	    String SQL = "SELECT MAX(boardID) FROM board WHERE boardCategory = ?";
-	    try (
-	         PreparedStatement pstmt = conn.prepareStatement(SQL)) {
-	        pstmt.setString(1, boardCategory);
+	public int getNext() {
+	    String SQL = "SELECT MAX(boardID) FROM board";
+	    try {
+	    	PreparedStatement pstmt = conn.prepareStatement(SQL);
 	        ResultSet rs = pstmt.executeQuery();
 	        if (rs.next()) {
 	            int maxBoardID = rs.getInt(1);
 	            return maxBoardID + 1;
+	        } else {
+            // If no posts found for the given category, return 1
+            return 1;
 	        }
-	        return 1; // if this is the first post in the category
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	    }
@@ -71,10 +72,10 @@ public class BoardDAO {
 	}
 	//글 작성하기
 	public int write(String boardTitle, String userID, String boardContent, String boardCategory, int viewCount, int heartCount) {
-		String SQL = "INSERT INTO board VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String SQL = "INSERT INTO board VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
-			pstmt.setInt(1, getNext(boardCategory));
+			pstmt.setInt(1, getNext());
 			pstmt.setString(2, boardTitle);
 			pstmt.setString(3, userID);
 			pstmt.setString(4, getDate());
@@ -91,12 +92,12 @@ public class BoardDAO {
 		return -1; //데이터베이스 오류
 	}
 	//글 목록 출력
-	public ArrayList<BoardVO> getList(int pageNumber, String boardCategory){
+	public ArrayList<BoardVO> getList(int pageNumber){
 		String SQL = "SELECT * FROM board WHERE boardID < ? AND boardAvailable = 1 ORDER BY boardID DESC LIMIT 10";
 		ArrayList<BoardVO> list = new ArrayList<BoardVO>();
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
-			pstmt.setInt(1, getNext(boardCategory) - (pageNumber - 1) * 10);
+			pstmt.setInt(1, (pageNumber - 1) * 10);
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
 				BoardVO board = new BoardVO();
@@ -137,12 +138,12 @@ public class BoardDAO {
 	}
 	//같은 카테고리인 글의 갯수가 10개 이상일 때 다음페이지로 넘기기
 	public boolean nextPage(int pageNumber, String boardCategory) {
+		String SQL = "SELECT * FROM board WHERE boardID < ?  AND boardCategory = ? AND boardAvailable = 1";
 		int count = countBoardByCategory(boardCategory);
 	    if (count >= 10) {
-	        String SQL = "SELECT * FROM board WHERE boardID < ? AND boardAvailable = 1 AND boardCategory = ?";
     	 try {
 	        PreparedStatement pstmt = conn.prepareStatement(SQL);
-			pstmt.setInt(1, getNext(boardCategory) - (pageNumber - 1) * 10);
+			pstmt.setInt(1, getNext() - (pageNumber - 1) * 10);
 			pstmt.setString(2, boardCategory);
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
@@ -244,12 +245,11 @@ public class BoardDAO {
 	      ArrayList<BoardVO> list = new ArrayList<BoardVO>();
 	      String SQL ="SELECT * FROM board WHERE boardAvailable = 1 AND boardCategory";
 	      try {
-	    	  
-	            SQL +=" LIKE '%"+searchField2+"%' ORDER BY boardID DESC LIMIT 10";
+	            SQL +=" LIKE '%"+searchField2+"%' ORDER BY boardID DESC";
 	            
 	            PreparedStatement pstmt=conn.prepareStatement(SQL);
 				rs=pstmt.executeQuery();//select
-	         
+	    	  
 				while(rs.next()) {
 	        	 
 	        	BoardVO board = new BoardVO();

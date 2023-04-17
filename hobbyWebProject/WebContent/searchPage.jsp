@@ -145,10 +145,7 @@ height: 30px;
 		BoardDAO boardDAO = new BoardDAO();
 		//카테고리를 검색했을 때 테이블 상단에 선택한 카테고리를 출력
 		String search = request.getParameter("searchField2");
-		String boardCategory = ""; // Define boardCategory variable
-		if (search != null && !search.isEmpty()) {
-		    boardCategory = search; // Set boardCategory to search if search is not empty
-		}
+		
 		%>
 		<h2 style="font-weight: bold; color: #646464;"><%= search %> | 회원들과 자유롭게 이야기하세요</h2><br>
 		
@@ -167,7 +164,6 @@ height: 30px;
 				<tbody>
 					<% //customerPage의 객체 이름과 같아야한다.
 						ArrayList<BoardVO> list = boardDAO.getSearch(search);
-						for (int i = 0; i < list.size(); i++) {
 						if(search == ""){
 							PrintWriter script = response.getWriter();
 							script.println("<script>");
@@ -175,6 +171,7 @@ height: 30px;
 							script.println("history.back()");
 							script.println("</script>");
 						}
+						for (int i = 0; i < list.size(); i++) {
 						if (list.size() == 0) {
 							PrintWriter script = response.getWriter();
 							script.println("<script>");
@@ -183,7 +180,8 @@ height: 30px;
 							script.println("</script>");
 						}
 					%>
-					<tr>
+				
+					<tr class="board-row">
 						<td style="background-color: #ffffff"><%= list.get(i).getBoardCategory() %></td>
 						<td><a href="view.jsp?boardID=<%= list.get(i).getBoardID() %>"><%= list.get(i).getBoardTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></a></td>
 						<td><%= list.get(i).getUserID() %></td>
@@ -191,6 +189,7 @@ height: 30px;
 						<td><%=list.get(i).getViewCount()%></td>
 						<td><%=list.get(i).getHeartCount()%></td>
 					</tr>
+					
 					<%
 						}
 					%>
@@ -198,23 +197,10 @@ height: 30px;
 			</table>
 		</div>
 		<div>
-		    <nav>
-		        <ul class="paginate" id="paginate"></ul>
-		    </nav>
+		<button type="button" id="load" class="more-btn"><span>더 보기</span></button>		    
 		</div>
-		
-		<%
-			if(pageNumber != 1) {
-		%>
-			<button type="button" id="prev" class="btn-black" onclick="history.back()"><span>&lt;</span></button>
+
 			
-		<% 
-			} if(boardDAO.nextPage(pageNumber + 1,boardCategory) && (boardDAO.countBoardByCategory(boardCategory) >= 10) && boardCategory.equals(search)){ 
-		%>
-			<button type="button" id="next" class="btn-black" onclick="location.href='searchPage.jsp?pageNumber=<%=pageNumber + 1%>&searchField2=<%=search%>'"><span>&gt;</span></button>
-		<%				
-		} 
-		%>
 		
 		<% 
 			if( userID != null ){
@@ -226,5 +212,18 @@ height: 30px;
 		%>
 	</div>
 </section>
+<script>
+$(function(){
+	$('.board-row').hide();
+    $('.board-row').slice(0, 10).show(); // 초기갯수
+    $("#load").click(function(e){ // 클릭시 more
+        if($('.board-row:hidden').length == 0){ // 컨텐츠 남아있는지 확인
+            alert("게시물의 끝입니다."); // 컨텐츠 없을시 alert 창 띄우기 
+        }
+        e.preventDefault();
+        $('.board-row:hidden').slice(0, 5).show(); // 클릭시 more 갯수 지저정
+});
+});
+</script>
 </body>
 </html>

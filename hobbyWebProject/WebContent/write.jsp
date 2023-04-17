@@ -76,7 +76,7 @@ if(session.getAttribute("userID") != null){
 								<th colspan="2" style="background-color: #464646; text-align: center; color: #ffffff;">문의하기</th>
 							
 								<th>
-								<select class="form-control" name="boardCategory" onclick="categoryCount()">
+								<select class="form-control" name="boardCategory">
 									<option value="0">CATEGORY</option>
 									<option value="SPORTS" >SPORTS</option>
 									<option value="LEISURE" >LEISURE</option>
