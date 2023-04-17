@@ -2,8 +2,7 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="board.BoardDAO"%>
 <%@page import="board.BoardVO"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@page import="user.UserDAO"%>
 <%@page import="user.UserVO"%>
 <!DOCTYPE html>
@@ -14,8 +13,7 @@
 <title>TOGETHER</title>
 <link rel="stylesheet" href="css/board.css?after">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
-<link href="https://fonts.googleapis.com/css?family=Teko:300,400,500,600,700&display=swap" rel="stylesheet">
-<link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=IBM+Plex+Sans+KR:wght@300;600&family=Jua&family=Merriweather:wght@700&family=Nanum+Gothic&family=Nanum+Gothic+Coding&family=Noto+Sans+KR:wght@400&family=Noto+Serif+KR:wght@200&display=swap" rel="stylesheet">
 <script defer src="option/jquery/jquery.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script src="https://kit.fontawesome.com/f95555e5d8.js" crossorigin="anonymous"></script>
@@ -25,69 +23,109 @@
 </head>
 <style>
 section{
-padding-top: 100px;
-height: 700px;
+padding-top: 150px;
+padding-bottom: 150px;
+height: auto;
 display: flex;
+
 }
 .board-container{
 margin: 0 auto;
 }
+#search-title{
+	font-family: 'Noto Sans KR', sans-serif;
+	font-size: 20pt;
+	font-weight: 400;
+	color: #505050;
+    display: flex;
+    align-items: center;
+	position: relative;
+    animation: fadeInLeft 2s;
+}
+@keyframes fadeInLeft {
+    0% {
+        opacity: 0;
+        transform: translate3d(-100%, 0, 0);
+    }
+    to {
+        opacity: 1;
+        transform: translateZ(0);
+    }
+}
 table{
-width: 800px;
+width: 1000px;
+text-align: center;
+border-collapse: collapse;
 }
 thead{
 height: 30px;
+font-size: 13pt;
+}
+tbody{
+}
+th{
+color: #6e6e6e;
+text-align: center;
+height: 50px;
+}
+th > span{
+padding: 5px 20px;
+border-radius: 20px;
+background-color: #CCE5FF;
+}
+tr{
+border-bottom: solid 1px #E0E0E0;
 }
 .btn-black{
+	position: relative;
+	display: inline-block;
+	width: 120px;
+	height: 80px;
+	background-color: transparent;
+	border: none; 
+	cursor: pointer;
+	margin: 10px;
 	float: right;
 }
-.btn-black span{
-	padding: 5px;
-	margin: 0;
-	height: 35px;
-}
-.td{
-	border-right-style: solid;
-	border-right-width: 0.3mm;
-	border-bottom: none;
-	border-color: #;
-}
 
-.btn-black {
-  position: relative;
-  display: inline-block;
-  width: 100px; height: 50px;
-  background-color: transparent;
-  border: none; 
-  cursor: pointer;
-  margin: 0;
- 
-}
 .btn-black span {         
   position: relative;
   display: inline-block;
   font-size: 12pt;
   font-weight: bold;
-  font-family: 'Nanum Gothic Coding', monospace;
   letter-spacing: 2px;
+  border-radius: 20px;
   width: 100%;
   padding: 10px;
-  transition: 0.5s;
-  
+  transition: 0.5s; 
   color: #ffffff;
-  background-color: #000000;
-  border: 1px solid #000000;
+  background-color: #7D95E5;
+  border: 1px solid #7D95E5;
+  font-family: 'Nanum Gothic Coding', monospace;
 }
-
+.btn-black #search, #write{
+font-family: 'Nanum Gothic Coding', monospace;
+}
 .btn-black::before {
-  background-color: #000000;
+  background-color: #7D95E5;
 }
 
 .btn-black span:hover {
-  color: #000000;
+  color: #7D95E5;
   background-color: #ffffff
 }
-
+#row-btn-sec{
+	width:auto;
+	display: flex;
+	margin: 0;
+	padding: 0;
+}
+#more-btn{
+	margin: 0 auto;
+	font-size: 15pt;
+	font-weight: bold;
+	color: #7D95E5;
+}
 </style>
 <body>
 <%
@@ -144,21 +182,21 @@ height: 30px;
 		<% 
 		BoardDAO boardDAO = new BoardDAO();
 		//카테고리를 검색했을 때 테이블 상단에 선택한 카테고리를 출력
-		String search = request.getParameter("searchField2");
-		
+		String search = request.getParameter("searchField2");	
 		%>
-		<h2 style="font-weight: bold; color: #646464;"><%= search %> | 회원들과 자유롭게 이야기하세요</h2><br>
-		
+		<div id="search-title">
+		<h2><%= search %></h2>&nbsp;&nbsp;<h4>함께 할 사람들과 이야기 나눠보세요</h4>
+		</div><br>
 		<div class="row">
-			<table style="text-align: center; border: 3px solid #ffffff; ">
+			<table>
 				<thead>
 					<tr>
-						<th style="background-color: #464646; text-align: center; width: 10%;">카테고리</th>
-						<th style="background-color: #464646; text-align: center; width: 30%;">제목</th>
-						<th style="background-color: #464646; text-align: center; width: 10%;">작성자</th>
-						<th style="background-color: #464646; text-align: center; width: 30%;">작성일</th>
-						<th style="background-color: #464646; text-align: center; width: 10%;">조회수</th>
-						<th style="background-color: #464646; text-align: center; width: 10%;">좋아요</th>
+						<th style="width: 15%;"><span>카테고리</span></th>
+						<th style="width: 30%;"><span>제목</span></th>
+						<th style="width: 10%;"><span>작성자</span></th>
+						<th style="width: 25%;"><span>작성일</span></th>
+						<th style="width: 10%;"><span>조회수</span></th>
+						<th style="width: 10%;"><span>좋아요</span></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -182,7 +220,7 @@ height: 30px;
 					%>
 				
 					<tr class="board-row">
-						<td style="background-color: #ffffff"><%= list.get(i).getBoardCategory() %></td>
+						<td><%= list.get(i).getBoardCategory() %></td>
 						<td><a href="view.jsp?boardID=<%= list.get(i).getBoardID() %>"><%= list.get(i).getBoardTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></a></td>
 						<td><%= list.get(i).getUserID() %></td>
 						<td><%= list.get(i).getBoardDate().substring(0 ,11) + list.get(i).getBoardDate().substring(11, 13) + "시" + list.get(i).getBoardDate().substring(14, 16) + "분" %></td>
@@ -195,35 +233,56 @@ height: 30px;
 					%>
 				</tbody>
 			</table>
+		</div>	
+		<% 
+			if( list.size() > 10 ){ //검색된 리스트의 갯수가 10개 이상일때만 더보기 버튼 보이기
+		%>
+		<br><div id="row-btn-sec">
+			<div id="more-btn">
+				<a>
+				<span>MORE</span>	    
+				<i class="fa-solid fa-chevron-down"></i>
+				</a>
+			</div>
 		</div>
-		<div>
-		<button type="button" id="load" class="more-btn"><span>더 보기</span></button>		    
-		</div>
-
-			
+		<% 
+			}
+		%>
 		
 		<% 
 			if( userID != null ){
 		%>
-			<button type="button" class="btn-black" id="search" onclick="location.href='community.jsp'"><span>검색</span></button>
+			<button type="button" class="btn-black" id="search" onclick="location.href='community.jsp'"><span>돌아가기</span></button>
 			<button type="button" class="btn-black" id="write" onclick="location.href='write.jsp'"><span>글쓰기</span></button>
 		<% 
 			}
 		%>
 	</div>
 </section>
+<footer>
+<hr>
+<div class="inform">
+		<ul>
+     		<li>06223 서울특별시 강남구 역삼로1004길 (역삼동, 대박타워) ㈜TOGETHER 대표이사 : 정윤서 | 사업자 등록번호: 222-22-22222｜통신판매업신고: 강남 1004호</li>
+     		<li>｜개인정보 보호책임자 : 정윤서 | 문의 : Webmaster@TOGETHER.co.kr | Copyright ⓒ TOGETHER. All rights reserved.</li>
+     		<li>㈜투게더의 사전 서면동의 없이 사이트(PC, 모바일)의 일체의 정보, 콘텐츠 및 UI 등을 상업적 목적으로 전재, 전송, 스크래핑 등 무단 사용할 수 없습니다.</liz>
+   		</ul>
+</div>
+</footer>
 <script>
-$(function(){
+$(document).ready(function(){
 	$('.board-row').hide();
     $('.board-row').slice(0, 10).show(); // 초기갯수
-    $("#load").click(function(e){ // 클릭시 more
+    $("#more-btn").click(function(e){ // 클릭시 more
         if($('.board-row:hidden').length == 0){ // 컨텐츠 남아있는지 확인
-            alert("게시물의 끝입니다."); // 컨텐츠 없을시 alert 창 띄우기 
+            alert("마지막 글입니다."); // 컨텐츠 없을시 alert 창 띄우기 
         }
         e.preventDefault();
-        $('.board-row:hidden').slice(0, 5).show(); // 클릭시 more 갯수 지저정
+        $('.board-row:hidden').slice(0, 5).show('slow'); // 클릭시 more 갯수 지저정
+	});
+    
 });
-});
+
 </script>
 </body>
 </html>
