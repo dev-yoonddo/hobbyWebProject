@@ -320,8 +320,7 @@ CommentVO comment = new CommentDAO().getCommentVO(cmtID);
 				}
 			%>
 			</div>
-			
-			
+				
 			<div class="cmt-view" style="height: auto;">
 	         	<div class="row" style="width: 600px; height: auto;">
 	                 <%
