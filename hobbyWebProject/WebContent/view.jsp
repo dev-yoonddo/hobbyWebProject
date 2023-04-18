@@ -21,81 +21,149 @@
 <link rel="stylesheet" href="css/board.css?after">
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
-<link href="https://fonts.googleapis.com/css?family=Teko:300,400,500,600,700&display=swap" rel="stylesheet">
 <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=IBM+Plex+Sans+KR:wght@300;600&family=Jua&family=Merriweather:wght@700&family=Nanum+Gothic&family=Nanum+Gothic+Coding&family=Noto+Sans+KR:wght@400&family=Noto+Serif+KR:wght@200&display=swap" rel="stylesheet">
 <script defer src="option/jquery/jquery.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script src="https://kit.fontawesome.com/f95555e5d8.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 <script type="text/javascript" src="js/script.js"></script>
-<script type="text/javascript" src="js/checkPW.js"></script>
+
 </head>
 <Style>
 section{
-	height: auto;
+	height: 1000px;
 	display: flex;
 	margin: 0;
 	padding: 0;
 	padding-top: 100px;
 	margin-bottom: 150px;
-	font-family: 'Nanum Gothic Coding', monospace;
+	font-family: 'Nanum Gothic', monospace;
+	font-weight: 500;
 }
 .board-container{
 	width: 1000px;
-	margin: 0 auto;	
+	margin: 0 auto;
 }
+.inquiry{
+padding-bottom: 100px;
+}
+table{
+width: 1000px;
+height: 500px;
+border-collapse: collapse;
+border: 1px solid #C0C0C0;
+font-size: 12pt;
+}
+
 thead{
-	color: #ffffff;
+
+}
+.td{
+text-align: center;
+}
+.td span{
+	
+padding: 10px 20px;
+border-radius: 20px;
+background-color: #CCE5FF;
+}
+#view-title{
+font-weight: bold;
+font-size: 25pt;
+color: #646464;
+font-family: 'Noto Sans KR', sans-serif;
+animation: fadeInLeft 2s;
+}
+
+@keyframes fadeInLeft {
+    0% {
+        opacity: 0;
+        transform: translate3d(-100%, 0, 0);
+    }
+    to {
+        opacity: 1;
+        transform: translateZ(0);
+    }
+
+}
+
+#tb-top{
+	display: flex;
+}
+#tb-top-1{
+	width: 50%;
+	height: 40px;
+	padding: 0;
+	margin: 0;
+	display: flex;
+	float: left;
+}
+#tb-top-2{
+	width: 50%;
+	height: 40px;
+	padding-bottom: 20px;
+	margin: 0;
+	float: right;
+}
+#user-item{
+	margin: 0;
+	padding: 10px;
+	justify-content: center;	
+}
+#count-item{
+	height: auto;
+	margin: 0;
+	border-radius: 20px;
+	background-color: #E0E0E0;
+	padding: 8px 50px;
+	float: right;
+}
+#count-item span{
+	color: #282557;
+	font-size:17pt;
+	width: 50px;
+	height: 30px;
+	margin-right: 10px; 
 }
 
 .btn-black{
+	position: relative;
+	display: inline-block;
+	width: 90px;
+	height: 70px;
+	background-color: transparent;
+	border: none; 
+	cursor: pointer;
+	margin: 10px;
 	float: right;
 }
-.btn-black span{
-	padding: 5px;
-	margin: 0;
-	height: 35px;
-}
-.td{
-	border-right-style: solid;
-	border-right-width: 0.3mm;
-	border-bottom: none;
-	border-color: #aaaaaa;
-}
 
-.btn-black {
-  position: relative;
-  display: inline-block;
-  width: 100px; height: 50px;
-  background-color: transparent;
-  border: none; 
-  cursor: pointer;
-  margin: 0;
- 
-}
 .btn-black span {         
   position: relative;
   display: inline-block;
   font-size: 12pt;
   font-weight: bold;
-  font-family: 'Nanum Gothic Coding', monospace;
   letter-spacing: 2px;
+  border-radius: 20px;
   width: 100%;
   padding: 10px;
-  transition: 0.5s;
-  
+  transition: 0.5s; 
   color: #ffffff;
-  background-color: #000000;
-  border: 1px solid #000000;
+  background-color: #7D95E5;
+  border: 1px solid #7D95E5;
+  font-family: 'Nanum Gothic Coding', monospace;
 }
-
+.btn-black #search, #write{
+font-family: 'Nanum Gothic Coding', monospace;
+}
 .btn-black::before {
-  background-color: #000000;
+  background-color: #7D95E5;
 }
 
 .btn-black span:hover {
-  color: #000000;
-  background-color: #ffffff;
+  color: #7D95E5;
+  background-color: #ffffff
 }
 </style>
 <body>
@@ -168,67 +236,75 @@ CommentVO comment = new CommentDAO().getCommentVO(cmtID);
 	<div class="board-container">
 		<div class="inquiry">
 			<div class="row"><br>
-				<h4 style="font-weight: bold; color: #646464;">문의 글</h4><br><br>
-				<table class="table table-striped" style="text-align: center; border: 1px solid #dddddd;">
-					<thead>
-						<tr>
-							<th colspan="3" style="background-color: #464646; text-align: center;">문의한 글 보기</th>
-						</tr>
-					</thead>
+				<a id="view-title"><%= board.getBoardCategory() %></a><br><br>
+				
+				<div id="tb-top">
+				<div id="tb-top-1">
+					<div id="user-item">
+					<span>작성자 <%= board.getUserID() %></span>
+					<span>&nbsp;&nbsp;|&nbsp;&nbsp; <%= board.getBoardDate().substring(0 ,11) + board.getBoardDate().substring(11, 13) + "시" + board.getBoardDate().substring(14, 16) + "분" %></span>
+					</div>
+				</div>
+				
+				<div id="tb-top-2">
+					<div id="count-item">
+					<span><i id="heart1" class="fa-regular fa-heart"></i><i id="heart2" class="fa-solid fa-heart"></i>&nbsp;<%= board.getHeartCount() %></span>&nbsp;&nbsp;
+					<span><i class="fa-solid fa-eye"></i>&nbsp;<%= board.getViewCount()+1 %></span>
+					</div>
+				</div>
+				</div>
+				
+				<table id="view-table">
 					<tbody>
-						<tr>
-							<td class="td" style="width:20%;">글 제목</td>
-							<td colspan="2"><%= board.getBoardTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>") %></td>
+						<tr height="25%" style="border-bottom: 1px solid #C0C0C0;">
+							<td class="td" style="width:20%;"><span>제목</span></td>
+							<td><%= board.getBoardTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>") %></td>
 						</tr>
-						<tr>
-							<td class="td">작성자</td>
-							<td colspan="2"><%= board.getUserID() %></td>
-						</tr>
-						<tr>
-							<td class="td">작성일자</td>
-							<td colspan="2"><%= board.getBoardDate().substring(0 ,11) + board.getBoardDate().substring(11, 13) + "시" + board.getBoardDate().substring(14, 16) + "분" %></td>
-						</tr>
-						<tr>
-							<td class="td">내용</td>
+						<tr height="75%" valign="top">
+							<td class="td" style="padding-top: 50px;"><span>내용</span></td>
 							<!-- 특수문자 처리 -->
-							<td colspan="2" style="min-height: 200px; text-align: left;"><%= board.getBoardContent().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>") %></td>
+							<td style="padding-top: 50px;"><%= board.getBoardContent().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>") %></td>
 						</tr>
-						<tr>
-							<td class="td">조회수</td>
+						<!-- <tr>
+							<td class="td"><span>조회수</span></td>
 							<td colspan="2"><%= board.getViewCount()+1 %></td>
 						</tr>
 						<tr>
-							<td class="td">하트</td>
+							<td class="td"><span>하트</span></td>
 							<td colspan="2"><%= board.getHeartCount() %></td>
-						</tr>
+						</tr> -->
 					</tbody>
 				</table>
-			</div>
+				
+			</div><br>
 			
-			<button type="button" class="btn-black" onclick="location.href='customerPage.jsp'"><span>목록</span></button>
+			<button type="button" class="btn-black" onclick="history.back()"><span>목록</span></button>
 			<% 
 				if(userID != null){
-					if(userID.equals("admin")){
 			%>
-			
-						<button type="button" class="btn-black" id="cmt-write-btn" onclick="cmtAction()"><span>답변쓰기</span></button>
-					
+				<button type="button" class="btn-black" id="cmt-write-btn" onclick="cmtAction()"><span>댓글쓰기</span></button>
 			<%
-					}else if(userID.equals(board.getUserID())){
+				if(userID != null && userID.equals("admin")){
 			%>
-						<button type="button" class="btn-black" onclick="location.href='update.jsp?boardID=<%= boardID%>'"><span>수정</span></button>
-						<button type="button" class="btn-black" id="btn-del" onclick="if(confirm('정말로 삭제하시겠습니까?')){location.href='deleteAction.jsp?boardID=<%= boardID%>'}"><span>삭제</span></button>
-						<button type="button" class="btn-black" id="cmt-write-btn" onclick="cmtAction()"><span>답변쓰기</span></button>
+				<button type="button" class="btn-black" id="cmt-write-btn" onclick="cmtAction()"><span>댓글쓰기</span></button>
+			<%
+				}
+				}
+			%>
+			<%
+				if(userID.equals(board.getUserID())){
+			%>
+				<button type="button" class="btn-black" onclick="location.href='update.jsp?boardID=<%= boardID%>'"><span>수정</span></button>
+				<button type="button" class="btn-black" id="btn-del" onclick="if(confirm('정말로 삭제하시겠습니까?')){location.href='deleteAction.jsp?boardID=<%= boardID%>'}"><span>삭제</span></button>
 			<% 
-					}
 				}
 			%>
 			</div>
 			
-			 
+			<br><br>
 			<div class="cmt-view">
 	         	<div class="row">
-	         		<h5 style="font-size: 15pt; color: #646464; float: left;">답변<br></h5><hr style="width: 1000px;">
+	         		<h5 style="font-size: 15pt; color: #646464; float: left;">댓글<br></h5><hr style="width: 1000px;">
 	                <%
 	                   CommentDAO cmtDAO = new CommentDAO();
 	                   ArrayList<CommentVO> list = cmtDAO.getList(boardID);
@@ -263,13 +339,10 @@ CommentVO comment = new CommentDAO().getCommentVO(cmtID);
 			<div id="cmt-write" style="display: none;">
 		      <div class="row">
 		          <form method="post" action="commentAction.jsp?boardID=<%= boardID %>">
-			          <table class="table table-bordered" style="text-align: center; border: 1px solid #dddddd">
+			          <table class="cmt-table" style="height: 100px; border-style: none;">
 			             <tbody>
 			                <tr>
-			                   <td align="left"><%=userID %></td>
-			                </tr>
-			                <tr>
-			                   <td><input type="text" class="form-control" placeholder="답변 쓰기" name="cmtContent" maxlength="300"></td>
+			                   <td><input type="text" placeholder="댓글을 입력하세요" name="cmtContent" maxlength="300" style="width:1000px; height: 100px; font-size: 12pt;"></td>
 			                </tr>
 			             </tbody>
 			          </table>
@@ -282,14 +355,38 @@ CommentVO comment = new CommentDAO().getCommentVO(cmtID);
 <!-- section -->
 
 <!-- footer -->
-<footer><hr>
-
-   	
+<footer>
+<hr>
+<div class="inform">
+	<ul>
+		<li>06223 서울특별시 강남구 역삼로1004길 (역삼동, 대박타워) ㈜TOGETHER 대표이사 : 정윤서 | 사업자 등록번호: 222-22-22222｜통신판매업신고: 강남 1004호</li>
+		<li>｜개인정보 보호책임자 : 정윤서 | 문의 : Webmaster@TOGETHER.co.kr | Copyright ⓒ TOGETHER. All rights reserved.</li>
+		<li>㈜투게더의 사전 서면동의 없이 사이트(PC, 모바일)의 일체의 정보, 콘텐츠 및 UI 등을 상업적 목적으로 전재, 전송, 스크래핑 등 무단 사용할 수 없습니다.</liz>
+	</ul>
+</div>
 </footer>
 <!-- footer -->
-<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
+<script>
+$(document).ready(function(){
+	$("#heart2").hide();
 	
+    $("#heart1").click(function(){ // 클릭시 more
+    	$("#heart1").hide();
+    	$("#heart2").show();
+    	if($("#heart2").click(function(){
+    		$("#heart2").hide();
+    		$("#heart1").show();
+    	}));
+	});
+    
+});
+function cmtAction(){
+	document.getElementById('cmt-write').style.display = 'block';
+	document.getElementById('cmt-write-btn').style.display = 'none';
+
+}
+</script>
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>	
 </body>
 </html>

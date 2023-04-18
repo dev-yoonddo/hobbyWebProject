@@ -14,6 +14,7 @@
 <link rel="stylesheet" href="css/board.css?after">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
 <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=IBM+Plex+Sans+KR:wght@300;600&family=Jua&family=Merriweather:wght@700&family=Nanum+Gothic&family=Nanum+Gothic+Coding&family=Noto+Sans+KR:wght@400&family=Noto+Serif+KR:wght@200&display=swap" rel="stylesheet">
+<link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square.css" rel="stylesheet">
 <script defer src="option/jquery/jquery.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script src="https://kit.fontawesome.com/f95555e5d8.js" crossorigin="anonymous"></script>
@@ -68,10 +69,11 @@ color: #6e6e6e;
 text-align: center;
 height: 50px;
 }
-th > span{
+th span{
 padding: 5px 20px;
 border-radius: 20px;
 background-color: #CCE5FF;
+font-size: 14pt;
 }
 tr{
 border-bottom: solid 1px #E0E0E0;
@@ -79,8 +81,8 @@ border-bottom: solid 1px #E0E0E0;
 .btn-black{
 	position: relative;
 	display: inline-block;
-	width: 120px;
-	height: 80px;
+	width: 90px;
+	height: 70px;
 	background-color: transparent;
 	border: none; 
 	cursor: pointer;
@@ -125,6 +127,15 @@ font-family: 'Nanum Gothic Coding', monospace;
 	font-size: 15pt;
 	font-weight: bold;
 	color: #7D95E5;
+	cursor: pointer;
+}
+#more-btn:hover{
+	color: #E0E0E0;
+}
+#click-view:hover{
+	font-weight: 400;
+	text-decoration: underline;
+	color: #606060;
 }
 </style>
 <body>
@@ -221,7 +232,7 @@ font-family: 'Nanum Gothic Coding', monospace;
 				
 					<tr class="board-row">
 						<td><%= list.get(i).getBoardCategory() %></td>
-						<td><a href="view.jsp?boardID=<%= list.get(i).getBoardID() %>"><%= list.get(i).getBoardTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></a></td>
+						<td><a id="click-view" href="view.jsp?boardID=<%= list.get(i).getBoardID() %>"><%= list.get(i).getBoardTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></a></td>
 						<td><%= list.get(i).getUserID() %></td>
 						<td><%= list.get(i).getBoardDate().substring(0 ,11) + list.get(i).getBoardDate().substring(11, 13) + "시" + list.get(i).getBoardDate().substring(14, 16) + "분" %></td>
 						<td><%=list.get(i).getViewCount()%></td>
