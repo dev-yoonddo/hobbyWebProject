@@ -32,7 +32,7 @@
 </head>
 <Style>
 section{
-	height: 1000px;
+	height: auto;
 	display: flex;
 	margin: 0;
 	padding: 0;
@@ -48,7 +48,7 @@ section{
 .inquiry{
 padding-bottom: 100px;
 }
-table{
+#view-table{
 width: 1000px;
 height: 500px;
 border-collapse: collapse;
@@ -61,6 +61,7 @@ thead{
 }
 .td{
 text-align: center;
+font-size: 13pt;
 }
 .td span{
 	
@@ -127,7 +128,7 @@ animation: fadeInLeft 2s;
 	margin-right: 10px; 
 }
 
-.btn-black{
+.btn-blue{
 	position: relative;
 	display: inline-block;
 	width: 90px;
@@ -139,7 +140,7 @@ animation: fadeInLeft 2s;
 	float: right;
 }
 
-.btn-black span {         
+.btn-blue span {         
   position: relative;
   display: inline-block;
   font-size: 12pt;
@@ -154,15 +155,34 @@ animation: fadeInLeft 2s;
   border: 1px solid #7D95E5;
   font-family: 'Nanum Gothic Coding', monospace;
 }
-.btn-black #search, #write{
-font-family: 'Nanum Gothic Coding', monospace;
-}
-.btn-black::before {
+
+.btn-blue::before {
   background-color: #7D95E5;
 }
 
-.btn-black span:hover {
+.btn-blue span:hover {
   color: #7D95E5;
+  background-color: #ffffff
+}
+#cmt-btn{
+	width: 40px;
+	height: 20px;
+	padding: 0;
+	margin: 0px 15px;
+}
+#cmt-btn span{
+	font-size: 10pt;
+	padding: 6px;
+	color: #ffffff;
+	  background-color: #323232;
+	  border: 1px solid #323232;
+}
+#cmt-btn::before {
+  background-color: #323232;
+}
+
+#cmt-btn span:hover {
+  color: #323232;
   background-color: #ffffff
 }
 </style>
@@ -278,78 +298,84 @@ CommentVO comment = new CommentDAO().getCommentVO(cmtID);
 				
 			</div><br>
 			
-			<button type="button" class="btn-black" onclick="history.back()"><span>목록</span></button>
+			<button type="button" class="btn-blue" onclick="history.back()"><span>목록</span></button>
 			<% 
 				if(userID != null){
 			%>
-				<button type="button" class="btn-black" id="cmt-write-btn" onclick="cmtAction()"><span>댓글쓰기</span></button>
+				<button type="button" class="btn-blue" id="cmt-write-btn" onclick="cmtAction()"><span>댓글쓰기</span></button>
 			<%
 				if(userID != null && userID.equals("admin")){
 			%>
-				<button type="button" class="btn-black" id="cmt-write-btn" onclick="cmtAction()"><span>댓글쓰기</span></button>
+				<button type="button" class="btn-blue" id="cmt-write-btn" onclick="cmtAction()"><span>댓글쓰기</span></button>
 			<%
 				}
 				}
 			%>
 			<%
-				if(userID.equals(board.getUserID())){
+				if(userID == (board.getUserID())){
 			%>
-				<button type="button" class="btn-black" onclick="location.href='update.jsp?boardID=<%= boardID%>'"><span>수정</span></button>
-				<button type="button" class="btn-black" id="btn-del" onclick="if(confirm('정말로 삭제하시겠습니까?')){location.href='deleteAction.jsp?boardID=<%= boardID%>'}"><span>삭제</span></button>
+				<button type="button" class="btn-blue" onclick="location.href='update.jsp?boardID=<%= boardID%>'"><span>수정</span></button>
+				<button type="button" class="btn-blue" id="btn-del" onclick="if(confirm('정말로 삭제하시겠습니까?')){location.href='deleteAction.jsp?boardID=<%= boardID%>'}"><span>삭제</span></button>
 			<% 
 				}
 			%>
 			</div>
 			
-			<br><br>
-			<div class="cmt-view">
-	         	<div class="row">
-	         		<h5 style="font-size: 15pt; color: #646464; float: left;">댓글<br></h5><hr style="width: 1000px;">
-	                <%
+			
+			<div class="cmt-view" style="height: auto;">
+	         	<div class="row" style="width: 600px; height: auto;">
+	                 <%
 	                   CommentDAO cmtDAO = new CommentDAO();
 	                   ArrayList<CommentVO> list = cmtDAO.getList(boardID);
+                  	 %>
+	         		<h5 style="font-size: 15pt; color: #646464; float: left;">댓글 (<%= list.size() %>)<br></h5><hr style="width: 1000px;"><br>
+                    <%
 	                   for(int i=0; i<list.size(); i++){
 	                %>
-	               	<table class="table table-striped" style="table-layout: fixed;">
-	               		<tr style="">
-	               			<td align="left"><%= list.get(i).getUserID() %></td>
-	               			<td align="right"><%= list.get(i).getCmtDate().substring(0,11)+list.get(i).getCmtDate().substring(11,13)+"시"+list.get(i).getCmtDate().substring(14,16)+"분" %></td>
-	               		</tr>
-	               	</table>
-	               	<table style="margin-bottom: 20px;">
-	               		<tr>
-	               			<td><%= list.get(i).getCmtContent() %></td>
-	               		</tr>
-		           	</table>
+	                <div class="cmt-list" style="width: 600px; height: 110px;">
+	                	<div style="display: flex;">
+		               	<div class="cmt-icon" style="justify-content: center; padding: 10px;">
+		               	<i style="font-size: 30pt;"class="fa-regular fa-face-smile"></i>
+		               	</div>
+		               	<table class="cmt-table" style="width: 600px;">
+		               		<tr style="height: 30px; table-layout:fixed; ">
+		               			<td align="left" style="width:30%;"><%= list.get(i).getUserID() %></td>
+		               			<td align="right" style="width:70%;"><%= list.get(i).getCmtDate().substring(0,11)+list.get(i).getCmtDate().substring(11,13)+"시"+list.get(i).getCmtDate().substring(14,16)+"분" %></td>
+		               		</tr>
+		               		<tr style="height: auto; font-weight: 550;">
+		               			<td colspan="2"><%= list.get(i).getCmtContent() %></td>
+		               		</tr>		               		
+			           	</table>
+			           	</div>
             			<%
-            				if(userID != null && userID.equals(list.get(i).getUserID())){
+            				if(userID != null && userID.equals(list.get(i).getUserID()) || userID == ("admin")){
             			%>
-         				<div style="float: right;">
-            			<button type="button" class="btn-black" id="cmt-btn" onclick="if(confirm('답글을 삭제하시겠습니까?')){location.href='commentDeleteAction.jsp?boardID=<%= boardID%>&cmtID=<%=list.get(i).getCmtID() %>'}"><span>삭제</span></button>
-            			</div>
+            			<button type="button" class="btn-blue" id="cmt-btn" onclick="if(confirm('답글을 삭제하시겠습니까?')){location.href='commentDeleteAction.jsp?boardID=<%= boardID%>&cmtID=<%=list.get(i).getCmtID() %>'}"><span>삭제</span></button>
             			<%
             				}
             			%>
+		           		</div>
 	                  <%
 	                     }
 	                  %>
 	         	</div>  
 	      	</div>
-			<!-- 답변쓰기 버튼을 눌렀을 때만 답변쓰기 섹션이 나타나도록 설정 -->
-			<div id="cmt-write" style="display: none;">
-		      <div class="row">
+	      	<!-- 답변쓰기 버튼을 눌렀을 때만 답변쓰기 섹션이 나타나도록 설정 -->
+			<div id="cmt-write" style="display: none; padding-top: 70px; width: 600px;"> 
+		      <div class="cmt-row">
 		          <form method="post" action="commentAction.jsp?boardID=<%= boardID %>">
 			          <table class="cmt-table" style="height: 100px; border-style: none;">
 			             <tbody>
 			                <tr>
-			                   <td><input type="text" placeholder="댓글을 입력하세요" name="cmtContent" maxlength="300" style="width:1000px; height: 100px; font-size: 12pt;"></td>
+			                   <td><input type="text" placeholder="댓글을 입력하세요" name="cmtContent" maxlength="60" style="width: 600px; height: 150px; font-size: 12pt;"></td>
 			                </tr>
 			             </tbody>
 			          </table>
-			      <button type="submit" class="btn-black" id="cmt-btn"><span>완료</span></button>
+			      <button type="submit" class="btn-blue" id="cmt-cpl"><span>완료</span></button>
 			      </form>
 		      </div>
 		   </div>
+			
    </div>
 </section>
 <!-- section -->
