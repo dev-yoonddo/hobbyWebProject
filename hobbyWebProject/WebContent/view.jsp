@@ -374,8 +374,7 @@ CommentVO comment = new CommentDAO().getCommentVO(cmtID);
 			      <button type="submit" class="btn-blue" id="cmt-cpl"><span>완료</span></button>
 			      </form>
 		      </div>
-		   </div>
-			
+		   </div>	
    </div>
 </section>
 <!-- section -->
