@@ -8,9 +8,9 @@ import java.sql.SQLException;
 import java.util.List;
 
 import board.BoardDAO;
-import board.BoardVO;
+import board.BoardDTO;
 import comment.CommentDAO;
-import comment.CommentVO;
+import comment.CommentDTO;
 
 public class UserDAO {
 
@@ -64,7 +64,7 @@ public class UserDAO {
 	}
 	
 //	회원 가입
-	public int join(UserVO user) {
+	public int join(UserDTO user) {
 		try {
 			String SQL ="INSERT INTO user VALUES (?, ?, ?, ?, ?, ?)";
 			PreparedStatement pstmt=conn.prepareStatement(SQL);
@@ -82,14 +82,14 @@ public class UserDAO {
 		return -1;
 	}
 //	회원 정보 보기	
-	public UserVO getUserVO(String userID) {
+	public UserDTO getUserVO(String userID) {
 		String SQL="SELECT * FROM user WHERE userID = ?";
 		try {
 			PreparedStatement pstmt=conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);//물음표
 			rs=pstmt.executeQuery();//select
 			if(rs.next()) {//결과가 있다면
-				UserVO user = new UserVO();
+				UserDTO user = new UserDTO();
 				user.setUserID(rs.getString(1));//첫 번째 결과 값
 				user.setUserName(rs.getString(2));
 				user.setUserBirth(rs.getString(3));
@@ -148,17 +148,17 @@ public class UserDAO {
 			pstmt.close();
 	        if (result > 0) {
 	            BoardDAO boardDAO = new BoardDAO(); 
-	            List<BoardVO> boardVOList = boardDAO.getDelBoardVOByUserID(userID);
-	            for (BoardVO boardVO : boardVOList) {
-	                boardVO.setBoardAvailable(0);
-	                boardDAO.updateBoardVO(boardVO);
+	            List<BoardDTO> boardVOList = boardDAO.getDelBoardVOByUserID(userID);
+	            for (BoardDTO boardDTO : boardVOList) {
+	                boardDTO.setBoardAvailable(0);
+	                boardDAO.updateBoardVO(boardDTO);
 	            }
 
 	            CommentDAO commentDAO = new CommentDAO();
-	            List<CommentVO> commentVOList = commentDAO.getDelCommentVOByUserID(userID);
-	            for (CommentVO commentVO : commentVOList) {
-	                commentVO.setCmtAvailable(0);
-	                commentDAO.updateCommentVO(commentVO);
+	            List<CommentDTO> commentVOList = commentDAO.getDelCommentVOByUserID(userID);
+	            for (CommentDTO commentDTO : commentVOList) {
+	                commentDTO.setCmtAvailable(0);
+	                commentDAO.updateCommentVO(commentDTO);
 	            }
 	        }
 	        return result;

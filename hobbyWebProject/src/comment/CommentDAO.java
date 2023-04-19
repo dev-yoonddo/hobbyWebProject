@@ -83,15 +83,15 @@ public class CommentDAO {
 		}
 		return ""; //오류
 	}
-	public ArrayList<CommentVO> getList(int boardID){
+	public ArrayList<CommentDTO> getList(int boardID){
 		String SQL = "SELECT * FROM comment WHERE boardID= ? AND cmtAvailable = 1 ORDER BY boardID DESC LIMIT 10"; 
-		ArrayList<CommentVO> list = new ArrayList<CommentVO>();
+		ArrayList<CommentDTO> list = new ArrayList<CommentDTO>();
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, boardID);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
-				CommentVO cmt = new CommentVO();
+				CommentDTO cmt = new CommentDTO();
 				cmt.setCmtContent(rs.getString(1));
 				cmt.setCmtID(rs.getInt(2));
 				cmt.setUserID(rs.getString(3));
@@ -119,14 +119,14 @@ public class CommentDAO {
 		}
 		return -1; // 데이터베이스 오류
 	}*/
-	public CommentVO getCommentVO(int cmtID) {
+	public CommentDTO getCommentVO(int cmtID) {
 		String SQL = "SELECT * FROM comment WHERE cmtID = ?";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1,  cmtID);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
-				CommentVO cmt = new CommentVO();
+				CommentDTO cmt = new CommentDTO();
 				cmt.setCmtContent(rs.getString(1));
 				cmt.setCmtID(rs.getInt(2));
 				cmt.setUserID(rs.getString(3));
@@ -154,8 +154,8 @@ public class CommentDAO {
 	
 	//UserDAO의 delete 메서드가 실행되면 사용되는 메서드
 	//delete된 userID의 comment데이터 리스트를 가져온다.
-	public List<CommentVO> getDelCommentVOByUserID(String userID) {
-	    List<CommentVO> commentVOs = new ArrayList<>();
+	public List<CommentDTO> getDelCommentVOByUserID(String userID) {
+	    List<CommentDTO> commentDTOs = new ArrayList<>();
 	    String SQL = "SELECT cmtID, cmtAvailable FROM comment WHERE userID = ?";
 
 	    try {
@@ -167,12 +167,12 @@ public class CommentDAO {
 	        	int cmtID = rs.getInt("cmtID");
 	        	int cmtAvailable = rs.getInt("cmtAvailable");
 	        	
-	            CommentVO commentVO = new CommentVO();
-	            commentVO.setCmtID(cmtID);
-	            commentVO.setCmtAvailable(cmtAvailable);
+	            CommentDTO commentDTO = new CommentDTO();
+	            commentDTO.setCmtID(cmtID);
+	            commentDTO.setCmtAvailable(cmtAvailable);
 
 	            // Add CommentVO object to the list
-	            commentVOs.add(commentVO);
+	            commentDTOs.add(commentDTO);
 	        }
 
 	        rs.close();
@@ -180,16 +180,16 @@ public class CommentDAO {
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	    }
-	    return commentVOs;
+	    return commentDTOs;
 	}
 	
-	public void updateCommentVO(CommentVO commentVO) {
+	public void updateCommentVO(CommentDTO commentDTO) {
 	    String SQL = "UPDATE comment SET cmtAvailable = ? WHERE cmtID = ?";
 
 	    try {
 	        PreparedStatement pstmt = conn.prepareStatement(SQL);
-	        pstmt.setInt(1, commentVO.getCmtAvailable());
-	        pstmt.setInt(2, commentVO.getCmtID());
+	        pstmt.setInt(1, commentDTO.getCmtAvailable());
+	        pstmt.setInt(2, commentDTO.getCmtID());
 	        pstmt.executeUpdate();
 	        pstmt.close();
 	    } catch (SQLException e) {

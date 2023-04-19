@@ -1,8 +1,8 @@
 package board;
 
-import user.UserVO;
+import user.UserDTO;
 
-public class BoardVO {
+public class BoardDTO {
 	private int boardID;
 	private String boardTitle;
 	private String userID;

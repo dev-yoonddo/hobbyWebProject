@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.io.PrintWriter" %>
-<%@ page import="board.BoardVO" %>
+<%@ page import="board.BoardDTO" %>
 <%@ page import="board.BoardDAO" %>
 
 <!DOCTYPE html>
@@ -11,16 +11,41 @@
 <meta charset="UTF-8">
 <title>TOGETHER</title>
 <link rel="stylesheet" href="css/board.css?after">
-<link rel="stylesheet" href="css/member.css?after">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
-<link href="https://fonts.googleapis.com/css?family=Teko:300,400,500,600,700&display=swap" rel="stylesheet">
 <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=IBM+Plex+Sans+KR:wght@300;600&family=Jua&family=Merriweather:wght@700&family=Nanum+Gothic&family=Nanum+Gothic+Coding&family=Noto+Sans+KR:wght@400&family=Noto+Serif+KR:wght@200&display=swap" rel="stylesheet">
 <script defer src="option/jquery/jquery.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script src="https://kit.fontawesome.com/f95555e5d8.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 <script type="text/javascript" src="js/script.js"></script>
 </head>
+<style>
+section{
+	height: auto;
+	display: flex;
+	margin: 0;
+	padding: 0;
+	padding-top: 100px;
+	margin-bottom: 150px;
+	font-family: 'Nanum Gothic', monospace;
+	font-weight: 500;
+}
+.board-container{
+	width: 1000px;
+	margin: 0 auto;
+}
+.inquiry{
+padding-bottom: 100px;
+}
+#view-table{
+width: 1000px;
+height: 500px;
+border-collapse: collapse;
+border: 1px solid #C0C0C0;
+font-size: 12pt;
+}
+</style>
 <body>
 		
 <% 
@@ -66,14 +91,15 @@ if(session.getAttribute("userID") != null){
 	<!-- header end-->
 	
 	<section>
+	
 		<div class="board-container">
 		<h4 style="font-weight: bold; color: #646464;">글 쓰기</h4><br>
 			<div class="row">
 				<form method="post" action="writeAction.jsp">
-					<table class="table table-striped" style="text-align: center; border: 1px solid #dddddd">
+					<table class="write-table" style="text-align: center; border: 1px solid #dddddd">
 						<thead>
-							<tr>
-								<th colspan="2" style="background-color: #464646; text-align: center; color: #ffffff;">문의하기</th>
+							<tr translate="yes">
+								<th style="background-color: #464646; text-align: center; color: #ffffff;">문의하기</th>
 							
 								<th>
 								<select class="form-control" name="boardCategory">

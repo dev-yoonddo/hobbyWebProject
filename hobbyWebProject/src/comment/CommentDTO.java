@@ -1,8 +1,8 @@
 package comment;
 
-import user.UserVO;
+import user.UserDTO;
 
-public class CommentVO {
+public class CommentDTO {
 	private String cmtContent;
 	private int cmtID;
 	private String userID;

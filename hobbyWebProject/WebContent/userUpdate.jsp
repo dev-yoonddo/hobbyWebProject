@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ page import="java.io.PrintWriter" %>
 <%@ page import="user.UserDAO" %>
-<%@ page import="user.UserVO" %>
+<%@ page import="user.UserDTO" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,7 +28,7 @@
 	if(session.getAttribute("userID")!=null){
 		userID=(String)session.getAttribute("userID");
 	}
-	UserVO user=new UserDAO().getUserVO(userID);
+	UserDTO user=new UserDAO().getUserVO(userID);
 %>
 <header>
 <div id="header" class="de-active">

@@ -1,11 +1,11 @@
 <%@page import="comment.CommentDAO"%>
-<%@page import="comment.CommentVO"%>
+<%@page import="comment.CommentDTO"%>
 <%@page import="user.UserDAO"%>
-<%@page import="user.UserVO"%>
+<%@page import="user.UserDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.io.PrintWriter" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="board.BoardVO" %>
+<%@ page import="board.BoardDTO" %>
 <%@ page import="board.BoardDAO" %>
 <%@ page import="java.io.File" %>
 <%@ page import="java.util.Enumeration" %>
@@ -19,7 +19,6 @@
 <meta charset="UTF-8">
 <title>TOGETHER</title>
 <link rel="stylesheet" href="css/board.css?after">
-
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
 <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=IBM+Plex+Sans+KR:wght@300;600&family=Jua&family=Merriweather:wght@700&family=Nanum+Gothic&family=Nanum+Gothic+Coding&family=Noto+Sans+KR:wght@400&family=Noto+Serif+KR:wght@200&display=swap" rel="stylesheet">
@@ -28,7 +27,6 @@
 <script src="https://kit.fontawesome.com/f95555e5d8.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 <script type="text/javascript" src="js/script.js"></script>
-
 </head>
 <Style>
 section{
@@ -188,7 +186,7 @@ animation: fadeInLeft 2s;
 </style>
 <body>
 <%
-//userID 가져오기
+	//userID 가져오기
 String userID = null;
 if(session.getAttribute("userID") != null){
 	userID = (String) session.getAttribute("userID");
@@ -211,8 +209,8 @@ if(boardID == 0){
 	script.println("</script>");
 }
 
-BoardVO board = new BoardDAO().getBoardVO(boardID);
-CommentVO comment = new CommentDAO().getCommentVO(cmtID);
+BoardDTO board = new BoardDAO().getBoardVO(boardID);
+CommentDTO comment = new CommentDAO().getCommentVO(cmtID);
 %>
 
 <!-- header -->
@@ -256,20 +254,20 @@ CommentVO comment = new CommentDAO().getCommentVO(cmtID);
 	<div class="board-container">
 		<div class="inquiry">
 			<div class="row"><br>
-				<a id="view-title"><%= board.getBoardCategory() %></a><br><br>
+				<a id="view-title"><%=board.getBoardCategory()%></a><br><br>
 				
 				<div id="tb-top">
 				<div id="tb-top-1">
 					<div id="user-item">
-					<span>작성자 <%= board.getUserID() %></span>
-					<span>&nbsp;&nbsp;|&nbsp;&nbsp; <%= board.getBoardDate().substring(0 ,11) + board.getBoardDate().substring(11, 13) + "시" + board.getBoardDate().substring(14, 16) + "분" %></span>
+					<span>작성자 <%=board.getUserID()%></span>
+					<span>&nbsp;&nbsp;|&nbsp;&nbsp; <%=board.getBoardDate().substring(0 ,11) + board.getBoardDate().substring(11, 13) + "시" + board.getBoardDate().substring(14, 16) + "분"%></span>
 					</div>
 				</div>
 				
 				<div id="tb-top-2">
 					<div id="count-item">
-					<span><i id="heart1" class="fa-regular fa-heart"></i><i id="heart2" class="fa-solid fa-heart"></i>&nbsp;<%= board.getHeartCount() %></span>&nbsp;&nbsp;
-					<span><i class="fa-solid fa-eye"></i>&nbsp;<%= board.getViewCount()+1 %></span>
+					<span><i id="heart1" class="fa-regular fa-heart"></i><i id="heart2" class="fa-solid fa-heart"></i>&nbsp;<%=board.getHeartCount()%></span>&nbsp;&nbsp;
+					<span><i class="fa-solid fa-eye"></i>&nbsp;<%=board.getViewCount()+1%></span>
 					</div>
 				</div>
 				</div>
@@ -278,20 +276,20 @@ CommentVO comment = new CommentDAO().getCommentVO(cmtID);
 					<tbody>
 						<tr height="25%" style="border-bottom: 1px solid #C0C0C0;">
 							<td class="td" style="width:20%;"><span>제목</span></td>
-							<td><%= board.getBoardTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>") %></td>
+							<td><%=board.getBoardTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></td>
 						</tr>
 						<tr height="75%" valign="top">
 							<td class="td" style="padding-top: 50px;"><span>내용</span></td>
 							<!-- 특수문자 처리 -->
-							<td style="padding-top: 50px;"><%= board.getBoardContent().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>") %></td>
+							<td style="padding-top: 50px;"><%=board.getBoardContent().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></td>
 						</tr>
 						<!-- <tr>
 							<td class="td"><span>조회수</span></td>
-							<td colspan="2"><%= board.getViewCount()+1 %></td>
+							<td colspan="2"board.getViewCount()+1)+1 %></td>
 						</tr>
 						<tr>
 							<td class="td"><span>하트</span></td>
-							<td colspan="2"><%= board.getHeartCount() %></td>
+							<td colspan="2"board.getHeartCount()t() %></td>
 						</tr> -->
 					</tbody>
 				</table>
@@ -299,24 +297,24 @@ CommentVO comment = new CommentDAO().getCommentVO(cmtID);
 			</div><br>
 			
 			<button type="button" class="btn-blue" onclick="history.back()"><span>목록</span></button>
-			<% 
+			<%
 				if(userID != null){
 			%>
-				<button type="button" class="btn-blue" id="cmt-write-btn" onclick="cmtAction()"><span>댓글쓰기</span></button>
-			<%
-				if(userID != null && userID.equals("admin")){
+					<button type="button" class="btn-blue" id="cmt-write-btn" onclick="cmtAction()"><span>댓글쓰기</span></button>
+			<%	
+					if(userID.equals("admin")){
 			%>
-				<button type="button" class="btn-blue" id="cmt-write-btn" onclick="cmtAction()"><span>댓글쓰기</span></button>
+						<button type="button" class="btn-blue" id="btn-del" onclick="if(confirm('정말로 삭제하시겠습니까?')){location.href='deleteAction.jsp?boardID=<%=boardID%>'}"><span>삭제</span></button>
 			<%
-				}
+					}
 				}
 			%>
 			<%
 				if(userID == (board.getUserID())){
 			%>
-				<button type="button" class="btn-blue" onclick="location.href='update.jsp?boardID=<%= boardID%>'"><span>수정</span></button>
-				<button type="button" class="btn-blue" id="btn-del" onclick="if(confirm('정말로 삭제하시겠습니까?')){location.href='deleteAction.jsp?boardID=<%= boardID%>'}"><span>삭제</span></button>
-			<% 
+					<button type="button" class="btn-blue" onclick="location.href='update.jsp?boardID=<%=boardID%>'"><span>수정</span></button>
+					<button type="button" class="btn-blue" id="btn-del" onclick="if(confirm('정말로 삭제하시겠습니까?')){location.href='deleteAction.jsp?boardID=<%=boardID%>'}"><span>삭제</span></button>
+			<%
 				}
 			%>
 			</div>
@@ -324,9 +322,9 @@ CommentVO comment = new CommentDAO().getCommentVO(cmtID);
 			<div class="cmt-view" style="height: auto;">
 	         	<div class="row" style="width: 600px; height: auto;">
 	                 <%
-	                   CommentDAO cmtDAO = new CommentDAO();
-	                   ArrayList<CommentVO> list = cmtDAO.getList(boardID);
-                  	 %>
+	                 	CommentDAO cmtDAO = new CommentDAO();
+	                 	                   ArrayList<CommentDTO> list = cmtDAO.getList(boardID);
+	                 %>
 	         		<h5 style="font-size: 15pt; color: #646464; float: left;">댓글 (<%= list.size() %>)<br></h5><hr style="width: 1000px;"><br>
                     <%
 	                   for(int i=0; i<list.size(); i++){

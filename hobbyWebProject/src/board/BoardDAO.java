@@ -92,15 +92,15 @@ public class BoardDAO {
 		return -1; //데이터베이스 오류
 	}
 	//글 목록 출력
-	public ArrayList<BoardVO> getList(int pageNumber){
+	public ArrayList<BoardDTO> getList(int pageNumber){
 		String SQL = "SELECT * FROM board WHERE boardID < ? AND boardAvailable = 1 ORDER BY boardID DESC LIMIT 10";
-		ArrayList<BoardVO> list = new ArrayList<BoardVO>();
+		ArrayList<BoardDTO> list = new ArrayList<BoardDTO>();
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, (pageNumber - 1) * 10);
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
-				BoardVO board = new BoardVO();
+				BoardDTO board = new BoardDTO();
 				board.setBoardID(rs.getInt(1));
 				board.setBoardTitle(rs.getString(2));
 				board.setUserID(rs.getString(3));
@@ -157,14 +157,14 @@ public class BoardDAO {
 		
 	}
 	//작성된 게시글 보기
-	public BoardVO getBoardVO(int boardID) {
+	public BoardDTO getBoardVO(int boardID) {
 		String SQL = "SELECT * FROM board WHERE boardID = ?";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, boardID);
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
-				BoardVO board = new BoardVO();
+				BoardDTO board = new BoardDTO();
 				board.setBoardID(rs.getInt(1));
 				board.setBoardTitle(rs.getString(2));
 				board.setUserID(rs.getString(3));
@@ -241,8 +241,8 @@ public class BoardDAO {
 	}
 	//검색하기
 	//boardAvailable = 1일때만 값 출력 : 게시글을 삭제했을때 & 회원탈퇴 했을때 게시글이 보이지 않는다.
-	public ArrayList<BoardVO> getSearch(String searchField2){//특정한 리스트를 받아서 반환
-	      ArrayList<BoardVO> list = new ArrayList<BoardVO>();
+	public ArrayList<BoardDTO> getSearch(String searchField2){//특정한 리스트를 받아서 반환
+	      ArrayList<BoardDTO> list = new ArrayList<BoardDTO>();
 	      String SQL ="SELECT * FROM board WHERE boardAvailable = 1 AND boardCategory";
 	      try {
 	            SQL +=" LIKE '%"+searchField2+"%' ORDER BY boardID DESC";
@@ -252,7 +252,7 @@ public class BoardDAO {
 	    	  
 				while(rs.next()) {
 	        	 
-	        	BoardVO board = new BoardVO();
+	        	BoardDTO board = new BoardDTO();
 	        	board.setBoardID(rs.getInt(1));
 	        	board.setBoardTitle(rs.getString(2));
 	        	board.setUserID(rs.getString(3));
@@ -272,8 +272,8 @@ public class BoardDAO {
 	
 	//UserDAO - delete에서 사용되는 메서드
 	//delete된 userID와 board의 userID가 같은 값의 리스트를 가져온다.
-	public List<BoardVO> getDelBoardVOByUserID(String userID) {
-	    List<BoardVO> boardVOs = new ArrayList<>();
+	public List<BoardDTO> getDelBoardVOByUserID(String userID) {
+	    List<BoardDTO> boardDTOs = new ArrayList<>();
 	    String SQL = "SELECT boardID, boardAvailable FROM board WHERE userID = ?";//userID가 작성한 board의 boardID와 boardAvailable의 값을 가져온다.
 	    try {
 	        PreparedStatement pstmt = conn.prepareStatement(SQL);
@@ -286,28 +286,28 @@ public class BoardDAO {
 	            //여기서 다른 속성도 가져올 수 있다.
 
 	            // BoardVO 객체 생성하고 가져온 속성을 BoardVO 객체에 저장한다.
-	            BoardVO boardVO = new BoardVO();
-	            boardVO.setBoardID(boardID); 
-	            boardVO.setBoardAvailable(boardAvailable);
+	            BoardDTO boardDTO = new BoardDTO();
+	            boardDTO.setBoardID(boardID); 
+	            boardDTO.setBoardAvailable(boardAvailable);
 
 	            // boardVOs list에 boardVO object 추가
-	            boardVOs.add(boardVO);
+	            boardDTOs.add(boardDTO);
 	        }
 	        rs.close();
 	        pstmt.close();
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	    }
-	    return boardVOs;
+	    return boardDTOs;
 	}
 	
 	//UserDAO - delete에서 삭제된 user와 관련된 정보를 업데이트 한다.
-	public void updateBoardVO(BoardVO boardVO){
+	public void updateBoardVO(BoardDTO boardDTO){
 	    String SQL = "UPDATE board SET boardAvailable = ? WHERE boardID = ?";
 	    try {
 	        PreparedStatement pstmt = conn.prepareStatement(SQL);
-	        pstmt.setInt(1, boardVO.getBoardAvailable());
-	        pstmt.setInt(2, boardVO.getBoardID());
+	        pstmt.setInt(1, boardDTO.getBoardAvailable());
+	        pstmt.setInt(2, boardDTO.getBoardID());
 	        pstmt.executeUpdate();
 	        pstmt.close();
 	    } catch (SQLException e) {

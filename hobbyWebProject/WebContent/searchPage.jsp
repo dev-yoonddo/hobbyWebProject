@@ -1,10 +1,12 @@
+<%@page import="comment.CommentDTO"%>
+<%@page import="comment.CommentDAO"%>
 <%@page import="java.io.PrintWriter"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="board.BoardDAO"%>
-<%@page import="board.BoardVO"%>
+<%@page import="board.BoardDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@page import="user.UserDAO"%>
-<%@page import="user.UserVO"%>
+<%@page import="user.UserDTO"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -67,15 +69,19 @@ tbody{
 th{
 color: #6e6e6e;
 text-align: center;
-height: 50px;
+height: 35px;
+border-radius: 30px;
+background-color: #CCE5FF;
+margin-right: 10px;
 }
 th span{
-padding: 5px 20px;
-border-radius: 20px;
-background-color: #CCE5FF;
 font-size: 14pt;
 }
-tr{
+.board-head{
+padding: 20px;
+
+}
+.board-row{
 border-bottom: solid 1px #E0E0E0;
 }
 .btn-black{
@@ -152,9 +158,10 @@ font-family: 'Nanum Gothic Coding', monospace;
 	if(request.getParameter("boardID") != null){
 		boardID = Integer.parseInt(request.getParameter("boardID"));
 	}
-	BoardVO board = new BoardDAO().getBoardVO(boardID);
-	
-	%>
+	BoardDTO board = new BoardDAO().getBoardVO(boardID);
+	CommentDAO cmtDAO = new CommentDAO();
+    ArrayList<CommentDTO> list2 = cmtDAO.getList(boardID);
+%>
 <header>
 <div id="header" class="de-active">
 	<nav class="navbar">
@@ -190,53 +197,54 @@ font-family: 'Nanum Gothic Coding', monospace;
 </header>
 <section>
 	<div class="board-container">
-		<% 
-		BoardDAO boardDAO = new BoardDAO();
-		//카테고리를 검색했을 때 테이블 상단에 선택한 카테고리를 출력
-		String search = request.getParameter("searchField2");	
+		<%
+			BoardDAO boardDAO = new BoardDAO();
+				//카테고리를 검색했을 때 테이블 상단에 선택한 카테고리를 출력
+				String search = request.getParameter("searchField2");
 		%>
 		<div id="search-title">
-		<h2><%= search %></h2>&nbsp;&nbsp;<h4>함께 할 사람들과 이야기 나눠보세요</h4>
+		<h2><%=search%></h2>&nbsp;&nbsp;<h4>함께 할 사람들과 이야기 나눠보세요</h4>
 		</div><br>
 		<div class="row">
 			<table>
 				<thead>
-					<tr>
-						<th style="width: 15%;"><span>카테고리</span></th>
+					<tr class="board-head">
+						<th style="width: 10%;"><span>조회수</span></th>
 						<th style="width: 30%;"><span>제목</span></th>
 						<th style="width: 10%;"><span>작성자</span></th>
-						<th style="width: 25%;"><span>작성일</span></th>
-						<th style="width: 10%;"><span>조회수</span></th>
 						<th style="width: 10%;"><span>좋아요</span></th>
+						<th style="width: 10%;"><span>댓글</span></th>
+						<th style="width: 25%;"><span>작성일</span></th>
 					</tr>
 				</thead>
 				<tbody>
-					<% //customerPage의 객체 이름과 같아야한다.
-						ArrayList<BoardVO> list = boardDAO.getSearch(search);
-						if(search == ""){
-							PrintWriter script = response.getWriter();
-							script.println("<script>");
-							script.println("alert('옵션을 선택해주세요')");
-							script.println("history.back()");
-							script.println("</script>");
-						}
-						for (int i = 0; i < list.size(); i++) {
-						if (list.size() == 0) {
-							PrintWriter script = response.getWriter();
-							script.println("<script>");
-							script.println("alert('검색결과가 없습니다.')");
-							script.println("history.back()");
-							script.println("</script>");
-						}
+					<%
+						//customerPage의 객체 이름과 같아야한다.
+									ArrayList<BoardDTO> list = boardDAO.getSearch(search);
+									if(search == ""){
+										PrintWriter script = response.getWriter();
+										script.println("<script>");
+										script.println("alert('옵션을 선택해주세요')");
+										script.println("history.back()");
+										script.println("</script>");
+									}
+									for (int i = 0; i < list.size(); i++) {
+									if (list.size() == 0) {
+										PrintWriter script = response.getWriter();
+										script.println("<script>");
+										script.println("alert('검색결과가 없습니다.')");
+										script.println("history.back()");
+										script.println("</script>");
+									}
 					%>
 				
 					<tr class="board-row">
-						<td><%= list.get(i).getBoardCategory() %></td>
+						<td><%=list.get(i).getViewCount()%></td>
 						<td><a id="click-view" href="view.jsp?boardID=<%= list.get(i).getBoardID() %>"><%= list.get(i).getBoardTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></a></td>
 						<td><%= list.get(i).getUserID() %></td>
-						<td><%= list.get(i).getBoardDate().substring(0 ,11) + list.get(i).getBoardDate().substring(11, 13) + "시" + list.get(i).getBoardDate().substring(14, 16) + "분" %></td>
-						<td><%=list.get(i).getViewCount()%></td>
 						<td><%=list.get(i).getHeartCount()%></td>
+						<td><%=list2.size()%></td>
+						<td><%= list.get(i).getBoardDate().substring(0 ,11) + list.get(i).getBoardDate().substring(11, 13) + "시" + list.get(i).getBoardDate().substring(14, 16) + "분" %></td>
 					</tr>
 					
 					<%
