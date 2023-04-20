@@ -13,7 +13,7 @@
 <meta name="viewport" content="width-device-width", initial-scale="1">
 <meta charset="UTF-8">
 <title>TOGETHER</title>
-<link rel="stylesheet" href="css/board.css?after">
+<link rel="stylesheet" href="css/main.css?after">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
 <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=IBM+Plex+Sans+KR:wght@300;600&family=Jua&family=Merriweather:wght@700&family=Nanum+Gothic&family=Nanum+Gothic+Coding&family=Noto+Sans+KR:wght@400&family=Noto+Serif+KR:wght@200&display=swap" rel="stylesheet">
 <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square.css" rel="stylesheet">
@@ -71,7 +71,7 @@ color: #6e6e6e;
 text-align: center;
 height: 35px;
 border-radius: 30px;
-background-color: #CCE5FF;
+background-color: #D9E1FC;
 margin-right: 10px;
 }
 th span{
@@ -132,7 +132,7 @@ font-family: 'Nanum Gothic Coding', monospace;
 	margin: 0 auto;
 	font-size: 15pt;
 	font-weight: bold;
-	color: #7D95E5;
+	color: #404040;
 	cursor: pointer;
 }
 #more-btn:hover{
@@ -159,8 +159,8 @@ font-family: 'Nanum Gothic Coding', monospace;
 		boardID = Integer.parseInt(request.getParameter("boardID"));
 	}
 	BoardDTO board = new BoardDAO().getBoardVO(boardID);
-	CommentDAO cmtDAO = new CommentDAO();
-    ArrayList<CommentDTO> list2 = cmtDAO.getList(boardID);
+	
+
 %>
 <header>
 <div id="header" class="de-active">
@@ -219,23 +219,22 @@ font-family: 'Nanum Gothic Coding', monospace;
 				</thead>
 				<tbody>
 					<%
-						//customerPage의 객체 이름과 같아야한다.
-									ArrayList<BoardDTO> list = boardDAO.getSearch(search);
-									if(search == ""){
-										PrintWriter script = response.getWriter();
-										script.println("<script>");
-										script.println("alert('옵션을 선택해주세요')");
-										script.println("history.back()");
-										script.println("</script>");
-									}
-									for (int i = 0; i < list.size(); i++) {
-									if (list.size() == 0) {
-										PrintWriter script = response.getWriter();
-										script.println("<script>");
-										script.println("alert('검색결과가 없습니다.')");
-										script.println("history.back()");
-										script.println("</script>");
-									}
+						ArrayList<BoardDTO> list = boardDAO.getSearch(search);
+						if(search == ""){
+							PrintWriter script = response.getWriter();
+							script.println("<script>");
+							script.println("alert('옵션을 선택해주세요')");
+							script.println("history.back()");
+							script.println("</script>");
+						}
+						if (list.size() == 0) {
+							PrintWriter script = response.getWriter();
+							script.println("<script>");
+							script.println("alert('검색결과가 없습니다.')");
+							script.println("history.back()");
+							script.println("</script>");
+						}
+						for (int i = 0; i < list.size(); i++) {
 					%>
 				
 					<tr class="board-row">
@@ -243,7 +242,11 @@ font-family: 'Nanum Gothic Coding', monospace;
 						<td><a id="click-view" href="view.jsp?boardID=<%= list.get(i).getBoardID() %>"><%= list.get(i).getBoardTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></a></td>
 						<td><%= list.get(i).getUserID() %></td>
 						<td><%=list.get(i).getHeartCount()%></td>
-						<td><%=list2.size()%></td>
+						<%
+	                 	CommentDAO cmtDAO = new CommentDAO();
+	                 	ArrayList<CommentDTO> cmtlist = cmtDAO.getList(list.get(i).getBoardID());
+	                 	%>
+						<td><%= cmtlist.size() %></td>
 						<td><%= list.get(i).getBoardDate().substring(0 ,11) + list.get(i).getBoardDate().substring(11, 13) + "시" + list.get(i).getBoardDate().substring(14, 16) + "분" %></td>
 					</tr>
 					

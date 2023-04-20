@@ -10,7 +10,7 @@
 <meta name="viewport" content="width-device-width", initial-scale="1">
 <meta charset="UTF-8">
 <title>TOGETHER</title>
-<link rel="stylesheet" href="css/board.css?after">
+<link rel="stylesheet" href="css/main.css?after">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
 <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=IBM+Plex+Sans+KR:wght@300;600&family=Jua&family=Merriweather:wght@700&family=Nanum+Gothic&family=Nanum+Gothic+Coding&family=Noto+Sans+KR:wght@400&family=Noto+Serif+KR:wght@200&display=swap" rel="stylesheet">
@@ -22,7 +22,7 @@
 </head>
 <style>
 section{
-	height: auto;
+	height: 700px;
 	display: flex;
 	margin: 0;
 	padding: 0;
@@ -35,6 +35,31 @@ section{
 	width: 1000px;
 	margin: 0 auto;
 }
+.write-table{
+	width: 1000px;
+}
+select{
+width: 200px;
+height: 40px;
+margin-bottom: 10px;
+text-align: center;
+font-size: 15pt;
+font-weight: 500;
+color: #B3C1EE;
+
+}
+option{
+color: #B3C1EE;
+height: 40px;
+}
+textarea{
+width: 1000px;
+font-size: 13pt;
+font-family: 'Nanum Gothic', monospace;
+border: none;
+resize: none;
+padding: 10px;
+}
 .inquiry{
 padding-bottom: 100px;
 }
@@ -44,6 +69,42 @@ height: 500px;
 border-collapse: collapse;
 border: 1px solid #C0C0C0;
 font-size: 12pt;
+}
+.btn-blue{
+	position: relative;
+	display: inline-block;
+	width: 90px;
+	height: 70px;
+	background-color: transparent;
+	border: none; 
+	cursor: pointer;
+	margin: 10px;
+	float: right;
+}
+
+.btn-blue span {         
+  position: relative;
+  display: inline-block;
+  font-size: 12pt;
+  font-weight: bold;
+  letter-spacing: 2px;
+  border-radius: 20px;
+  width: 100%;
+  padding: 10px;
+  transition: 0.5s; 
+  color: #ffffff;
+  background-color: #7D95E5;
+  border: 1px solid #7D95E5;
+  font-family: 'Nanum Gothic Coding', monospace;
+}
+
+.btn-blue::before {
+  background-color: #7D95E5;
+}
+
+.btn-blue span:hover {
+  color: #7D95E5;
+  background-color: #ffffff
 }
 </style>
 <body>
@@ -93,35 +154,34 @@ if(session.getAttribute("userID") != null){
 	<section>
 	
 		<div class="board-container">
-		<h4 style="font-weight: bold; color: #646464;">글 쓰기</h4><br>
-			<div class="row">
+		<h3 style="font-weight: bold; color: #646464;"><%= userID %>님 안녕하세요</h3><br>
+			<div class="right-row">
 				<form method="post" action="writeAction.jsp">
+					<div class="category-sel">
+					<select name="boardCategory">
+						<option value="0">CATEGORY</option>
+						<option value="SPORTS" >SPORTS</option>
+						<option value="LEISURE" >LEISURE</option>
+						<option value="ART&MUSIC" >ART & MUSIC</option>
+						<option value="OTHER" >OTHER</option>
+					</select>
+					</div>
 					<table class="write-table" style="text-align: center; border: 1px solid #dddddd">
 						<thead>
 							<tr translate="yes">
-								<th style="background-color: #464646; text-align: center; color: #ffffff;">문의하기</th>
-							
-								<th>
-								<select class="form-control" name="boardCategory">
-									<option value="0">CATEGORY</option>
-									<option value="SPORTS" >SPORTS</option>
-									<option value="LEISURE" >LEISURE</option>
-									<option value="ART&MUSIC" >ART & MUSIC</option>
-									<option value="OTHER" >OTHER</option>
-								</select>
-								</th>
+								<th style="background-color: #DBE2F7; text-align: center; color: #464646; height: 40px;">글 작성</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr>
-								<td><input type="text" class="form-control" placeholder="글 제목" name="boardTitle" maxlength="50"></td>
+								<td><textarea placeholder="제목을 입력하세요" name="boardTitle" maxlength="50"></textarea></td>
 							</tr>
 							<tr>
-								<td><textarea class="form-control" placeholder="글 내용" name="boardContent" maxlength="2048" style="height: 350px;"></textarea></td>
+								<td><textarea placeholder="내용을 입력하세요" name="boardContent" maxlength="2048" style="height: 350px;"></textarea></td>
 							</tr>
 						</tbody>
 					</table>
-					<button type="submit" class="btn-black" value="글쓰기"><span>작성하기</span></button>
+					<button type="submit" class="btn-blue" value="글쓰기"><span>작성하기</span></button>
 				</form>
 			</div>
 		</div>

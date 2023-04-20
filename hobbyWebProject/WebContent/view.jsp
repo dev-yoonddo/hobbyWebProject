@@ -1,3 +1,5 @@
+<%@page import="heart.HeartDTO"%>
+<%@page import="heart.HeartDAO"%>
 <%@page import="comment.CommentDAO"%>
 <%@page import="comment.CommentDTO"%>
 <%@page import="user.UserDAO"%>
@@ -18,7 +20,7 @@
 <meta name="viewport" content="width-device-width", initial-scale="1">
 <meta charset="UTF-8">
 <title>TOGETHER</title>
-<link rel="stylesheet" href="css/board.css?after">
+<link rel="stylesheet" href="css/main.css?after">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
 <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=IBM+Plex+Sans+KR:wght@300;600&family=Jua&family=Merriweather:wght@700&family=Nanum+Gothic&family=Nanum+Gothic+Coding&family=Noto+Sans+KR:wght@400&family=Noto+Serif+KR:wght@200&display=swap" rel="stylesheet">
@@ -111,19 +113,22 @@ animation: fadeInLeft 2s;
 	justify-content: center;	
 }
 #count-item{
-	height: auto;
-	margin: 0;
 	border-radius: 20px;
 	background-color: #E0E0E0;
-	padding: 8px 50px;
+	display: flex;
 	float: right;
 }
-#count-item span{
+#count{
+display: flex;
+justify-content: center;
+padding: 8px 60px;
+}
+#count span{
 	color: #282557;
 	font-size:17pt;
-	width: 50px;
-	height: 30px;
-	margin-right: 10px; 
+	height: 25px;
+	margin: 0 auto;
+	padding-right: 10px;
 }
 
 .btn-blue{
@@ -211,6 +216,7 @@ if(boardID == 0){
 
 BoardDTO board = new BoardDAO().getBoardVO(boardID);
 CommentDTO comment = new CommentDAO().getCommentVO(cmtID);
+HeartDTO heart = new HeartDAO().getHeartVO(userID);
 %>
 
 <!-- header -->
@@ -266,8 +272,21 @@ CommentDTO comment = new CommentDAO().getCommentVO(cmtID);
 				
 				<div id="tb-top-2">
 					<div id="count-item">
-					<span><i id="heart1" class="fa-regular fa-heart"></i><i id="heart2" class="fa-solid fa-heart"></i>&nbsp;<%=board.getHeartCount()%></span>&nbsp;&nbsp;
-					<span><i class="fa-solid fa-eye"></i>&nbsp;<%=board.getViewCount()+1%></span>
+						<div id="count">
+						<span>
+						<% 
+								if(userID != null && userID.equals(heart.getUserID()) && boardID == heart.getBoardID()){		
+						%>
+						
+						<i id="heart2" class="fa-solid fa-heart"></i>&nbsp;<%=board.getHeartCount()%>
+						<%
+						}else{
+						%>
+						<i id="heart1" class="fa-regular fa-heart" onclick="location.href='heartAction.jsp?boardID=<%=boardID%>'"></i>&nbsp;<%=board.getHeartCount()%>
+						<%} %>
+						</span>&nbsp;&nbsp;
+						<span><i class="fa-solid fa-eye"></i>&nbsp;<%=board.getViewCount()+1%></span>
+						</div>
 					</div>
 				</div>
 				</div>
@@ -318,16 +337,16 @@ CommentDTO comment = new CommentDAO().getCommentVO(cmtID);
 				}
 			%>
 			</div>
-				
+			
 			<div class="cmt-view" style="height: auto;">
 	         	<div class="row" style="width: 600px; height: auto;">
 	                 <%
 	                 	CommentDAO cmtDAO = new CommentDAO();
-	                 	                   ArrayList<CommentDTO> list = cmtDAO.getList(boardID);
+	                 	ArrayList<CommentDTO> cmtlist = cmtDAO.getList(boardID);
 	                 %>
-	         		<h5 style="font-size: 15pt; color: #646464; float: left;">댓글 (<%= list.size() %>)<br></h5><hr style="width: 1000px;"><br>
+	         		<h5 style="font-size: 15pt; color: #646464; float: left;">댓글 (<%= cmtlist.size() %>)<br></h5><hr style="width: 1000px;"><br>
                     <%
-	                   for(int i=0; i<list.size(); i++){
+	                   for(int i=0; i<cmtlist.size(); i++){
 	                %>
 	                <div class="cmt-list" style="width: 600px; height: 110px;">
 	                	<div style="display: flex;">
@@ -336,18 +355,18 @@ CommentDTO comment = new CommentDAO().getCommentVO(cmtID);
 		               	</div>
 		               	<table class="cmt-table" style="width: 600px;">
 		               		<tr style="height: 30px; table-layout:fixed; ">
-		               			<td align="left" style="width:30%;"><%= list.get(i).getUserID() %></td>
-		               			<td align="right" style="width:70%;"><%= list.get(i).getCmtDate().substring(0,11)+list.get(i).getCmtDate().substring(11,13)+"시"+list.get(i).getCmtDate().substring(14,16)+"분" %></td>
+		               			<td align="left" style="width:30%;"><%= cmtlist.get(i).getUserID() %></td>
+		               			<td align="right" style="width:70%;"><%= cmtlist.get(i).getCmtDate().substring(0,11)+cmtlist.get(i).getCmtDate().substring(11,13)+"시"+cmtlist.get(i).getCmtDate().substring(14,16)+"분" %></td>
 		               		</tr>
 		               		<tr style="height: auto; font-weight: 550;">
-		               			<td colspan="2"><%= list.get(i).getCmtContent() %></td>
+		               			<td colspan="2"><%= cmtlist.get(i).getCmtContent() %></td>
 		               		</tr>		               		
 			           	</table>
 			           	</div>
             			<%
-            				if(userID != null && userID.equals(list.get(i).getUserID()) || userID == ("admin")){
+            				if(userID != null && userID.equals(cmtlist.get(i).getUserID()) || userID == ("admin")){
             			%>
-            			<button type="button" class="btn-blue" id="cmt-btn" onclick="if(confirm('답글을 삭제하시겠습니까?')){location.href='commentDeleteAction.jsp?boardID=<%= boardID%>&cmtID=<%=list.get(i).getCmtID() %>'}"><span>삭제</span></button>
+            			<button type="button" class="btn-blue" id="cmt-btn" onclick="if(confirm('답글을 삭제하시겠습니까?')){location.href='commentDeleteAction.jsp?boardID=<%= boardID%>&cmtID=<%=cmtlist.get(i).getCmtID() %>'}"><span>삭제</span></button>
             			<%
             				}
             			%>
@@ -390,16 +409,16 @@ CommentDTO comment = new CommentDAO().getCommentVO(cmtID);
 <!-- footer -->
 <script>
 $(document).ready(function(){
-	$("#heart2").hide();
+	/*$("#heart2").hide();
 	
-    $("#heart1").click(function(){ // 클릭시 more
+    $("#heart1").click(function(){ 
     	$("#heart1").hide();
     	$("#heart2").show();
     	if($("#heart2").click(function(){
     		$("#heart2").hide();
     		$("#heart1").show();
     	}));
-	});
+	});*/
     
 });
 function cmtAction(){

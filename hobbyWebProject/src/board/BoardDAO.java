@@ -119,7 +119,7 @@ public class BoardDAO {
 	}
 	
 	
-	public int countBoardByCategory(String boardCategory) {
+	/*public int countBoardByCategory(String boardCategory) {
 	    int count = 0;
 	    try {
 	        String SQL = "SELECT COUNT(*) FROM board WHERE boardCategory = ?";
@@ -136,7 +136,7 @@ public class BoardDAO {
 	    }
 	    return count;
 	}
-	//같은 카테고리인 글의 갯수가 10개 이상일 때 다음페이지로 넘기기
+	같은 카테고리인 글의 갯수가 10개 이상일 때 다음페이지로 넘기기
 	public boolean nextPage(int pageNumber, String boardCategory) {
 		String SQL = "SELECT * FROM board WHERE boardID < ?  AND boardCategory = ? AND boardAvailable = 1";
 		int count = countBoardByCategory(boardCategory);
@@ -155,7 +155,7 @@ public class BoardDAO {
         }
 		return false; 
 		
-	}
+	}*/
 	//작성된 게시글 보기
 	public BoardDTO getBoardVO(int boardID) {
 		String SQL = "SELECT * FROM board WHERE boardID = ?";

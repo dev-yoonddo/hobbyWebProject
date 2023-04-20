@@ -16,7 +16,7 @@ public class CommentDAO {
 	
 	public CommentDAO() {
 		try {
-		 	String dbURL = "jdbc:mysql://localhost:3306/hobbywebproject?serverTimezone=UTC";
+		 	String dbURL = "jdbc:mysql://localhost:3306/hobbywebproject?useUnicode=true&characterEncoding=UTF-8";
 		 	String dbID = "root";
 		 	String dbPassword = "9228";
 		 	Class.forName("com.mysql.jdbc.Driver");
@@ -39,6 +39,7 @@ public class CommentDAO {
 		}
 		return ""; //데이터베이스 오류
 	}
+	//cmtID 번호 매기기
 	public int getNext() {
 		String SQL = "SELECT cmtID FROM COMMENT ORDER BY cmtID DESC";
 		try {
@@ -52,6 +53,7 @@ public class CommentDAO {
 		}
 		return 1; //첫번째 댓글인 경우
 	}
+	//작성하기
 	public int write(String cmtContent, String userID, int boardID) {
 		String SQL = "INSERT INTO COMMENT VALUES(?, ?, ?, ?, ?, ?)";
 		try {
@@ -69,6 +71,7 @@ public class CommentDAO {
 		}
 		return -1; //데이터베이스 오류
 	}
+	//수정하기
 	public String getUpdateComment(int cmtID) {
 		String SQL = "SELECT cmtContent FROM comment WHERE cmtID = ?";
 		try {
@@ -119,6 +122,7 @@ public class CommentDAO {
 		}
 		return -1; // 데이터베이스 오류
 	}*/
+	//하나의 댓글 정보 가져오기
 	public CommentDTO getCommentVO(int cmtID) {
 		String SQL = "SELECT * FROM comment WHERE cmtID = ?";
 		try {
@@ -140,6 +144,7 @@ public class CommentDAO {
 		}
 		return null;
 	}
+	//삭제하기
 	public int delete(int cmtID) {
 		String SQL = "DELETE FROM comment WHERE cmtID = ?";
 		try {
@@ -151,7 +156,21 @@ public class CommentDAO {
 		}
 		return -1; // 데이터베이스 오류
 	}
-	
+	//특정 boardID에 해당되는 comment의 갯수 구하기
+	public int getCommentCount(int boardID) {
+	    String SQL = "SELECT COUNT(*) FROM comment WHERE boardID = ?";
+	    try {
+	        PreparedStatement pstmt = conn.prepareStatement(SQL);
+	        pstmt.setInt(1, boardID);
+	        rs = pstmt.executeQuery();
+	        if (rs.next()) {
+	            return rs.getInt(1);
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return -1;
+	}
 	//UserDAO의 delete 메서드가 실행되면 사용되는 메서드
 	//delete된 userID의 comment데이터 리스트를 가져온다.
 	public List<CommentDTO> getDelCommentVOByUserID(String userID) {
