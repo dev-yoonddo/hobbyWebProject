@@ -127,7 +127,7 @@ if(session.getAttribute("userID") != null){
       <div class="slide">
         <img src="https://contentservice.mc.reyrey.net/image_v1.0.0/?id=bcc24faa-00f1-5165-8a61-084cf088d117&637062227314430208" alt="2020 GMC Canyon" />
         <div class="details">
-          <h2>MUSIC & INSTRUMENT</h2>
+          <h2>ART & MUSIC</h2>
             <div class="info-item">
               <h2>인원 모집중</h2>
             </div>
