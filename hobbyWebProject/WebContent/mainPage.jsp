@@ -97,8 +97,7 @@ if(session.getAttribute("userID") != null){
     <div id="content">
 <!--       Slide One -->
       <div class="slide showing">
-        <img src="./image/hike.png">
-
+        <img src="./image/sports.png">
         <div class="details">
           <h2>SPORTS</h2>
             <div class="info-item">
@@ -112,7 +111,7 @@ if(session.getAttribute("userID") != null){
 <!--       Slide One -->
 <!--       Slide Two -->
       <div class="slide">
-        <img src="https://contentservice.mc.reyrey.net/image_v1.0.0/?id=bcc24faa-00f1-5165-8a61-084cf088d117&637062227314430208" alt="2020 GMC Canyon" />
+        <img src="./image/surfing.png">
         <div class="details">
           <h2>LEISURE SPORTS</h2>
             <div class="info-item">
@@ -125,7 +124,7 @@ if(session.getAttribute("userID") != null){
 <!--       Slide Two -->
 <!--       Slide Three -->
       <div class="slide">
-        <img src="https://contentservice.mc.reyrey.net/image_v1.0.0/?id=bcc24faa-00f1-5165-8a61-084cf088d117&637062227314430208" alt="2020 GMC Canyon" />
+        <img src="./image/music.png">
         <div class="details">
           <h2>ART & MUSIC</h2>
             <div class="info-item">
@@ -138,7 +137,7 @@ if(session.getAttribute("userID") != null){
 <!--       Slide Three -->
 <!--       Slide Four -->
       <div class="slide">
-        <img src="https://contentservice.mc.reyrey.net/image_v1.0.0/?id=bcc24faa-00f1-5165-8a61-084cf088d117&637062227314430208" alt="2020 GMC Canyon" />
+        <img src="./image/other.png">
         <div class="details">
           <h2>OTHER</h2>
             <div class="info-item">

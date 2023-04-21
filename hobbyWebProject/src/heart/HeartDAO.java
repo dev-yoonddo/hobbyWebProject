@@ -4,8 +4,12 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import board.BoardDTO;
+import comment.CommentDTO;
 
 public class HeartDAO {
    private Connection conn;//데이터베이스에 접근하게 해주는 하나의 객체
@@ -37,11 +41,11 @@ public class HeartDAO {
    return -1;//추천 중복 오류
  }
 
-   public HeartDTO getHeartVO(String userID) {
-		String SQL = "SELECT * FROM heart WHERE userID = ?";
+   public HeartDTO getHeartVO(int boardID) {
+		String SQL = "SELECT * FROM heart WHERE boardID = ?";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
-			pstmt.setString(1, userID);
+			pstmt.setInt(1, boardID);
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
 				HeartDTO heart = new HeartDTO();
@@ -54,5 +58,26 @@ public class HeartDAO {
 			e.printStackTrace();
 		}
 		return null; 
+	}
+   
+   
+   
+   public ArrayList<HeartDTO> getHeartList(int boardID){
+		String SQL = "SELECT * FROM heart WHERE boardID = ?"; 
+		ArrayList<HeartDTO> hearts = new ArrayList<HeartDTO>();
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt.setInt(1, boardID);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				HeartDTO heart = new HeartDTO();
+				heart.setBoardID(rs.getInt(1));
+				heart.setUserID(rs.getString(2));
+				hearts.add(heart);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return hearts; 
 	}
 }

@@ -1,3 +1,4 @@
+<%@page import="java.util.List"%>
 <%@page import="heart.HeartDTO"%>
 <%@page import="heart.HeartDAO"%>
 <%@page import="comment.CommentDAO"%>
@@ -194,7 +195,7 @@ padding: 8px 60px;
 	//userID 가져오기
 String userID = null;
 if(session.getAttribute("userID") != null){
-	userID = (String) session.getAttribute("userID");
+	userID = (String)session.getAttribute("userID");
 }
 int cmtID = 0;
 if(request.getParameter("cmtID")!=null)
@@ -215,8 +216,6 @@ if(boardID == 0){
 }
 
 BoardDTO board = new BoardDAO().getBoardVO(boardID);
-CommentDTO comment = new CommentDAO().getCommentVO(cmtID);
-HeartDTO heart = new HeartDAO().getHeartVO(userID);
 %>
 
 <!-- header -->
@@ -274,23 +273,33 @@ HeartDTO heart = new HeartDAO().getHeartVO(userID);
 					<div id="count-item">
 						<div id="count">
 						<span>
-						<% 
-								if(userID != null && userID.equals(heart.getUserID()) && boardID == heart.getBoardID()){		
-						%>
 						
-						<i id="heart2" class="fa-solid fa-heart"></i>&nbsp;<%=board.getHeartCount()%>
 						<%
-						}else{
+	                 	HeartDAO heartDAO = new HeartDAO();
+						ArrayList<HeartDTO> hearts = heartDAO.getHeartList(boardID);
+						
+						for (int i = 0; i < hearts.size(); i++) {
+						        if (userID == null || hearts == null || userID != (hearts.get(i).getUserID())){
 						%>
-						<i id="heart1" class="fa-regular fa-heart" onclick="location.href='heartAction.jsp?boardID=<%=boardID%>'"></i>&nbsp;<%=board.getHeartCount()%>
-						<%} %>
+	                 	<i id="heart1" class="fa-regular fa-heart" onclick="location.href='heartAction.jsp?boardID=<%=boardID%>'"></i>&nbsp;<%=board.getHeartCount()%>
+						
+						<%           						    
+						}else{
+	                 	%>
+	                 	<i id="heart2" class="fa-solid fa-heart"></i>&nbsp;<%=board.getHeartCount()%>
+	                 	<%
+	                 	
+						}
+						}
+						%>
+	                	
+						
 						</span>&nbsp;&nbsp;
 						<span><i class="fa-solid fa-eye"></i>&nbsp;<%=board.getViewCount()+1%></span>
 						</div>
 					</div>
 				</div>
 				</div>
-				
 				<table id="view-table">
 					<tbody>
 						<tr height="25%" style="border-bottom: 1px solid #C0C0C0;">
@@ -346,7 +355,7 @@ HeartDTO heart = new HeartDAO().getHeartVO(userID);
 	                 %>
 	         		<h5 style="font-size: 15pt; color: #646464; float: left;">댓글 (<%= cmtlist.size() %>)<br></h5><hr style="width: 1000px;"><br>
                     <%
-	                   for(int i=0; i<cmtlist.size(); i++){
+	                   for(int i=cmtlist.size()-1; i>=0; i--){ //거꾸로 출력
 	                %>
 	                <div class="cmt-list" style="width: 600px; height: 110px;">
 	                	<div style="display: flex;">
@@ -424,7 +433,9 @@ $(document).ready(function(){
 function cmtAction(){
 	document.getElementById('cmt-write').style.display = 'block';
 	document.getElementById('cmt-write-btn').style.display = 'none';
-
+}
+function del1(){
+	$("#heart1z").hide();
 }
 </script>
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>

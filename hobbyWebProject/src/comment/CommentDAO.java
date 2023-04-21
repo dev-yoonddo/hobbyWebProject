@@ -86,8 +86,9 @@ public class CommentDAO {
 		}
 		return ""; //오류
 	}
+	//댓글 리스트 출력하기
 	public ArrayList<CommentDTO> getList(int boardID){
-		String SQL = "SELECT * FROM comment WHERE boardID= ? AND cmtAvailable = 1 ORDER BY boardID DESC LIMIT 10"; 
+		String SQL = "SELECT * FROM comment WHERE boardID= ? AND cmtAvailable = 1 ORDER BY boardID DESC"; 
 		ArrayList<CommentDTO> list = new ArrayList<CommentDTO>();
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
@@ -106,7 +107,7 @@ public class CommentDAO {
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
-		return list; //데이터베이스 오류
+		return list; 
 	}
 	
 	/*public int update(String cmtContent, int boardID, int cmtID) {
