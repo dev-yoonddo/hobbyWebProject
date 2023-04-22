@@ -192,11 +192,12 @@ padding: 8px 60px;
 </style>
 <body>
 <%
-	//userID 가져오기
+//userID 가져오기
 String userID = null;
 if(session.getAttribute("userID") != null){
 	userID = (String)session.getAttribute("userID");
 }
+//cmtID 가져오기
 int cmtID = 0;
 if(request.getParameter("cmtID")!=null)
 	cmtID = Integer.parseInt(request.getParameter("cmtID"));
@@ -216,6 +217,7 @@ if(boardID == 0){
 }
 
 BoardDTO board = new BoardDAO().getBoardVO(boardID);
+HeartDTO heartvo = new HeartDAO().getHeartVO(boardID);
 %>
 
 <!-- header -->
@@ -273,23 +275,33 @@ BoardDTO board = new BoardDAO().getBoardVO(boardID);
 					<div id="count-item">
 						<div id="count">
 						<span>
-						
+					
 						<%
 	                 	HeartDAO heartDAO = new HeartDAO();
 						ArrayList<HeartDTO> hearts = heartDAO.getHeartList(boardID);
 						
-						for (int i = 0; i < hearts.size(); i++) {
-						        if (userID == null || hearts == null || userID != (hearts.get(i).getUserID())){
+						if (userID != null) {
+						    boolean hasMatch = false;
+						    for (HeartDTO heart: hearts) {
+						        if (userID.equals(heart.getUserID()) && boardID == heart.getBoardID()) {
+						            hasMatch = true;
+						            break; // Exit loop if match is found
+						        }
+						        hasMatch = false;
+						    }
+						    if (hasMatch){
 						%>
-	                 	<i id="heart1" class="fa-regular fa-heart" onclick="location.href='heartAction.jsp?boardID=<%=boardID%>'"></i>&nbsp;<%=board.getHeartCount()%>
-						
-						<%           						    
-						}else{
-	                 	%>
-	                 	<i id="heart2" class="fa-solid fa-heart"></i>&nbsp;<%=board.getHeartCount()%>
-	                 	<%
-	                 	
-						}
+						        <i id="heart2" class="fa-solid fa-heart"></i>&nbsp;<%=board.getHeartCount()%>
+						<%
+						    } else {
+						%>
+						        <i id="heart1" class="fa-regular fa-heart" onclick="location.href='heartAction.jsp?boardID=<%=boardID%>'"></i>&nbsp;<%= board.getHeartCount()%>
+						<%
+						    }
+						} else {
+						%>
+						    <i id="heart1" class="fa-regular fa-heart" onclick="location.href='heartAction.jsp?boardID=<%=boardID%>'"></i>&nbsp;<%= board.getHeartCount()%>
+						<%
 						}
 						%>
 	                	

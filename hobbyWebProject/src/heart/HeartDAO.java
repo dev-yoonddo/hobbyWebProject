@@ -63,7 +63,7 @@ public class HeartDAO {
    
    
    public ArrayList<HeartDTO> getHeartList(int boardID){
-		String SQL = "SELECT * FROM heart WHERE boardID = ?"; 
+		String SQL = "SELECT * FROM heart WHERE boardID = ? AND userID IS NOT NULL"; 
 		ArrayList<HeartDTO> hearts = new ArrayList<HeartDTO>();
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
@@ -71,13 +71,15 @@ public class HeartDAO {
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				HeartDTO heart = new HeartDTO();
-				heart.setBoardID(rs.getInt(1));
-				heart.setUserID(rs.getString(2));
+				heart.setBoardID(rs.getInt(2));
+				heart.setUserID(rs.getString(1));
 				hearts.add(heart);
 			}
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-		return hearts; 
+			rs.close();
+	        pstmt.close();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } 
+	    return hearts;
 	}
 }
