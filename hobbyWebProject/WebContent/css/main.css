@@ -6,9 +6,30 @@
 	--accent-color: #303030;
   --line-color: #c1c1c1;
   --font-family:'NanumSquare';
-
   --colorOne: white;
   --colorTwo: #A4C3FF;
+  --color-mousea: #1d1d1d;
+  --color-mouseb: #fff;
+}
+
+/* cursor css */
+
+/* 커서 스타일 정의 */
+.cursor {
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid var(--color-mousea);
+  background-color: var(--color-mousea);
+  border-radius: 50%;
+  position: absolute;
+  z-index: 1000;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  transition: all 0.3s ease;
+  transition-property: background, transform;
+  transform-origin: 100% 100%;
+  backdrop-filter: sepia(20%);
+  background-size: cover;
 }
 
 /* header css */
@@ -17,7 +38,7 @@ body{
 	margin: 0px;
   z-index: 1;
   font-family: var(--font-family);
-
+  cursor: none;
 }
 header{
 	width: 100%;

@@ -1,6 +1,25 @@
 (function($) {
   $(function($){
 
+//마우스 커서 이벤트 ------
+let a = document.createElement('div');
+let header = document.getElementById('header');
+//모든 페이지에 <div class="cursor"> 삽입
+a.setAttribute("class","cursor");
+header.appendChild(a);
+
+let mouseCursor = document.querySelector(".cursor");
+//window 객체에 scroll & mouse 이벤트를 추가하고 cursor함수 실행되도록 함
+window.addEventListener("scroll", cursor);
+window.addEventListener("mousemove", cursor);
+//커스텀 커서의 left값과 top값을 커서의 XY좌표값과 일치시킴
+function cursor(e) {
+mouseCursor.style.left = e.pageX + "px";
+mouseCursor.style.top = e.pageY - scrollY + "px";
+}
+// ------------------------
+
+
 //navbar togglebuttton 눌렀을 때 메뉴 펼치고 접기
 const toggleBtn = document.querySelector('.navbar_toggleBtn');
 const menu = document.querySelector('.navbar_menu');

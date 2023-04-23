@@ -19,13 +19,6 @@
 
 
 </head>
-<style>
-button {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-}
-</style>
 <body>
 <header>
 <% 
@@ -33,6 +26,7 @@ String userID = null;
 if(session.getAttribute("userID") != null){
 	userID = (String) session.getAttribute("userID");
 } %>
+
 <div id="header" class="de-active">
 	<nav class="navbar">
 		<nav class="navbar_left">
@@ -186,6 +180,5 @@ if(session.getAttribute("userID") != null){
    		</ul>
 </div>
 </footer>
-
 </body>
 </html>
