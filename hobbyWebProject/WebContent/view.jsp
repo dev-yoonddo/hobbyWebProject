@@ -136,7 +136,7 @@ padding: 8px 60px;
 	position: relative;
 	display: inline-block;
 	width: 90px;
-	height: 70px;
+	height: 50px;
 	background-color: transparent;
 	border: none; 
 	cursor: pointer;
@@ -350,7 +350,7 @@ HeartDTO heartvo = new HeartDAO().getHeartVO(boardID);
 				}
 			%>
 			<%
-				if(userID == (board.getUserID())){
+				if(userID.equals(board.getUserID())){
 			%>
 					<button type="button" class="btn-blue" onclick="location.href='update.jsp?boardID=<%=boardID%>'"><span>수정</span></button>
 					<button type="button" class="btn-blue" id="btn-del" onclick="if(confirm('정말로 삭제하시겠습니까?')){location.href='deleteAction.jsp?boardID=<%=boardID%>'}"><span>삭제</span></button>
@@ -359,13 +359,27 @@ HeartDTO heartvo = new HeartDAO().getHeartVO(boardID);
 			%>
 			</div>
 			
+			<%
+            	CommentDAO cmtDAO = new CommentDAO();
+            	ArrayList<CommentDTO> cmtlist = cmtDAO.getList(boardID);
+            %>
+			<h5 style="font-size: 15pt; color: #646464; float: left;">댓글 (<%= cmtlist.size() %>)<br></h5><hr style="width: 1000px;"><br>
+			
+            <!-- 답변쓰기 버튼을 눌렀을 때만 답변쓰기 섹션이 나타나도록 설정 -->
+			<div id="cmt-write" style="display: none; width: 600px; height: 220px;"> 
+		          <form method="post" action="commentAction.jsp?boardID=<%= boardID %>">
+			          <table class="cmt-table" style="height: 100px; border-style: none;">
+			             <tbody>
+			                <tr>
+			                   <td><input type="text" placeholder="댓글을 입력하세요" name="cmtContent" maxlength="60" style="width: 600px; height: 150px; font-size: 12pt;"></td>
+			                </tr>
+			             </tbody>
+			          </table>
+			      <button type="submit" class="btn-blue" id="cmt-cpl"><span>완료</span></button>
+			      </form>
+		   </div><br>	
 			<div class="cmt-view" style="height: auto;">
 	         	<div class="row" style="width: 600px; height: auto;">
-	                 <%
-	                 	CommentDAO cmtDAO = new CommentDAO();
-	                 	ArrayList<CommentDTO> cmtlist = cmtDAO.getList(boardID);
-	                 %>
-	         		<h5 style="font-size: 15pt; color: #646464; float: left;">댓글 (<%= cmtlist.size() %>)<br></h5><hr style="width: 1000px;"><br>
                     <%
 	                   for(int i=cmtlist.size()-1; i>=0; i--){ //거꾸로 출력
 	                %>
@@ -397,21 +411,6 @@ HeartDTO heartvo = new HeartDAO().getHeartVO(boardID);
 	                  %>
 	         	</div>  
 	      	</div>
-	      	<!-- 답변쓰기 버튼을 눌렀을 때만 답변쓰기 섹션이 나타나도록 설정 -->
-			<div id="cmt-write" style="display: none; padding-top: 70px; width: 600px;"> 
-		      <div class="cmt-row">
-		          <form method="post" action="commentAction.jsp?boardID=<%= boardID %>">
-			          <table class="cmt-table" style="height: 100px; border-style: none;">
-			             <tbody>
-			                <tr>
-			                   <td><input type="text" placeholder="댓글을 입력하세요" name="cmtContent" maxlength="60" style="width: 600px; height: 150px; font-size: 12pt;"></td>
-			                </tr>
-			             </tbody>
-			          </table>
-			      <button type="submit" class="btn-blue" id="cmt-cpl"><span>완료</span></button>
-			      </form>
-		      </div>
-		   </div>	
    </div>
 </section>
 <!-- section -->

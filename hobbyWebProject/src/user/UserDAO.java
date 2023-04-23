@@ -40,10 +40,14 @@ public class UserDAO {
 			PreparedStatement pstmt=conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
 			rs = pstmt.executeQuery();
-			
+			//둘 중 하나라도 입력하지 않았을 때
+			if(userID ==  null || userPassword == null) {
+				return 2;
+			}
 			if (rs.next()) { //입력한 아이디가 존재할 때
 	            int available = rs.getInt("userAvailable"); //userAvailable 값 가져오기
 	            String password = rs.getString("userPassword"); //password 값 가져오기
+	            
 	            if (available == 1) {
 	            	if(password.equals(userPassword)) { //userAvailable == 1이고 password 값이 일치하면
 	                    return 1; // 로그인 성공

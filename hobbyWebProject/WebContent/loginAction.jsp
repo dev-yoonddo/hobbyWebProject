@@ -27,7 +27,15 @@
 		}
 		UserDAO userDAO = new UserDAO();
 		int result = userDAO.login(user.getUserID(), user.getUserPassword(), user.getUserAvailable());
-		if(result == 1){
+		if(result == 2){
+			session.setAttribute("userID", user.getUserID());
+			PrintWriter script = response.getWriter();
+			script.println("<script>");
+			script.println("alert('정보를 모두 입력해주세요.')");
+			script.println("history.back()");
+			script.println("</script>");
+		}
+		else if(result == 1){
 			session.setAttribute("userID", user.getUserID());
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
