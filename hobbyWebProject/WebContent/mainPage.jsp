@@ -19,7 +19,13 @@
 
 
 </head>
-
+<style>
+button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+</style>
 <body>
 <header>
 <% 
@@ -103,9 +109,10 @@ if(session.getAttribute("userID") != null){
             <div class="info-item">
              <h2>인원 모집중</h2>
             </div>
-        
-          
-          <div class="btn"><a href="#">TOGETHER</a></div>
+        	<form method="post" action="searchPage.jsp">
+		      <input type="hidden" name="searchField2" value="SPORTS">
+		      <div class="btn"><button type="submit">TOGETHER</button></div>
+		    </form>
         </div>
       </div>
 <!--       Slide One -->
@@ -117,8 +124,10 @@ if(session.getAttribute("userID") != null){
             <div class="info-item">
               <h2>인원 모집중</h2>
             </div>           
-          
-          <div class="btn"><a href="#">TOGETHER</a></div>
+	        <form method="post" action="searchPage.jsp">
+		      <input type="hidden" name="searchField2" value="LEISURE">
+		      <div class="btn"><button type="submit">TOGETHER</button></div>
+		    </form>
         </div>
       </div>
 <!--       Slide Two -->
@@ -130,8 +139,10 @@ if(session.getAttribute("userID") != null){
             <div class="info-item">
               <h2>인원 모집중</h2>
             </div>
-          
-          <div class="btn"><a href="#">TOGETHER</a></div>
+          	<form method="post" action="searchPage.jsp">
+		      <input type="hidden" name="searchField2" value="ART&MUSIC">
+		      <div class="btn"><button type="submit">TOGETHER</button></div>
+		    </form>
         </div>
       </div>
 <!--       Slide Three -->
@@ -143,7 +154,10 @@ if(session.getAttribute("userID") != null){
             <div class="info-item">
               <h2>찾아보기</h2>
             </div>
-          <div class="btn"><a href="#">GO</a></div>
+            <form method="post" action="searchPage.jsp">
+		      <input type="hidden" name="searchField2" value="OTHER">
+		      <div class="btn"><button type="submit">GO</button></div>
+		    </form>
         </div>
       </div>
 <!--       Slide Four -->

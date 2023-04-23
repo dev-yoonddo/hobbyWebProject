@@ -281,15 +281,15 @@ HeartDTO heartvo = new HeartDAO().getHeartVO(boardID);
 						ArrayList<HeartDTO> hearts = heartDAO.getHeartList(boardID);
 						
 						if (userID != null) {
-						    boolean hasMatch = false;
+						    boolean heartMatch = false;
 						    for (HeartDTO heart: hearts) {
 						        if (userID.equals(heart.getUserID()) && boardID == heart.getBoardID()) {
-						            hasMatch = true;
+						        	heartMatch = true;
 						            break; // Exit loop if match is found
 						        }
-						        hasMatch = false;
+						        heartMatch = false;
 						    }
-						    if (hasMatch){
+						    if (heartMatch){
 						%>
 						        <i id="heart2" class="fa-solid fa-heart"></i>&nbsp;<%=board.getHeartCount()%>
 						<%

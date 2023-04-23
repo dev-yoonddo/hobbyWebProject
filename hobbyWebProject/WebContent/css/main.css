@@ -400,17 +400,28 @@ body {
   border: none;
   color: var(--colorTwo);
   border-radius: 50px;
-  padding: 7px;
   margin-top: 20px;
-  font-weight: 600;
-  font-size: 36px;
-  line-height:50px;
+  padding: 7px;
+  width: 250px;
   letter-spacing: 2px;
   text-align:center;
 }
 
-.slide .btn a:hover {
-  text-decoration:none;
+.btn button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+  background-color: var(--colorOne);
+  color:inherit;
+  width:100%;
+  border:none;
+  font-weight: 500;
+  font-size: 38px;
+  display:inline-block;
+  border-radius: 50px;
+  cursor: pointer;
+  padding: 5px;
 }
 
 a {
