@@ -12,13 +12,8 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
 <link href="https://fonts.googleapis.com/css?family=Teko:300,400,500,600,700&display=swap" rel="stylesheet">
 <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square.css" rel="stylesheet">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script defer src="option/jquery/jquery.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script src="https://kit.fontawesome.com/f95555e5d8.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
-<script type="text/javascript" src="js/script.js"></script>
-
 
 </head>
 <body>
@@ -93,7 +88,7 @@ if(session.getAttribute("userID") != null){
 	</div>
 	
 	<div class="move_btns">
-	  <div class="moveTop" onclick="topBtn()">
+	  <div class="moveTop">
 	  <i class="fa-solid fa-circle-arrow-up fa-2x"></i>
 	  </div>
 	  <div class="moveBottom" onclick="bottomBtn()">
@@ -194,10 +189,11 @@ if(session.getAttribute("userID") != null){
 </div>
 </footer>
 <script>
-$(function() {
 	opener.location.reload(); //부모창 리프레쉬
     self.close(); //현재창 닫기
-});
 </script>
+<script src="option/jquery/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="js/script.js"></script>
 </body>
 </html>

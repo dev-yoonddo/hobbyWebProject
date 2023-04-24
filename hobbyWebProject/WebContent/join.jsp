@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Join</title>
 <link rel="stylesheet" href="css/main.css?after">
 <link rel="stylesheet" href="css/member.css?after">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
@@ -29,6 +29,13 @@
 
 <body>
 <header>
+<% 
+String userID = null;
+if(session.getAttribute("userID") != null){
+	userID = (String) session.getAttribute("userID");
+}
+%>
+
 <div id="header" class="de-active">
 	<nav class="navbar">
 		<nav class="navbar_left">
@@ -36,13 +43,34 @@
 				<a href="mainPage.jsp" id="mainlogo" >TOGETHER</a>
 			</div>
 			<ul class="navbar_menu" style="float: left;">
-				<li><a href="community.jsp" id ="menu">COMMUNITY</a></li>
-				<li><a href="qnaPage.jsp" id="menu">Q & A</a></li>
+				<li><a href="community.jsp" class ="menu">COMMUNITY</a></li>
+				<% 
+					if(userID == null){
+				%>
+				<li><a id="go-qna-1" class="menu">Q & A</a></li>
+				<%
+					} else { 
+				%>
+				<li><a id="go-qna-2" class="menu" onclick="location.href='qnaPage.jsp'">Q & A</a></li>
+				<%
+					}
+				%>
 			</ul>
 		</nav>
 			<ul class="navbar_login" >
+				<%
+					if(userID == null){
+				%>	
 				<li><a href="login.jsp">LOGIN</a></li>
 				<li><a href="join.jsp">JOIN</a></li>
+				<%
+					}else{
+				%>
+				<li><a href="userUpdate.jsp"><i class="fa-solid fa-gear"></i></a></li>
+				<li><a href="logout.jsp">LOGOUT</a></li>
+				<%
+					}
+				%>
 			</ul>
 			<a onclick="toggleAct()" class="navbar_toggleBtn">
 				<i class="fa-solid fa-bars"></i>

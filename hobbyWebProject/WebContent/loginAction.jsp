@@ -16,7 +16,7 @@
 <%
 		String userID = null;
 		if(session.getAttribute("userID") != null){
-			userID = (String) session.getAttribute("userid");
+			userID = (String) session.getAttribute("userID");
 		}
 		if(userID != null){
 			PrintWriter script = response.getWriter();
@@ -28,7 +28,6 @@
 		UserDAO userDAO = new UserDAO();
 		int result = userDAO.login(user.getUserID(), user.getUserPassword(), user.getUserAvailable());
 		if(result == 2){
-			session.setAttribute("userID", user.getUserID());
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
 			script.println("alert('정보를 모두 입력해주세요.')");
@@ -64,13 +63,13 @@
 			script.println("history.back()");
 			script.println("</script>");
 		}
-		else if(result == -3){
+		/*else if(result == -3){
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
 			script.println("alert('회원 정보가 없습니다.')");
 			script.println("history.back()");
 			script.println("</script>");
-		}
+		}*/
 	%>
 
 </body>

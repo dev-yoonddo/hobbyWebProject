@@ -347,14 +347,12 @@ HeartDTO heartvo = new HeartDAO().getHeartVO(boardID);
 						<button type="button" class="btn-blue" id="btn-del" onclick="if(confirm('정말로 삭제하시겠습니까?')){location.href='deleteAction.jsp?boardID=<%=boardID%>'}"><span>삭제</span></button>
 			<%
 					}
-				}
+					else if(userID.equals(board.getUserID())){
 			%>
+						<button type="button" class="btn-blue" onclick="location.href='update.jsp?boardID=<%=boardID%>'"><span>수정</span></button>
+						<button type="button" class="btn-blue" id="btn-del" onclick="if(confirm('정말로 삭제하시겠습니까?')){location.href='deleteAction.jsp?boardID=<%=boardID%>'}"><span>삭제</span></button>
 			<%
-				if(userID.equals(board.getUserID())){
-			%>
-					<button type="button" class="btn-blue" onclick="location.href='update.jsp?boardID=<%=boardID%>'"><span>수정</span></button>
-					<button type="button" class="btn-blue" id="btn-del" onclick="if(confirm('정말로 삭제하시겠습니까?')){location.href='deleteAction.jsp?boardID=<%=boardID%>'}"><span>삭제</span></button>
-			<%
+					}
 				}
 			%>
 			</div>
@@ -444,9 +442,6 @@ $(document).ready(function(){
 function cmtAction(){
 	document.getElementById('cmt-write').style.display = 'block';
 	document.getElementById('cmt-write-btn').style.display = 'none';
-}
-function del1(){
-	$("#heart1z").hide();
 }
 </script>
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
