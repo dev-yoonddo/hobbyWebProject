@@ -11,6 +11,7 @@
 
 // })();
 
+
 const con = document.querySelector(".wrapper");
 const section = document.querySelector(".main");
 const side = document.querySelector('.side');

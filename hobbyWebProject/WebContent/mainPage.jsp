@@ -1,3 +1,5 @@
+<%@page import="java.util.HashMap"%>
+<%@page import="java.util.Map"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -25,7 +27,8 @@
 String userID = null;
 if(session.getAttribute("userID") != null){
 	userID = (String) session.getAttribute("userID");
-} %>
+}
+%>
 
 <div id="header" class="de-active">
 	<nav class="navbar">
@@ -34,8 +37,18 @@ if(session.getAttribute("userID") != null){
 				<a href="mainPage.jsp" id="mainlogo" >TOGETHER</a>
 			</div>
 			<ul class="navbar_menu" style="float: left;">
-				<li><a href="community.jsp" id ="menu">COMMUNITY</a></li>
-				<li><a href="qnaPage.jsp" id="menu">Q & A</a></li>
+				<li><a href="community.jsp" class ="menu">COMMUNITY</a></li>
+				<% 
+					if(userID == null){
+				%>
+				<li><a id="go-qna-1" class="menu">Q & A</a></li>
+				<%
+					} else { 
+				%>
+				<li><a id="go-qna-2" class="menu" onclick="location.href='qnaPage.jsp'">Q & A</a></li>
+				<%
+					}
+				%>
 			</ul>
 		</nav>
 			<ul class="navbar_login" >
@@ -180,5 +193,11 @@ if(session.getAttribute("userID") != null){
    		</ul>
 </div>
 </footer>
+<script>
+$(function() {
+	opener.location.reload(); //부모창 리프레쉬
+    self.close(); //현재창 닫기
+});
+</script>
 </body>
 </html>

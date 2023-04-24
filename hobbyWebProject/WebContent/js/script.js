@@ -19,6 +19,44 @@ mouseCursor.style.top = e.pageY - scrollY + "px";
 }
 // ------------------------
 
+// $(function loginPU(){
+// 		var login = confirm('로그인시 이용이 가능합니다. 로그인 페이지로 이동하시겠습니까?');
+// 		if (login) {
+// 			window.open("login.jsp", "Login", "width=410, height=400, top=50%, left=50%") ;
+//     }
+// 		else {
+// 			location.href='mainPage.jsp';
+// 		}
+// });
+
+ 
+// $(function(){
+//     $("#go-qna").on('click', function(){
+//       var login = confirm('로그인시 이용이 가능합니다. 로그인 페이지로 이동하시겠습니까?');
+//       if (login) {
+//         window.open("login.jsp", "Login", "width=410, height=400, top=50%, left=50%") ;
+//       }
+//       else {
+//         location.href='mainPage.jsp';
+//       }
+//     });
+// });
+
+
+const qnaPage = document.querySelector("#go-qna-1");
+qnaPage.addEventListener('click', () =>{
+  
+    var login = confirm('로그인시 이용이 가능합니다. 로그인 페이지로 이동하시겠습니까?');
+      if (login) {
+        window.open("login.jsp", "Login", "width=410, height=400, top=50%, left=50%") ;
+      }
+      else {
+        location.href='mainPage.jsp';
+      }
+    
+  });
+
+  
 
 //navbar togglebuttton 눌렀을 때 메뉴 펼치고 접기
 const toggleBtn = document.querySelector('.navbar_toggleBtn');
@@ -83,6 +121,7 @@ function hasScrolled() {
 }
 
 */
+
 
 //mainPage 슬라이드
 var btn = document.querySelectorAll('.arrowBtn')
