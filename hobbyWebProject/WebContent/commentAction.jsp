@@ -30,7 +30,7 @@
  		PrintWriter script = response.getWriter();
  		script.println("<script>");
 		script.println("alert('로그인을 해주세요.')");
- 		script.println("location.href = 'loginPage.jsp'");
+ 		script.println("location.href = 'login.jsp'");
  		script.println("</script>");
  	} 
  	else{

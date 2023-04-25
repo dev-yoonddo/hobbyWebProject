@@ -124,8 +124,18 @@ if(session.getAttribute("userID") != null){
 				<a href="mainPage.jsp" id="mainlogo" >TOGETHER</a>
 			</div>
 			<ul class="navbar_menu" style="float: left;">
-				<li><a href="community.jsp" id ="menu">COMMUNITY</a></li>
-				<li><a href="qnaPage.jsp" id="menu">Q & A</a></li>
+				<li><a href="community.jsp" class ="menu">COMMUNITY</a></li>
+				<% 
+					if(userID == null){
+				%>
+				<li><a id="go-group-1" class="menu">Q & A</a></li>
+				<%
+					} else { 
+				%>
+				<li><a id="go-group-2" class="menu" onclick="location.href='groupPage.jsp'">Q & A</a></li>
+				<%
+					}
+				%>
 			</ul>
 		</nav>
 			<ul class="navbar_login" >

@@ -31,6 +31,46 @@
   backdrop-filter: sepia(20%);
   background-size: cover;
 }
+/* 버튼 스타일 */
+.btn-blue{
+	position: relative;
+	display: inline-block;
+	width: 90px;
+	height: 70px;
+	background-color: transparent;
+	border: none; 
+	cursor: pointer;
+	margin: 10px;
+	float: right;
+}
+
+.btn-blue span {         
+  position: relative;
+  display: inline-block;
+  font-size: 12pt;
+  font-weight: bold;
+  letter-spacing: 2px;
+  border-radius: 20px;
+  width: 100%;
+  padding: 10px;
+  transition: 0.5s; 
+  color: #ffffff;
+  background-color: #7D95E5;
+  border: 1px solid #7D95E5;
+  font-family: 'Nanum Gothic Coding', monospace;
+}
+.btn-blue #search, #write{
+font-family: 'Nanum Gothic Coding', monospace;
+}
+.btn-blue::before {
+  background-color: #7D95E5;
+}
+
+.btn-blue span:hover {
+  color: #7D95E5;
+  background-color: #ffffff
+}
+
 
 /* header css */
 body{

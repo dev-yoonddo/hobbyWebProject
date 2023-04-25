@@ -1,5 +1,24 @@
 (function($) {
   $(function($){
+    
+//userID == null일때 로그인팝업창 
+$(function(){
+  $('#go-group-1').on('click',function(){
+    var login = confirm('로그인시 이용이 가능합니다. 로그인 페이지로 이동하시겠습니까?');
+    if (login) {
+      window.open("login.jsp", "Login", "width=450, height=700, top=50%, left=50%") ;
+    }
+    else {
+      location.href='mainPage.jsp';
+    }
+    });
+});
+$(function(){
+  $('#create-group').on('click',function(){
+      window.open("groupPopup.jsp", "Login", "width=450, height=500, top=50%, left=50%") ;
+    });
+});
+
 
 //마우스 커서 이벤트 ------
 let a = document.createElement('div');
@@ -41,19 +60,6 @@ mouseCursor.style.top = e.pageY - scrollY + "px";
 //       }
 //     });
 // });
-
-//userID == null일때 로그인팝업창 
-const qnaPage = document.querySelector("#go-qna-1");
-qnaPage.addEventListener('click', () =>{
-    var login = confirm('로그인시 이용이 가능합니다. 로그인 페이지로 이동하시겠습니까?');
-      if (login) {
-        window.open("login.jsp", "Login", "width=450, height=700, top=500, left=500") ;
-      }
-      else {
-        location.href='mainPage.jsp';
-      }
-    
-  });
 
   
 

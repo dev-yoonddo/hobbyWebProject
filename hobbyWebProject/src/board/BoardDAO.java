@@ -53,6 +53,7 @@ public class BoardDAO {
 		}
 		return -1; //데이터베이스 오류 : 게시물 번호로 적절하지 않은 -1 반환
 	}*/
+	//boardID 번호매기기
 	public int getNext() {
 	    String SQL = "SELECT MAX(boardID) FROM board";
 	    try {
@@ -62,7 +63,6 @@ public class BoardDAO {
 	            int maxBoardID = rs.getInt(1);
 	            return maxBoardID + 1;
 	        } else {
-            // If no posts found for the given category, return 1
             return 1;
 	        }
 	    } catch (Exception e) {

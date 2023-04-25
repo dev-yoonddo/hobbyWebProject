@@ -132,42 +132,6 @@ padding: 8px 60px;
 	padding-right: 10px;
 }
 
-.btn-blue{
-	position: relative;
-	display: inline-block;
-	width: 90px;
-	height: 50px;
-	background-color: transparent;
-	border: none; 
-	cursor: pointer;
-	margin: 10px;
-	float: right;
-}
-
-.btn-blue span {         
-  position: relative;
-  display: inline-block;
-  font-size: 12pt;
-  font-weight: bold;
-  letter-spacing: 2px;
-  border-radius: 20px;
-  width: 100%;
-  padding: 10px;
-  transition: 0.5s; 
-  color: #ffffff;
-  background-color: #7D95E5;
-  border: 1px solid #7D95E5;
-  font-family: 'Nanum Gothic Coding', monospace;
-}
-
-.btn-blue::before {
-  background-color: #7D95E5;
-}
-
-.btn-blue span:hover {
-  color: #7D95E5;
-  background-color: #ffffff
-}
 #cmt-btn{
 	width: 40px;
 	height: 20px;
@@ -229,8 +193,18 @@ HeartDTO heartvo = new HeartDAO().getHeartVO(boardID);
 				<a href="mainPage.jsp" id="mainlogo" >TOGETHER</a>
 			</div>
 			<ul class="navbar_menu" style="float: left;">
-				<li><a href="community.jsp" id ="menu">COMMUNITY</a></li>
-				<li><a href="qnaPage.jsp" id="menu">Q & A</a></li>
+				<li><a href="community.jsp" class ="menu">COMMUNITY</a></li>
+				<% 
+					if(userID == null){
+				%>
+				<li><a id="go-group-1" class="menu">Q & A</a></li>
+				<%
+					} else { 
+				%>
+				<li><a id="go-group-2" class="menu" onclick="location.href='groupPage.jsp'">Q & A</a></li>
+				<%
+					}
+				%>
 			</ul>
 		</nav>
 			<ul class="navbar_login" >

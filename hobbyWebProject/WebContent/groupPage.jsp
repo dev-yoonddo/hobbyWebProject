@@ -1,5 +1,10 @@
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.io.PrintWriter" %>
+<%@ page import="group.GroupDTO" %>
+<%@ page import="group.GroupDAO" %>
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,8 +13,8 @@
 <title>TOGETHER</title>
 <link rel="stylesheet" href="css/main.css?after">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
-<link href="https://fonts.googleapis.com/css?family=Teko:300,400,500,600,700&display=swap" rel="stylesheet">
 <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=IBM+Plex+Sans+KR:wght@300;600&family=Jua&family=Merriweather:wght@700&family=Nanum+Gothic&family=Nanum+Gothic+Coding&family=Noto+Sans+KR:wght@400&family=Noto+Serif+KR:wght@200&display=swap" rel="stylesheet">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script defer src="option/jquery/jquery.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
@@ -20,7 +25,46 @@
 
 </head>
 <style>
-    * {
+section{
+padding-top: 100px;
+margin: 0 100px;
+}
+#sec-top{
+	display: flex;
+justify-content: center;}
+.btn-blue{
+	width: 250px;
+	height: auto;
+	float: none;
+	display: flex;
+	justify-content: center;	
+	margin: 0 auto; 
+}
+.btn-blue span{
+	width: 230px;
+	height: auto;
+	margin: 0 auto;
+	color: #ffffff;
+	background-color: #2E2F49;
+	border: 1px solid #2E2F49;
+	border-radius: 200px;
+	font-size: 15pt;
+	padding: 15px 20px;
+}
+
+.btn-blue::before {
+  background-color: #2E2F49;
+}
+
+.btn-blue span:hover {
+  color: #2E2F49;
+  background-color: #ffffff
+}
+#row{
+height: auto;
+margin-top: 100px;
+}
+/*    * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
@@ -47,7 +91,7 @@
       transition: all 1s linear;
       align-items: center;
 
-      /* background-color: #f1c40f; */
+      // background-color: #f1c40f;
     }
 
     .main div {
@@ -92,18 +136,25 @@
       left: 0;
       top: 0;
     }
+    */
   </style>
 </head>
 
 <body>
-<header>
 <% 
 String userID = null;
 if(session.getAttribute("userID") != null){
 	userID = (String) session.getAttribute("userID");
 }
+int groupID = 0;
+if(request.getParameter("groupID") != null){
+	groupID = Integer.parseInt(request.getParameter("groupID"));
+}
+int pageNumber = 1;//기본적으로 1페이지
+if (request.getParameter("pageNumber") != null)
+	pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
 %>
-
+<header>
 <div id="header" class="de-active">
 	<nav class="navbar">
 		<nav class="navbar_left">
@@ -115,11 +166,11 @@ if(session.getAttribute("userID") != null){
 				<% 
 					if(userID == null){
 				%>
-				<li><a id="go-qna-1" class="menu">Q & A</a></li>
+				<li><a id="go-group-1" class="menu">Q & A</a></li>
 				<%
 					} else { 
 				%>
-				<li><a id="go-qna-2" class="menu" onclick="location.href='qnaPage.jsp'">Q & A</a></li>
+				<li><a id="go-group-2" class="menu" onclick="location.href='groupPage.jsp'">Q & A</a></li>
 				<%
 					}
 				%>
@@ -146,6 +197,41 @@ if(session.getAttribute("userID") != null){
 	</nav>
 </div>
 </header>
+<section>
+<div id="sec-top">
+<div>
+	<h3 style="font-weight: bold; font-size: 20pt; color: #646464;"><%= userID %>님 안녕하세요 그룹을 만들거나 참여해보세요</h3>
+	<button type="button" class="btn-blue" id="create-group" value="그룹생성"><span>그룹 만들기</span></button>	
+</div>
+</div>
+<div id="row">
+
+			<tr class="board-head">
+				<th style="width: 20%;"><span>그룹이름</span></th>
+				<th style="width: 20%;"><span>팀장</span></th>
+				<th style="width: 20%;"><span>활동중</span></th>
+				<th style="width: 20%;"><span>팀원</span></th>
+			</tr>
+	
+		<%
+			GroupDAO groupDAO = new GroupDAO();
+			ArrayList<GroupDTO> list = groupDAO.getList(pageNumber);
+			for (int i = 0; i < list.size(); i++) {
+		%>
+		<div class="group-box">	
+			<div class="group" id="in-group"><span><a href="groupView.jsp?groupID=<%=list.get(i).getGroupID()%>"><%= list.get(i).getGroupName().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></a></span></div>
+			<div class="group"><span><%= list.get(i).getUserID() %></span></div>
+			<div class="group"><span><%= list.get(i).getGroupAvailable() %></span></div>
+			<div class="group"><span>팀원---</span></div>
+		</div>
+		<%
+		}
+		%>
+		
+		
+</div>		
+</section>
+<!--  
   <div class="wrapper">
     <section class="main">
       <div class="first-container item">1</div>
@@ -160,8 +246,14 @@ if(session.getAttribute("userID") != null){
 
     </section>
   </div>
-
+-->
 </body>
+<script>
+opener.location.reload(); //부모창 리프레쉬
+self.close(); //로그인 후 팝업창이 mainPage로 이동했을때 창 닫기
+
+
+</script>
 <script src="js/qna.js"></script>
 
 </html>

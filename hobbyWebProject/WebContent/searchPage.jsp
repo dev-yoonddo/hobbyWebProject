@@ -84,44 +84,7 @@ padding: 20px;
 .board-row{
 border-bottom: solid 1px #E0E0E0;
 }
-.btn-black{
-	position: relative;
-	display: inline-block;
-	width: 90px;
-	height: 70px;
-	background-color: transparent;
-	border: none; 
-	cursor: pointer;
-	margin: 10px;
-	float: right;
-}
 
-.btn-black span {         
-  position: relative;
-  display: inline-block;
-  font-size: 12pt;
-  font-weight: bold;
-  letter-spacing: 2px;
-  border-radius: 20px;
-  width: 100%;
-  padding: 10px;
-  transition: 0.5s; 
-  color: #ffffff;
-  background-color: #7D95E5;
-  border: 1px solid #7D95E5;
-  font-family: 'Nanum Gothic Coding', monospace;
-}
-.btn-black #search, #write{
-font-family: 'Nanum Gothic Coding', monospace;
-}
-.btn-black::before {
-  background-color: #7D95E5;
-}
-
-.btn-black span:hover {
-  color: #7D95E5;
-  background-color: #ffffff
-}
 #row-btn-sec{
 	width:auto;
 	display: flex;
@@ -159,8 +122,6 @@ font-family: 'Nanum Gothic Coding', monospace;
 		boardID = Integer.parseInt(request.getParameter("boardID"));
 	}
 	BoardDTO board = new BoardDAO().getBoardVO(boardID);
-	
-
 %>
 <header>
 <div id="header" class="de-active">
@@ -170,8 +131,18 @@ font-family: 'Nanum Gothic Coding', monospace;
 				<a href="mainPage.jsp" id="mainlogo" >TOGETHER</a>
 			</div>
 			<ul class="navbar_menu" style="float: left;">
-				<li><a href="community.jsp" id ="menu">COMMUNITY</a></li>
-				<li><a href="qnaPage.jsp" id="menu">Q & A</a></li>
+				<li><a href="community.jsp" class ="menu">COMMUNITY</a></li>
+				<% 
+					if(userID == null){
+				%>
+				<li><a id="go-group-1" class="menu">Q & A</a></li>
+				<%
+					} else { 
+				%>
+				<li><a id="go-group-2" class="menu" onclick="location.href='groupPage.jsp'">Q & A</a></li>
+				<%
+					}
+				%>
 			</ul>
 		</nav>
 			<ul class="navbar_login" >
@@ -198,7 +169,6 @@ font-family: 'Nanum Gothic Coding', monospace;
 <section>
 	<div class="board-container">
 		<%
-			BoardDAO boardDAO = new BoardDAO();
 				//카테고리를 검색했을 때 테이블 상단에 선택한 카테고리를 출력
 				String search = request.getParameter("searchField2");
 		%>
@@ -219,6 +189,7 @@ font-family: 'Nanum Gothic Coding', monospace;
 				</thead>
 				<tbody>
 					<%
+						BoardDAO boardDAO = new BoardDAO();
 						ArrayList<BoardDTO> list = boardDAO.getSearch(search);
 						if(search == ""){
 							PrintWriter script = response.getWriter();
@@ -274,8 +245,8 @@ font-family: 'Nanum Gothic Coding', monospace;
 		<% 
 			if( userID != null ){
 		%>
-			<button type="button" class="btn-black" id="search" onclick="location.href='community.jsp'"><span>돌아가기</span></button>
-			<button type="button" class="btn-black" id="write" onclick="location.href='write.jsp'"><span>글쓰기</span></button>
+			<button type="button" class="btn-blue" id="search" onclick="location.href='community.jsp'"><span>돌아가기</span></button>
+			<button type="button" class="btn-blue" id="write" onclick="location.href='write.jsp'"><span>글쓰기</span></button>
 		<% 
 			}
 		%>
