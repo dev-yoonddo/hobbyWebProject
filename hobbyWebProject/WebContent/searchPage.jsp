@@ -135,11 +135,11 @@ border-bottom: solid 1px #E0E0E0;
 				<% 
 					if(userID == null){
 				%>
-				<li><a id="go-group-1" class="menu">Q & A</a></li>
+				<li><a id="go-group-1" class="menu">GROUP</a></li>
 				<%
 					} else { 
 				%>
-				<li><a id="go-group-2" class="menu" onclick="location.href='groupPage.jsp'">Q & A</a></li>
+				<li><a id="go-group-2" class="menu" onclick="location.href='groupPage.jsp'">GROUP</a></li>
 				<%
 					}
 				%>

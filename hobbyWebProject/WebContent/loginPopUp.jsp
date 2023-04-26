@@ -7,6 +7,12 @@
 <title>Login</title>
 <link rel="stylesheet" href="css/member.css?after">
 </head>
+<style>
+.login-wrapper{
+	margin: 20px;
+	margin-top: 50px;
+}
+</style>
 <body>
 	<div class="login-wrapper">
 	 <div>

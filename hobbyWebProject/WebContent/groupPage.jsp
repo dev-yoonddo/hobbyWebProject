@@ -65,79 +65,57 @@ justify-content: center;}
 height: auto;
 margin-top: 100px;
 }
-/*    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
 
-    body {
-      width: 100vw;
-      height: 100vh;
+#gallery {
+  width: 100%; 
+  height: 100%;
+  display: flex;
+}
+#gal-inner{
+	display: flex;
+	width: auto;
+	height: auto;
+	
+}
+.group-box {
+  border-radius: 10px;
+  transition: transform 0.5s ease;
+  height: 200px;
+  width: 200px;
+  background-color: rgb(204, 204, 255);
+  margin:0 auto;
+  display: flex;
 
-    }
+}
 
-    .wrapper {
-      width: 100%;
-      height: 100%;
-      display: flex;
+.group-box:hover {
+  transform: scale(1.2);
+}
+.group-box:hover > .info-box{
+	opacity: 0;
+}
+.group-box:hover > .group-inner-box {
+  opacity: 1;
+  transform: scale(1.1);
+}
 
-    }
-
-    .main {
-      width: 80%;
-      height: 100vh;
-      display: flex;
-      justify-content: space-around;
-      transition: all 1s linear;
-      align-items: center;
-
-      // background-color: #f1c40f;
-    }
-
-    .main div {
-      width: 100px;
-      height: 100px;
-      border: 1px solid aliceblue;
-      background-color: aliceblue;
-
-      border-radius: 15px;
-      box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
-    }
-
-    .aside {
-      width: 20%;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-around;
-      align-items: center;
-      background-color: #95a5a6;
-    }
-
-    .aside div {
-      width: 50px;
-      height: 50px;
-      border: 1px solid aliceblue;
-      background-color: aliceblue;
-      border-radius: 10px;
-      box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .aside div .mini {
-      width: 40px;
-      height: 40px;
-      border: 1px solid rgb(71, 255, 227);
-      background-color: rgb(71, 255, 227);
-      border-radius: 8px;
-      box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
-      left: 0;
-      top: 0;
-    }
-    */
+.group-inner-box {
+  width: 150px;
+  height: 100px;
+  opacity: 0;
+  transition: opacity 0.5s ease,
+    transform 0.5s ease;
+  margin: 0 auto;
+  align-items: center;
+  position: absolute;
+}
+.info-box{
+	width: 150px;
+  	height: 100px;
+	margin: 0 auto;
+	justify-content: center;
+	position: absolute;
+}
   </style>
 </head>
 
@@ -147,7 +125,6 @@ String userID = null;
 if(session.getAttribute("userID") != null){
 	userID = (String) session.getAttribute("userID");
 }
-
 int pageNumber = 1;//기본적으로 1페이지
 if (request.getParameter("pageNumber") != null)
 	pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
@@ -163,17 +140,7 @@ if (request.getParameter("pageNumber") != null)
 			</div>
 			<ul class="navbar_menu" style="float: left;">
 				<li><a href="community.jsp" class ="menu">COMMUNITY</a></li>
-				<% 
-					if(userID == null){
-				%>
-				<li><a id="go-group-1" class="menu">Q & A</a></li>
-				<%
-					} else { 
-				%>
-				<li><a id="go-group-2" class="menu" onclick="location.href='groupPage.jsp'">Q & A</a></li>
-				<%
-					}
-				%>
+				<li><a class="menu">GROUP</a></li>
 			</ul>
 		</nav>
 			<ul class="navbar_login" >
@@ -204,45 +171,41 @@ if (request.getParameter("pageNumber") != null)
 	<button type="button" class="btn-blue" id="create-group" value="그룹생성"><span>그룹 만들기</span></button>	
 </div>
 </div>
-<div id="row">
-
-			<tr class="board-head">
-				<th style="width: 20%;"><span>그룹이름</span></th>
-				<th style="width: 20%;"><span>팀장</span></th>
-				<th style="width: 20%;"><span>활동중</span></th>
-				<th style="width: 20%;"><span>팀원</span></th>
-			</tr>
-	
+<div id="gallery">
+<div id="gal-inner">
 		<%
 			GroupDAO groupDAO = new GroupDAO();
 			ArrayList<GroupDTO> list = groupDAO.getList(pageNumber);
-			for (int i = 0; i < list.size(); i++) {	
-
+			for (int i = 0; i < list.size(); i++) {
 		%>
-		<div class="group-box">	
-			<div class="group" id="in-group">
-	            <span>
-	                <a onclick="showPasswordPrompt('<%=list.get(i).getGroupID()%>', '<%=list.get(i).getGroupPassword()%>')">
-	                    <%=list.get(i).getGroupName().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%>
-	                </a>
-	            </span>
-	        </div>
- 			<div class="group"><span><%= list.get(i).getUserID() %></span></div>
-			<div class="group">
-				<span>
-				<% if(list.get(i).getGroupAvailable() == 1){%>
-				활동중<%}else{ %>비활동중<%} %>
-				</span>
+		<div class="group-box">
+			<div class="info-box">
+				<div class="info" id="in-group">
+		            <span>
+		                <a onclick="showPasswordPrompt('<%=list.get(i).getGroupID()%>', '<%=list.get(i).getGroupPassword()%>','<%= list.get(i).getGroupAvailable()%>')">
+		                    <%=list.get(i).getGroupName().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%>
+		                </a>
+		            </span>
+		        </div>
+	 			<div class="info"><span><%= list.get(i).getUserID() %></span></div>
+				<div class="info">
+					<span>
+					<% if(list.get(i).getGroupAvailable() == 1){%>
+					활동중<%}else{ %>비활동중<%} %>
+					</span>
+				</div>
+				<div class="info"><span>팀원---</span></div>
+			</div>			
+  			<div class="group-inner-box">		
 			</div>
-			<div class="group"><span>팀원---</span></div>
-						
 		</div>
+		<% if(list.get(i).getGroupID() % 3 == 0){ %><br><br><br>
 		<%
-		
+		}
 			}
 		%>
 		
-		
+</div>		
 </div>		
 </section>
 <!--  
@@ -264,20 +227,28 @@ if (request.getParameter("pageNumber") != null)
 </body>
 <script>
 opener.location.reload(); //부모창 리프레쉬
-self.close(); //로그인 후 팝업창이 mainPage로 이동했을때 창 닫기
+self.close(); //로그인 후 팝업 창 닫기
 </script>
 <script>
-function showPasswordPrompt(grID, grPassword) {
+//groupName을 클릭하면 id,password,available value를 받아온다
+function showPasswordPrompt(grID, grPassword, grAvailable) {
     var inputPassword = "";
-    while (inputPassword != grPassword) {
-        inputPassword = prompt("비밀번호를 입력하세요");
-        if(inputPassword == null){ //null은 취소버튼을 눌렀을 때를 의미한다. 아무것도 입력하지 않고 확인을 누르면 ""이다."
-        	break;
-        }
+    //활동중
+    if(grAvailable == 1){
+	    while (inputPassword != grPassword) {
+	        inputPassword = prompt("비밀번호를 입력하세요");
+	        if(inputPassword == null){ //null은 취소버튼을 눌렀을 때를 의미한다. 아무것도 입력하지 않고 확인을 누르면 ""이다."
+	        	break;
+	        }
+	    }
+	    if (inputPassword == grPassword) {
+	        location.href = "groupView.jsp?groupID=" + grID;
+	    }
+	//비활동중
+    }else{
+    	alert("비활동 중인 그룹입니다.");
     }
-    if (inputPassword == grPassword) {
-        location.href = "groupView.jsp?groupID=" + grID;
-    }
+    
     /* 다른 while
     while(true) {
         inputPassword = prompt("Enter group password:");

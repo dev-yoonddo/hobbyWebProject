@@ -6,10 +6,10 @@ $(function(){
   $('#go-group-1').on('click',function(){
     var login = confirm('로그인시 이용이 가능합니다. 로그인 페이지로 이동하시겠습니까?');
     if (login) {
-      window.open("login.jsp", "Login", "width=450, height=700, top=50%, left=50%") ;
+      window.open("loginPopUp.jsp", "Login", "width=450, height=500, top=50%, left=50%") ;
     }
     else {
-      location.href='mainPage.jsp';
+      location.href='history.back()';
     }
     });
 });

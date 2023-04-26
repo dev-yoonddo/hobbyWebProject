@@ -9,7 +9,19 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>GROUP VIEW</title>
+<link rel="stylesheet" href="css/main.css?after">
+<link rel="stylesheet" href="css/member.css?after">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
+<link href="https://fonts.googleapis.com/css2?family=Bruno+Ace&family=Gowun+Dodum&family=IBM+Plex+Sans+KR:wght@300;600&family=Jua&family=Merriweather:wght@700&family=Nanum+Gothic&family=Nanum+Gothic+Coding&family=Noto+Sans+KR:wght@400&family=Noto+Serif+KR:wght@200&display=swap" rel="stylesheet">
+<link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square.css" rel="stylesheet">
+<script src="option/jquery/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="js/script.js"></script>
+<script type="text/javascript" src="js/checkPW.js"></script>
+<script src="https://kit.fontawesome.com/f95555e5d8.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+
 </head>
 <body>
 <%
@@ -50,17 +62,7 @@ GroupDTO group = new GroupDAO().getGroupVO(groupID);
 			</div>
 			<ul class="navbar_menu" style="float: left;">
 				<li><a href="community.jsp" class ="menu">COMMUNITY</a></li>
-				<% 
-					if(userID == null){
-				%>
-				<li><a id="go-group-1" class="menu">Q & A</a></li>
-				<%
-					} else { 
-				%>
-				<li><a id="go-group-2" class="menu" onclick="location.href='groupPage.jsp'">Q & A</a></li>
-				<%
-					}
-				%>
+				<li><a class="menu" onclick="history.back()">GROUP</a></li>
 			</ul>
 		</nav>
 			<ul class="navbar_login" >
@@ -93,5 +95,7 @@ GroupDTO group = new GroupDAO().getGroupVO(groupID);
 <button type="button" class="btn-blue" id="btn-del" onclick="if(confirm('정말로 삭제하시겠습니까?')){location.href='groupDeleteAction.jsp?groupID=<%=groupID%>'}"><span>삭제</span></button>
 
 </section>
+<script>
+</script>
 </body>
 </html>

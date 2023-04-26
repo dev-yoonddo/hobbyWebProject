@@ -1,3 +1,6 @@
+<%@page import="group.GroupDAO"%>
+<%@page import="group.GroupDTO"%>
+<%@page import="java.io.PrintWriter"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -19,143 +22,78 @@
 
 
 <style>
-
-.select {
-  position: relative;
-  width: 400px;
+body {
+  background-color: rgb(10, 10, 10);
+  display: flex;
+  padding-top: 200px;
 }
 
-
-.select .option-list {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  width: 100%;
-  overflow: hidden;
-  max-height: 0;
+#gallery {
+  height: 100%;
+  width: 100%; 
+  display: flex;
+  display: flex;
 }
 
-.select.active .option-list {
-  max-height: none;
+.tile {
+  border-radius: 10px;
+  transition: transform 0.5s ease;
+  height: 200px;
+  width: 200px;
+  background-color: rgb(204, 204, 255);
+  margin:0 auto;
+  display: flex;
 }
 
-/* 테마 적용하기 */
-#select-sec {
-	width: 450px;
-	height: 50px;
-	font-size: 13pt;
-	font-weight: bold;
-	color: #6e6e6e;
-	font-family: 'Nanum Gothic', sans-serif;
-	display: flex;
+.tile:hover {
+  transform: scale(1.2);
 }
-#select-sec .select {
-  box-shadow: 0 0 10px #86A5FF;
-  border-radius: 15px;
-  padding: 15px;
-  cursor: pointer;
+.tile:hover > .text{
+opacity: 0;
+}
+.tile:hover > .img {
+  opacity: 1;
+  transform: scale(1.1);
 }
 
-#select-sec .select .text {
-font-size: 13pt;
-font-weight: bold;
-color: #6e6e6e;
-display: flex;
+.img {
+  width: 150px;
+  height: 100px;
+  opacity: 0;
+  transition: opacity 0.5s ease,
+    transform 0.5s ease;
+  margin: 0 auto;
+  align-items: center;
 }
-.option{
-display: flex;
+.item{
+	width:150px;
+	height: 100px;
+	margin: 0 auto;
+	padding: 20px;
+	justify-content: center;
 }
-span{
-margin: 0 auto;
-}
-#select-sec .select .option-list {
-  list-style: none;
-  padding: 0;
-  border-radius: 15px;
-  box-shadow: 0 0 10px #86A5FF;
-}
-#select-sec .select .option-list .option {
-  padding: 15px;
-}
-#select-sec .select .option-list .option:hover {
-border-radius: 15px;
-background-color: #E0EBFF;
-}
-button{
-	border: 0;
-	outline: 0;
-	width: 60px;
-	height: 50px;
-	border-radius: 15px;
-	border-color: #86A5FF;
-	background-color: #E0EBFF;
-	margin-left: 10px;
-	box-shadow: 0 0 10px #86A5FF;
-	cursor: pointer;
-}
-#sc{
-	font-size: 13pt;
-	font-weight: bold;
-	color: 6e6e6e;
-	font-family: 'Nanum Gothic', sans-serif;
-}
+
+
+
 </style>
 
 <body>
-	<form method="post" id ="searchField2" name="searchField2" action="searchPage.jsp">
-	<div id="select-sec">
-	  <div class="select">
-	    <div class="text">
-	    <input type="hidden" name="searchField2">
-	    <span>함께 하고싶은 취미를 선택하세요 !</span>
-	    </div>
-	    <ul class="option-list">
-	      <li class="option"><input type="hidden" name="searchField2" id="SPORTS" value="SPORTS"><span>SPORTS</span></li>
-	      <li class="option"><input type="hidden" name="searchField2" id="LEISURE" value="LEISURE"><span>LEISURE</span></li>
-	      <li class="option"><input type="hidden" name="searchField2" id="ART&MUSIC" value="ART&MUSIC"><span>ART & MUSIC</span></li>
-	      <li class="option"><input type="hidden" name="searchField2" id="OTHER" value="OTHER"><span>OTHER</span></li>
-	    </ul>
-	  </div>
-	  <div id="submit-btn">
-	  <button type="submit"><span id="sc">검색</span></button>
-	  </div>
-	</div>
-  </form>
+<%
+%>
+<div id="gallery">
+  <div class="tile">
+  <div class="text">
+  테스트 111
+  </div>
+  	<div class="img">
+  	 <div class="item">
+	  	테스트중입니다
+		<button type="button" class="btn-blue" id="btn-del"><span>삭제</span></button>
+  	</div>
+  	</div>
+  </div>
+</div>
 
-<script>
-var speed=500 
 
-function flashit(){ 
-	var flash=document.getElementById? document.getElementById("sc") : document.all? document.all.myexample : "" 
-	if (flash){ 
-		if (flash.style.color.indexOf("rgb(255, 255, 255)")!=-1) 
-			flash.style.color="#6e6e6e" 
-		else 
-			flash.style.color="rgb(255, 255, 255)" 
-	}
-} 
-setInterval("flashit()", speed);
-
-function onClickSelect(e) {
-	  const isActive = e.currentTarget.className.indexOf("active") !== -1;
-	  if (isActive) {
-	    e.currentTarget.className = "select";
-	  } else {
-	    e.currentTarget.className = "select active";
-	  }
-	}
-	document.querySelector("#select-sec .select").addEventListener("click", onClickSelect);
-
-	function onClickOption(e) {
-	  const selectedValue = e.currentTarget.innerHTML;
-	  document.querySelector("#select-sec .text").innerHTML = selectedValue;
-	}
-
-	var optionList = document.querySelectorAll("#select-sec .option");
-	for (var i = 0; i < optionList.length; i++) {
-	  var option = optionList[i];
-	  option.addEventListener("click", onClickOption);
-	}
-</script>
 </body>
 </html>
