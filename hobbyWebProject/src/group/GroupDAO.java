@@ -117,4 +117,34 @@ public class GroupDAO {
 		}
 		return false;
 	}
+	
+	//삭제하기
+	public int delete(int groupID) {
+		String SQL = "UPDATE `group` SET groupAvailable = 0 WHERE groupID = ? ";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt.setInt(1, groupID);
+			//성공적으로 수행했다면 0이상의 결과 반환
+			return pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return -1; //데이터베이스 오류
+	}
+	/*
+	public String getGroupPW(int groupID){
+		String SQL = "SELECT groupPassword FROM `group` WHERE groupID = ?";
+		try {
+			PreparedStatement pstmt=conn.prepareStatement(SQL);
+			pstmt.setInt(1, groupID);
+			rs=pstmt.executeQuery();
+			if (rs.next()) {
+	            String password = rs.getString("groupPassword");
+	            return password;
+			}		
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return "";
+	}*/
 }

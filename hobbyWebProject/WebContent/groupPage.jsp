@@ -1,3 +1,4 @@
+<%@page import="javafx.scene.web.PromptData"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -146,13 +147,12 @@ String userID = null;
 if(session.getAttribute("userID") != null){
 	userID = (String) session.getAttribute("userID");
 }
-int groupID = 0;
-if(request.getParameter("groupID") != null){
-	groupID = Integer.parseInt(request.getParameter("groupID"));
-}
+
 int pageNumber = 1;//기본적으로 1페이지
 if (request.getParameter("pageNumber") != null)
 	pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
+
+
 %>
 <header>
 <div id="header" class="de-active">
@@ -216,16 +216,30 @@ if (request.getParameter("pageNumber") != null)
 		<%
 			GroupDAO groupDAO = new GroupDAO();
 			ArrayList<GroupDTO> list = groupDAO.getList(pageNumber);
-			for (int i = 0; i < list.size(); i++) {
+			for (int i = 0; i < list.size(); i++) {	
+
 		%>
 		<div class="group-box">	
-			<div class="group" id="in-group"><span><a href="groupView.jsp?groupID=<%=list.get(i).getGroupID()%>"><%= list.get(i).getGroupName().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></a></span></div>
-			<div class="group"><span><%= list.get(i).getUserID() %></span></div>
-			<div class="group"><span><%= list.get(i).getGroupAvailable() %></span></div>
+			<div class="group" id="in-group">
+	            <span>
+	                <a onclick="showPasswordPrompt('<%=list.get(i).getGroupID()%>', '<%=list.get(i).getGroupPassword()%>')">
+	                    <%=list.get(i).getGroupName().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%>
+	                </a>
+	            </span>
+	        </div>
+ 			<div class="group"><span><%= list.get(i).getUserID() %></span></div>
+			<div class="group">
+				<span>
+				<% if(list.get(i).getGroupAvailable() == 1){%>
+				활동중<%}else{ %>비활동중<%} %>
+				</span>
+			</div>
 			<div class="group"><span>팀원---</span></div>
+						
 		</div>
 		<%
-		}
+		
+			}
 		%>
 		
 		
@@ -251,8 +265,29 @@ if (request.getParameter("pageNumber") != null)
 <script>
 opener.location.reload(); //부모창 리프레쉬
 self.close(); //로그인 후 팝업창이 mainPage로 이동했을때 창 닫기
-
-
+</script>
+<script>
+function showPasswordPrompt(grID, grPassword) {
+    var inputPassword = "";
+    while (inputPassword != grPassword) {
+        inputPassword = prompt("비밀번호를 입력하세요");
+        if(inputPassword == null){ //null은 취소버튼을 눌렀을 때를 의미한다. 아무것도 입력하지 않고 확인을 누르면 ""이다."
+        	break;
+        }
+    }
+    if (inputPassword == grPassword) {
+        location.href = "groupView.jsp?groupID=" + grID;
+    }
+    /* 다른 while
+    while(true) {
+        inputPassword = prompt("Enter group password:");
+	    if (inputPassword == grPassword) {
+	        location.href = "groupView.jsp?groupID=" + grID;
+	        break;
+	    }
+    }
+    */
+}
 </script>
 <script src="js/qna.js"></script>
 

@@ -5,6 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>CREATE GROUP</title>
+<link rel="stylesheet" href="css/main.css?after">
 <link rel="stylesheet" href="css/member.css?after">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
 <link href="https://fonts.googleapis.com/css2?family=Bruno+Ace&family=Gowun+Dodum&family=IBM+Plex+Sans+KR:wght@300;600&family=Jua&family=Merriweather:wght@700&family=Nanum+Gothic&family=Nanum+Gothic+Coding&family=Noto+Sans+KR:wght@400&family=Noto+Serif+KR:wght@200&display=swap" rel="stylesheet">
@@ -24,14 +25,30 @@ h2{
 	color: #2E2F49;
 }
 #sb{
-	background-color: #2E2F49;
-	color: #2E2F49;
+width: 100%;
 }
+#sb span{
+color: #ffffff;
+  background-color: #2E2F49;
+  border: 1px solid #2E2F49;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+#sb::before {
+  background-color: #2E2F49;
+}
+
+#sb span:hover {
+  color: #2E2F49;
+  background-color: #ffffff;
+}
+  
 #createGroup{
 	width: 370px;
 	margin: 30px;
 	padding-top: 30px;
 }
+
 </style>
 </head>
 <body>
@@ -43,7 +60,7 @@ h2{
         <input type="password" placeholder="비밀번호를 입력하세요" name="groupPassword" id="groupPassword" maxlength="20">
         <input type="text" placeholder="인원을 입력하세요" name="groupNoP" id="groupNoP" maxlength="2">
 
-        <input type="submit" id="sb" value="OK">
+        <button type="submit" class="btn-blue" id="sb"><span>OK</span></button>
     </form>
 </div>
 

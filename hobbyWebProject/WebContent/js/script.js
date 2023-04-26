@@ -19,7 +19,6 @@ $(function(){
     });
 });
 
-
 //마우스 커서 이벤트 ------
 let a = document.createElement('div');
 let header = document.getElementById('header');

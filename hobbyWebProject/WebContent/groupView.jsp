@@ -11,7 +11,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
-<body onload="showPasswordPrompt()">
+<body>
 <%
 //userID 가져오기
 String userID = null;
@@ -37,7 +37,7 @@ if(groupID == 0){
 	script.println("</script>");
 }
 GroupDTO group = new GroupDAO().getGroupVO(groupID);
-String pw = group.getGroupPassword();
+
 %>
 
 <!-- header -->
@@ -85,14 +85,13 @@ String pw = group.getGroupPassword();
 </div>
 </header>
 <!-- header -->
-<script>
-function showPasswordPrompt(groupID, groupName) {
-	var password = prompt("Enter group password:");
-	var dbpw = <%= pw %>;
-	while(!password.equals(dbpw)){
-	  var password = prompt("Enter group password:");
-	}break;
-}
-</script>
+<section>
+<%= group.getGroupID() %>
+<%= group.getGroupName() %>
+<%= group.getGroupNoP() %>
+<%= group.getUserID() %>
+<button type="button" class="btn-blue" id="btn-del" onclick="if(confirm('정말로 삭제하시겠습니까?')){location.href='groupDeleteAction.jsp?groupID=<%=groupID%>'}"><span>삭제</span></button>
+
+</section>
 </body>
 </html>
