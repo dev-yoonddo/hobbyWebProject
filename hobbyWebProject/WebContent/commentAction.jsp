@@ -29,8 +29,8 @@
  	if(userID == null){
  		PrintWriter script = response.getWriter();
  		script.println("<script>");
-		script.println("alert('로그인을 해주세요.')");
- 		script.println("location.href = 'login.jsp'");
+		script.println("alert('로그인을 하세요.')");
+ 		script.println("location.href = 'loginPopUp.jsp'");
  		script.println("</script>");
  	} 
  	else{

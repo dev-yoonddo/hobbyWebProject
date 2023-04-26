@@ -30,7 +30,7 @@
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
 			script.println("alert('로그인을 해주세요.')");
-			script.println("location.href = 'login.jsp'");
+			script.println("location.href = 'loginPopUp.jsp'");
 			script.println("</script>");
 		}else{
 			if(group.getGroupName() == null || group.getGroupPassword() == null
@@ -62,7 +62,7 @@
 					PrintWriter script = response.getWriter();
 					script.println("<script>");
 					script.println("alert('그룹 생성이 완료되었습니다.')");
-					script.println("location.href = 'mainPage.jsp'");
+					script.println("location.href = 'groupPage.jsp'");
 					script.println("</script>");
 				}
 			
