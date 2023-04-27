@@ -55,7 +55,7 @@ public class CommentDAO {
 	}
 	//작성하기
 	public int write(String cmtContent, String userID, int boardID) {
-		String SQL = "INSERT INTO COMMENT VALUES(?, ?, ?, ?, ?, ?)";
+		String SQL = "INSERT INTO comment VALUES(?, ?, ?, ?, ?, ?)";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, cmtContent);

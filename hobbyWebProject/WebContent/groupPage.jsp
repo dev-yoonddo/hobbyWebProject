@@ -1,3 +1,5 @@
+<%@page import="member.MemberDTO"%>
+<%@page import="member.MemberDAO"%>
 <%@page import="javafx.scene.web.PromptData"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -43,8 +45,7 @@ justify-content: center;
 	float: none;
 	display: flex;
 	justify-content: center;
-	margin: 0 auto;	
-	margin-top: 50px; 
+	margin: 0 auto;	 
 }
 .btn-blue span{
 	width: 230px;
@@ -72,12 +73,13 @@ margin-top: 100px;
 }
 
 #gallery {
+
 	display: flex;
   justify-content: center;
 }
 #gal-inner{
-
-	width: 1000px;
+	max-width: 1100px;
+	width: auto;
 	height: auto;
 	padding-top: 100px;
 	
@@ -136,6 +138,11 @@ justify-content: center;
 	width: auto;
 	height: auto;
 	color: white;
+	justify-content: center;
+	align-items: center;
+}
+.in-group-btn{
+	margin: 0 auto;
 }
   </style>
 </head>
@@ -147,10 +154,14 @@ if(session.getAttribute("userID") != null){
 	userID = (String) session.getAttribute("userID");
 }
 int pageNumber = 1;//기본적으로 1페이지
-if (request.getParameter("pageNumber") != null)
+if (request.getParameter("pageNumber") != null){
 	pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
-
-
+}
+//groupID 가져오기
+int groupID = 0;
+if(request.getParameter("groupID") != null){
+	groupID = Integer.parseInt(request.getParameter("groupID"));
+}
 %>
 <header>
 <div id="header" class="de-active">
@@ -188,7 +199,7 @@ if (request.getParameter("pageNumber") != null)
 <section>
 <div id="sec-top">
 <div>
-	<span class="text" style="font-weight: bold; font-size: 30pt; color: #646464; font-family: 'Noto Sans KR', sans-serif;"></span>
+	<span class="text" style="font-weight: bold; font-size: 30pt; color: #646464; font-family: 'Noto Sans KR', sans-serif;"></span><br><br><br><br>
 	<button type="button" class="btn-blue" id="create-group" value="그룹생성"><span>그룹 만들기</span></button>	
 </div>
 </div>
@@ -232,15 +243,21 @@ if (request.getParameter("pageNumber") != null)
 				<%} %>
 				</div>
 	 			<div class="info"><a>Leader | <%= list.get(i).getUserID() %></a></div>
-				<div class="info"><a>명 / <%= list.get(i).getGroupNoP() %>명</a></div>
+				<%
+					//그룹에 가입한 멤버숫자 가져오기
+					MemberDAO mbDAO = new MemberDAO();
+					ArrayList<MemberDTO> mblist = mbDAO.getList(list.get(i).getGroupID());
+				%>
+				<div class="info"><a><%= mblist.size() %>명 / <%= list.get(i).getGroupNoP() %>명</a></div>
 			</div>			
   			<div class="group-inner-box">
 				<div class="access-group">
-					<a>
-							<button type="button" class="btn-blue" id="create-group" value="그룹생성" onclick="showPasswordPrompt('<%=list.get(i).getGroupID()%>', '<%=list.get(i).getGroupPassword()%>','<%= list.get(i).getGroupAvailable()%>')">
-							<span>참여하기</span>
-							</button>	
-					</a>
+					<button type="button" class="btn-blue" id="join-group-btn" value="그룹가입" onclick="joinGroup('<%=list.get(i).getGroupID()%>','<%= list.get(i).getGroupAvailable()%>')">
+					<span>가입하기</span>
+					</button>	
+					<button type="button" class="btn-blue" id="in-group-btn" value="그룹참가" onclick="showPasswordPrompt('<%=list.get(i).getGroupID()%>', '<%=list.get(i).getGroupPassword()%>','<%= list.get(i).getGroupAvailable()%>')">
+					<span>접속하기</span>
+					</button>
 				</div>
 			</div>
 		</div>		
@@ -276,7 +293,6 @@ opener.location.reload(); //부모창 리프레쉬
 self.close(); //로그인 후 팝업 창 닫기
 </script>
 <script>
-
 const content = "그룹을 만들거나 참여해보세요";
 const text = document.querySelector('.text');
 let i = 0;
@@ -290,8 +306,28 @@ function typing() {
 	    }
 }
 	setInterval(typing, 150)
+</script>
+<script>
+//가입하기 버튼을 클릭하면 id,available값을 받는다.
+function joinGroup(groupID, groupAvailable) {
+	//활동중
+    if(groupAvailable == 1){
+        var joinGroup = confirm("가입 하시겠습니까?");
+        if (joinGroup) {
+        	//팝업창을 열때 groupID값을 넘겨준다.
+          	window.open("groupJoinPopUp.jsp?groupID=" + groupID , "Join", "width=450, height=450, top=50%, left=50%") ;
+        }
+        else {
 
-//groupName을 클릭하면 id,password,available value를 받아온다
+        }
+	//비활동중
+    }else{
+    	alert("비활동 중인 그룹입니다.");
+    }
+}
+</script>
+<script>
+//접속하기 버튼을 클릭하면 id,password,available value를 받는다
 function showPasswordPrompt(grID, grPassword, grAvailable) {
     var inputPassword = "";
     //활동중

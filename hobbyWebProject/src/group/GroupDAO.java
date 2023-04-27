@@ -4,7 +4,11 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
+
+import member.MemberDTO;
 
 
 
@@ -147,4 +151,49 @@ public class GroupDAO {
 		}
 		return "";
 	}*/
+	
+	//UserDAO - delete에서 사용되는 메서드
+			//delete된 userID와 board의 userID가 같은 값의 리스트를 가져온다.
+			public List<GroupDTO> getDelGroupVOByUserID(String userID) {
+			    List<GroupDTO> groupDTOs = new ArrayList<>();
+			    String SQL = "SELECT groupID, groupAvailable FROM `group` WHERE userID = ?";//userID가 작성한 board의 boardID와 boardAvailable의 값을 가져온다.
+			    try {
+			        PreparedStatement pstmt = conn.prepareStatement(SQL);
+			        pstmt.setString(1, userID);
+			        ResultSet rs = pstmt.executeQuery();
+			        
+			        while (rs.next()) { //user 한명이 여러개의 board를 생성하면 데이터가 1개 이상 나오기때문에 while을 사용한다.
+			            int groupID = rs.getInt("groupID");
+			            int groupAvailable = rs.getInt("groupAvailable");
+			            //여기서 다른 속성도 가져올 수 있다.
+
+			            // BoardVO 객체 생성하고 가져온 속성을 BoardVO 객체에 저장한다.
+			            GroupDTO groupDTO = new GroupDTO();
+			            groupDTO.setGroupID(groupID); 
+			            groupDTO.setGroupAvailable(groupAvailable);
+
+			            // boardVOs list에 boardVO object 추가
+			            groupDTOs.add(groupDTO);
+			        }
+			        rs.close();
+			        pstmt.close();
+			    } catch (SQLException e) {
+			        e.printStackTrace();
+			    }
+			    return groupDTOs;
+			}
+			
+			//UserDAO - delete에서 삭제된 user와 관련된 정보를 업데이트 한다.
+			public void updateGroupVO(GroupDTO groupDTO){
+			    String SQL = "UPDATE `group` SET groupAvailable = ? WHERE groupID = ?";
+			    try {
+			        PreparedStatement pstmt = conn.prepareStatement(SQL);
+			        pstmt.setInt(1, groupDTO.getGroupAvailable());
+			        pstmt.setInt(2, groupDTO.getGroupID());
+			        pstmt.executeUpdate();
+			        pstmt.close();
+			    } catch (SQLException e) {
+			        e.printStackTrace();
+			    }
+			}
 }

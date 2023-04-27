@@ -39,7 +39,7 @@
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
 			script.println("alert('로그인 되었습니다.')");
-			script.println("location.href=mainPage;");
+			script.println("location.href = 'mainPage.jsp'");
 			script.println("</script>");
 		}
 		else if(result == 0){

@@ -1,3 +1,6 @@
+<%@page import="member.MemberDTO"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="member.MemberDAO"%>
 <%@page import="java.io.PrintWriter"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -23,6 +26,38 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 
 </head>
+<style>
+h2{
+	font-family: 'Bruno Ace', cursive;
+	font-weight: bold;
+	font-size: 20pt;
+	color: #2E2F49;
+}
+#sb{
+width: 100%;
+}
+#sb span{
+color: #ffffff;
+  background-color: #2E2F49;
+  border: 1px solid #2E2F49;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+#sb::before {
+  background-color: #2E2F49;
+}
+
+#sb span:hover {
+  color: #2E2F49;
+  background-color: #ffffff;
+}
+  
+#joinGroup{
+	width: 370px;
+	margin: 30px;
+	padding-top: 30px;
+}
+</style>
 <body>
 <%
 //userID 가져오기
@@ -88,14 +123,35 @@ GroupDTO group = new GroupDAO().getGroupVO(groupID);
 </header>
 <!-- header -->
 <section>
-<%= group.getGroupID() %>
-<%= group.getGroupName() %>
-<%= group.getGroupNoP() %>
-<%= group.getUserID() %>
-<button type="button" class="btn-blue" id="btn-del" onclick="if(confirm('정말로 삭제하시겠습니까?')){location.href='groupDeleteAction.jsp?groupID=<%=groupID%>'}"><span>삭제</span></button>
 
+
+<%= group.getGroupName() %>
+<%= group.getGroupNoP() 
+%>
+<%= group.getUserID() %>
+<!-- 그룹을 만든 userID와 로그인userID가 같으면 삭제 버튼 생성 -->
+<% if(userID.equals(group.getUserID())){ %>
+<button type="button" class="btn-blue" id="btn-del" onclick="if(confirm('정말로 삭제하시겠습니까?')){location.href='groupDeleteAction.jsp?groupID=<%=groupID%>'}"><span>삭제</span></button>
+<%} %>
+<button type="button" class="btn-blue" id="joinGroup-btn" onclick="mbJoin()"><span>가입</span></button>
+
+<% 
+	MemberDAO mbDAO = new MemberDAO();
+	ArrayList<MemberDTO> mblist = mbDAO.getList(groupID);
+	for(int i=0; i<mblist.size(); i++){
+%>
+	<%= mblist.get(i).getMemberID() %>
+	<%= mblist.get(i).getMbContent() %>
+	<%= mblist.get(i).getMbDate().substring(0,11)+mblist.get(i).getMbDate().substring(11,13)+"시"+mblist.get(i).getMbDate().substring(14,16)+"분" %>
+<%
+	}
+%>
 </section>
 <script>
+function mbJoin(){
+	document.getElementById('joinGroup').style.display = 'block';
+	document.getElementById('joinGroup-btn').style.display = 'none';
+}
 </script>
 </body>
 </html>

@@ -1,3 +1,4 @@
+<%@page import="java.io.PrintWriter"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -43,24 +44,45 @@ color: #ffffff;
   background-color: #ffffff;
 }
   
-#createGroup{
+#joinGroup{
 	width: 370px;
-	margin: 30px;
-	padding-top: 30px;
+	margin: 40px;
 }
-
+#join-form > input{
+	height: 100px;
+}
 </style>
 </head>
 <body>
+<%
+//userID 가져오기
+String userID = null;
+if(session.getAttribute("userID") != null){
+	userID = (String)session.getAttribute("userID");
+}
 
-<div id="createGroup">
-    <h2>Create Group<h2>
-    <form method="post" action="groupCreateAction.jsp" id="join-form">
-        <input type="text" placeholder="그룹이름을 입력하세요" name="groupName" id="groupName" maxlength="10">
-        <input type="password" placeholder="비밀번호를 입력하세요" name="groupPassword" id="groupPassword" maxlength="20">
-        <input type="text" placeholder="인원을 입력하세요" name="groupNoP" id="groupNoP" maxlength="2">
+//groupID 가져오기
+int groupID = 0;
+if(request.getParameter("groupID") != null){
+	groupID = Integer.parseInt(request.getParameter("groupID"));
+}
 
-        <button type="submit" class="btn-blue" id="sb"><span>완료</span></button>
+//글이 유효하다면 1이상의 숫자가 반환되기 때문에 boardID == 0일때  글이 유효하지 않다는 알림창 띄우기
+if(groupID == 0){
+	PrintWriter script = response.getWriter();
+	script.println("<script>");
+	script.println("alert('유효하지 않은 그룹입니다.')");
+	script.println("history.back()");
+	script.println("</script>");
+}
+
+%>
+<div id="joinGroup">
+    <h2>Join Group<h2>
+    <form method="post" action="groupJoinAction.jsp?groupID=<%= groupID %>" id="join-form">
+        <input type="text" placeholder="닉네임을 입력하세요" name="memberID" id="memberID" maxlength="10">
+        <input type="text" placeholder="자기소개를 입력하세요" name="mbContent" id="mbContent" class="intro" maxlength="50">
+        <button type="submit" class="btn-blue" id="sb"><span>가입하기</span></button>
     </form>
 </div>
 

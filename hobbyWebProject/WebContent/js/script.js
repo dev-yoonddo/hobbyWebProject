@@ -18,6 +18,23 @@ $(function(){
       window.open("groupPopup.jsp", "Login", "width=450, height=500, top=50%, left=50%") ;
     });
 });
+// $(function(){
+//   $('#join-group-btn').on('click',function(){
+//     var groupID = '<%= list.get(i).getGroupID() %>';
+//     var groupAvailable = '<%= list.get(i).getGroupAvailable() %>';
+//     if(groupAvailable == 1){
+//       var joinGroup = confirm('가입 하시겠습니까?');
+//       if (joinGroup) {
+//         window.open("groupJoinPopUp.jsp?groupID=" + groupID , "Join", "width=450, height=450, top=50%, left=50%") ;
+//       }
+//       else {
+//         location.href='history.back()';
+//       }
+//     }else{
+//       alert("비활동 중인 그룹입니다.");
+//     }
+//   })
+// });
 
 //마우스 커서 이벤트 ------
 let a = document.createElement('div');

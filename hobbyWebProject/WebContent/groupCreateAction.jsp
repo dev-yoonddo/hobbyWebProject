@@ -59,6 +59,7 @@
 					script.println("</script>");
 				}
 				else {
+					session.setAttribute("groupID", group.getGroupID());
 					PrintWriter script = response.getWriter();
 					script.println("<script>");
 					script.println("alert('그룹 생성이 완료되었습니다.')");

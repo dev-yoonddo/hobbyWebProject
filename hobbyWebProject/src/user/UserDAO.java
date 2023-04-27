@@ -11,6 +11,10 @@ import board.BoardDAO;
 import board.BoardDTO;
 import comment.CommentDAO;
 import comment.CommentDTO;
+import group.GroupDAO;
+import group.GroupDTO;
+import member.MemberDAO;
+import member.MemberDTO;
 
 public class UserDAO {
 
@@ -163,6 +167,20 @@ public class UserDAO {
 	            for (CommentDTO commentDTO : commentVOList) {
 	                commentDTO.setCmtAvailable(0);
 	                commentDAO.updateCommentVO(commentDTO);
+	            }
+	            
+	            GroupDAO groupDAO = new GroupDAO(); 
+	            List<GroupDTO> groupVOList = groupDAO.getDelGroupVOByUserID(userID);
+	            for (GroupDTO groupDTO : groupVOList) {
+	            	groupDTO.setGroupAvailable(0);
+	            	groupDAO.updateGroupVO(groupDTO);
+	            }
+	            
+	            MemberDAO memberDAO = new MemberDAO(); 
+	            List<MemberDTO> memberVOList = memberDAO.getDelMemberVOByUserID(userID);
+	            for (MemberDTO memberDTO : memberVOList) {
+	            	memberDTO.setMbAvailable(0);
+	            	memberDAO.updateMemberVO(memberDTO);
 	            }
 	        }
 	        return result;
