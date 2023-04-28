@@ -103,6 +103,7 @@ height: 3000px;
   margin: 20px;
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
 .group-box:hover {
@@ -130,16 +131,38 @@ height: 3000px;
   align-items: center;
 }
 .info-box{
-	width: 250px;
-  	height: 250px;
+	width: 230px;
+  	height: 230px;
 	justify-content: center;
-	position: absolute;
+	position: relative;
 	font-size: 20pt;
-	margin: 20px;
+	margin: 30px;
 }
-div > .info{
+div > .info-a{
 display: flex;
 justify-content: center;
+font-size: 15pt; 
+border-radius: 50px; 
+background-color: white; 
+width: 100px;
+height: 40px; 
+margin-top: 10px;
+}
+div > .info-a > a{
+width:auto; 
+height: auto; 
+display: flex; 
+justify-content: center; 
+align-items: center;
+}
+.info-b{
+position: absolute;
+bottom: 0;
+}
+.info-l , .info-p{
+height: 35px;
+font-size: 18pt;
+font-weight: 400;
 }
 .access-group{
 	width: auto;
@@ -232,34 +255,30 @@ if(request.getParameter("groupID") != null){
 		<div class="group-box">
 			<div class="info-box">
 				<div style="">
-				<div class="info" id="in-group" style="font-size:30pt; font-weight: bold; padding-right: 20px;">
-		            
+				<div class="info-title" id="in-group" style="font-size:30pt; font-weight: bold;">  
 	                <a>
-	                    <%=list.get(i).getGroupName().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%>
+	                	<%=list.get(i).getGroupName().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%>
 	                </a>
-	    
 		        </div>
 				<% if(list.get(i).getGroupAvailable() == 1){%>
-				<div class="info" style="font-size: 15pt; border-radius: 50px; background-color: white; width: 100px; height: 40px; margin-top: 10px;">
-				<a style="width:auto; height: auto; display: flex; justify-content: center; align-items: center;">
-				활동중
-				</a>
+				<div class="info-a">
+					<a>활동중</a>
 				</div>
 				<%}else{ %>
-				<div class="info" style="font-size: 15pt; border-radius: 50px; background-color: black; color: white; width: 100px; height: 40px; margin-top: 10px;">
-				<a style="width:auto; height: auto; display: flex; justify-content: center; align-items: center;">
-				비활동중
-				</a>
+				<div class="info-a" style="background-color: black; color: white;">
+					<a>비활동중</a>
 				</div>
 				<%} %>
 				</div>
-	 			<div class="info"><a>Leader | <%= list.get(i).getUserID() %></a></div>
-				<%
-					//그룹에 가입한 멤버숫자 가져오기
-					MemberDAO mbDAO = new MemberDAO();
-					ArrayList<MemberDTO> mblist = mbDAO.getList(list.get(i).getGroupID());
-				%>
-				<div class="info"><a><%= mblist.size() %>명 / <%= list.get(i).getGroupNoP() %>명</a></div>
+				<div class="info-b">
+		 			<div class="info-l"><a>Leader  <%= list.get(i).getUserID() %></a></div>
+					<%
+						//그룹에 가입한 멤버숫자 가져오기
+						MemberDAO mbDAO = new MemberDAO();
+						ArrayList<MemberDTO> mblist = mbDAO.getList(list.get(i).getGroupID());
+					%>
+					<div class="info-p"><a><%= mblist.size() %>명 / <%= list.get(i).getGroupNoP() %>명</a></div>
+				</div>
 			</div>			
   			<div class="group-inner-box">
 				<div class="access-group">

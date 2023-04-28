@@ -10,6 +10,7 @@
 <jsp:useBean id="member" class="member.MemberDTO" scope="page" />
 <jsp:setProperty name="member" property="memberID" />
 <jsp:setProperty name="member" property="mbContent" />
+<jsp:setProperty name="member" property="mbAvailable" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -68,17 +69,27 @@
 				}else{
 					//memberDAO에 userID와 groupID가 둘다 일치하는 데이터가 있으면 해당그룹에 이미 가입 되어있는것
 					if(memberDAO.getMemberVO(userID, groupID) != null){
+						//데이터가 있지만 available값이 0이면 탈퇴한 회원
+						if(memberDAO.getMemberVO(userID, groupID).getMbAvailable() == 0){
+							PrintWriter script = response.getWriter();
+							script.println("<script>");
+							script.println("alert('탈퇴한 회원은 재가입이 불가능합니다.')");
+							script.println("history.back()");
+							script.println("</script>");
+						}else if(memberDAO.getMemberVO(userID, groupID).getMbAvailable() == 1){
+						//0이 아니면 이미 가입되어있는 회원
 						PrintWriter script = response.getWriter();
 						script.println("<script>");
 						script.println("alert('이미 가입 되어있습니다.')");
 						script.println("history.back()");
-						script.println("</script>");	
+						script.println("</script>");
+						}
 					}else{
 						int result = memberDAO.join(member.getMemberID(), groupID, userID, member.getMbContent());
 						if(result == -1){ //데이터베이스 오류
 							PrintWriter script = response.getWriter();
 							script.println("<script>");
-							script.println("alert('가입에 실패했습니다.')");
+							script.println("alert('이미 사용중인 ID입니다.')");
 							script.println("history.back()");
 							script.println("</script>");
 						}

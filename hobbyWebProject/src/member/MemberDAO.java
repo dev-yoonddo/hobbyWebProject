@@ -61,7 +61,7 @@ public class MemberDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return -1;
+		return -1; //데이터베이스 오류 , primary key인 memberid가 중복됐을때도 오류가 난다.
 	}
 //	회원 정보 보기	
 	public MemberDTO getMemberVO(String memberID) {

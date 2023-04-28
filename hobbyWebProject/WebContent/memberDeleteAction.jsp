@@ -36,42 +36,27 @@
 		int groupID=0;
 		if(request.getParameter("groupID")!=null)
 			groupID=Integer.parseInt(request.getParameter("groupID"));
-			
+		
+		//memberID값 가져오기
 		String memberID = request.getParameter("memberID");
-			
-		if(memberID == null){
-		PrintWriter script=response.getWriter();
-		script.println("<script>");
-		script.println("alert('유효하지 않은 멤버입니다.')");
-		script.println("history.back()");
-		script.println("</script>");
+
+		MemberDAO memberDAO = new MemberDAO();
+		int result = memberDAO.delete(memberID);
+		if(result == -1){//데이터 베이스 오류
+			PrintWriter script=response.getWriter();
+			script.println("<script>");
+			script.println("alert('탈퇴에 실패했습니다.')");
+			script.println("history.back()");
+			script.println("</script>");
+		}
+		else{
+			PrintWriter script=response.getWriter();
+			script.println("<script>");
+			script.println("alert('탈퇴에 성공했습니다.')");
+			script.println("location.href='groupPage.jsp'");	
+			script.println("</script>");
 		}
 			
-		MemberDTO member = new MemberDAO().getMemberVO(memberID);
-		if(!userID.equals(member.getUserID())){
-		PrintWriter script=response.getWriter();
-		script.println("<script>");
-		script.println("alert('권한이 없습니다.')");
-		script.println("history.back()");
-		script.println("</script>");
-			} else{
-				MemberDAO memberDAO = new MemberDAO();
-				int result = memberDAO.delete(memberID);
-				if(result == -1){//데이터 베이스 오류
-					PrintWriter script=response.getWriter();
-					script.println("<script>");
-					script.println("alert('탈퇴에 실패했습니다.')");
-					script.println("history.back()");
-					script.println("</script>");
-				}
-				else{
-					PrintWriter script=response.getWriter();
-					script.println("<script>");
-					script.println("alert('탈퇴에 성공했습니다.')");
-					script.println("history.back()");	
-					script.println("</script>");
-				}
-			}
 	%>
 </body>
 </html>

@@ -65,10 +65,6 @@ int groupID = 0;
 if(request.getParameter("groupID") != null){
 	groupID = Integer.parseInt(request.getParameter("groupID"));
 }
-//cmtID 가져오기
-
-String memberID = (request.getParameter("memberID"));
-
 
 if(userID == null){
 	PrintWriter script = response.getWriter();
@@ -86,9 +82,31 @@ if(groupID == 0){
 	script.println("</script>");
 }
 int userAccess = Integer.parseInt(request.getParameter("userAccess"));
-MemberDAO mbDAO = new MemberDAO();
 GroupDTO group = new GroupDAO().getGroupVO(groupID); //하나의 그룹 정보 가져오기
-ArrayList<MemberDTO> mblist = mbDAO.getList(groupID); //그룹의 멤버리스트 가져오기
+MemberDTO member = new MemberDAO().getMemberVO(userID, groupID); //현재 로그인하고 groupID에 가입한 member 정보 가져오기
+MemberDAO mbDAO = new MemberDAO();
+
+//그룹을 만든 userID가 아닐때 (그룹을 만든 userID는 접속가능)
+if(!userID.equals(group.getUserID())){
+	//접속하는 userID의 데이터가 member에 없으면
+	if( member == null){
+	PrintWriter script = response.getWriter();
+	script.println("<script>");
+	script.println("alert('가입하지 않은 회원입니다.')");
+	script.println("location.href = 'groupPage.jsp'");
+	script.println("</script>");
+	}
+	//데이터는 있지만 available값이 0이면
+	else if( member.getMbAvailable() == 0){ //탈퇴한 회원이기때문에 접속 불가능
+	PrintWriter script = response.getWriter();
+	script.println("<script>");
+	script.println("alert('탈퇴한 회원입니다.')");
+	script.println("location.href = 'groupPage.jsp'");
+	script.println("</script>");
+	}
+}
+
+ArrayList<MemberDTO> mblist = mbDAO.getList(groupID); //해당 그룹의 멤버리스트 가져오기
 %>
 
 <!-- header -->
@@ -140,8 +158,9 @@ ArrayList<MemberDTO> mblist = mbDAO.getList(groupID); //그룹의 멤버리스�
 				<% if(userID.equals(group.getUserID())){ %>
 				<button type="button" class="btn-blue" id="btn-del" onclick="if(confirm('정말로 삭제하시겠습니까?')){location.href='groupDeleteAction.jsp?groupID=<%=groupID%>'}"><span>그룹삭제</span></button>
 				<%}else{ %>
-				<!-- 그룹에 가입한 userID일때는 그룹 탈퇴 버튼 생성 -->
-				<button type="button" class="btn-blue" id="btn-del" onclick="if(confirm('정말로 탈퇴하시겠습니까?')){location.href='memberDeleteAction.jsp?groupID=<%=groupID%>&memberID=<%=memberID%>'}"><span>그룹탈퇴</span></button>
+			
+				<!-- 그룹에 가입한 userID일때는 그룹 탈퇴 버튼 생성하고 memberID넘기기 -->
+				<button type="button" class="btn-blue" id="btn-del" onclick="if(confirm('탈퇴 후 재가입이 불가합니다.\n정말로 탈퇴하시겠습니까?')){location.href='memberDeleteAction.jsp?groupID=<%=groupID%>&memberID=<%=member.getMemberID()%>'}"><span>그룹탈퇴</span></button>
 				<%} %>
 				</div>
 			</div>
@@ -150,19 +169,21 @@ ArrayList<MemberDTO> mblist = mbDAO.getList(groupID); //그룹의 멤버리스�
 		<%= group.getUserID() %>
 		</div>
 	
-		<div id="member-list">
-		<% 
+		<div id="member-list" style="width: 500px; height: auto;">
+		<%
 			for(int i=0; i<mblist.size(); i++){
 		%>
-		<div id="member">
+		<div id="member" style="border-radius: 10px; outline-width: 2px; outline-color: #2E2F49; background-color: #C9D7FF; color: #2E2F49; padding: 10px; position: relative;">
 			<div id="user-name">
-			<%= mblist.get(i).getMemberID() %>님이 가입했습니다
+				<div style="border-radius: 10px; border-bottom-left-radius:0; border-bottom-right-radius: 0; background-color: white; padding: 11px;">
+				<span><%= mblist.get(i).getMemberID() %>님이 가입했습니다</span>
+				<span style="position: absolute; right:20px;"><%= mblist.get(i).getMbDate().substring(0,11)+mblist.get(i).getMbDate().substring(11,13)+"시"+mblist.get(i).getMbDate().substring(14,16)+"분" %></span>
+				</div>
+				<div id="user-content" style="height: auto; border-radius: 10px; border-top-left-radius: 0; border-top-right-radius: 0; background-color: white; padding: 10px; margin-top: 10px;">
+				<%= mblist.get(i).getMbContent() %>
+				</div>
 			</div>
-			<div id="user-content">
-			<%= mblist.get(i).getMbContent() %>
-			<%= mblist.get(i).getMbDate().substring(0,11)+mblist.get(i).getMbDate().substring(11,13)+"시"+mblist.get(i).getMbDate().substring(14,16)+"분" %>
-			</div>
-		</div>
+		</div><br>
 		<%
 			}
 		%>
@@ -170,10 +191,7 @@ ArrayList<MemberDTO> mblist = mbDAO.getList(groupID); //그룹의 멤버리스�
 	</div>
 </section>
 <script>
-function mbJoin(){
-	document.getElementById('joinGroup').style.display = 'block';
-	document.getElementById('joinGroup-btn').style.display = 'none';
-}
+
 </script>
 </body>
 </html>
