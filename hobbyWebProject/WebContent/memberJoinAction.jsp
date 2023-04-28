@@ -47,41 +47,50 @@
 				script.println("history.back()");
 				script.println("</script>");
 			}
-			//groupID에 해당되는 member의 수가 groupNoP(정원)보다 같거나 크면 정원이 다 찼다는 알림을 띄운다.
 			GroupDAO groupDAO = new GroupDAO();
 			MemberDAO memberDAO = new MemberDAO();
-			ArrayList<MemberDTO> mblist = memberDAO.getList(groupID);
-			if(mblist.size() >= groupDAO.getGroupVO(groupID).getGroupNoP()){
+			//해당group을 만든 userID와 가입하려는 userID가 같으면 가입할 수 없도록 한다.
+			if(userID.equals(groupDAO.getGroupVO(groupID).getUserID())){
 				PrintWriter script = response.getWriter();
 				script.println("<script>");
-				script.println("alert('정원이 다 찼습니다.')");
+				script.println("alert('유효한 가입 대상이 아닙니다.')");
 				script.println("history.back()");
-				script.println("</script>");	
+				script.println("</script>");
 			}else{
-				//memberDAO에 userID와 groupID가 둘다 일치하는 데이터가 있으면 해당그룹에 이미 가입 되어있는것
-				if(memberDAO.getMemberVO(userID, groupID) != null){
+				//groupID에 해당되는 member의 수가 groupNoP(정원)보다 같거나 크면 정원이 다 찼다는 알림을 띄운다.
+				ArrayList<MemberDTO> mblist = memberDAO.getList(groupID);
+				if(mblist.size() >= groupDAO.getGroupVO(groupID).getGroupNoP()){
 					PrintWriter script = response.getWriter();
 					script.println("<script>");
-					script.println("alert('이미 가입 되어있습니다.')");
+					script.println("alert('정원이 다 찼습니다.')");
 					script.println("history.back()");
 					script.println("</script>");	
 				}else{
-					int result = memberDAO.join(member.getMemberID(), groupID, userID, member.getMbContent());
-					if(result == -1){ //데이터베이스 오류
+					//memberDAO에 userID와 groupID가 둘다 일치하는 데이터가 있으면 해당그룹에 이미 가입 되어있는것
+					if(memberDAO.getMemberVO(userID, groupID) != null){
 						PrintWriter script = response.getWriter();
 						script.println("<script>");
-						script.println("alert('가입에 실패했습니다.')");
+						script.println("alert('이미 가입 되어있습니다.')");
 						script.println("history.back()");
-						script.println("</script>");
-					}
-					else {
-						//가입시 비밀번호 알려주기
-						String pw = groupDAO.getGroupVO(groupID).getGroupPassword();
-						PrintWriter script = response.getWriter();
-						script.println("<script>");
-						script.println("alert('가입이 완료되었습니다. 비밀번호는" + pw + "입니다')");
-						script.println("location.href = 'groupPage.jsp'");
-						script.println("</script>");
+						script.println("</script>");	
+					}else{
+						int result = memberDAO.join(member.getMemberID(), groupID, userID, member.getMbContent());
+						if(result == -1){ //데이터베이스 오류
+							PrintWriter script = response.getWriter();
+							script.println("<script>");
+							script.println("alert('가입에 실패했습니다.')");
+							script.println("history.back()");
+							script.println("</script>");
+						}
+						else {
+							//가입시 비밀번호 알려주기
+							String pw = groupDAO.getGroupVO(groupID).getGroupPassword();
+							PrintWriter script = response.getWriter();
+							script.println("<script>");
+							script.println("alert('가입이 완료되었습니다. 비밀번호는" + pw + "입니다')");
+							script.println("location.href = 'groupPage.jsp'");
+							script.println("</script>");
+						}
 					}
 				}
 			}

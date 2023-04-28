@@ -79,7 +79,7 @@ if(groupID == 0){
 %>
 <div id="joinGroup">
     <h2>Join Group<h2>
-    <form method="post" action="groupJoinAction.jsp?groupID=<%= groupID %>" id="join-form">
+    <form method="post" action="memberJoinAction.jsp?groupID=<%= groupID %>" id="join-form">
         <input type="text" placeholder="닉네임을 입력하세요" name="memberID" id="memberID" maxlength="10">
         <input type="text" placeholder="자기소개를 입력하세요" name="mbContent" id="mbContent" class="intro" maxlength="50">
         <button type="submit" class="btn-blue" id="sb"><span>가입하기</span></button>

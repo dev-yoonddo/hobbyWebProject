@@ -62,13 +62,12 @@ public class GroupDAO {
 		return -1;
 	}
 	
-	//그룹 리스트 출력하기
-	public ArrayList<GroupDTO> getList(int pageNumber){
-		String SQL = "SELECT * FROM `group` WHERE groupID < ? ORDER BY groupID desc"; 
+	//모든 그룹 리스트 출력하기 (조건x)
+	public ArrayList<GroupDTO> getList(){
+		String SQL = "SELECT * FROM `group` ORDER BY groupID desc"; 
 		ArrayList<GroupDTO> list = new ArrayList<GroupDTO>();
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
-			pstmt.setInt(1, pageNumber*10);//물음표에 들어갈 내용
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				GroupDTO grp = new GroupDTO();

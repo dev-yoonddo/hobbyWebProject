@@ -160,6 +160,31 @@ public class MemberDAO {
 			}
 			return null;
 		}
+		/*//그룹 탈퇴하기 (1. 데이터 삭제)
+		public int delete(String memberID) {
+			String SQL = "DELETE FROM member WHERE memberID = ?";
+			try {
+				PreparedStatement pstmt = conn.prepareStatement(SQL);
+				pstmt.setString(1, memberID);
+				return pstmt.executeUpdate();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return -1; // 데이터베이스 오류
+		}*/
+		//그룹 탈퇴하기 (2. mbAvailable = 0 으로 업데이트)
+		public int delete(String memberID) {
+			String SQL = "UPDATE member SET mbAvailable = 0 WHERE memberID = ? ";
+			try {
+				PreparedStatement pstmt = conn.prepareStatement(SQL);
+				pstmt.setString(1, memberID);
+				//성공적으로 수행했다면 0이상의 결과 반환
+				return pstmt.executeUpdate();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return -1; //데이터베이스 오류
+		}
 		//특정 groupID에 해당되는 member의 갯수 구하기
 		public int getMemberCount(int groupID) {
 		    String SQL = "SELECT COUNT(*) FROM member WHERE groupID = ?";

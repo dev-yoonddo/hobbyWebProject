@@ -30,15 +30,22 @@
 <style>
 section{
 padding-top: 100px;
+display: flex;
 justify-content: center;
 align-items: center;
 }
 #sec-top{
+
 width: 100%;
-	display: flex;
+display: flex;
 justify-content: center;
 }
-
+.text{
+font-weight: bold; 
+font-size: 35pt; 
+color: #646464; 
+font-family: 'Noto Sans KR', sans-serif;
+}
 .btn-blue{
 	width: 250px;
 	height: auto;
@@ -73,14 +80,14 @@ margin-top: 100px;
 }
 
 #gallery {
-
+height: 3000px;
 	display: flex;
   justify-content: center;
 }
 #gal-inner{
 	max-width: 1100px;
 	width: auto;
-	height: auto;
+	height: 3000px;
 	padding-top: 100px;
 	
 }
@@ -153,10 +160,7 @@ String userID = null;
 if(session.getAttribute("userID") != null){
 	userID = (String) session.getAttribute("userID");
 }
-int pageNumber = 1;//기본적으로 1페이지
-if (request.getParameter("pageNumber") != null){
-	pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
-}
+
 //groupID 가져오기
 int groupID = 0;
 if(request.getParameter("groupID") != null){
@@ -197,21 +201,28 @@ if(request.getParameter("groupID") != null){
 </div>
 </header>
 <section>
-<div id="sec-top">
 <div>
-	<span class="text" style="font-weight: bold; font-size: 30pt; color: #646464; font-family: 'Noto Sans KR', sans-serif;"></span><br><br><br><br>
-	<button type="button" class="btn-blue" id="create-group" value="그룹생성"><span>그룹 만들기</span></button>	
-</div>
+<div id="sec-top">
+	<div>
+		<div style="width : auto;">
+			<span class="text" id="ani-text"></span><br><br><br>
+		</div>
+		<div style="width: 600px; margin: 0 auto;">
+			<span class="text" style="font-size: 25pt; display: flex; justify-content: center; color: #2E2F49;">그룹을 만들거나 참여해보세요</span><br>
+			<button type="button" class="btn-blue" id="create-group" value="그룹생성"><span>그룹 만들기</span></button>	
+		</div>
+	</div>
 </div>
 <div id="gallery">
 <div id="gal-inner">
 		<%
 			GroupDAO groupDAO = new GroupDAO();
-			ArrayList<GroupDTO> list = groupDAO.getList(pageNumber);
+			ArrayList<GroupDTO> list = groupDAO.getList();
 			int counter = 0;
 			for (int i = 0; i < list.size(); i++) {	
 		%>
 		<%
+		//group을 한개씩 출력할 때 마다 counter++ 해서 3개가 출력될 때 마다 group-row로 감싸도록 한다.
 		if (counter % 3 == 0) {
         %>
         <div class="group-row">
@@ -262,14 +273,18 @@ if(request.getParameter("groupID") != null){
 			</div>
 		</div>		
 		<% 
-      if (counter % 3 == 0 || i == list.size() - 1) {
-        %></div><%
+      if (counter % 3 == 0) {
+        %>
+        </div>
+        
+        <%
       }
     }
     %>
 		
 </div>		
-</div>		
+</div>
+</div>	
 </section>
 <!--  
   <div class="wrapper">
@@ -294,7 +309,7 @@ self.close(); //로그인 후 팝업 창 닫기
 </script>
 <script>
 const content = "ALWAYS BETTER TOGETHER";
-const text = document.querySelector('.text');
+const text = document.querySelector('#ani-text');
 let i = 0;
 function typing() {
 	
@@ -315,7 +330,7 @@ function joinGroup(groupID, groupAvailable) {
         var joinGroup = confirm("가입 하시겠습니까?");
         if (joinGroup) {
         	//팝업창을 열때 groupID값을 넘겨준다.
-          	window.open("groupJoinPopUp.jsp?groupID=" + groupID , "Join", "width=450, height=450, top=50%, left=50%") ;
+          	window.open("memberJoinPopUp.jsp?groupID=" + groupID , "Join", "width=450, height=450, top=50%, left=50%") ;
         }
         else {
 

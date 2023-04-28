@@ -31,6 +31,8 @@ section{
 	padding-top: 150px;
 	padding-left: 100px;
 	padding-right: 100px;
+	display: flex;
+	justify-content: center;
 }	
 h2{
 	font-family: 'Bruno Ace', cursive;
@@ -39,10 +41,15 @@ h2{
 	color: #2E2F49;
 }
 #group-main{
-	height: 200px;
+	width: 1000px;
+	height: auto;
+}
+#group-info{
+	height: 300px;
 }
 .btn-blue{
 	width: 100px;
+	height: 50px;
 } 
 
 </style>
@@ -53,16 +60,16 @@ String userID = null;
 if(session.getAttribute("userID") != null){
 	userID = (String)session.getAttribute("userID");
 }
-//boardID 가져오기
-int boardID = 0;
-if(request.getParameter("boardID") != null){
-	boardID = Integer.parseInt(request.getParameter("boardID"));
-}
 //groupID 가져오기
 int groupID = 0;
 if(request.getParameter("groupID") != null){
 	groupID = Integer.parseInt(request.getParameter("groupID"));
 }
+//cmtID 가져오기
+
+String memberID = (request.getParameter("memberID"));
+
+
 if(userID == null){
 	PrintWriter script = response.getWriter();
 	script.println("<script>");
@@ -78,10 +85,10 @@ if(groupID == 0){
 	script.println("location.href = 'groupPage.jsp'");
 	script.println("</script>");
 }
-GroupDTO group = new GroupDAO().getGroupVO(groupID);
 int userAccess = Integer.parseInt(request.getParameter("userAccess"));
 MemberDAO mbDAO = new MemberDAO();
-ArrayList<MemberDTO> mblist = mbDAO.getList(groupID);
+GroupDTO group = new GroupDAO().getGroupVO(groupID); //하나의 그룹 정보 가져오기
+ArrayList<MemberDTO> mblist = mbDAO.getList(groupID); //그룹의 멤버리스트 가져오기
 %>
 
 <!-- header -->
@@ -120,29 +127,46 @@ ArrayList<MemberDTO> mblist = mbDAO.getList(groupID);
 </header>
 <!-- header -->
 <section>
-<%= userAccess %>
 
 	<div id="group-main">
+	<%= userAccess %>명 접속중
 		<div id="group-info">
-		<span><%= group.getGroupName() %>에서 많은 사람들과 함께 즐겨보세요</span>
-		<!-- 그룹을 만든 userID일때만 버튼 생성 -->
-		<% if(userID.equals(group.getUserID())){ %>
-		<button type="button" class="btn-blue" id="btn-del" onclick="if(confirm('정말로 삭제하시겠습니까?')){location.href='groupDeleteAction.jsp?groupID=<%=groupID%>'}"><span>그룹삭제</span></button>
-		<%} %>
-		<%= mblist.size() %>명 참여중
+			<div id="group-title" style="width: 100%; height: 100px; display: flex; align-items: center;">
+				<div id="title-text" style="width: 8500px; font-size: 25pt;">
+				<span><%= group.getGroupName() %> 에서 함께 취미를 즐겨보세요 </span>
+				</div>
+				<div id="del-btn" style="">
+				<!-- 그룹을 만든 userID일때는 그룹 삭제 버튼 생성 -->
+				<% if(userID.equals(group.getUserID())){ %>
+				<button type="button" class="btn-blue" id="btn-del" onclick="if(confirm('정말로 삭제하시겠습니까?')){location.href='groupDeleteAction.jsp?groupID=<%=groupID%>'}"><span>그룹삭제</span></button>
+				<%}else{ %>
+				<!-- 그룹에 가입한 userID일때는 그룹 탈퇴 버튼 생성 -->
+				<button type="button" class="btn-blue" id="btn-del" onclick="if(confirm('정말로 탈퇴하시겠습니까?')){location.href='memberDeleteAction.jsp?groupID=<%=groupID%>&memberID=<%=memberID%>'}"><span>그룹탈퇴</span></button>
+				<%} %>
+				</div>
+			</div>
+				<hr style="width: 100%; height: 2px; background-color: black;">
+		가입 멤버 : <%= mblist.size() %>명
 		<%= group.getUserID() %>
 		</div>
-	</div>
-	<div id="member-list">
-	<% 
-		for(int i=0; i<mblist.size(); i++){
-	%>
-		<%= mblist.get(i).getMemberID() %>
-		<%= mblist.get(i).getMbContent() %>
-		<%= mblist.get(i).getMbDate().substring(0,11)+mblist.get(i).getMbDate().substring(11,13)+"시"+mblist.get(i).getMbDate().substring(14,16)+"분" %>
-	<%
-		}
-	%>
+	
+		<div id="member-list">
+		<% 
+			for(int i=0; i<mblist.size(); i++){
+		%>
+		<div id="member">
+			<div id="user-name">
+			<%= mblist.get(i).getMemberID() %>님이 가입했습니다
+			</div>
+			<div id="user-content">
+			<%= mblist.get(i).getMbContent() %>
+			<%= mblist.get(i).getMbDate().substring(0,11)+mblist.get(i).getMbDate().substring(11,13)+"시"+mblist.get(i).getMbDate().substring(14,16)+"분" %>
+			</div>
+		</div>
+		<%
+			}
+		%>
+		</div>
 	</div>
 </section>
 <script>
