@@ -9,7 +9,6 @@ $(function(){
       window.open("loginPopUp.jsp", "Login", "width=450, height=500, top=50%, left=50%") ;
     }
     else {
-      location.href='history.back()';
     }
     });
 });

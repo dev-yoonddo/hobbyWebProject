@@ -14,7 +14,6 @@
 <meta charset="UTF-8">
 <title>GROUP VIEW</title>
 <link rel="stylesheet" href="css/main.css?after">
-<link rel="stylesheet" href="css/member.css?after">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
 <link href="https://fonts.googleapis.com/css2?family=Bruno+Ace&family=Gowun+Dodum&family=IBM+Plex+Sans+KR:wght@300;600&family=Jua&family=Merriweather:wght@700&family=Nanum+Gothic&family=Nanum+Gothic+Coding&family=Noto+Sans+KR:wght@400&family=Noto+Serif+KR:wght@200&display=swap" rel="stylesheet">
 <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square.css" rel="stylesheet">
@@ -27,36 +26,25 @@
 
 </head>
 <style>
+section{
+	height: 800px;
+	padding-top: 150px;
+	padding-left: 100px;
+	padding-right: 100px;
+}	
 h2{
 	font-family: 'Bruno Ace', cursive;
 	font-weight: bold;
 	font-size: 20pt;
 	color: #2E2F49;
 }
-#sb{
-width: 100%;
+#group-main{
+	height: 200px;
 }
-#sb span{
-color: #ffffff;
-  background-color: #2E2F49;
-  border: 1px solid #2E2F49;
-  padding-top: 15px;
-  padding-bottom: 15px;
-}
-#sb::before {
-  background-color: #2E2F49;
-}
+.btn-blue{
+	width: 100px;
+} 
 
-#sb span:hover {
-  color: #2E2F49;
-  background-color: #ffffff;
-}
-  
-#joinGroup{
-	width: 370px;
-	margin: 30px;
-	padding-top: 30px;
-}
 </style>
 <body>
 <%
@@ -75,6 +63,13 @@ int groupID = 0;
 if(request.getParameter("groupID") != null){
 	groupID = Integer.parseInt(request.getParameter("groupID"));
 }
+if(userID == null){
+	PrintWriter script = response.getWriter();
+	script.println("<script>");
+	script.println("alert('로그인이 필요합니다.')");
+	script.println("window.open('loginPopUp.jsp', 'Login', 'width=450, height=500, top=50%, left=50%')");
+	script.println("</script>");
+}
 //유효하지 않은 그룹일때
 if(groupID == 0){
 	PrintWriter script = response.getWriter();
@@ -84,7 +79,9 @@ if(groupID == 0){
 	script.println("</script>");
 }
 GroupDTO group = new GroupDAO().getGroupVO(groupID);
-
+int userAccess = Integer.parseInt(request.getParameter("userAccess"));
+MemberDAO mbDAO = new MemberDAO();
+ArrayList<MemberDTO> mblist = mbDAO.getList(groupID);
 %>
 
 <!-- header -->
@@ -123,29 +120,30 @@ GroupDTO group = new GroupDAO().getGroupVO(groupID);
 </header>
 <!-- header -->
 <section>
+<%= userAccess %>
 
-
-<%= group.getGroupName() %>
-<%= group.getGroupNoP() 
-%>
-<%= group.getUserID() %>
-<!-- 그룹을 만든 userID와 로그인userID가 같으면 삭제 버튼 생성 -->
-<% if(userID.equals(group.getUserID())){ %>
-<button type="button" class="btn-blue" id="btn-del" onclick="if(confirm('정말로 삭제하시겠습니까?')){location.href='groupDeleteAction.jsp?groupID=<%=groupID%>'}"><span>삭제</span></button>
-<%} %>
-<button type="button" class="btn-blue" id="joinGroup-btn" onclick="mbJoin()"><span>가입</span></button>
-
-<% 
-	MemberDAO mbDAO = new MemberDAO();
-	ArrayList<MemberDTO> mblist = mbDAO.getList(groupID);
-	for(int i=0; i<mblist.size(); i++){
-%>
-	<%= mblist.get(i).getMemberID() %>
-	<%= mblist.get(i).getMbContent() %>
-	<%= mblist.get(i).getMbDate().substring(0,11)+mblist.get(i).getMbDate().substring(11,13)+"시"+mblist.get(i).getMbDate().substring(14,16)+"분" %>
-<%
-	}
-%>
+	<div id="group-main">
+		<div id="group-info">
+		<span><%= group.getGroupName() %>에서 많은 사람들과 함께 즐겨보세요</span>
+		<!-- 그룹을 만든 userID일때만 버튼 생성 -->
+		<% if(userID.equals(group.getUserID())){ %>
+		<button type="button" class="btn-blue" id="btn-del" onclick="if(confirm('정말로 삭제하시겠습니까?')){location.href='groupDeleteAction.jsp?groupID=<%=groupID%>'}"><span>그룹삭제</span></button>
+		<%} %>
+		<%= mblist.size() %>명 참여중
+		<%= group.getUserID() %>
+		</div>
+	</div>
+	<div id="member-list">
+	<% 
+		for(int i=0; i<mblist.size(); i++){
+	%>
+		<%= mblist.get(i).getMemberID() %>
+		<%= mblist.get(i).getMbContent() %>
+		<%= mblist.get(i).getMbDate().substring(0,11)+mblist.get(i).getMbDate().substring(11,13)+"시"+mblist.get(i).getMbDate().substring(14,16)+"분" %>
+	<%
+		}
+	%>
+	</div>
 </section>
 <script>
 function mbJoin(){

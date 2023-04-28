@@ -293,7 +293,7 @@ opener.location.reload(); //부모창 리프레쉬
 self.close(); //로그인 후 팝업 창 닫기
 </script>
 <script>
-const content = "그룹을 만들거나 참여해보세요";
+const content = "ALWAYS BETTER TOGETHER";
 const text = document.querySelector('.text');
 let i = 0;
 function typing() {
@@ -327,6 +327,7 @@ function joinGroup(groupID, groupAvailable) {
 }
 </script>
 <script>
+var userAccess = 0;
 //접속하기 버튼을 클릭하면 id,password,available value를 받는다
 function showPasswordPrompt(grID, grPassword, grAvailable) {
     var inputPassword = "";
@@ -339,7 +340,8 @@ function showPasswordPrompt(grID, grPassword, grAvailable) {
 	        }
 	    }
 	    if (inputPassword == grPassword) {
-	        location.href = "groupView.jsp?groupID=" + grID;
+	        userAccess++;
+	        location.href = "groupView.jsp?groupID=" + grID + "&userAccess=" + userAccess;
 	    }
 	//비활동중
     }else{
