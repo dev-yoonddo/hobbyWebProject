@@ -173,13 +173,13 @@ ArrayList<MemberDTO> mblist = mbDAO.getList(groupID); //해당 그룹의 멤버�
 		<%
 			for(int i=0; i<mblist.size(); i++){
 		%>
-		<div id="member" style="border-radius: 10px; outline-width: 2px; outline-color: #2E2F49; background-color: #C9D7FF; color: #2E2F49; padding: 10px; position: relative;">
+		<div id="member" style=" background-color: white; color: #2E2F49; padding: 10px; position: relative;">
 			<div id="user-name">
-				<div style="border-radius: 10px; border-bottom-left-radius:0; border-bottom-right-radius: 0; background-color: white; padding: 11px;">
+				<div style="border-radius: 20px; color: black; border-bottom-left-radius:0; border-bottom-right-radius: 0; background-color: #D6E0FC; padding: 11px;">
 				<span><%= mblist.get(i).getMemberID() %>님이 가입했습니다</span>
 				<span style="position: absolute; right:20px;"><%= mblist.get(i).getMbDate().substring(0,11)+mblist.get(i).getMbDate().substring(11,13)+"시"+mblist.get(i).getMbDate().substring(14,16)+"분" %></span>
 				</div>
-				<div id="user-content" style="height: auto; border-radius: 10px; border-top-left-radius: 0; border-top-right-radius: 0; background-color: white; padding: 10px; margin-top: 10px;">
+				<div id="user-content" style="height: auto; border-width: 1px; border-color: #D6E0FC; border-radius: 20px; border-style: solid; border-top-left-radius: 0; border-top-right-radius: 0; background-color: white; padding: 10px; margin-top: 10px;">
 				<%= mblist.get(i).getMbContent() %>
 				</div>
 			</div>

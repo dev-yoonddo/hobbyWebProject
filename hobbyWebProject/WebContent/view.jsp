@@ -349,7 +349,7 @@ HeartDTO heartvo = new HeartDAO().getHeartVO(boardID);
 			          </table>
 			      <button type="submit" class="btn-blue" id="cmt-cpl"><span>완료</span></button>
 			      </form>
-		   </div><br>	
+		   </div><br><br>	
 			<div class="cmt-view" style="height: auto;">
 	         	<div class="row" style="width: 600px; height: auto;">
                     <%

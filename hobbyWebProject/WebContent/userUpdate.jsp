@@ -73,6 +73,12 @@
 </div>
 </header>
 <section>
+<div>
+	<div class="menu-bar" style="left: 0; top: 120px;width: 150px; position: fixed; font-size: 15pt; padding-left: 20px;">
+		<div id="my-info" style="height: 50px;">내 정보 수정</div>
+		<div id="my data" style="height: 50px;">내 정보 관리</div>
+	</div>
+</div>
 <div class="user-info">
  	<div>
         <h2>내 정보 수정<h2>

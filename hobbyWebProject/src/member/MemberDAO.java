@@ -87,6 +87,8 @@ public class MemberDAO {
 	}
 	//삭제하기
 		public int delete(int memberID) {
+			
+			
 			String SQL = "UPDATE member SET mbAvailable = 0 WHERE memberID = ? ";
 			try {
 				PreparedStatement pstmt = conn.prepareStatement(SQL);
