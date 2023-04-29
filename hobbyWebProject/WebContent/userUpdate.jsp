@@ -21,7 +21,64 @@
 <script type="text/javascript" src="js/script.js"></script>
 <script type="text/javascript" src="js/checkPW.js"></script>
 </head>
+<style>
+.menu-bar{
+position: fixed;
+left: -150px;
+top: 150px;
+font-size: 15pt;
+}
+.menu-bar-1{
+width: 200px;
+  height: 50px;
+left: -150px;
+  top: 150px;
+  background-color: #E0EBFF;
+  transition: left 1s;
+  position: fixed;
+display: flex;
+ justify-content: center;
+ align-items: center;
+}
+.menu-bar-2{
+	width: 200px;
+  height: 50px;
+left: -150px;
+  top: 210px;
+  background-color: #E0EBFF;
+  transition: left 1s; 
+  position: fixed;
+  display: flex;
+ justify-content: center;
+  align-items: center;
+ 
+}
+.menu-bar-1:hover , .menu-bar-2:hover{
+ left: 0;
+  transition: left 1s;
+}
 
+.menu-bar-1 > ul , .menu-bar-2 > ul{
+position: relative;
+  float: right;
+  list-style-type: none;
+  display: flex;
+ margin: 0 auto;
+align-items: center;
+}
+
+.menu-bar-1 > li , .menu-bar-2> li{
+width: auto;
+height: auto;
+margin: 0 auto;
+}
+.i{
+font-size: 20pt;
+margin-left: 20px;
+margin-top: 5px;
+
+}
+</style>
 <body>
 <%
 	String userID=null;
@@ -74,10 +131,21 @@
 </header>
 <section>
 <div>
-	<div class="menu-bar" style="left: 0; top: 120px;width: 150px; position: fixed; font-size: 15pt; padding-left: 20px;">
-		<div id="my-info" style="height: 50px;">내 정보 수정</div>
-		<div id="my data" style="height: 50px;">내 정보 관리</div>
+	<div class="menu-bar">
+		<div class="menu-bar-1">
+		<ul>
+			<li>내 정보 수정</li>
+			<li class="i"><i class="fa-solid fa-angles-right"></i></li>
+		</ul>
+		</div>
+		<div class="menu-bar-2">
+		<ul>
+			<li>내 정보 관리</li>
+			<li class="i"><i class="fa-solid fa-angles-right"></i></li>
+		</ul>
+		</div>
 	</div>
+
 </div>
 <div class="user-info">
  	<div>
