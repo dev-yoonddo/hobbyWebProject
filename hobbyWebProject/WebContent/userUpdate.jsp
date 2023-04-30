@@ -1,8 +1,20 @@
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.io.PrintWriter" %>
 <%@ page import="user.UserDAO" %>
 <%@ page import="user.UserDTO" %>
+<%@ page import="board.BoardDAO" %>
+<%@ page import="board.BoardDTO" %>
+<%@ page import="comment.CommentDAO" %>
+<%@ page import="comment.CommentDTO" %>
+<%@ page import="group.GroupDAO" %>
+<%@ page import="group.GroupDTO" %>
+<%@ page import="member.MemberDAO" %>
+<%@ page import="member.MemberDTO" %>
+<%@ page import="heart.HeartDAO" %>
+<%@ page import="heart.HeartDTO" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,19 +28,21 @@
 <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square.css" rel="stylesheet">
 <script defer src="option/jquery/jquery.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
 <script src="https://kit.fontawesome.com/f95555e5d8.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
-<script type="text/javascript" src="js/script.js"></script>
 <script type="text/javascript" src="js/checkPW.js"></script>
+<script type="text/javascript" src="js/script.js"></script>
+
 </head>
 <style>
 .menu-bar{
-position: fixed;
-left: -150px;
+width: auto;
+height: auto;
 top: 150px;
 font-size: 15pt;
 }
-.menu-bar-1{
+#menu1{
 width: 200px;
   height: 50px;
 left: -150px;
@@ -39,8 +53,9 @@ left: -150px;
 display: flex;
  justify-content: center;
  align-items: center;
+ cursor: pointer;
 }
-.menu-bar-2{
+#menu2{
 	width: 200px;
   height: 50px;
 left: -150px;
@@ -51,14 +66,15 @@ left: -150px;
   display: flex;
  justify-content: center;
   align-items: center;
+  cursor: pointer;
  
 }
-.menu-bar-1:hover , .menu-bar-2:hover{
+#menu1:hover , #menu2:hover{
  left: 0;
   transition: left 1s;
 }
 
-.menu-bar-1 > ul , .menu-bar-2 > ul{
+#menu1 > ul , #menu2 > ul{
 position: relative;
   float: right;
   list-style-type: none;
@@ -67,7 +83,7 @@ position: relative;
 align-items: center;
 }
 
-.menu-bar-1 > li , .menu-bar-2> li{
+#menu1 > li , #menu2 > li{
 width: auto;
 height: auto;
 margin: 0 auto;
@@ -77,6 +93,18 @@ font-size: 20pt;
 margin-left: 20px;
 margin-top: 5px;
 
+}
+#more-btn{
+cursor: pointer;
+}
+td{
+table-layout: fixed;
+height: 20px;
+border-bottom: solid 1px #C0C0C0;
+text-align: left;
+}
+#click-view:hover{
+text-decoration: underline;
 }
 </style>
 <body>
@@ -130,26 +158,24 @@ margin-top: 5px;
 </div>
 </header>
 <section>
-<div>
 	<div class="menu-bar">
-		<div class="menu-bar-1">
+		<div id="menu1">
 		<ul>
-			<li>내 정보 수정</li>
+			<li>정보 수정하기</li>
 			<li class="i"><i class="fa-solid fa-angles-right"></i></li>
 		</ul>
 		</div>
-		<div class="menu-bar-2">
+		<div id="menu2">
 		<ul>
-			<li>내 정보 관리</li>
+			<li>데이터 관리하기</li>
 			<li class="i"><i class="fa-solid fa-angles-right"></i></li>
 		</ul>
 		</div>
 	</div>
-
-</div>
-<div class="user-info">
+	
+<div id="userInfo">
  	<div>
-        <h2>내 정보 수정<h2>
+        <h2>정보 수정하기<h2>
         <form method="post" action="userUpdateAction.jsp" id="user-update" onsubmit="return passwordCheck(this)">
 		<input type="text" value=<%=user.getUserID()%> name="userID" id="userID" maxlength="20">
 		<input type="text" value=<%=user.getUserName()%> name="userName" id="userName"maxlength="20">
@@ -165,6 +191,147 @@ margin-top: 5px;
         <button type="button" id="user-delete" onclick="if(confirm('정말 탈퇴 하시겠습니까?')){location.href='userDeleteAction.jsp'}">회원 탈퇴하기</button>
     </div>
 </div>
+<div id="userSet">
+	<div>
+		<h2>데이터 관리하기</h2>
+		<div class="userData" id="boardData">
+		<%
+		BoardDAO boardDAO = new BoardDAO();
+		ArrayList<BoardDTO> list = boardDAO.getListByUser(userID);
+		%>
+		<h4>글 (<%= list.size() %>)개</h4>
+			<table style="font-size: 10pt; color: black; width: 450px; text-align: left;">
+				<thead>
+					<tr class="board-head">
+						<th style="width: 20%;"><span>카테고리</span></th>
+						<th style="width: 37%;"><span>제목</span></th>
+						<th style="width: 23%;"><span>작성일</span></th>
+						<th style="width: 10%;"><span>좋아요</span></th>
+						<th style="width: 10%;"><span>댓글</span></th>
+					</tr>
+				</thead>
+				<tbody>
+					<%
+						for (int i = 0; i < list.size(); i++) {
+						//댓글 갯수 가져오기
+	                 	CommentDAO cmtDAO = new CommentDAO();
+	                 	ArrayList<CommentDTO> cmtlist = cmtDAO.getList(list.get(i).getBoardID());//밑에 댓글리스트와는 다른 결과를 가져오는 메서드
+	                 	
+						if (list.size() == 0) {
+					%>
+						<tr>
+						<td>작성한 글이 없습니다.</td>
+						</tr>
+					<%
+						}
+						if(list.get(i).getBoardAvailable()==1){ //삭제하지 않은 글 (DB에서 미리 해도 되지만 삭제한 글이 필요할 수 있어서 여기서 조건을 건다.)
+					%>
+					<tr class="showWrite" style="height: 20px;">
+						<td><%=list.get(i).getBoardCategory()%></td>
+						<td><a id="click-view" href="view.jsp?boardID=<%= list.get(i).getBoardID() %>"><%= list.get(i).getBoardTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></a></td>
+						<td><%= list.get(i).getBoardDate().substring(0 ,11) + "<br>" + list.get(i).getBoardDate().substring(11, 13) + "시" + list.get(i).getBoardDate().substring(14, 16) + "분" %></td>
+						<td><%=list.get(i).getHeartCount()%></td>
+						<td><%= cmtlist.size() %></td>
+					</tr>
+					<%
+						}
+						}
+						
+					%>
+				</tbody>
+			</table>
+		</div><br>
+		<div id="more-btn">MORE</div>
+		
+		<div class="userData" id="cmtData">
+		<%
+		CommentDAO cmtDAO = new CommentDAO();
+		ArrayList<CommentDTO> cmtlist = cmtDAO.getListByUser(userID);
+		%>
+			<h4>댓글 (<%= cmtlist.size() %>)개</h4>
+			<table style="font-size: 10pt; color: black; width: 450px; text-align: left;">
+				<thead>
+					<tr class="board-head">
+						<th style="width: 60%;"><span>댓글</span></th>
+						<th style="width: 40%;"><span>작성일</span></th>
+					</tr>
+				</thead>
+				<tbody>
+					<%
+						for (int i = 0; i < cmtlist.size(); i++) {
+
+						if (cmtlist.size() == 0) {
+					%>
+						<tr>
+						<td>작성한 댓글이 없습니다.</td>
+						</tr>
+					<%
+						}
+					%>
+					<tr class="showCmt" style="height: 20px;">
+						<td><a id="click-view" href="view.jsp?boardID=<%= cmtlist.get(i).getBoardID() %>"><%= cmtlist.get(i).getCmtContent().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></a></td>
+						<td><%= cmtlist.get(i).getCmtDate().substring(0 ,11) + list.get(i).getBoardDate().substring(11, 13) + "시" + list.get(i).getBoardDate().substring(14, 16) + "분" %></td>
+					</tr>
+					<%
+						
+						}
+						
+					%>
+				</tbody>
+			</table>
+		</div><br>
+		<div id="more-btn-2">MORE</div>
+	</div>
+</div>
 </section>
+<script>
+$(document).ready(function(){
+	//메뉴 클릭할때마다 보이고 숨기기
+	$('#userInfo').show();
+	$('#userSet').hide();
+
+	$('#menu1').on('click', function(){
+	    $('#userInfo').show();
+		    $('#userSet').hide();
+	  });
+	$('#menu2').on('click', function(){
+	  $('#userInfo').hide();
+	   $('#userSet').show();
+	});
+	
+	//내가 작성한 게시글 더보기
+	var viewCount = 5; // 클릭할 때 마다 보여질 갯수
+	var lastIndex = viewCount - 1; //보여질 글의 마지막 인덱스
+    var hiddenRows = $('.showWrite:hidden'); //숨겨져있는 글의 갯수
+	$('.showWrite').slice(viewCount).hide(); // 처음 viewCount개의 글을 제외하고 모두 숨기기
+
+	$("#more-btn").click(function(e){ //more-btn을 클릭했을때
+	    e.preventDefault();
+	    if($('.showWrite').length <= lastIndex){ //만약 전체 글의 갯수보다 lastIndex가 크거나 같다면
+	        alert("마지막 글입니다"); //알림창 띄우기
+	        return; //return을 하지않으면 알림창을 띄우고 또 다음으로 실행된다.
+	    }
+	    $('.showWrite').slice(lastIndex + 1, lastIndex + 1 + viewCount).show('slow'); // 처음 출력한 글의 다음 글들을 보여준다.
+	    $('.showWrite').slice(0, lastIndex + 1).hide(); // 0부터 이전의 글들을 모두 숨긴다.
+	    lastIndex += viewCount; // 다음 글 출력을 위해 lastIndex에 viewCount를 더해준다
+	});
+	 
+	//내가 작성한 댓글 더보기 viewCount lastIndex는 이미 위에서 선언함
+    var hiddenRows = $('.showCmt:hidden'); //숨겨져있는 글의 갯수
+	$('.showCmt').slice(viewCount).hide(); // 처음 viewCount개의 글을 제외하고 모두 숨기기
+
+	$("#more-btn-2").click(function(e){ //more-btn을 클릭했을때
+	    e.preventDefault();
+	    if($('.showCmt').length <= lastIndex){ //만약 전체 글의 갯수보다 lastIndex가 크거나 같다면
+	        alert("마지막 댓글입니다"); //알림창 띄우기
+	        return; //return을 하지않으면 알림창을 띄우고 또 다음으로 실행된다.
+	    }
+	    $('.showCmt').slice(lastIndex + 1, lastIndex + 1 + viewCount).show('slow'); // 처음 출력한 글의 다음 글들을 보여준다.
+	    $('.showCmt').slice(0, lastIndex + 1).hide(); // 0부터 이전의 글들을 모두 숨긴다.
+	    lastIndex += viewCount; // 다음 글 출력을 위해 lastIndex에 viewCount를 더해준다
+	});
+    
+});
+</script>
 </body>
 </html>

@@ -86,7 +86,7 @@ public class CommentDAO {
 		}
 		return ""; //오류
 	}
-	//댓글 리스트 출력하기
+	//해당 boardID의 댓글 리스트 출력하기
 	public ArrayList<CommentDTO> getList(int boardID){
 		String SQL = "SELECT * FROM comment WHERE boardID= ? AND cmtAvailable = 1 ORDER BY boardID DESC"; 
 		ArrayList<CommentDTO> list = new ArrayList<CommentDTO>();
@@ -110,6 +110,29 @@ public class CommentDAO {
 		return list; 
 	}
 	
+	//해당 userID가 작성한 댓글 리스트 가져오기
+	public ArrayList<CommentDTO> getListByUser(String userID){
+		String SQL = "SELECT * FROM comment WHERE userID = ? AND cmtAvailable = 1 ORDER BY cmtID DESC"; //삭제하지 않은 댓글 
+		ArrayList<CommentDTO> list = new ArrayList<CommentDTO>();
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, userID);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				CommentDTO cmt = new CommentDTO();
+				cmt.setCmtContent(rs.getString(1));
+				cmt.setCmtID(rs.getInt(2));
+				cmt.setUserID(rs.getString(3));
+				cmt.setCmtAvailable(rs.getInt(4));
+				cmt.setCmtDate(rs.getString(5));
+				cmt.setBoardID(rs.getInt(6));
+				list.add(cmt);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return list; 
+	}
 	/*public int update(String cmtContent, int boardID, int cmtID) {
 		String SQL = "UPDATE comment SET cmtContent = ? WHERE boardID = ? AND cmtID = ?";
 		try {

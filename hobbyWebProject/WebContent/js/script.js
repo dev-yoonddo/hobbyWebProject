@@ -215,6 +215,12 @@ $(function(){
     });
 });
 
- 
+$(function(){
+    $('.moveBottom').on('click', function(){
+      window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+    });
+});
+
+
 });
 })(jQuery);

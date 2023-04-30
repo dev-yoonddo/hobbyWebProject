@@ -91,13 +91,12 @@ public class BoardDAO {
 		}
 		return -1; //데이터베이스 오류
 	}
-	//글 목록 출력
-	public ArrayList<BoardDTO> getList(int pageNumber){
-		String SQL = "SELECT * FROM board WHERE boardID < ? AND boardAvailable = 1 ORDER BY boardID DESC LIMIT 10";
+	//글 전체 목록 출력 (삭제된 글, LIMIT 제외)
+	public ArrayList<BoardDTO> getList(){
+		String SQL = "SELECT * FROM board WHERE boardAvailable = 1 ORDER BY boardID DESC";
 		ArrayList<BoardDTO> list = new ArrayList<BoardDTO>();
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
-			pstmt.setInt(1, (pageNumber - 1) * 10);
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
 				BoardDTO board = new BoardDTO();
@@ -109,7 +108,34 @@ public class BoardDAO {
 				board.setBoardAvailable(rs.getInt(6));
 				board.setBoardCategory(rs.getString(7));
 				board.setViewCount(rs.getInt(8));
-				board.setHeartCount(rs.getInt(8));
+				board.setHeartCount(rs.getInt(9));
+				list.add(board);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list; 
+	}
+	
+	//해당 userID가 작성한 글의 리스트 가져오기
+	public ArrayList<BoardDTO> getListByUser(String userID){
+		String SQL = "SELECT * FROM board WHERE userID = ? ORDER BY boardID DESC";
+		ArrayList<BoardDTO> list = new ArrayList<BoardDTO>();
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			 pstmt.setString(1, userID);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				BoardDTO board = new BoardDTO();
+				board.setBoardID(rs.getInt(1));
+				board.setBoardTitle(rs.getString(2));
+				board.setUserID(rs.getString(3));
+				board.setBoardDate(rs.getString(4));
+				board.setBoardContent(rs.getString(5));
+				board.setBoardAvailable(rs.getInt(6));
+				board.setBoardCategory(rs.getString(7));
+				board.setViewCount(rs.getInt(8));
+				board.setHeartCount(rs.getInt(9));
 				list.add(board);
 			}
 		} catch (Exception e) {
