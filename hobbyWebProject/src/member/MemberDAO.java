@@ -1,6 +1,7 @@
 package member;
 
 import java.sql.Connection;
+
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,6 +13,7 @@ import board.BoardDAO;
 import board.BoardDTO;
 import comment.CommentDAO;
 import comment.CommentDTO;
+import group.GroupDTO;
 
 public class MemberDAO {
 
@@ -63,59 +65,7 @@ public class MemberDAO {
 		}
 		return -1; //데이터베이스 오류 , primary key인 memberid가 중복됐을때도 오류가 난다.
 	}
-//	회원 정보 보기	
-	public MemberDTO getMemberVO(String memberID) {
-		String SQL="SELECT * FROM member WHERE memberID = ?";
-		try {
-			PreparedStatement pstmt=conn.prepareStatement(SQL);
-			pstmt.setString(1, memberID);//물음표
-			rs=pstmt.executeQuery();//select
-			if(rs.next()) {//결과가 있다면
-				MemberDTO mb = new MemberDTO();
-				mb.setMemberID(rs.getString(1));
-				mb.setGroupID(rs.getInt(2));
-				mb.setUserID(rs.getString(3));
-				mb.setMbAvailable(rs.getInt(4));
-				mb.setMbContent(rs.getString(5));
-				mb.setMbDate(rs.getString(6));
-				return mb;//6개의 항목을 user인스턴스에 넣어 반환한다.
-			}			
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-	//삭제하기
-		public int delete(int memberID) {
-			
-			
-			String SQL = "UPDATE member SET mbAvailable = 0 WHERE memberID = ? ";
-			try {
-				PreparedStatement pstmt = conn.prepareStatement(SQL);
-				pstmt.setInt(1, memberID);
-				//성공적으로 수행했다면 0이상의 결과 반환
-				return pstmt.executeUpdate();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			return -1; //데이터베이스 오류
-		}
 	
-//	회원 탈퇴
-//	1. 데이터 베이스 삭제
-	/*
-	public int delete(String userID) {
-		String SQL="DELETE FROM user WHERE userID = ?";
-		try {
-			PreparedStatement pstmt=conn.prepareStatement(SQL);
-			pstmt.setString(1, userID);
-			return pstmt.executeUpdate();
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-		return -1;//데이터베이스 오류
-	}*/
-		
 		//멤버 리스트 출력하기
 		public ArrayList<MemberDTO> getList(int groupID){
 			String SQL = "SELECT * FROM member WHERE groupID= ? AND mbAvailable = 1 ORDER BY groupID DESC"; 
@@ -139,6 +89,31 @@ public class MemberDAO {
 			}
 			return list; 
 		}
+		
+		//해당 userID가 가입한 그룹리스트(memberID) 가져오기
+		public ArrayList<MemberDTO> getListByUser(String userID){
+			String SQL = "SELECT * FROM member WHERE userID = ? ORDER BY memberID DESC"; 
+			ArrayList<MemberDTO> list = new ArrayList<MemberDTO>();
+			try {
+				PreparedStatement pstmt = conn.prepareStatement(SQL);
+				pstmt.setString(1, userID);
+				rs = pstmt.executeQuery();
+				while (rs.next()) {
+					MemberDTO mb = new MemberDTO();
+					mb.setMemberID(rs.getString(1));
+					mb.setGroupID(rs.getInt(2));
+					mb.setUserID(rs.getString(3));
+					mb.setMbAvailable(rs.getInt(4));
+					mb.setMbContent(rs.getString(5));
+					mb.setMbDate(rs.getString(6));
+					list.add(mb);
+				}
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+			return list; 
+		}
+		
 		//하나의 멤버 정보 가져오기
 		public MemberDTO getMemberVO(String userID, int groupID) {
 			String SQL = "SELECT * FROM member WHERE userID = ? AND groupID = ?";

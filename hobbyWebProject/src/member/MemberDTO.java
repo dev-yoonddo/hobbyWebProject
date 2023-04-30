@@ -10,8 +10,6 @@ public class MemberDTO {
 	private int mbAvailable;
 	private String mbContent;	
 	private String mbDate;
-	
-	
 	public String getMemberID() {
 		return memberID;
 	}
@@ -48,6 +46,9 @@ public class MemberDTO {
 	public void setMbDate(String mbDate) {
 		this.mbDate = mbDate;
 	}
+	
+	
+	
 	
 	
 

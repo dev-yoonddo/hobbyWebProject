@@ -81,7 +81,7 @@ if(groupID == 0){
 	script.println("location.href = 'groupPage.jsp'");
 	script.println("</script>");
 }
-int userAccess = Integer.parseInt(request.getParameter("userAccess"));
+//int userAccess = Integer.parseInt(request.getParameter("userAccess"));
 GroupDTO group = new GroupDAO().getGroupVO(groupID); //하나의 그룹 정보 가져오기
 MemberDTO member = new MemberDAO().getMemberVO(userID, groupID); //현재 로그인하고 groupID에 가입한 member 정보 가져오기
 MemberDAO mbDAO = new MemberDAO();
@@ -147,7 +147,6 @@ ArrayList<MemberDTO> mblist = mbDAO.getList(groupID); //해당 그룹의 멤버�
 <section>
 
 	<div id="group-main">
-	<%= userAccess %>명 접속중
 		<div id="group-info">
 			<div id="group-title" style="width: 100%; height: 100px; display: flex; align-items: center;">
 				<div id="title-text" style="width: 8500px; font-size: 25pt;">

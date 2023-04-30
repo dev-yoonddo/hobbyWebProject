@@ -106,6 +106,49 @@ text-align: left;
 #click-view:hover{
 text-decoration: underline;
 }
+.userData{
+
+}
+.btn-blue{
+	width: 45px;
+	height: 25px;
+	font-size: 13pt;
+	margin: 0;
+	padding: 0;
+}
+.btn-blue span{
+	height: 15px;
+	float: center;
+}
+h3{
+	width: 60%;
+	margin: 0;
+	float: left;
+}
+.userDataBoard{
+	min-height: 40px;
+	margin-bottom: 30px;
+	padding-top: 30px;
+}
+.view-head{
+	height: 30px;
+	align-items: center;
+}
+.view-btn{
+	width: 40%;
+	height: 30px;
+	float: center;
+	top: 0;
+}
+td{
+	max-height: 30px;
+}
+ul{
+list-style: none;
+height: 30px;
+text-decoration: none;
+display: flex;
+}
 </style>
 <body>
 <%
@@ -192,14 +235,18 @@ text-decoration: underline;
     </div>
 </div>
 <div id="userSet">
-	<div>
+	<div style="width: 500px; height: 800px;">
 		<h2>데이터 관리하기</h2>
-		<div class="userData" id="boardData">
 		<%
 		BoardDAO boardDAO = new BoardDAO();
 		ArrayList<BoardDTO> list = boardDAO.getListByUser(userID);
 		%>
-		<h4>글 (<%= list.size() %>)개</h4>
+		<div class="userDataBoard">
+			<tr class="view-head">
+				<td><h3>글 (<%= list.size() %>)개</h3></td>
+				<td><button type="button" class="btn-blue" id="view1" style="float: left;"><span>보기</span></button></td>	
+			</tr>
+		<div class="userData" id="boardData">
 			<table style="font-size: 10pt; color: black; width: 450px; text-align: left;">
 				<thead>
 					<tr class="board-head">
@@ -224,7 +271,7 @@ text-decoration: underline;
 						</tr>
 					<%
 						}
-						if(list.get(i).getBoardAvailable()==1){ //삭제하지 않은 글 (DB에서 미리 해도 되지만 삭제한 글이 필요할 수 있어서 여기서 조건을 건다.)
+						if(list.get(i).getBoardAvailable()==1){ //삭제하지 않은 글 (DAO에서 미리 해도 되지만 삭제한 글이 필요할 수 있어서 여기서 조건을 건다.)
 					%>
 					<tr class="showWrite" style="height: 20px;">
 						<td><%=list.get(i).getBoardCategory()%></td>
@@ -240,15 +287,17 @@ text-decoration: underline;
 					%>
 				</tbody>
 			</table>
-		</div><br>
 		<div id="more-btn">MORE</div>
+		</div>
+		</div>
 		
-		<div class="userData" id="cmtData">
 		<%
 		CommentDAO cmtDAO = new CommentDAO();
 		ArrayList<CommentDTO> cmtlist = cmtDAO.getListByUser(userID);
 		%>
-			<h4>댓글 (<%= cmtlist.size() %>)개</h4>
+		<div class="userDataBoard">
+		<h4>댓글 (<%= cmtlist.size() %>)개</h4>
+		<div class="userData" id="cmtData">
 			<table style="font-size: 10pt; color: black; width: 450px; text-align: left;">
 				<thead>
 					<tr class="board-head">
@@ -279,8 +328,110 @@ text-decoration: underline;
 					%>
 				</tbody>
 			</table>
-		</div><br>
 		<div id="more-btn-2">MORE</div>
+		</div>
+			<div class="view-btn">
+				<button type="button" class="btn-blue" id="view2"><span>보기</span></button>	
+			</div>
+		</div>
+		
+		<%
+		GroupDAO groupDAO = new GroupDAO();
+		ArrayList<GroupDTO> grouplist = groupDAO.getListByUser(userID);
+		%>
+		<div class="userDataBoard">
+		<h4>만든 그룹 (<%= grouplist.size() %>)개</h4>
+		<div class="userData" id="groupData">
+			<table style="font-size: 10pt; color: black; width: 450px; text-align: left;">
+				<thead>
+					<tr class="board-head">
+						<th style="width: 50%;"><span>그룹</span></th>
+						<th style="width: 20%;"><span>비밀번호</span></th>
+						<th style="width: 15%;"><span>활동</span></th>
+						<th style="width: 15%;"><span>인원</span></th>
+					</tr>
+				</thead>
+				<tbody>
+					<%
+						
+						for (int i = 0; i < grouplist.size(); i++) {
+						if (grouplist.size() == 0) {
+								
+					%>
+						<tr>
+						<td>생성한 그룹이 없습니다.</td>
+						</tr>
+					<%
+							}
+					%>
+					<tr class="showGroup" style="height: 20px;">
+						<td><a id="click-view" href="groupView.jsp?groupID=<%= grouplist.get(i).getGroupID() %>"><%= grouplist.get(i).getGroupName().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></a></td>
+						<td><%= grouplist.get(i).getGroupPassword() %></td>
+						<td><%= grouplist.get(i).getGroupAvailable() %></td>
+						<td><%= grouplist.get(i).getGroupNoP() %></td>
+					</tr>
+					<%
+							
+						}
+						
+					%>
+				</tbody>
+			</table>
+		<div id="more-btn-3">MORE</div>
+		</div>
+			<div class="view-btn">
+				<button type="button" class="btn-blue" id="view3"><span>보기</span></button>	
+			</div>
+		</div>
+		
+		<%
+		MemberDAO memberDAO = new MemberDAO();
+		ArrayList<MemberDTO> mblist = memberDAO.getListByUser(userID);
+		%>
+		<div class="userDataBoard">
+		<h4>가입한 그룹 (<%= mblist.size() %>)개</h4>
+		<div class="userData" id="memberData">
+			<table style="font-size: 10pt; color: black; width: 450px; text-align: left;">
+				<thead>
+					<tr class="board-head">
+						<th style="width: 20%;"><span>이름</span></th>
+						<th style="width: 50%;"><span>가입인사</span></th>
+						<th style="width: 20%;"><span>가입일</span></th>
+						<th style="width: 10%;"><span>활동</span></th>
+					</tr>
+				</thead>
+				<tbody>
+					<%
+						
+						for (int i = 0; i < mblist.size(); i++) {
+						if (mblist.size() == 0) {
+								
+					%>
+						<tr>
+						<td>가입한 그룹이 없습니다.</td>
+						</tr>
+					<%
+						}
+					%>
+					<tr class="showMember" style="height: 20px;">
+						<td><a id="click-view" href="groupView.jsp?groupID=<%= mblist.get(i).getGroupID() %>"><%= mblist.get(i).getMemberID().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></a></td>
+						<td><%= mblist.get(i).getMbContent() %></td>
+						<td><%= mblist.get(i).getMbDate().substring(0 ,11) + list.get(i).getBoardDate().substring(11, 13) + "시" + list.get(i).getBoardDate().substring(14, 16) + "분" %></td>
+						<td><%= mblist.get(i).getMbAvailable() %></td>
+					</tr>
+					<%
+							
+						}
+					%>
+				</tbody>
+			</table>
+		<div id="more-btn-4">MORE</div>
+		</div>
+			<div class="view-btn">
+				<button type="button" class="btn-blue" id="view4"><span>보기</span></button>	
+			</div>
+		</div>
+		
 	</div>
 </div>
 </section>
@@ -299,6 +450,24 @@ $(document).ready(function(){
 	   $('#userSet').show();
 	});
 	
+	//원하는 항목 보기
+	$('#boardData').hide(); $('#cmtData').hide(); $('#groupData').hide(); $('#memberData').hide();
+	$('#view1').on('click', function(){
+		$('#boardData').show();
+		$('#cmtData').hide(); $('#groupData').hide(); $('#memberData').hide();
+	});
+	$('#view2').on('click', function(){
+		$('#cmtData').show();
+		$('#boardData').hide(); $('#groupData').hide(); $('#memberData').hide();
+	});
+	$('#view3').on('click', function(){
+		$('#groupData').show();
+		$('#boardData').hide(); $('#cmtData').hide(); $('#memberData').hide();
+	});
+	$('#view4').on('click', function(){
+		$('#memberData').show();
+		$('#boardData').hide(); $('#cmtData').hide(); $('#groupData').hide();
+	});
 	//내가 작성한 게시글 더보기
 	var viewCount = 5; // 클릭할 때 마다 보여질 갯수
 	var lastIndex = viewCount - 1; //보여질 글의 마지막 인덱스
@@ -317,18 +486,54 @@ $(document).ready(function(){
 	});
 	 
 	//내가 작성한 댓글 더보기 viewCount lastIndex는 이미 위에서 선언함
-    var hiddenRows = $('.showCmt:hidden'); //숨겨져있는 글의 갯수
-	$('.showCmt').slice(viewCount).hide(); // 처음 viewCount개의 글을 제외하고 모두 숨기기
+    var viewCount2 = 5;
+	var lastIndex2 = viewCount2 - 1;
+	var hiddenRows2 = $('.showCmt:hidden');
+	$('.showCmt').slice(viewCount2).hide(); 
 
-	$("#more-btn-2").click(function(e){ //more-btn을 클릭했을때
+	$("#more-btn-2").click(function(e){ 
 	    e.preventDefault();
-	    if($('.showCmt').length <= lastIndex){ //만약 전체 글의 갯수보다 lastIndex가 크거나 같다면
-	        alert("마지막 댓글입니다"); //알림창 띄우기
-	        return; //return을 하지않으면 알림창을 띄우고 또 다음으로 실행된다.
+	    if($('.showCmt').length <= lastIndex2){ 
+	        alert("마지막 댓글입니다");
+	        return;
 	    }
-	    $('.showCmt').slice(lastIndex + 1, lastIndex + 1 + viewCount).show('slow'); // 처음 출력한 글의 다음 글들을 보여준다.
-	    $('.showCmt').slice(0, lastIndex + 1).hide(); // 0부터 이전의 글들을 모두 숨긴다.
-	    lastIndex += viewCount; // 다음 글 출력을 위해 lastIndex에 viewCount를 더해준다
+	    $('.showCmt').slice(lastIndex2 + 1, lastIndex2 + 1 + viewCount2).show('slow'); 
+	    $('.showCmt').slice(0, lastIndex2 + 1).hide();
+	    lastIndex2 += viewCount2;
+	});
+	
+	//내가 생성한 그룹 더보기
+	var viewCount3 = 5;
+	var lastIndex3 = viewCount3 - 1;
+    var hiddenRows3 = $('.showGroup:hidden');
+	$('.showGroup').slice(viewCount3).hide();
+
+	$("#more-btn-3").click(function(e){ 
+	    e.preventDefault();
+	    if($('.showGroup').length <= lastIndex3){ 
+	        alert("마지막 그룹입니다");
+	        return;
+	    }
+	    $('.showGroup').slice(lastIndex3 + 1, lastIndex3 + 1 + viewCount3).show('slow');
+	    $('.showGroup').slice(0, lastIndex3 + 1).hide(); 
+	    lastIndex3 += viewCount3;
+	});
+	
+	//내가 가입한 그룹 더보기
+	var viewCount4 = 5;
+	var lastIndex4 = viewCount4 - 1;
+    var hiddenRows4 = $('.showMember:hidden'); 
+	$('.showMember').slice(viewCount4).hide();
+
+	$("#more-btn-4").click(function(e){ 
+	    e.preventDefault();
+	    if($('.showMember').length <= lastIndex4){ 
+	        alert("마지막 그룹입니다"); 
+	        return;
+	    }
+	    $('.showMember').slice(lastIndex4 + 1, lastIndex4 + 1 + viewCount4).show('slow'); 
+	    $('.showMember').slice(0, lastIndex4 + 1).hide();
+	    lastIndex4 += viewCount4; 
 	});
     
 });

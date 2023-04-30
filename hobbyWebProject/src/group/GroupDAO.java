@@ -84,6 +84,31 @@ public class GroupDAO {
 		}
 		return list; 
 	}
+	
+	// 해당 userID의 groupList 가져오기
+		public ArrayList<GroupDTO> getListByUser(String userID){
+			String SQL = "SELECT * FROM `group` WHERE userID = ? ORDER BY groupID desc"; 
+			ArrayList<GroupDTO> list = new ArrayList<GroupDTO>();
+			try {
+				PreparedStatement pstmt = conn.prepareStatement(SQL);
+				pstmt.setString(1, userID);
+				rs = pstmt.executeQuery();
+				while (rs.next()) {
+					GroupDTO grp = new GroupDTO();
+					grp.setGroupID(rs.getInt(1));
+					grp.setGroupName(rs.getString(2));
+					grp.setGroupPassword(rs.getString(3));
+					grp.setUserID(rs.getString(4));
+					grp.setGroupAvailable(rs.getInt(5));
+					grp.setGroupNoP(rs.getInt(6));
+					list.add(grp);
+				}
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+			return list; 
+		}
+		
 	//하나의 그룹 정보 가져오기
 	public GroupDTO getGroupVO(int groupID) {
 		String SQL = "SELECT * FROM `group` WHERE groupID = ?";

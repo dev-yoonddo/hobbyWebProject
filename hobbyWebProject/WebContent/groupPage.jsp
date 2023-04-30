@@ -361,7 +361,7 @@ function joinGroup(groupID, groupAvailable) {
 }
 </script>
 <script>
-var userAccess = 0;
+
 //접속하기 버튼을 클릭하면 id,password,available value를 받는다
 function showPasswordPrompt(grID, grPassword, grAvailable) {
     var inputPassword = "";
@@ -374,7 +374,6 @@ function showPasswordPrompt(grID, grPassword, grAvailable) {
 	        }
 	    }
 	    if (inputPassword == grPassword) {
-	        userAccess++;
 	        location.href = "groupView.jsp?groupID=" + grID + "&userAccess=" + userAccess;
 	    }
 	//비활동중
