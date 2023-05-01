@@ -36,6 +36,7 @@
 
 </head>
 <style>
+
 .menu-bar{
 width: auto;
 height: auto;
@@ -106,12 +107,12 @@ text-align: left;
 #click-view:hover{
 text-decoration: underline;
 }
-.userData{
-
+.userSet{
+	
 }
 .btn-blue{
 	width: 45px;
-	height: 25px;
+	height: 20px;
 	font-size: 13pt;
 	margin: 0;
 	padding: 0;
@@ -119,10 +120,10 @@ text-decoration: underline;
 .btn-blue span{
 	height: 15px;
 	float: center;
+	padding: 5px;
 }
 h3{
 	width: 60%;
-	margin: 0;
 	float: left;
 }
 .userDataBoard{
@@ -132,23 +133,40 @@ h3{
 }
 .view-head{
 	height: 30px;
-	align-items: center;
+	border-bottom: solid 2px #C0C0C0;
 }
 .view-btn{
 	width: 40%;
-	height: 30px;
-	float: center;
-	top: 0;
+	float: right;
+	right: 30px;
+}
+table{
+font-size: 10pt; 
+color: black; 
+width: 450px; 
+text-align: left; 
+margin-top: 50px;
+}
+tr{
+	align-items: center;
+	border-bottom-style: solid;
+	border-bottom-width: 2px;
+	border-bottom-color: #C0C0C0;
 }
 td{
 	max-height: 30px;
 }
-ul{
-list-style: none;
-height: 30px;
-text-decoration: none;
-display: flex;
+
+hr{
+
 }
+#more-btn{
+	float: right;
+	margin-right: 20px;
+	font-size: 13pt;
+	font-weight: bold;
+}
+
 </style>
 <body>
 <%
@@ -235,7 +253,7 @@ display: flex;
     </div>
 </div>
 <div id="userSet">
-	<div style="width: 500px; height: 800px;">
+	<div style="width: 500px;">
 		<h2>데이터 관리하기</h2>
 		<%
 		BoardDAO boardDAO = new BoardDAO();
@@ -244,10 +262,10 @@ display: flex;
 		<div class="userDataBoard">
 			<tr class="view-head">
 				<td><h3>글 (<%= list.size() %>)개</h3></td>
-				<td><button type="button" class="btn-blue" id="view1" style="float: left;"><span>보기</span></button></td>	
+				<td><button type="button" class="btn-blue" id="view1" style="margin-right: 50px;margin-top: 10px;"><span>보기</span></button></td>	
 			</tr>
 		<div class="userData" id="boardData">
-			<table style="font-size: 10pt; color: black; width: 450px; text-align: left;">
+			<table>
 				<thead>
 					<tr class="board-head">
 						<th style="width: 20%;"><span>카테고리</span></th>
@@ -286,7 +304,7 @@ display: flex;
 						
 					%>
 				</tbody>
-			</table>
+			</table><br>
 		<div id="more-btn">MORE</div>
 		</div>
 		</div>
