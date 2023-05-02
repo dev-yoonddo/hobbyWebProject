@@ -159,6 +159,19 @@ public class GroupDAO {
 		}
 		return -1; //데이터베이스 오류
 	}
+	//해당 userID데이터 삭제하기
+		public int deleteByUser(String userID) {
+			String SQL = "UPDATE `group` SET groupAvailable = 0 WHERE userID = ? ";
+			try {
+				PreparedStatement pstmt = conn.prepareStatement(SQL);
+				pstmt.setString(1, userID);
+				//성공적으로 수행했다면 0이상의 결과 반환
+				return pstmt.executeUpdate();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return -1; //데이터베이스 오류
+		}
 	/*
 	public String getGroupPW(int groupID){
 		String SQL = "SELECT groupPassword FROM `group` WHERE groupID = ?";

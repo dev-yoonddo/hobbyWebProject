@@ -12,13 +12,12 @@ header{
 	height: 100px;
 }
 section{
-	padding-top: 100px;
+	padding-top: 150px;
 	padding-bottom: 100px;
 	width: 100%;
 	height: 650px;
 	display: flex;
 	justify-content: center;
-	align-items: center;
 	font-family: 'NanumSquare';
 }
 /* login.jsp */
@@ -118,10 +117,6 @@ section{
     border-width: 2px;
     display: flex;
 }
-#userInfo > div{
-	margin: 0 auto;
-}
-
 #userInfo > div > h2{
     font-size: 24px;
     color: #86A5FF;
@@ -171,14 +166,14 @@ section{
 
 #userSet{
     width: 550px;
-    height: 650px;
+    height: 800px;
     padding: 40px;
     box-sizing: border-box;
     border-style: solid;
     border-radius: 20px;
     border-color: #b4b4b4;
     border-width: 2px;
-    display: flex;
+    position: relative;
 }
 #userSet > div{
 	margin: 0 auto;

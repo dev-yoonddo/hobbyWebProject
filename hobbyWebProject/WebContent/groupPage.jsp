@@ -374,7 +374,7 @@ function showPasswordPrompt(grID, grPassword, grAvailable) {
 	        }
 	    }
 	    if (inputPassword == grPassword) {
-	        location.href = "groupView.jsp?groupID=" + grID + "&userAccess=" + userAccess;
+	        location.href = "groupView.jsp?groupID=" + grID;
 	    }
 	//비활동중
     }else{

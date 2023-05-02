@@ -92,7 +92,7 @@ public class MemberDAO {
 		
 		//해당 userID가 가입한 그룹리스트(memberID) 가져오기
 		public ArrayList<MemberDTO> getListByUser(String userID){
-			String SQL = "SELECT * FROM member WHERE userID = ? ORDER BY memberID DESC"; 
+			String SQL = "SELECT * FROM member WHERE userID = ? AND mbAvailable = 1"; 
 			ArrayList<MemberDTO> list = new ArrayList<MemberDTO>();
 			try {
 				PreparedStatement pstmt = conn.prepareStatement(SQL);
@@ -162,6 +162,19 @@ public class MemberDAO {
 			}
 			return -1; //데이터베이스 오류
 		}
+		//해당 userID 그룹 탈퇴하기
+				public int deleteByUser(String userID) {
+					String SQL = "UPDATE member SET mbAvailable = 0 WHERE userID = ? ";
+					try {
+						PreparedStatement pstmt = conn.prepareStatement(SQL);
+						pstmt.setString(1, userID);
+						//성공적으로 수행했다면 0이상의 결과 반환
+						return pstmt.executeUpdate();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					return -1; //데이터베이스 오류
+				}
 		//특정 groupID에 해당되는 member의 갯수 구하기
 		public int getMemberCount(int groupID) {
 		    String SQL = "SELECT COUNT(*) FROM member WHERE groupID = ?";

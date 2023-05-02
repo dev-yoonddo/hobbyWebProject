@@ -9,6 +9,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import comment.CommentDAO;
+import comment.CommentDTO;
+
 public class BoardDAO {
 	private Connection conn; //자바와 데이터베이스 연결
 	private ResultSet rs; //결과값 받아오기
@@ -119,7 +122,7 @@ public class BoardDAO {
 	
 	//해당 userID가 작성한 글의 리스트 가져오기
 	public ArrayList<BoardDTO> getListByUser(String userID){
-		String SQL = "SELECT * FROM board WHERE userID = ? ORDER BY boardID DESC";
+		String SQL = "SELECT * FROM board WHERE userID = ? AND boardAvailable = 1 ORDER BY boardID DESC";
 		ArrayList<BoardDTO> list = new ArrayList<BoardDTO>();
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
@@ -227,19 +230,43 @@ public class BoardDAO {
 		return -1; //데이터베이스 오류
 
 	}
-	//삭제하기
+	//삭제하기 : 글을 삭제하면 글에 달린 댓글들도 삭제하기
 	public int delete(int boardID) {
 		String SQL = "UPDATE board SET boardAvailable = 0 WHERE boardID = ? ";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, boardID);
 			//성공적으로 수행했다면 0이상의 결과 반환
-			return pstmt.executeUpdate();
+			int result = pstmt.executeUpdate();
+			pstmt.close();
+			if(result > 0) {
+				CommentDAO cmtDAO = new CommentDAO();
+				//commentDAO의 geList()사용
+				ArrayList<CommentDTO> cmtlist = cmtDAO.getList(boardID);
+				for(CommentDTO cmtDTO : cmtlist) {
+					cmtDTO.setCmtAvailable(0);
+					cmtDAO.updateCommentVO(cmtDTO);
+				}
+			}
+			return result;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return -1; //데이터베이스 오류
 	}
+	//해당 userID데이터 삭제하기
+		public int deleteByUser(String userID) {
+			String SQL = "UPDATE board SET boardAvailable = 0 WHERE userID = ? ";
+			try {
+				PreparedStatement pstmt = conn.prepareStatement(SQL);
+				pstmt.setString(1, userID);
+				//성공적으로 수행했다면 0이상의 결과 반환
+				return pstmt.executeUpdate();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return -1; //데이터베이스 오류
+		}
 	//좋아요
 	public int heart(int boardID) {
 		String SQL = "UPDATE board SET heartCount = heartCount + 1 WHERE boardID = ?";

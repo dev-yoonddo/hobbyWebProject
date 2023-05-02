@@ -86,6 +86,13 @@ GroupDTO group = new GroupDAO().getGroupVO(groupID); //하나의 그룹 정보 �
 MemberDTO member = new MemberDAO().getMemberVO(userID, groupID); //현재 로그인하고 groupID에 가입한 member 정보 가져오기
 MemberDAO mbDAO = new MemberDAO();
 
+if(group.getGroupAvailable() == 0){
+	PrintWriter script = response.getWriter();
+	script.println("<script>");
+	script.println("alert('삭제한 그룹입니다.')");
+	script.println("history.back()");
+	script.println("</script>");
+}
 //그룹을 만든 userID가 아닐때 (그룹을 만든 userID는 접속가능)
 if(!userID.equals(group.getUserID())){
 	//접속하는 userID의 데이터가 member에 없으면

@@ -174,7 +174,7 @@ button{
 </div>
 -->
 <div class="select-hobby">
-<form method="post" id ="searchField2" name="searchField2" action="searchPage.jsp">
+<form method="post" id ="searchField2" action="searchPage.jsp">
 	<div id="select-sec">
 		<div class="select">
 			<div class="text">

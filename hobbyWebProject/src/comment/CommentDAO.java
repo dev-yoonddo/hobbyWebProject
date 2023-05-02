@@ -71,7 +71,7 @@ public class CommentDAO {
 		}
 		return -1; //데이터베이스 오류
 	}
-	//수정하기
+	/*//수정하기 (사용x)
 	public String getUpdateComment(int cmtID) {
 		String SQL = "SELECT cmtContent FROM comment WHERE cmtID = ?";
 		try {
@@ -85,11 +85,12 @@ public class CommentDAO {
 			e.printStackTrace();
 		}
 		return ""; //오류
-	}
-	//해당 boardID의 댓글 리스트 출력하기
+	}*/
+	
+	//해당 boardID의 댓글 리스트
 	public ArrayList<CommentDTO> getList(int boardID){
 		String SQL = "SELECT * FROM comment WHERE boardID= ? AND cmtAvailable = 1 ORDER BY boardID DESC"; 
-		ArrayList<CommentDTO> list = new ArrayList<CommentDTO>();
+		ArrayList<CommentDTO> cmtlist = new ArrayList<CommentDTO>();
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, boardID);
@@ -102,12 +103,12 @@ public class CommentDAO {
 				cmt.setCmtAvailable(rs.getInt(4));
 				cmt.setCmtDate(rs.getString(5));
 				cmt.setBoardID(rs.getInt(6));
-				list.add(cmt);
+				cmtlist.add(cmt);
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
-		return list; 
+		return cmtlist; 
 	}
 	
 	//해당 userID가 작성한 댓글 리스트 가져오기
@@ -170,7 +171,7 @@ public class CommentDAO {
 	}
 	//삭제하기
 	public int delete(int cmtID) {
-		String SQL = "DELETE FROM comment WHERE cmtID = ?";
+		String SQL = "UPDATE comment SET cmtAvailable = 0 WHERE cmtID = ?";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, cmtID);
@@ -180,6 +181,29 @@ public class CommentDAO {
 		}
 		return -1; // 데이터베이스 오류
 	}
+	/*public int delete(int cmtID) {
+		String SQL = "DELETE FROM comment WHERE cmtID = ?";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt.setInt(1, cmtID);
+			return pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return -1; // 데이터베이스 오류
+	}*/
+	//해당 userID데이터 삭제하기
+		public int deleteByUser(String userID) {
+			String SQL = "DELETE FROM comment WHERE userID = ?";
+			try {
+				PreparedStatement pstmt = conn.prepareStatement(SQL);
+				pstmt.setString(1, userID);
+				return pstmt.executeUpdate();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return -1; // 데이터베이스 오류
+		}
 	//특정 boardID에 해당되는 comment의 갯수 구하기
 	public int getCommentCount(int boardID) {
 	    String SQL = "SELECT COUNT(*) FROM comment WHERE boardID = ?";
@@ -195,8 +219,8 @@ public class CommentDAO {
 	    }
 	    return -1;
 	}
-	//UserDAO의 delete 메서드가 실행되면 사용되는 메서드
-	//delete된 userID의 comment데이터 리스트를 가져온다.
+	
+	//해당 userID의 comment데이터 리스트를 userDAO에서 사용하기 위한 메서드
 	public List<CommentDTO> getDelCommentVOByUserID(String userID) {
 	    List<CommentDTO> commentDTOs = new ArrayList<>();
 	    String SQL = "SELECT cmtID, cmtAvailable FROM comment WHERE userID = ?";
@@ -225,7 +249,7 @@ public class CommentDAO {
 	    }
 	    return commentDTOs;
 	}
-	
+	//userDAO에서 변한 commetAvailable값을 업데이트 해주는 메서드
 	public void updateCommentVO(CommentDTO commentDTO) {
 	    String SQL = "UPDATE comment SET cmtAvailable = ? WHERE cmtID = ?";
 
