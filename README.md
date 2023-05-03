@@ -30,7 +30,7 @@
 
 ### DB 관계도
 
-![DB](https://user-images.githubusercontent.com/84071666/229287138-09d04701-c10b-4ef1-92dd-9a64a0e9f582.PNG)
+![DB관계도](https://user-images.githubusercontent.com/84071666/235856555-9732e223-7613-47cd-aadb-b98b5e9eedfc.PNG)
 <br><br>
 
 <hr>
@@ -54,45 +54,24 @@
 ### - 메인
 
 <br><br>
-
+🔘
 <div align="center">
 
-![main1](https://user-images.githubusercontent.com/84071666/229292646-897b825d-f42c-44d6-ac8f-c3f67ea68837.PNG)
-
-![main2](https://user-images.githubusercontent.com/84071666/229292260-244012f1-e353-4680-8146-c9a719e609b5.PNG)
-
-![main3](https://user-images.githubusercontent.com/84071666/229292263-ded8f0ff-93de-45e6-84b1-9cd1a1c4a562.PNG)
+![main2](https://user-images.githubusercontent.com/84071666/235856706-4bf89328-0714-458b-acaf-949b3e27fd71.PNG)
+![main3](https://user-images.githubusercontent.com/84071666/235856717-9570fcc1-ce42-4365-b25f-73d00786c687.PNG)
+![main1](https://user-images.githubusercontent.com/84071666/235856720-931bbcfe-f645-4da8-94f6-073cac83c57d.PNG)
 
 <br><br><br>
 
 <div align="left">
 
-🔘 매장 선택 결과에따라 매장정보가 다르게 , 상세보기 버튼을 눌렀을 때의 결과도 다르게 제작
-
 </div>
 
 <br>
 
-![store1](https://user-images.githubusercontent.com/84071666/229702703-fc9cd08e-5328-41f7-8c40-ba8f21a56e4d.PNG)
 
-![store2](https://user-images.githubusercontent.com/84071666/229702712-f7d46ea8-818a-4651-b6b1-4b4445a31ff5.PNG)
-
-![store3](https://user-images.githubusercontent.com/84071666/229702713-23ad9bf5-d59e-4b4d-b882-bfdf663bdf07.PNG)
-
-![store4](https://user-images.githubusercontent.com/84071666/229702715-28a4be55-21be-4960-a944-08a957de73a6.PNG)
 
 </div>
-
-<br><br>
-
----
-
-<br><br>
-
-### - 로그인
-<br><br>
-
-![login](https://user-images.githubusercontent.com/84071666/229292257-12b25f06-770a-499f-b4ea-0cd662bb441c.PNG)
 
 <br><br>
 
@@ -102,7 +81,29 @@
 
 ### - 회원가입 <br><br>
 
-![join](https://user-images.githubusercontent.com/84071666/229292255-0d379d8f-c15a-4e5d-8875-24d2cebd7545.PNG)
+
+<br><br>
+
+---
+
+<br><br>
+
+### - 로그인/로그아웃
+<br><br>
+
+![login1](https://user-images.githubusercontent.com/84071666/235856990-35ef5e84-1699-49eb-a050-c2ebc76d6b6b.PNG)
+![login2](https://user-images.githubusercontent.com/84071666/235856992-a54a866a-e13a-4e91-9cc1-5b56913403c6.PNG)
+![login3](https://user-images.githubusercontent.com/84071666/235856994-c7ab678c-8b6d-4bf5-a25f-75b7dd236ed5.PNG)
+![login4](https://user-images.githubusercontent.com/84071666/235856997-7642fd3b-6c5b-4672-b806-08d205f5a4de.PNG)
+![login5](https://user-images.githubusercontent.com/84071666/235856998-920a1440-5738-4bf8-b40d-90c24d145dcd.PNG)
+![login6](https://user-images.githubusercontent.com/84071666/235857000-64eaa871-c3b7-4a13-83c3-473ffe19c13b.PNG)
+![login7](https://user-images.githubusercontent.com/84071666/235857004-48a40e5d-c729-410b-b159-a4c36204f838.PNG)
+![login8](https://user-images.githubusercontent.com/84071666/235857005-6a1448d8-aad3-441e-acaf-42dca90413cd.PNG)
+![login9](https://user-images.githubusercontent.com/84071666/235857007-87c978de-f9de-431a-815d-571870d542be.PNG)
+![login10](https://user-images.githubusercontent.com/84071666/235857008-547bcad1-d68b-40c9-85dc-afe04d879634.PNG)
+![login11](https://user-images.githubusercontent.com/84071666/235857012-af99212f-752d-4d7e-bfe0-f40986e8ce44.PNG)
+![logout1](https://user-images.githubusercontent.com/84071666/235856984-26cf668a-4f84-41b1-86d4-7d3d12ad8610.PNG)
+![logout2](https://user-images.githubusercontent.com/84071666/235856986-3ec5b33b-8783-48c9-a9da-911c6488c789.PNG)
 
 <br><br>
 
@@ -112,12 +113,7 @@
 
 ### - 주문 페이지
 
-:로그인시에만 접속 가능 <br><br>
-![order1](https://user-images.githubusercontent.com/84071666/229292264-c390d218-907c-4e40-9e76-6b8888c1c938.PNG)
 
-![order2](https://user-images.githubusercontent.com/84071666/229292265-f7ea4a76-a6a8-4c2e-bccf-e06a02a1d2fd.PNG)
-
-![order3](https://user-images.githubusercontent.com/84071666/229292266-1ceda459-744e-4c22-a4d6-81fe67cd8418.PNG)
 
 <br><br>
 
@@ -127,7 +123,6 @@
 
 ### - 주문 완료 <br><br>
 
-![orderSuccess](https://user-images.githubusercontent.com/84071666/229292267-46133fbf-9f9f-4138-8d20-c757ce48baf8.PNG)
 
 <br><br>
 
@@ -137,10 +132,7 @@
 
 ### - 문의 게시판
 
-:로그인시에만 글쓰기 버튼 생성 <br><br>
-![customer1](https://user-images.githubusercontent.com/84071666/229292251-83173bc3-8f48-42b7-ab1a-fc23cb381993.PNG)
 
-![customer2](https://user-images.githubusercontent.com/84071666/229292252-c069d01e-769e-40a3-9d84-f4a3593cf5fe.PNG)
 
 <br><br>
 
@@ -150,14 +142,6 @@
 
 ### - 작성한 글 보기 <br><br>
 
-1. 본인이 작성한 글이 아닐 때
-![view(user)](https://user-images.githubusercontent.com/84071666/229292275-c7bb88e6-7e36-4057-a608-1183cf373e6e.PNG)
-
-2. 본인이 작성한 글일 때
-![view(yoonseo)](https://user-images.githubusercontent.com/84071666/229292245-b8f5fc07-17d2-4921-9acc-685789235808.PNG)
-
-3. 관리자로 접속시
-![view(admin)](https://user-images.githubusercontent.com/84071666/229292274-1f11c5a3-f7c1-4ad2-ba0b-5cdff5d6ede6.PNG)
 
 <br><br>
 
@@ -167,8 +151,7 @@
 
 ### - 수정하기
 
-:본인이 작성한 글일 때 수정가능 <br><br>
-![update](https://user-images.githubusercontent.com/84071666/229292273-ea6627bf-af3e-40c8-a20d-13c2339f357d.PNG)
+
 
 <br><br>
 
@@ -178,10 +161,7 @@
 
 ### - 답글쓰기
 
-: 본인이 작성한 글 && 관리자로 접속시 답글쓰기 버튼 생성 <br><br>
-![comment1](https://user-images.githubusercontent.com/84071666/229292248-f8e8fb13-e52f-4511-9b27-46a237de536b.PNG)
 
-![comment2](https://user-images.githubusercontent.com/84071666/229292249-aad143c4-8f16-4641-b3f3-95b698bf079f.PNG)
 
 <br><br>
 
@@ -191,8 +171,4 @@
 
 ### - 글 검색하기
 
-:제목으로 검색 <br><br>
-![search1](https://user-images.githubusercontent.com/84071666/229292270-09e66606-8646-4a76-ab77-8dd026a72348.PNG)
 
-:아이디로 검색
-![search2](https://user-images.githubusercontent.com/84071666/229292272-b72ed5f1-46c0-4e4a-ab7f-cfd7f4cd0def.PNG)<br><br><br>
