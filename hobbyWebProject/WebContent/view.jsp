@@ -31,7 +31,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 <script type="text/javascript" src="js/script.js"></script>
 </head>
-<Style>
+<style>
 section{
 	height: auto;
 	display: flex;
@@ -176,7 +176,7 @@ if(boardID == 0){
 	PrintWriter script = response.getWriter();
 	script.println("<script>");
 	script.println("alert('유효하지 않은 글입니다.')");
-	script.println("location.href = 'customerPage.jsp'");
+	script.println("history.back()");
 	script.println("</script>");
 }
 

@@ -128,7 +128,7 @@ h3{
 	float: left;
 }
 .userDataBoard{
-	min-height: 40px;
+	min-height: 45px;
 	margin-bottom: 20px;
 }
 .view-head{
@@ -141,7 +141,6 @@ font-size: 10pt;
 color: black; 
 width: 450px; 
 text-align: left; 
-margin-top: 50px;
 }
 tr{
 	align-items: center;
@@ -166,11 +165,12 @@ tr{
   width: 100%;
   overflow: hidden;
   max-height: 0;
-  background-color: white; 
+  background-color: white;
 }
 
 .select.active .option-list {
   max-height: none;
+  border: solid 3px #E0EBFF;
 }
 #select-sec {
 	width: 300px;
@@ -182,9 +182,11 @@ tr{
 	display: flex;
 }
 #select-sec .select {
-  box-shadow: 0 0 10px #86A5FF;
+border-style: solid;
+	border-color: #E0EBFF;
+	color: #6e6e6e;
   border-radius: 15px;
-  padding: 15px;
+  padding: 10px;
   cursor: pointer;
 }
 
@@ -205,7 +207,6 @@ margin: 0 auto;
   list-style: none;
   padding: 0;
   border-radius: 15px;
-  box-shadow: 0 0 10px #86A5FF;
 }
 #select-sec .select .option-list .option {
   padding: 15px;
@@ -236,7 +237,7 @@ background-color: #E0EBFF;
 	padding: 10px; 
 }
 #delete-sec{
-	height: 12%;
+	height: 10%;
 	bottom: 0;
 	position: absolute;
 }
@@ -340,9 +341,7 @@ background-color: #E0EBFF;
 			<!-- 내가 작성한 글 목록 -->
 				<tr class="view-head">
 					<td><h3>글 (<%= list.size() %>)개</h3></td>
-					<% if (list.size() != 0) { %>
 					<td><button type="button" class="btn-blue" id="view1"><span>보기</span></button></td>	
-					<%} %>
 				</tr>
 				<div class="userData" id="boardData">
 					<table>
@@ -358,7 +357,7 @@ background-color: #E0EBFF;
 						<% if (list.size() == 0) { %>
 						<tbody>
 							<tr>
-								<td colspan="5" class="none-list" ">작성한 글이 없습니다.</td>
+								<td colspan="5" class="none-list">작성한 글이 없습니다.</td>
 							</tr>
 						</tbody>
 						<% }else{ %>
@@ -399,9 +398,7 @@ background-color: #E0EBFF;
 			<!-- 내가 작성한 댓글 목록 -->
 				<tr class="view-head">
 					<td><h3>댓글 (<%= cmtlist2.size() %>)개</h3></td>
-					<% if (cmtlist2.size() != 0) { %>
 					<td><button type="button" class="btn-blue" id="view2"><span>보기</span></button></td>	
-					<%} %>
 				</tr>
 				<div class="userData" id="cmtData">
 					<table style="font-size: 10pt; color: black; width: 450px; text-align: left;">
@@ -414,7 +411,7 @@ background-color: #E0EBFF;
 						<% if (cmtlist2.size() == 0) { %>
 						<tbody>
 							<tr>
-								<td colspan="2" class="none-list">작성한 댓글이 없습니다.</td>
+								<td colspan="5" class="none-list">작성한 댓글이 없습니다.</td>
 							</tr>
 						</tbody>
 						<% }else{ %>
@@ -448,9 +445,7 @@ background-color: #E0EBFF;
 			<!-- 내가 만든 그룹 목록 -->
 				<tr class="view-head">
 					<td><h3>만든 그룹 (<%= grouplist.size() %>)개</h3></td>
-					<% if (grouplist.size() != 0) { %>
 					<td><button type="button" class="btn-blue" id="view3"><span>보기</span></button></td>	
-					<%} %>
 				</tr>
 				<div class="userData" id="groupData">
 					<table style="font-size: 10pt; color: black; width: 450px; text-align: left;">
@@ -499,9 +494,7 @@ background-color: #E0EBFF;
 			<!-- 내가 가입한 그룹 목록 -->
 				<tr class="view-head">
 					<td><h3>가입한 그룹 (<%= mblist.size() %>)개</h3></td>
-					<% if (mblist.size() != 0) { %>
 					<td><button type="button" class="btn-blue" id="view4"><span>보기</span></button></td>	
-					<%} %>
 				</tr>
 				<div class="userData" id="memberData">
 					<table style="font-size: 10pt; color: black; width: 450px; text-align: left;">
@@ -555,7 +548,7 @@ background-color: #E0EBFF;
 						<span>삭제할 데이터 선택</span>
 						<span><i class="fa-solid fa-chevron-down"></i></span>
 					</div>
-				<ul class="option-list" >
+				<ul class="option-list">
 					<li class="option"><input type="hidden" id="boards" name="deleteField" value="board"><span>게시글</span></li>
 					<li class="option"><input type="hidden" id="comments" name="deleteField" value="cmt"><span>댓글</span></li>
 					<li class="option"><input type="hidden" id="groups" name="deleteField" value="group"><span>생성그룹</span></li>
@@ -610,7 +603,11 @@ $(document).ready(function(){
 	});
 	
 	//원하는 데이터 목록 보기
+	//게시글 목록은 무조건 보이기
 	$('#boardData').show(); $('#cmtData').hide(); $('#groupData').hide(); $('#memberData').hide();
+	
+	//나머지는 리스트 결과가 없을때 텍스트를 표시하기 위해 show를 해준다.
+	
 	$('#view1').on('click', function(){
 		$('#boardData').show();
 		$('#cmtData').hide(); $('#groupData').hide(); $('#memberData').hide();
@@ -627,21 +624,22 @@ $(document).ready(function(){
 		$('#memberData').show();
 		$('#boardData').hide(); $('#cmtData').hide(); $('#groupData').hide();
 	});
+	
 	//내가 작성한 게시글 더보기
 	var viewCount = 5; // 클릭할 때 마다 보여질 갯수
 	var lastIndex = viewCount - 1; //보여질 글의 마지막 인덱스
-    var hiddenRows = $('.showWrite:hidden'); //숨겨져있는 글의 갯수
 	$('.showWrite').slice(viewCount).hide(); // 처음 viewCount개의 글을 제외하고 모두 숨기기
 
 	$("#more-btn").click(function(e){ //more-btn을 클릭했을때
 	    e.preventDefault();
-	    if($('.showWrite').length <= lastIndex){ //만약 전체 글의 갯수보다 lastIndex가 크거나 같다면
+	    if($('.showWrite:hidden').length <= lastIndex || $('.showWrite:hidden').length == 0){ //만약 전체 글의 갯수보다 lastIndex가 크거나 같다면
 	        alert("마지막 글입니다"); //알림창 띄우기
-	        return; //return을 하지않으면 알림창을 띄우고 또 다음으로 실행된다.
+		    return; //return을 하지않으면 알림창을 띄우고 또 다음으로 실행된다.
+	    
 	    }
 	    $('.showWrite').slice(lastIndex + 1, lastIndex + 1 + viewCount).show('slow'); // 처음 출력한 글의 다음 글들을 보여준다.
 	    $('.showWrite').slice(0, lastIndex + 1).hide(); // 0부터 이전의 글들을 모두 숨긴다.
-	    lastIndex += viewCount; // 다음 글 출력을 위해 lastIndex에 viewCount를 더해준다
+	    lastIndex += viewCount; // 다음 글 출력을 위해 lastIndex에 viewCount를 더해준다.
 	});
 	 
 	//내가 작성한 댓글 더보기 viewCount lastIndex는 이미 위에서 선언함

@@ -215,13 +215,14 @@ public class BoardDAO {
 		return null; 
 	}
 	//업데이트
-	public int update(int boardID, String boardTitle, String boardContent) {
-		String SQL = "UPDATE board SET boardTitle = ?, boardContent = ? WHERE boardID = ?";
+	public int update(int boardID, String boardTitle, String boardContent, String boardCategory) {
+		String SQL = "UPDATE board SET boardTitle = ?, boardContent = ?, boardCategory = ? WHERE boardID = ?";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, boardTitle);
 			pstmt.setString(2, boardContent);
-			pstmt.setInt(3, boardID);
+			pstmt.setString(3, boardCategory);
+			pstmt.setInt(4, boardID);
 			//성공적으로 수행했다면 0이상의 결과 반환
 			return pstmt.executeUpdate();
 		} catch (Exception e) {
