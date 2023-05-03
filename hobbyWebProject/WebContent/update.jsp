@@ -147,7 +147,7 @@ BoardDTO board = new BoardDAO().getBoardVO(boardID);
 			<a onclick="toggleAct()" class="navbar_toggleBtn">
 				<i class="fa-solid fa-bars"></i>
 			</a>
-	</nav>ㅋㅋㅋ
+	</nav>
 </div>
 </header>
 <!-- header -->
