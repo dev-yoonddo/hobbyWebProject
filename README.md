@@ -255,7 +255,7 @@
 
 <br><br>
 
-### ⚙ 회원 탈퇴 전/후 페이지 보기
+### ⚙ 회원 탈퇴 전/후 페이지
 
 <br>
 
@@ -286,7 +286,7 @@
 
 <br>
 
-## 🔘 3 ) 회원 데이터 관리하기
+## 🔘 3 ) 회원 데이터 관리
 
 <br>
 
@@ -336,7 +336,7 @@
 
 <br><br>
 
-### ⚙ 원하는 데이터 전체 삭제하기
+### ⚙ 원하는 데이터 전체 삭제
 
 <br>
 
@@ -378,47 +378,206 @@
 
 <br><br>
 
-![search3](https://user-images.githubusercontent.com/84071666/235914388-4353ec97-bbbf-48ee-889f-dbae2405ccb4.PNG)
+## 🔘 1 ) 커뮤니티 접속
+
+<br>
+
 ![community1](https://user-images.githubusercontent.com/84071666/235914393-655f3530-5b45-4532-b10c-a36d2730d8bd.PNG)
-![community2](https://user-images.githubusercontent.com/84071666/235914397-0a34cfe3-f4ca-4691-9683-80bc11adc325.PNG)
-![community3](https://user-images.githubusercontent.com/84071666/235914401-a34a3fa2-b2e7-4880-808e-1789ea48de19.PNG)
+
+### ⚙ 참여하고싶은 카테고리 선택
+
+<br>
+
+<div style="display: flex;">
+<img src="https://user-images.githubusercontent.com/84071666/235914397-0a34cfe3-f4ca-4691-9683-80bc11adc325.PNG" width="45%">
+<img src="https://user-images.githubusercontent.com/84071666/235914401-a34a3fa2-b2e7-4880-808e-1789ea48de19.PNG" width="50%">
+</div>
+
+<br>
+
+### ⚙ SPORTS 카테고리 게시판으로 이동
+
+<br>
+
 ![search1](https://user-images.githubusercontent.com/84071666/235914402-88640d54-ff8f-4ac7-9e32-3dd3e7c71235.PNG)
 ![search1-1](https://user-images.githubusercontent.com/84071666/235914406-adf293cf-4c69-4f10-add8-645977cb98e8.PNG)
 ![search1-2](https://user-images.githubusercontent.com/84071666/235914409-2766c22d-aa72-48c7-b232-bcb5db844319.PNG)
+
+<br>
+
+### ⚙ MORE버튼을 클릭하면 게시글을 10개씩 보여주고 더이상 보여줄 글이 없으면 알림창 띄우기
+
+<br>
+
 ![search1-3](https://user-images.githubusercontent.com/84071666/235914412-55f08796-8f4d-48fc-9376-8de75e7b9f37.PNG)
+
+<br>
+
+### ⚙ LEISURE 카테고리 게시판으로 이동
+
+<br>
+
 ![search2](https://user-images.githubusercontent.com/84071666/235914415-b46de4fd-964b-4460-8226-bd483dd8f59d.PNG)
 
+<br>
 
+### ⚙ 선택한 카테고리에 글이 없으면 알림창 
 
+<br>
+
+![search3](https://user-images.githubusercontent.com/84071666/235973504-c5d55d96-381e-4b35-93ce-b4dad970dcd5.PNG)
 
 ---
 
 <br><br>
-![view1](https://user-images.githubusercontent.com/84071666/235914514-0bcd973b-a2b1-48bd-b5a8-3c41581f7a64.PNG)
-![view2](https://user-images.githubusercontent.com/84071666/235914523-caad107f-eba3-47c3-8b86-79093e2b0ad5.PNG)
-![view3](https://user-images.githubusercontent.com/84071666/235914524-31fc167e-55dc-428e-9306-ebe3a91abc25.PNG)
-![view3-1](https://user-images.githubusercontent.com/84071666/235914526-00d5a7f5-58fb-4456-a80f-c0cd5de88c20.PNG)
-![view4](https://user-images.githubusercontent.com/84071666/235914528-d508b2c4-91d0-4315-9dbe-db6c033896b8.PNG)
-![view5](https://user-images.githubusercontent.com/84071666/235914531-642b2af7-2b8b-4b3a-8cdf-cf71488bd9c9.PNG)
-![view6](https://user-images.githubusercontent.com/84071666/235914534-12c12389-d32b-456b-b4da-998773524cf1.PNG)
-![view7](https://user-images.githubusercontent.com/84071666/235914538-bcf6fdbc-fc9e-4852-a04e-34e310066f9e.PNG)
-![write1](https://user-images.githubusercontent.com/84071666/235914540-00e46ec2-c7f0-468c-9952-f58e872dec4f.PNG)
-![write2](https://user-images.githubusercontent.com/84071666/235914544-68da89a8-5ce4-4ded-a03d-25a9bf2c0530.PNG)
-![write3](https://user-images.githubusercontent.com/84071666/235914547-c0fcdf2f-d167-4573-bba9-dd3f1f742a65.PNG)
-![write3-1](https://user-images.githubusercontent.com/84071666/235914557-d6348f52-4536-474b-8145-dfe8f2d06bde.PNG)
-![write3-2](https://user-images.githubusercontent.com/84071666/235914560-ab1509a5-8e5f-4d3f-8e47-446ea6088a16.PNG)
-![write4](https://user-images.githubusercontent.com/84071666/235914566-82eead46-b81c-43fa-b6c8-aaf197f707c1.PNG)
 
-![cmt5](https://user-images.githubusercontent.com/84071666/235914718-1b326487-0e4b-45a2-9c32-8114d685e356.PNG)
-![btn1](https://user-images.githubusercontent.com/84071666/235914722-429d562d-e06b-4c33-b687-884e2c31d2a7.PNG)
-![btn-2](https://user-images.githubusercontent.com/84071666/235914723-96d67056-d9cc-4ab0-9908-ea17e3511e9a.PNG)
-![btn3](https://user-images.githubusercontent.com/84071666/235914727-eb3c29a7-cb19-432c-9510-d0e66d7775c8.PNG)
-![btn-4](https://user-images.githubusercontent.com/84071666/235914730-5849df5a-3c4e-46c4-ac68-9ede85daf1cd.PNG)
-![btn-5](https://user-images.githubusercontent.com/84071666/235914736-dab8dfae-e7e8-4e61-bd3f-0414d695f8e1.PNG)
-![cmt1](https://user-images.githubusercontent.com/84071666/235914739-10880322-f618-480b-9ca1-8e3656e9d582.PNG)
-![cmt2](https://user-images.githubusercontent.com/84071666/235914741-baac3955-27c6-4d68-a6e3-16cb1a5a580f.PNG)
-![cmt3](https://user-images.githubusercontent.com/84071666/235914748-bfb84439-193f-4b3e-b34f-e130e03656d3.PNG)
-![cmt4](https://user-images.githubusercontent.com/84071666/235914749-d37915a1-c4c7-47d8-b5da-928231b23320.PNG)
+## 🔘 2 ) 커뮤니티 글 작성
+
+<br>
+
+![write1](https://user-images.githubusercontent.com/84071666/235973478-509b923f-a9d6-4bca-87b0-e68e2c7f946f.PNG)
+
+<br>
+
+### ⚙ 카테고리 선택, 제목과 내용 작성
+
+<br>
+
+![write2](https://user-images.githubusercontent.com/84071666/235973481-509417f5-ac74-4ae2-b17c-fb799f2ad076.PNG)
+
+<br>
+
+### ⚙ 카테고리 미선택, 내용 미작성, 작성완료시 알림창 띄우기
+
+<br>
+
+![write3-1](https://user-images.githubusercontent.com/84071666/235973490-34370293-899d-4bd0-b3ac-894694b8c0cc.PNG)
+![write3-2](https://user-images.githubusercontent.com/84071666/235973495-a54f6d3a-73c3-4ad4-9a5b-aeb6ec4dc5b9.PNG)
+![write3](https://user-images.githubusercontent.com/84071666/235973488-e14e53ba-8bbd-4048-9db7-4749485cb123.PNG)
+
+<br>
+
+### ⚙ 작성 완료
+
+<br>
+
+![write4](https://user-images.githubusercontent.com/84071666/235973500-1445e637-dbfb-4000-9c83-f0403769eeda.PNG)
+
+<br>
+
+### ⚙ 작성한 글 보기
+
+<br>
+
+![view1](https://user-images.githubusercontent.com/84071666/235973512-095f9051-3692-4538-8b64-6cda65de0073.PNG)
+![view2](https://user-images.githubusercontent.com/84071666/235973436-b1483dea-6113-4b72-8207-32e4705f48fa.PNG)
+
+<br>
+
+#### 1. 로그인 하지 않은 유저에게 보이는 버튼
+
+<br>
+
+![btn1](https://user-images.githubusercontent.com/84071666/235973859-08b5a8c4-3291-4a0d-a82a-e1239c14a151.PNG)
+
+<br>
+
+#### 2. 로그인은 했지만 글 작성자가 아닌 회원에게 보이는 버튼
+
+<br>
+
+![btn3](https://user-images.githubusercontent.com/84071666/235973866-7a1011cc-cd13-42df-9583-a55261e7e2f0.PNG)
+
+<br>
+
+#### 2. 로그인 한 글 작성자에게 보이는 버튼
+
+<br>
+
+![btn-2](https://user-images.githubusercontent.com/84071666/235973863-84254a30-acd4-4789-b0f6-5f00fa2b9644.PNG)
+
+<br>
+
+#### 3. 관리자(admin)에게 보이는 버튼 : 모든 사용자 글 삭제 가능
+
+<br>
+
+![btn-4](https://user-images.githubusercontent.com/84071666/235973872-29e11747-ed85-41cb-8a35-6c61535b23c8.PNG)
+
+---
+
+<br><br>
+
+## 🔘 3 ) 댓글 작성
+
+<br><br>
+
+### ⚙ 댓글쓰기 버튼 클릭시 댓글 작성 박스 노출 및 댓글쓰기 버튼 숨기기
+
+<br>
+
+<div style="display: flex;">
+<img src="https://user-images.githubusercontent.com/84071666/235973881-f283cc80-8300-448f-967e-efa175b4f8ea.PNG" width="40%">
+<img src="https://user-images.githubusercontent.com/84071666/235973889-c70156b7-5fc6-4021-833c-ec0196603a0c.PNG" width="50%">
+</div>
+
+<br><br>
+
+### ⚙ 본인이 작성한 댓글에 보이는 삭제 버튼
+
+<br>
+
+<div style="display: flex;">
+<img src="https://user-images.githubusercontent.com/84071666/235973897-b3e3fc37-fa53-44b9-91de-5b85e91f9038.PNG" width="40%">
+<img src="https://user-images.githubusercontent.com/84071666/235973904-1320e1a7-d7ee-4056-ab08-e1ae805b551a.PNG" width="50%">
+</div>
+
+<br><br>
+
+### ⚙ 댓글 삭제 완료
+
+<br>
+
+<img src="https://user-images.githubusercontent.com/84071666/235973851-c951aa05-d887-4f3a-ad6f-e9a2075ffed6.PNG" width="60%">
+
+<br>
+
+### ⚙ 글 상단에 작성자, 좋아요, 조회수 표시
+
+<br>
+
+<div style="display: flex;">
+<img src="https://user-images.githubusercontent.com/84071666/235973461-9aed1560-ee07-4cc2-961c-52a149bad14b.PNG" width="60%">
+<img src="https://user-images.githubusercontent.com/84071666/235973466-7768b8b7-c728-4931-b12c-15969f6dadf4.PNG" width="35%">
+</div>
+
+<br><br>
+
+### ⚙ 하트🤍클릭시 하트🖤색상 변경 및 갯수 증가, 새로고침시 조회수 증가  
+
+<br>
+
+<div style="display: flex;">
+<img src="https://user-images.githubusercontent.com/84071666/235973470-59d80b33-c3cb-4882-9ca2-c1277f91ee5e.PNG" width="60%">
+<img src="https://user-images.githubusercontent.com/84071666/235973474-936dc53d-c9f9-496b-bc00-c5ff493eb4ec.PNG" width="35%">
+</div>
+
+---
+
+<br><br>
+
+## 🔘 4 ) 커뮤니티 글 수정
+
+<br><br>
+
+![boardupdate1](https://user-images.githubusercontent.com/84071666/235974307-9a9dcfc5-33c1-4b58-934c-6cd4946a63fe.PNG)
+![boardupdate2](https://user-images.githubusercontent.com/84071666/235974312-2bb5193c-b889-401d-82e0-318aa33785bf.PNG)
+![boardupdate3](https://user-images.githubusercontent.com/84071666/235974314-df888c99-3984-4909-a505-efda4273481f.PNG)
+![boardupdate4](https://user-images.githubusercontent.com/84071666/235974318-fc3bfe3b-1f77-4a7a-ab09-f1887c8e249d.PNG)
+![boardupdate5](https://user-images.githubusercontent.com/84071666/235974300-cfeb5959-c208-4cec-998c-161bd275cc5f.PNG)
+---
+
+<br><br>
 
 # - 그룹 📍
 
