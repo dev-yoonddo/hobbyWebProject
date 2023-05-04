@@ -3,21 +3,27 @@
 
 ✔팀 구성 : 1 명<br>
 ✔파트 : 풀 스택<br>
-✔기간 : 2주 (부족한 부분은 계속 수정 중)<br><br><br>
+✔기간 : 2주
 
+<br><br><br>
 
 ## ❔ 프로젝트 주제 선정 이유와 개발 목표
 
 1. 직장생활중에도 틈틈히 몸과 마음을 refresh해야 더 건강하고 능동적으로 일을 할 수 있다고 생각합니다. 하지만 모든 직장인들이 친구 또는 동료와 함께
-<br>같은 취미를 즐기기엔 어려움이 있기 때문에 다양한 사람들과 대화할 수 있는 웹페이지 제작을 주제로 선정하였습니다.
-2. 팀 프로젝트와 다른 기능들을 더 추가하고, 나의 개성을 나타낼 수 있는 웹 구현을 목표로 개발했습니다.<br>
-그 결과 category별로 검색한 게시글을 볼 수 있는 기능, 회원 정보 수정 기능, 회원 탈퇴 기능, 회원 정보 관리 기능, 그룹 생성 및 가입 기능을 구현했습니다. <br><br>
+같은 취미를 즐기기엔 어려움이 있기 때문에 다양한 사람들과 대화할 수 있는 웹페이지 제작을 주제로 선정하였습니다.
+2. 팀 프로젝트와 다른 기능들을 더 추가하고, 나의 개성을 나타낼 수 있는 웹 구현을 목표로 프로젝트를 진행했습니다.<br>
+그 결과 category별로 검색한 게시글을 볼 수 있는 기능, 회원 정보 수정 기능, 회원 탈퇴 기능, 회원 정보 관리 기능, 그룹 생성 및 가입 기능을 추가로 구현했습니다.
+
+<br><br>
 
 ## ❔ 프로젝트를 진행하고 느낀점
 
-개발에 있어 에러는 바늘과 실처럼 함께할 수 밖에 없는 관계라고 생각합니다. 문제 해결을 하며 꼬박 반나절을 고민한 적도 있지만 그렇게 문제를 해결하며 높아지는 완성도와
-<br>그에 따른 만족감도 몇 배로 높아짐에 뿌듯함을 느낀 프로젝트입니다. 또한 당장 오류를 놓고 머릿속으로 고민하기보다 인터넷 서칭을 하고 난해한 코드일지라도 실행해보며 부딪<br>히는 것이 좀 더 빠른 오류 해결을 가져올 뿐만 아니라 개발에 대한 흥미를 돋구는 아주 중요한 점이라는 깨달음을 준 프로젝트입니다.
-프로젝트를 완벽하게 마무리할 수 있을때 까지 꾸준히 공부하며 완성도 높은 개발을 할 수 있도록 더 노력해야겠다고 다짐했던 프로젝트였습니다. <br><br>
+개발에 있어 에러는 바늘과 실처럼 함께할 수 밖에 없는 관계라고 생각합니다. 문제 해결을 하며 꼬박 반나절을 고민한 적도 있지만 그렇게 문제를 해결하며 완성도를 높이고
+그에 따른 만족감도 몇 배로 높아짐에 뿌듯함을 느낀 프로젝트입니다. 또한 당장 오류를 놓고 머릿속으로 고민하기보다 책과 검색을 활용해 정보를 찾아보고 난해한 코드일지라도
+실행해보며 부딪히는 것이 좀 더 빠른 오류 해결을 가져올 뿐만 아니라 개발에 대한 흥미를 더욱 높아지게 하는 아주 중요한 점이라는 깨달음을 준 프로젝트입니다.
+프로젝트를 완벽하게 마무리할 수 있을때 까지 꾸준히 공부하며 완성도 높은 결과물을 얻을 수 있도록 노력하고 있습니다.
+
+<br><br>
 
 ## ❔ 기술
 
@@ -30,6 +36,7 @@
 ### DB 관계도
 
 ![DB관계도](https://user-images.githubusercontent.com/84071666/235856555-9732e223-7613-47cd-aadb-b98b5e9eedfc.PNG)
+
 <br><br>
 
 <hr>
@@ -569,21 +576,214 @@
 
 <br><br>
 
+### ⚙ 다른 카테고리로 변경 가능 
+
+<br>
+
 ![boardupdate1](https://user-images.githubusercontent.com/84071666/235974307-9a9dcfc5-33c1-4b58-934c-6cd4946a63fe.PNG)
 ![boardupdate2](https://user-images.githubusercontent.com/84071666/235974312-2bb5193c-b889-401d-82e0-318aa33785bf.PNG)
 ![boardupdate3](https://user-images.githubusercontent.com/84071666/235974314-df888c99-3984-4909-a505-efda4273481f.PNG)
 ![boardupdate4](https://user-images.githubusercontent.com/84071666/235974318-fc3bfe3b-1f77-4a7a-ab09-f1887c8e249d.PNG)
 ![boardupdate5](https://user-images.githubusercontent.com/84071666/235974300-cfeb5959-c208-4cec-998c-161bd275cc5f.PNG)
+
 ---
 
 <br><br>
 
 # - 그룹 📍
 
+<br><br>
+
+## 🔘 1 ) 그룹 생성
 
 <br><br>
 
+### ⚙ 그룹 메인 화면
+
+<br>
+
+![group1](https://user-images.githubusercontent.com/84071666/236118956-41e6b198-5b44-43f1-bd60-e4f78d209535.PNG)
+![group2](https://user-images.githubusercontent.com/84071666/236118958-6cc65ad3-36c3-4904-b6dc-6af590acbd09.PNG)
+
+<br><br>
+
+### ⚙ 그룹 만들기 버튼을 클릭하면 가입 팝업 생성
+
+<br>
+
+![group3](https://user-images.githubusercontent.com/84071666/236118959-0228f450-3189-48f8-9cf5-8b3385007813.PNG)
+
+<div style="display: flex;">
+<img src="https://user-images.githubusercontent.com/84071666/236118960-6db6245c-54cc-4faa-9949-defcb7a1b02c.PNG" width="48%">
+<img src="https://user-images.githubusercontent.com/84071666/236118962-d88a1ec0-d8ae-4c6e-a79f-9506e928c1eb.PNG" width="48%">
+</div>
+
+<br><br>
+
+### ⚙ 생성 완료
+
+<br>
+
+![create3](https://user-images.githubusercontent.com/84071666/236118964-0d1ab74c-1557-41e9-ada6-cab98361db2f.PNG)
+
+<br><br>
+
+### ⚙ 그룹이름, 활동여부, 그룹 생성자, 가입 가능한 인원과 현재 가입한 인원 표시
+
+<br>
+
+![create4](https://user-images.githubusercontent.com/84071666/236118953-7b07b4e8-5a80-4924-adb3-5e1cece091d1.PNG)
+
 ---
 
+<br><br>
 
+## 🔘 2 ) 그룹 가입
 
+<br><br>
+
+### ⚙ 그룹에 가입하지 않은 사람은 접속 불가
+
+### : 비밀번호 오류시 prompt창 무한 반복
+
+<br>
+
+![access1](https://user-images.githubusercontent.com/84071666/236120122-b697ac25-6e63-4fd1-a26b-cdc4beae9103.PNG)
+
+<br>
+
+<div style="display: flex;">
+<img src="https://user-images.githubusercontent.com/84071666/236120124-b565985e-d3ca-44fa-9aa0-69ba34558d30.PNG" width="40%">
+<img src="https://user-images.githubusercontent.com/84071666/236120119-35e17e24-4ed6-484e-bb79-43368f2103bf.PNG" width="54%">
+</div>
+
+<br><br>
+
+### ⚙ 그룹 가입
+
+<br><br>
+
+![grouplist2](https://user-images.githubusercontent.com/84071666/236123166-a808e5ad-1588-449e-9c0f-7cb58631d34d.PNG)
+
+<br>
+
+<img src="https://user-images.githubusercontent.com/84071666/236123160-70462d12-19c6-4c42-a872-209daf6cba5a.PNG" float="center">
+
+<br><br>
+
+### ⚙ 데이터베이스 오류, 공백 유무, 아이디 중복, 이미 존재하는 데이터인지 확인 후 가입 완료
+
+<br>
+
+<div style="display: flex;">
+<img src="https://user-images.githubusercontent.com/84071666/236120936-8edb14e3-fb53-4235-99bd-dd5ba2d2a398.PNG" width="48%">
+<img src="https://user-images.githubusercontent.com/84071666/236120941-9db3b694-62de-4a13-81ce-295b96ce4685.PNG" width="48%">
+</div>
+
+<div style="display: flex;">
+<img src="https://user-images.githubusercontent.com/84071666/236120943-c0890163-4891-4430-8d65-55bd9839392c.PNG" width="48%">
+<img src="https://user-images.githubusercontent.com/84071666/236120948-cc035f97-a2dd-4270-8deb-32ec2d17747f.PNG" width="48%">
+</div>
+
+<div style="display: flex;">
+<img src="https://user-images.githubusercontent.com/84071666/236120945-b2e16112-551f-4138-aac0-163b99a44f79.PNG" width="48%">
+<img src="https://user-images.githubusercontent.com/84071666/236120954-5c31fe36-0bc1-4143-82d9-557a3e4b0161.PNG" width="48%">
+</div>
+
+<br><br>
+
+### ⚙ 그룹 가입 완료시 해당 그룹의 비밀번호를 알려준다.
+  
+<br>
+
+![join6](https://user-images.githubusercontent.com/84071666/236120951-5e535d3d-bc85-4a5b-aad8-8de279b916a4.PNG)
+
+<br><br>
+
+### ⚙ 그룹 가입 완료시 가입한 사용자의 정보를 그룹 게시판에 출력
+  
+<br>
+
+![view1](https://user-images.githubusercontent.com/84071666/236120957-d0ab98b0-ebd1-4cab-8193-420172182699.PNG)
+  
+<br><br>
+
+### ⚙ 그룹에 접속한 사용자가 그룹 생성자일 경우 그룹삭제 버튼, 가입한 사용자일 경우 그룹탈퇴 버튼 생성
+  
+<br>
+
+<div style="display: flex;">
+<img src="https://user-images.githubusercontent.com/84071666/236120959-34788413-5bb4-4ea2-bb2b-b99651318494.PNG" width="20%">
+<img src="https://user-images.githubusercontent.com/84071666/236120961-08539a42-987f-4082-a9f7-3ef9b3d5ea1e.PNG" width="20%">
+</div>
+
+---
+
+<br><br>
+
+## 🔘 3 ) 그룹 탈퇴
+
+<br><br>
+
+### ⚙ 그룹 탈퇴시 그룹 메인 화면의 가입 인원에서 삭제
+  
+<br>
+
+<div style="display: flex;">
+<img src="https://user-images.githubusercontent.com/84071666/236124025-1e5219fd-8ee5-4059-99de-cbe4f57d1928.PNG" width="43%">
+<img src="https://user-images.githubusercontent.com/84071666/236124026-0a9d6d86-b7cb-4fca-9b2b-3c1fe206b5d2.PNG" width="50%">
+</div>
+
+<br>
+
+<div style="display: flex;">
+<img src="https://user-images.githubusercontent.com/84071666/236125789-a0c198aa-ce65-41d9-8d38-7ccb4892a7d9.PNG" width="19%">
+<img src="https://user-images.githubusercontent.com/84071666/236125794-64d93f2a-41d3-43f0-9b3a-2a4fded3430e.PNG" width="20%">
+</div>
+
+<br><br>
+
+### ⚙ 탈퇴한 회원은 그룹 접속 및 그룹 재가입 불가 
+
+<br>
+
+<div style="display: flex;">
+<img src="https://user-images.githubusercontent.com/84071666/236124028-ce02b9ea-a5e7-4857-8e8b-394aeacb6fc9.PNG" width="48%">
+<img src="https://user-images.githubusercontent.com/84071666/236124022-610fb714-736b-4e7a-941c-ccf1c60bd954.PNG" width="48%">
+</div>
+
+---
+
+<br><br>
+
+## 🔘 4 ) 그룹 삭제
+
+<br><br>
+
+<div style="display: flex;">
+<img src="https://user-images.githubusercontent.com/84071666/236124080-7302a907-d983-4333-9df2-a6ef09a36279.PNG" width="48%">
+<img src="https://user-images.githubusercontent.com/84071666/236124081-6b6aa21e-c088-4797-9e15-2b18dfacaef4.PNG" width="48%">
+</div>
+
+<br><br>
+
+### ⚙ 그룹 삭제 완료시 활동중에서 비활동중으로 변경
+
+<br>
+
+<div style="display: flex;">
+<img src="https://user-images.githubusercontent.com/84071666/236127560-132acca2-c4df-4dcf-88f3-1abdd2df0044.PNG" width="48%">
+<img src="https://user-images.githubusercontent.com/84071666/236124083-74489947-46a7-4b34-8a1c-0efadb0484f7.PNG" width="48%">
+</div>
+
+<br><br>
+
+### ⚙ 그룹 삭제 후 사용자가 그룹 가입 또는 접속 버튼 클릭시 비활동중인 그룹이라는 알림창 생성
+
+<br>
+
+![groupdelete4](https://user-images.githubusercontent.com/84071666/236124076-998c703f-a070-498c-afd8-7864477b50b3.PNG)
+
+<br><br><br><br><br><br>
+
+# 진행한 프로젝트는 여기까지이며 <br> 추후에도 새로운 기능을 추가할 예정입니다. <br> 읽어주셔서 감사합니다 🥰
