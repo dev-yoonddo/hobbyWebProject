@@ -36,6 +36,10 @@
 
 ![DB관계도](https://user-images.githubusercontent.com/84071666/235856555-9732e223-7613-47cd-aadb-b98b5e9eedfc.PNG)
 
+### 파일 구성
+
+![프로젝트 구성도](https://user-images.githubusercontent.com/84071666/236287196-7092c751-5119-449c-8e66-2ed0ec144527.PNG)
+
 <br><br>
 
 <hr>
