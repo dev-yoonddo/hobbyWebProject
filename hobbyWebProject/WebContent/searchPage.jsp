@@ -170,10 +170,10 @@ border-bottom: solid 1px #E0E0E0;
 	<div class="board-container">
 		<%
 				//카테고리를 검색했을 때 테이블 상단에 선택한 카테고리를 출력
-				String search = request.getParameter("searchField2");
+				String boardCategory = request.getParameter("searchField2");
 		%>
 		<div id="search-title">
-		<h2><%=search%></h2>&nbsp;&nbsp;<h4>함께 할 사람들과 이야기 나눠보세요</h4>
+		<h2><%=boardCategory%></h2>&nbsp;&nbsp;<h4>함께 할 사람들과 이야기 나눠보세요</h4>
 		</div><br>
 		<div class="row">
 			<table>
@@ -190,8 +190,8 @@ border-bottom: solid 1px #E0E0E0;
 				<tbody>
 					<%
 						BoardDAO boardDAO = new BoardDAO();
-						ArrayList<BoardDTO> list = boardDAO.getSearch(search);
-						if(search == ""){
+						ArrayList<BoardDTO> list = boardDAO.getSearch(boardCategory);
+						if(boardCategory == ""){
 							PrintWriter script = response.getWriter();
 							script.println("<script>");
 							script.println("alert('옵션을 선택해주세요')");

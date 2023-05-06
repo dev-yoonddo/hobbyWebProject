@@ -248,6 +248,16 @@ background-color: #E0EBFF;
 	if(session.getAttribute("userID")!=null){
 		userID=(String)session.getAttribute("userID");
 	}
+	if(userID == null){
+		PrintWriter script = response.getWriter();
+		script.println("<script>");
+		script.println("alert('로그인이 필요합니다.')");
+		script.println("window.open('loginPopUp.jsp', 'Login', 'width=450, height=500, top=50%, left=50%')");
+		script.println("</script>");
+	}
+	
+	//int userAccess = Integer.parseInt(request.getParameter("userAccess"));
+	 //하나의 그룹 정보 가져오기
 	UserDTO user=new UserDAO().getUserVO(userID);
 %>
 <header>
@@ -471,7 +481,11 @@ background-color: #E0EBFF;
 							<tr class="showGroup" style="height: 20px;">
 								<td><a id="click-view" href="groupView.jsp?groupID=<%= grouplist.get(i).getGroupID() %>"><%= grouplist.get(i).getGroupName().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></a></td>
 								<td><%= grouplist.get(i).getGroupPassword() %></td>
-								<td><%= grouplist.get(i).getGroupAvailable() %></td>
+								<%if(grouplist.get(i).getGroupAvailable() == 0){ %>
+								<td>NO</td>
+								<%}else{ %>
+								<td>YES</td>
+								<%} %>
 								<td><%= grouplist.get(i).getGroupNoP() %></td>
 							</tr>
 							<%	
@@ -521,7 +535,19 @@ background-color: #E0EBFF;
 								<td><a id="click-view" href="groupView.jsp?groupID=<%= mblist.get(i).getGroupID() %>"><%= mblist.get(i).getMemberID().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></a></td>
 								<td><%= mblist.get(i).getMbContent() %></td>
 								<td><%= mblist.get(i).getMbDate().substring(0 ,11) + mblist.get(i).getMbDate().substring(11, 13) + "시" + mblist.get(i).getMbDate().substring(14, 16) + "분" %></td>
-								<td><%= mblist.get(i).getMbAvailable() %></td>
+								<%
+									//mblist의 groupID와 같은 groupID의 정보를 가져온 후 groupAvailable == 0 이면 해당 그룹이 비활동중임을 표시한다.
+									GroupDTO group = new GroupDAO().getGroupVO(mblist.get(i).getGroupID());
+									if(group.getGroupAvailable() == 0){
+								%>
+								<td>NO</td>
+								<%
+									}else{
+								%>
+								<td>YES</td>
+								<%		
+									}
+								%>
 							</tr>
 							<%		
 								}
