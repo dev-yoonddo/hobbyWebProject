@@ -614,6 +614,14 @@
 
 <br><br>
 
+### ⚙ 그룹 페이지는 로그인 하지 않으면 접속 불가 하므로 로그인 팝업창 띄우기
+
+<br>
+
+![login12](https://user-images.githubusercontent.com/84071666/236673216-bfea8799-cc9d-46a2-b19d-8082cc136ecd.PNG)
+
+<br><br>
+
 ### ⚙ 그룹 메인 화면
 
 <br>
