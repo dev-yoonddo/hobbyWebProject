@@ -4,7 +4,7 @@
 //userID == null일때 로그인팝업창 
 $(function(){
   $('#go-group-1').on('click',function(){
-    var login = confirm('로그인시 이용이 가능합니다. 로그인 페이지로 이동하시겠습니까?');
+    var login = confirm('로그인이 필요합니다');
     if (login) {
       window.open("loginPopUp.jsp", "Login", "width=450, height=500, top=50%, left=50%") ;
     }

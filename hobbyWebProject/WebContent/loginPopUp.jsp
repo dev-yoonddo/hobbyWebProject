@@ -5,12 +5,24 @@
 <head>
 <meta charset="UTF-8">
 <title>Login</title>
+<link rel="icon" href="image/logo.png">
 <link rel="stylesheet" href="css/member.css?after">
 </head>
 <style>
 .login-wrapper{
-	margin: 20px;
-	margin-top: 50px;
+	margin: 40px;
+	margin-top: 70px;
+	margin-bottom: 0;
+	height: 400px;
+}
+#goJoin{
+	float: right; 
+	height: 30px; 
+	color: #C0C0C0;
+	cursor: pointer;
+}
+#goJoin:hover{
+	text-decoration: underline;
 }
 </style>
 <body>
@@ -26,10 +38,13 @@
 		    </label>
 		    <input type="submit" value="Login">
 		</form>
+			<div id="goJoin" onclick="location.href='join.jsp'">
+				<h4>아직 회원이 아니신가요?</h4>
+			</div>
 	   </div>
 	</div>
-<script type="text/javascript">
 
-</script>
 </body>
+<script>
+</script>
 </html>

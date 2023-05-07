@@ -8,6 +8,7 @@
 <meta name="viewport" content="width-device-width", initial-scale="1">
 <meta charset="UTF-8">
 <title>TOGETHER</title>
+<link rel="icon" href="image/logo.png">
 <link rel="stylesheet" href="css/main.css?after">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
 <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=IBM+Plex+Sans+KR:wght@300;600&family=Jua&family=Merriweather:wght@700&family=Nanum+Gothic&family=Nanum+Gothic+Coding&family=Noto+Sans+KR:wght@400&family=Noto+Serif+KR:wght@200&display=swap" rel="stylesheet">

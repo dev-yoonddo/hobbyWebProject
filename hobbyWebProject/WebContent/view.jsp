@@ -21,6 +21,7 @@
 <meta name="viewport" content="width-device-width", initial-scale="1">
 <meta charset="UTF-8">
 <title>TOGETHER</title>
+<link rel="icon" href="image/logo.png">
 <link rel="stylesheet" href="css/main.css?after">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
 <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square.css" rel="stylesheet">
@@ -257,9 +258,10 @@ HeartDTO heartvo = new HeartDAO().getHeartVO(boardID);
 						if (userID != null) {
 						    boolean heartMatch = false;
 						    for (HeartDTO heart: hearts) {
+						    	//hearts 리스트안에 boardID와 userID값이 모두 일치하는 값이 있으면 해당 글에 이미 좋아요를 눌렀음을 의미한다.
 						        if (userID.equals(heart.getUserID()) && boardID == heart.getBoardID()) {
 						        	heartMatch = true;
-						            break; // Exit loop if match is found
+						            break; // 일치하는 값을 찾으면 반복문을 나간다.
 						        }
 						        heartMatch = false;
 						    }
@@ -274,7 +276,7 @@ HeartDTO heartvo = new HeartDAO().getHeartVO(boardID);
 						    }
 						} else {
 						%>
-						    <i id="heart1" class="fa-regular fa-heart" onclick="location.href='heartAction.jsp?boardID=<%=boardID%>'"></i>&nbsp;<%= board.getHeartCount()%>
+						    <i id="noUser" class="fa-regular fa-heart"></i>&nbsp;<%= board.getHeartCount()%>
 						<%
 						}
 						%>
@@ -400,19 +402,17 @@ HeartDTO heartvo = new HeartDAO().getHeartVO(boardID);
 </footer>
 <!-- footer -->
 <script>
-$(document).ready(function(){
-	/*$("#heart2").hide();
-	
-    $("#heart1").click(function(){ 
-    	$("#heart1").hide();
-    	$("#heart2").show();
-    	if($("#heart2").click(function(){
-    		$("#heart2").hide();
-    		$("#heart1").show();
-    	}));
-	});*/
-    
+$(function(){
+	$('#noUser').on('click',function(){
+	  var login = confirm('로그인을 해주세요');
+	  if (login) {
+	    window.open("loginPopUp.jsp", "Login", "width=450, height=500, top=50%, left=50%") ;
+	  }
+	  else {
+	  }
+	});
 });
+
 function cmtAction(){
 	document.getElementById('cmt-write').style.display = 'block';
 	document.getElementById('cmt-write-btn').style.display = 'none';
