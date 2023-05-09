@@ -1,3 +1,7 @@
+<%@page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy"%>
+<%@page import="com.oreilly.servlet.MultipartRequest"%>
+<%@page import="java.net.URLEncoder"%>
+<%@page import="java.io.File"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.io.PrintWriter" %>
@@ -194,6 +198,7 @@ if(session.getAttribute("userID") != null){
 					</table>
 					<button type="submit" class="btn-blue" value="글쓰기"><span>작성하기</span></button>
 				</form>
+				
 			</div>
 		</div>
 	</section>
