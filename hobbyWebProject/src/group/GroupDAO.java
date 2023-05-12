@@ -19,14 +19,14 @@ public class GroupDAO {
 	
 	public GroupDAO() {
 		try {
-		 	String dbURL = "jdbc:mysql://localhost:3306/hobbywebproject?useUnicode=true&characterEncoding=UTF-8";
+		 	String dbURL = "jdbc:mysql://database-1.cxujakzvpvip.ap-southeast-2.rds.amazonaws.com:3306?hobbywebproject";
 		 	String dbID = "root";
-		 	String dbPassword = "9228";
+		 	String dbPassword = "qlalf9228?";
 		 	Class.forName("com.mysql.jdbc.Driver");
 		 	conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
 	}
 	//GroupID 번호매기기
 	//SQL명령어 중 GROUP 이 있기 때문에 백틱 ``을 사용해 구분을 해줘야한다.

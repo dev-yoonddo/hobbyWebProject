@@ -9,6 +9,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
+
+import org.apache.catalina.Context;
+
 import comment.CommentDAO;
 import comment.CommentDTO;
 
@@ -16,16 +21,17 @@ public class BoardDAO {
 	private Connection conn; //자바와 데이터베이스 연결
 	private ResultSet rs; //결과값 받아오기
 	
+	
 	public BoardDAO() {
 		try {
-			 	String dbURL = "jdbc:mysql://localhost:3306/hobbywebproject?useUnicode=true&characterEncoding=UTF-8";
-			 	String dbID = "root";
-			 	String dbPassword = "9228";
-			 	Class.forName("com.mysql.jdbc.Driver");
-			 	conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		 	String dbURL = "jdbc:mysql://database-1.cxujakzvpvip.ap-southeast-2.rds.amazonaws.com:3306?hobbywebproject";
+		 	String dbID = "root";
+		 	String dbPassword = "qlalf9228?";
+		 	Class.forName("com.mysql.jdbc.Driver");
+		 	conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
 	}
 	//날짜 가져오기
 	public String getDate() { //현재 시간을 가져오는 함수
@@ -87,6 +93,7 @@ public class BoardDAO {
 			pstmt.setString(7, boardCategory);
 			pstmt.setInt(8, viewCount);
 			pstmt.setInt(9, heartCount);
+
 			//성공적으로 수행했다면 0이상의 결과 반환
 			return pstmt.executeUpdate();
 		} catch (Exception e) {

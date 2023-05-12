@@ -171,7 +171,7 @@ if(session.getAttribute("userID") != null){
 		<div class="board-container">
 		<h3 style="font-weight: bold; color: #646464;"><%= userID %>님 안녕하세요</h3><br>
 			<div class="right-row">
-				<form method="post" action="writeAction.jsp">
+				<form method="post" action="writeAction.jsp" >
 					<div class="category-sel">
 					<select name="boardCategory">
 						<option value="0">CATEGORY</option>

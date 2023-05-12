@@ -13,7 +13,6 @@ public class BoardDTO {
 	private int viewCount;
 	private int heartCount;
 	
-	
 	public int getBoardID() {
 		return boardID;
 	}

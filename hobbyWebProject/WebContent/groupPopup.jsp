@@ -34,6 +34,7 @@ color: #ffffff;
   border: 1px solid #2E2F49;
   padding-top: 15px;
   padding-bottom: 15px;
+  
 }
 #sb::before {
   background-color: #2E2F49;
@@ -46,7 +47,7 @@ color: #ffffff;
   
 #createGroup{
 	width: 370px;
-	margin: 30px;
+	margin: 60px;
 	padding-top: 30px;
 }
 

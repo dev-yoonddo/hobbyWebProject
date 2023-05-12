@@ -295,7 +295,7 @@ body {
   #m2{
     font-size: 17pt;
     position: absolute;
-    bottom: 10%;
+    bottom: 25%;
     left: 30%;
   }
   #line{
@@ -309,7 +309,7 @@ body {
   #m2{
     font-size: 15pt;
     position: absolute;
-    bottom: 15%;
+    bottom: 20%;
     left: 30%;
   }
   .move_btns{

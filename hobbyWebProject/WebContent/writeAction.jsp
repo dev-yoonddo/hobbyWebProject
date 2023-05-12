@@ -45,6 +45,7 @@
 				script.println("</script>");
 				
 				}else{
+					
 					BoardDAO boardDAO = new BoardDAO();
 					int result = boardDAO.write(board.getBoardTitle(), userID, board.getBoardContent(), board.getBoardCategory(), board.getViewCount(), board.getHeartCount());
 					if(result == -1){
