@@ -17,7 +17,7 @@ public class HeartDAO {
    
    public HeartDAO() {//mysql에 접속을 하게 해줌,자동으로 데이터베이스 커넥션이 일어남
 	   try {
-		 	String dbURL = "jdbc:mysql://database-1.cxujakzvpvip.ap-southeast-2.rds.amazonaws.com:3306?hobbywebproject";
+		 	String dbURL = "jdbc:mysql://database-1.cxujakzvpvip.ap-southeast-2.rds.amazonaws.com:3306/hobbyWebProject?useUnicode=true&characterEncoding=UTF-8";
 		 	String dbID = "root";
 		 	String dbPassword = "qlalf9228?";
 		 	Class.forName("com.mysql.jdbc.Driver");

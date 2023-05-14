@@ -24,7 +24,7 @@ public class BoardDAO {
 	
 	public BoardDAO() {
 		try {
-		 	String dbURL = "jdbc:mysql://database-1.cxujakzvpvip.ap-southeast-2.rds.amazonaws.com:3306?hobbywebproject";
+		 	String dbURL = "jdbc:mysql://database-1.cxujakzvpvip.ap-southeast-2.rds.amazonaws.com:3306/hobbyWebProject?useUnicode=true&characterEncoding=UTF-8";
 		 	String dbID = "root";
 		 	String dbPassword = "qlalf9228?";
 		 	Class.forName("com.mysql.jdbc.Driver");

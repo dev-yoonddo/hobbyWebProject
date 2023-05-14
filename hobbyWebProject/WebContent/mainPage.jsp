@@ -201,7 +201,7 @@ if(session.getAttribute("userID") != null){
 <!-- footer -->
 <script>
 	opener.location.reload(); //부모창 리프레쉬
-    self.close(); //로그인 후 팝업창이 mainPage로 이동했을때 창 닫기
+    self.close(); //로그인 후 팝업창이
 </script>
 </body>
 </html>

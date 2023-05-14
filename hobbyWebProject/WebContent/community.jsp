@@ -196,6 +196,7 @@ button{
 	</div>
 </form>
 </div>
+<div><button type="button" onclick="location.href='write.jsp'">글 작성하기</button></div>
 </section>
 
 

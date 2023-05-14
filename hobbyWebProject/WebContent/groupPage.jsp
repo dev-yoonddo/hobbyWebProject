@@ -1,6 +1,5 @@
 <%@page import="member.MemberDTO"%>
 <%@page import="member.MemberDAO"%>
-<%@page import="javafx.scene.web.PromptData"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -184,12 +183,10 @@ String userID = null;
 if(session.getAttribute("userID") != null){
 	userID = (String) session.getAttribute("userID");
 }
-
-//groupID 가져오기
-int groupID = 0;
-if(request.getParameter("groupID") != null){
-	groupID = Integer.parseInt(request.getParameter("groupID"));
+if(userID==null) {
+	response.sendRedirect(request.getContextPath()+"/login.jsp");
 }
+
 %>
 <header>
 <div id="header" class="de-active">
