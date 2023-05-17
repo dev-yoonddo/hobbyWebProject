@@ -75,10 +75,6 @@ if(session.getAttribute("userID") != null){
 
 <!-- section -->
 <section>
-<%
-	int num = Integer.parseInt(request.getParameter("num"));
-
-%>
 	
 <div class="main">
 	<div class="main-text">
