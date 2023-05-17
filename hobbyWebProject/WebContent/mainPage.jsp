@@ -75,6 +75,10 @@ if(session.getAttribute("userID") != null){
 
 <!-- section -->
 <section>
+<%
+	int num = Integer.parseInt(request.getParameter("num"));
+%>
+	
 <div class="main">
 	<div class="main-text">
 		<div id="m1">
@@ -88,8 +92,8 @@ if(session.getAttribute("userID") != null){
 		TOGETHER 회원가입
 		</div>
 		<%} else{%>
-		<div id="m2" onclick="alert('이미 회원입니다.')">
-		TOGETHER 회원가입
+		<div id="m2" onclick="location.href='write.jsp'">
+		글 작성하기
 		</div>
 		<%} %>
 	</div>

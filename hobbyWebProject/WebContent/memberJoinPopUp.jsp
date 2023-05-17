@@ -47,7 +47,7 @@ color: #ffffff;
   
 #joinGroup{
 	width: 370px;
-	margin: 60px;
+	margin: 55px;
 }
 #join-form > input{
 	height: 100px;

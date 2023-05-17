@@ -41,7 +41,7 @@ public class CommentDAO {
 	}
 	//cmtID 번호 매기기
 	public int getNext() {
-		String SQL = "SELECT cmtID FROM COMMENT ORDER BY cmtID DESC";
+		String SQL = "SELECT cmtID FROM comment ORDER BY cmtID DESC";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
 			rs = pstmt.executeQuery();

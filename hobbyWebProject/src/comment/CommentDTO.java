@@ -1,7 +1,5 @@
 package comment;
 
-import user.UserDTO;
-
 public class CommentDTO {
 	private String cmtContent;
 	private int cmtID;

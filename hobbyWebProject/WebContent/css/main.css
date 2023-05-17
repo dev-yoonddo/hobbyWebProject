@@ -231,7 +231,7 @@ body {
   color:var(--colorOne);
 }
 .main{
-	height: 600px;
+	height: 700px;
 	padding-top: 80px;
 	background-image:linear-gradient(180deg, var(--colorTwo) 0%, var(--colorOne) 100%);
 	display: flex;
@@ -258,12 +258,12 @@ body {
 	font-size: 25pt;
 	font-weight: bold;
 	position: absolute;
-	bottom: 30%;
-	left: 50%;
+	bottom: 35%;
+	left: 45%;
 	color: white;
 	background-color: #3c3c3c;
 	border-radius: 50px;
-	padding: 17px;
+	padding: 17px 25px;
 	cursor: pointer;
 }
 #line{
@@ -295,14 +295,14 @@ body {
   #m2{
     font-size: 17pt;
     position: absolute;
-    bottom: 25%;
-    left: 30%;
+    bottom: 20%;
+    left: 25%;
   }
   #line{
   	width: 450px;
   }
  }
- @media screen and (max-width:600px) {
+ @media screen and (max-width:700px) {
   #m1{
   	font-size: 30pt;
   }
@@ -426,6 +426,7 @@ body {
 
 .slide img {
   width: 400px;
+  height: 400px;
   max-width:60%;
 }
 .slide h1 {

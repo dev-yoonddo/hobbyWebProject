@@ -47,7 +47,7 @@ color: #ffffff;
   
 #createGroup{
 	width: 370px;
-	margin: 60px;
+	margin: 55px;
 	padding-top: 30px;
 }
 

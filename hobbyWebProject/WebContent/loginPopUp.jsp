@@ -10,7 +10,7 @@
 </head>
 <style>
 .login-wrapper{
-	margin: 30px;
+	margin: 40px;
 	margin-top: 70px;
 	margin-bottom: 0;
 	height: 400px;
