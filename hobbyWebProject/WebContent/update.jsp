@@ -201,7 +201,7 @@ BoardDTO board = new BoardDAO().getBoardVO(boardID);
 </footer>
 <!-- footer -->
 <script>
-//글을 작성할 때 선택했던 카테고리를 수정할 때 선택되어있도록 한다.
+//글을 작성할 때 선택했던 카테고리가 수정할 때 선택되어있도록 한다.
 let boardCategory = '<%= board.getBoardCategory() %>';
 
 let selectBox = document.getElementsByName('boardCategory')[0];

@@ -118,8 +118,11 @@ String userID = null;
 if(session.getAttribute("userID") != null){
 	userID = (String) session.getAttribute("userID");
 } //로그인 확인 후 id값 얻어오기
+
+//searchPage에서 글쓰기 버튼을 눌렀을 때 전달받는 카테고리 값 가져오기
+String category = request.getParameter("boardCategory");
 %>
-	<!-- header start-->
+<!-- header start-->
 <header>
 <div id="header" class="de-active">
 	<nav class="navbar">
@@ -165,49 +168,63 @@ if(session.getAttribute("userID") != null){
 </header>
 	<!-- header end-->
 	
-	<section>
-	
-		<div class="board-container">
-		<h3 style="font-weight: bold; color: #646464;"><%= userID %>님 안녕하세요</h3><br>
-			<div class="right-row">
-				<form method="post" action="writeAction.jsp" >
-					<div class="category-sel">
-					<select name="boardCategory">
-						<option value="0">CATEGORY</option>
-						<option value="SPORTS" >SPORTS</option>
-						<option value="LEISURE" >LEISURE</option>
-						<option value="ART&MUSIC" >ART & MUSIC</option>
-						<option value="OTHER" >OTHER</option>
-					</select>
-					</div>
-					<table class="write-table" style="text-align: center; border: 1px solid #dddddd">
-						<thead>
-							<tr translate="yes">
-								<th style="background-color: #DBE2F7; text-align: center; color: #464646; height: 40px;">글 작성</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td><textarea placeholder="제목을 입력하세요" name="boardTitle" maxlength="50"></textarea></td>
-							</tr>
-							<tr>
-								<td><textarea placeholder="내용을 입력하세요" name="boardContent" maxlength="2048" style="height: 350px;"></textarea></td>
-							</tr>
-						</tbody>
-					</table>
-					<button type="submit" class="btn-blue" value="글쓰기"><span>작성하기</span></button>
-				</form>
-				
-			</div>
+<section>
+
+	<div class="board-container">
+	<h3 style="font-weight: bold; color: #646464;"><%= userID %>님 안녕하세요</h3><br>
+		<div class="right-row">
+			<form method="post" action="writeAction.jsp" >
+				<div class="category-sel">
+				<select name="boardCategory">
+					<option value="0">CATEGORY</option>
+					<option value="SPORTS" >SPORTS</option>
+					<option value="LEISURE" >LEISURE</option>
+					<option value="ART&MUSIC" >ART & MUSIC</option>
+					<option value="OTHER" >OTHER</option>
+				</select>
+				</div>
+				<table class="write-table" style="text-align: center; border: 1px solid #dddddd">
+					<thead>
+						<tr translate="yes">
+							<th style="background-color: #DBE2F7; text-align: center; color: #464646; height: 40px;">글 작성</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><textarea placeholder="제목을 입력하세요" name="boardTitle" maxlength="50"></textarea></td>
+						</tr>
+						<tr>
+							<td><textarea placeholder="내용을 입력하세요" name="boardContent" maxlength="2048" style="height: 350px;"></textarea></td>
+						</tr>
+					</tbody>
+				</table>
+				<button type="submit" class="btn-blue" value="글쓰기"><span>작성하기</span></button>
+			</form>
+			
 		</div>
-	</section>
-	
-	<!-- footer start -->
-	<footer><hr>
-	
-    	
-	</footer>
-	<!-- footer end-->
+	</div>
+</section>
+
+<!-- footer start -->
+<footer><hr>
+
+   	
+</footer>
+<!-- footer end-->
+
+<script>
+//글쓰기 버튼을 클릭했던 페이지의 카테고리가 글 작성시 선택되어있도록 한다.
+let boardCategory = '<%= category %>';
+
+let selectBox = document.getElementsByName('boardCategory')[0];
+
+for (let i = 0; i < selectBox.options.length; i++) {
+  if (selectBox.options[i].value === boardCategory) {
+    selectBox.options[i].setAttribute('selected', 'selected');
+    break;
+  }
+}
+</script>
 		<!-- 부트스트랩 참조 영역 -->
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="js/bootstrap.js"></script>

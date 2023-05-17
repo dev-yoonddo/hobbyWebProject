@@ -62,7 +62,7 @@ public class HeartDAO {
    
    
    public ArrayList<HeartDTO> getHeartList(int boardID){
-		String SQL = "SELECT * FROM heart WHERE boardID = ? AND userID IS NOT NULL"; 
+		String SQL = "SELECT * FROM heart WHERE boardID = ? AND userID IS NOT NULL"; //boardID가 일치하고 userID가 null이 아닌 heart의 리스트를 가져온다
 		ArrayList<HeartDTO> hearts = new ArrayList<HeartDTO>();
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
@@ -70,8 +70,8 @@ public class HeartDAO {
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				HeartDTO heart = new HeartDTO();
+				heart.setUserID(rs.getString(1));//heart메서드와 동일한 순서로 넣어야 정상적인 결과가 나온다.
 				heart.setBoardID(rs.getInt(2));
-				heart.setUserID(rs.getString(1));
 				hearts.add(heart);
 			}
 			rs.close();

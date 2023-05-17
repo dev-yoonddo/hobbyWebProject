@@ -264,7 +264,7 @@ HeartDTO heartvo = new HeartDAO().getHeartVO(boardID);
 						        }
 						        heartMatch = false;
 						    }
-						    if (heartMatch){
+						    if (heartMatch){ //heartMatch == true 이면 (이미 하트를 눌렀으면)
 						%>
 						        <i id="heart2" class="fa-solid fa-heart"></i>&nbsp;<%=board.getHeartCount()%>
 						<%
@@ -311,7 +311,7 @@ HeartDTO heartvo = new HeartDAO().getHeartVO(boardID);
 				
 			</div><br>
 			
-			<button type="button" class="btn-blue" onclick="history.back()"><span>목록</span></button>
+			<button type="button" class="btn-blue" onclick="location.href= 'searchPage.jsp?searchField2=<%=board.getBoardCategory()%>'"><span>목록</span></button>
 			<%
 				if(userID != null){
 			%>
