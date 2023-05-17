@@ -6,22 +6,37 @@
 <head>
 <meta charset="UTF-8">
 <title>error</title>
+<script src="https://kit.fontawesome.com/f95555e5d8.js" crossorigin="anonymous"></script>
+
 </head>
+<style>
+body{
+	width: auto;
+	height: 500px;
+	margin-top: 150px;
+	color: grey;
+}
+a{
+	text-decoration: underline;
+	cursor: pointer;
+	color: blue;
+}
+a:hover{
+	font-weight: bold;
+}
+h1{
+	display: flex;
+	justify-content: center;
+}
+</style>
 <body>
-	<h1>에러발생!! <%=exception.getMessage() %></h1>
-	<%
-		PrintWriter er = response.getWriter();
-		exception.printStackTrace(er);
-	%>
-	====== toString() 내용 ======<br>
-	<h1><%= exception.toString() %></h1> <%-- exception 내장 객체를 사용해 예외 처리 --%>
-	============ getMessage() 내용 ============<br>
-	<h1><%= exception.getMessage() %></h1>
-	============ printStackTrace() 내용 ============<br>
-	<h1><% exception.printStackTrace(); %></h1> <%-- 이클립스 콘솔로 예외 메시지를 출력 --%>
-	<h3>
-	숫자만 입력 가능합니다. 다시 시도하세요.
-	<a onclick='history.back()'>돌아가기</a>
-</h3>
+<div id="error" style="width:auto; display: flex; justify-content: center;">
+	<div style="justify-content: center;">
+		<div style="font-size: 30px; display: flex; justify-content: center;"><i class="fa-regular fa-face-frown fa-10x"></i></div>
+		<h1>오류가 발생했습니다.</h1>
+		<h1><%= exception.toString() %></h1>
+		<a onclick="history.back()">돌아가기</a>
+	</div>
+</div>
 </body>
 </html>

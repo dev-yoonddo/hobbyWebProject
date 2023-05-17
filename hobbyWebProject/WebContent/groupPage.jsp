@@ -2,7 +2,7 @@
 <%@page import="member.MemberDAO"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" errorPage="/error/errorPage.jsp"%>
 <%@ page import="java.io.PrintWriter" %>
 <%@ page import="group.GroupDTO" %>
 <%@ page import="group.GroupDAO" %>

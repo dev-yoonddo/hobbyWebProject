@@ -5,7 +5,7 @@
 <%@page import="comment.CommentDTO"%>
 <%@page import="user.UserDAO"%>
 <%@page import="user.UserDTO"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" errorPage="/error/errorPage.jsp"%>
 <%@ page import="java.io.PrintWriter" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="board.BoardDTO" %>

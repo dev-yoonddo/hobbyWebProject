@@ -1,6 +1,6 @@
 <%@page import="java.io.PrintWriter"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" errorPage="/error/errorPage.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -47,7 +47,7 @@ color: #ffffff;
   
 #joinGroup{
 	width: 370px;
-	margin: 55px;
+	margin: 50px;
 }
 #join-form > input{
 	height: 100px;

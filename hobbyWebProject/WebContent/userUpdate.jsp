@@ -1,6 +1,6 @@
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" errorPage="/error/errorPage.jsp"%>
 <%@ page import="java.io.PrintWriter" %>
 <%@ page import="user.UserDAO" %>
 <%@ page import="user.UserDTO" %>
@@ -343,7 +343,7 @@ background-color: #E0EBFF;
 	<!-- 데이터 관리하기 -->
 	<div id="userSet">
 		<div>
-			<h2>데이터 관리</h2>
+			<h2>데이터 관리하기</h2>
 			<%
 			BoardDAO boardDAO = new BoardDAO();
 			ArrayList<BoardDTO> list = boardDAO.getListByUser(userID);

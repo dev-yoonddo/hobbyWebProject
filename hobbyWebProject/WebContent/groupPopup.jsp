@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" errorPage="/error/errorPage.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -47,7 +47,7 @@ color: #ffffff;
   
 #createGroup{
 	width: 370px;
-	margin: 55px;
+	margin: 50px;
 	padding-top: 30px;
 }
 

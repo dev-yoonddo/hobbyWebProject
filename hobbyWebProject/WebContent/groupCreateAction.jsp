@@ -2,7 +2,7 @@
 <%@page import="java.io.PrintWriter"%>
 <%@page import="group.GroupDAO"%>
 <%@page import="group.GroupDTO"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" errorPage="/error/errorPage.jsp"%>
 <%@ page import="java.io.File" %>
 <%@ page import="java.util.Enumeration" %>
 

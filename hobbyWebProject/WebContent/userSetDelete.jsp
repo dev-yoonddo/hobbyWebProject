@@ -4,7 +4,7 @@
 <%@page import="board.BoardDTO"%>
 <%@page import="board.BoardDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" errorPage="/error/errorPage.jsp"%>
 <%@ page import="user.UserDTO" %>
 <%@ page import="user.UserDAO" %>
 <%@ page import="java.io.PrintWriter" %>

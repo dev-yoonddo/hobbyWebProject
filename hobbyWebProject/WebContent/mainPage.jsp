@@ -1,7 +1,7 @@
 <%@page import="java.util.HashMap"%>
 <%@page import="java.util.Map"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" errorPage="/error/errorPage.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -77,6 +77,7 @@ if(session.getAttribute("userID") != null){
 <section>
 <%
 	int num = Integer.parseInt(request.getParameter("num"));
+
 %>
 	
 <div class="main">
