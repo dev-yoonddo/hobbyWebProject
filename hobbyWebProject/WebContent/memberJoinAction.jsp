@@ -27,7 +27,7 @@
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
 			script.println("alert('로그인이 필요합니다.')");
-			script.println("location.href = 'login.jsp'");
+			script.println("window.open('loginPopUp.jsp', 'Login', 'width=450, height=500, top=50%, left=50%')");
 			script.println("</script>");
 		}else{
 			int groupID = 0; 
@@ -59,14 +59,14 @@
 				script.println("</script>");
 			}else{
 				//groupID에 해당되는 member의 수가 groupNoP(정원)보다 같거나 크면 정원이 다 찼다는 알림을 띄운다.
-				ArrayList<MemberDTO> mblist = memberDAO.getList(groupID);
-				if(mblist.size() >= groupDAO.getGroupVO(groupID).getGroupNoP()){
-					PrintWriter script = response.getWriter();
-					script.println("<script>");
-					script.println("alert('정원이 다 찼습니다.')");
-					script.println("history.back()");
-					script.println("</script>");	
-				}else{
+				//ArrayList<MemberDTO> mblist = memberDAO.getList(groupID);
+				//if(mblist.size() >= groupDAO.getGroupVO(groupID).getGroupNoP()){
+				//	PrintWriter script = response.getWriter();
+				//	script.println("<script>");
+				//	script.println("alert('정원이 다 찼습니다.')");
+				//	script.println("history.back()");
+				//	script.println("</script>");	
+				//}else{
 					//memberDAO에 userID와 groupID가 둘다 일치하는 데이터가 있으면 해당그룹에 이미 가입 되어있는것
 					if(memberDAO.getMemberVO(userID, groupID) != null){
 						//데이터가 있지만 available값이 0이면 탈퇴한 회원
@@ -76,14 +76,15 @@
 							script.println("alert('탈퇴한 회원은 재가입이 불가능합니다.')");
 							script.println("history.back()");
 							script.println("</script>");
-						}else if(memberDAO.getMemberVO(userID, groupID).getMbAvailable() == 1){
-						//0이 아니면 이미 가입되어있는 회원
-						PrintWriter script = response.getWriter();
-						script.println("<script>");
-						script.println("alert('이미 가입 되어있습니다.')");
-						script.println("history.back()");
-						script.println("</script>");
 						}
+						//else if(memberDAO.getMemberVO(userID, groupID).getMbAvailable() == 1){
+						//0이 아니면 이미 가입되어있는 회원
+						//PrintWriter script = response.getWriter();
+						//script.println("<script>");
+						//script.println("alert('이미 가입 되어있습니다.')");
+						//script.println("history.back()");
+						//script.println("</script>");
+						//}
 					}else{
 						int result = memberDAO.join(member.getMemberID(), groupID, userID, member.getMbContent());
 						if(result == -1){ //데이터베이스 오류
@@ -105,7 +106,7 @@
 					}
 				}
 			}
-		}
+//		}
 		
 	%>
 </body>

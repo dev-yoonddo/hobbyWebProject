@@ -3,7 +3,7 @@
 <%@page import="member.MemberDAO"%>
 <%@page import="java.io.PrintWriter"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" errorPage="/error/errorPage.jsp"%>
+    pageEncoding="UTF-8" %>
 <%@page import="user.UserDAO"%>
 <%@page import="user.UserDTO"%>
 <%@page import="group.GroupDTO"%>
@@ -82,10 +82,11 @@ if(groupID == 0){
 	script.println("location.href = 'groupPage.jsp'");
 	script.println("</script>");
 }
+//groupPage에서 이미 가입,접속에 대한 처리를 했지만 실행 도중 로그아웃과같은 데이터 변경을 대비해 view 페이지에도 코드를 작성했다.
 //int userAccess = Integer.parseInt(request.getParameter("userAccess"));
+MemberDAO mbDAO = new MemberDAO();
 GroupDTO group = new GroupDAO().getGroupVO(groupID); //하나의 그룹 정보 가져오기
 MemberDTO member = new MemberDAO().getMemberVO(userID, groupID); //현재 로그인하고 groupID에 가입한 member 정보 가져오기
-MemberDAO mbDAO = new MemberDAO();
 
 if(group.getGroupAvailable() == 0){
 	PrintWriter script = response.getWriter();
@@ -95,24 +96,25 @@ if(group.getGroupAvailable() == 0){
 	script.println("</script>");
 }
 //그룹을 만든 userID가 아닐때 (그룹을 만든 userID는 접속가능)
-if(!userID.equals(group.getUserID())){
-	//접속하는 userID의 데이터가 member에 없으면
-	if( member == null){
-	PrintWriter script = response.getWriter();
-	script.println("<script>");
-	script.println("alert('가입하지 않은 회원입니다.')");
-	script.println("location.href = 'groupPage.jsp'");
-	script.println("</script>");
+	if(!userID.equals(group.getUserID())){
+		//접속하는 userID의 데이터가 member에 없으면
+		if( member == null){
+		PrintWriter script = response.getWriter();
+		script.println("<script>");
+		script.println("alert('가입하지 않은 회원입니다.')");
+		script.println("location.href = 'groupPage.jsp'");
+		script.println("</script>");
+		}
+		//데이터는 있지만 available값이 0이면
+		if( member.getMbAvailable() == 0){ //탈퇴한 회원이기때문에 접속 불가능
+		PrintWriter script = response.getWriter();
+		script.println("<script>");
+		script.println("alert('탈퇴한 회원입니다.')");
+		script.println("location.href = 'groupPage.jsp'");
+		script.println("</script>");
+		}
 	}
-	//데이터는 있지만 available값이 0이면
-	else if( member.getMbAvailable() == 0){ //탈퇴한 회원이기때문에 접속 불가능
-	PrintWriter script = response.getWriter();
-	script.println("<script>");
-	script.println("alert('탈퇴한 회원입니다.')");
-	script.println("location.href = 'groupPage.jsp'");
-	script.println("</script>");
-	}
-}
+
 
 ArrayList<MemberDTO> mblist = mbDAO.getList(groupID); //해당 그룹의 멤버리스트 가져오기
 %>
@@ -171,9 +173,8 @@ ArrayList<MemberDTO> mblist = mbDAO.getList(groupID); //해당 그룹의 멤버�
 				<%} %>
 				</div>
 			</div>
-				<hr style="width: 100%; height: 2px; background-color: black;">
-		가입 멤버 : <%= mblist.size() %>명
-		<%= group.getUserID() %>
+			<hr style="width: 100%; height: 2px; background-color: black;"><br>
+			Member : <%= mblist.size() %>명&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Leader : <%= group.getUserID() %>
 		</div>
 	
 		<div id="member-list" style="width: 500px; height: auto;">

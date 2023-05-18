@@ -186,7 +186,7 @@ if(session.getAttribute("userID") != null){
 if(userID==null) {
 	response.sendRedirect(request.getContextPath()+"/login.jsp");
 }
-
+GroupDAO group = new GroupDAO();
 %>
 <header>
 <div id="header" class="de-active">
@@ -274,16 +274,19 @@ if(userID==null) {
 						//그룹에 가입한 멤버숫자 가져오기
 						MemberDAO mbDAO = new MemberDAO();
 						ArrayList<MemberDTO> mblist = mbDAO.getList(list.get(i).getGroupID());
+						
+						//해당 그룹에 유저가 이미 가입했는지 검사하기 위해 값 가져오기
+						MemberDTO member = new MemberDAO().getMemberVO(userID, list.get(i).getGroupID());
 					%>
 					<div class="info-p"><a><%= mblist.size() %>명 / <%= list.get(i).getGroupNoP() %>명</a></div>
 				</div>
 			</div>			
   			<div class="group-inner-box">
 				<div class="access-group">
-					<button type="button" class="btn-blue" id="join-group-btn" value="그룹가입" onclick="joinGroup('<%=list.get(i).getGroupID()%>','<%= list.get(i).getGroupAvailable()%>')">
+					<button type="button" class="btn-blue" id="join-group-btn" value="그룹가입" onclick="joinGroup('<%=list.get(i).getGroupID()%>','<%= list.get(i).getGroupAvailable()%>','<%= mblist.size() %>','<%= list.get(i).getGroupNoP() %>','<%=member%>')">
 					<span>가입하기</span>
-					</button>	
-					<button type="button" class="btn-blue" id="in-group-btn" value="그룹참가" onclick="showPasswordPrompt('<%=list.get(i).getGroupID()%>', '<%=list.get(i).getGroupPassword()%>','<%= list.get(i).getGroupAvailable()%>')">
+					</button>
+					<button type="button" class="btn-blue" id="in-group-btn" value="그룹참가" onclick="showPasswordPrompt('<%=list.get(i).getGroupID()%>', '<%=list.get(i).getGroupPassword()%>','<%= list.get(i).getGroupAvailable()%>','<%=member%>')">
 					<span>접속하기</span>
 					</button>
 				</div>
@@ -294,7 +297,7 @@ if(userID==null) {
         %>
         </div>
         
-        <%
+        <%  
       }
     }
     %>
@@ -320,10 +323,7 @@ if(userID==null) {
   </div>
 -->
 </body>
-<script>
-opener.location.reload(); //부모창 리프레쉬
-self.close(); //로그인 후 팝업 창 닫기
-</script>
+
 <script>
 const content = "ALWAYS BETTER TOGETHER";
 const text = document.querySelector('#ani-text');
@@ -340,14 +340,22 @@ function typing() {
 	setInterval(typing, 150)
 </script>
 <script>
-//가입하기 버튼을 클릭하면 id,available값을 받는다.
-function joinGroup(groupID, groupAvailable) {
+//가입하기 버튼을 클릭하면 id,available값과 현재 멤버 수, 가입 가능 멤버 수를 받는다.
+function joinGroup(groupID, groupAvailable, mbNum, grNum, member) {
 	//활동중
     if(groupAvailable == 1){
         var joinGroup = confirm("가입 하시겠습니까?");
         if (joinGroup) {
+        	if(member != "null"){
+        		alert("이미 가입한 그룹입니다.");
+        	}
+        	else if(mbNum == grNum){
+        		alert("정원이 다 찼습니다.");
+        	}
+        	else{
         	//팝업창을 열때 groupID값을 넘겨준다.
           	window.open("memberJoinPopUp.jsp?groupID=" + groupID , "Join", "width=450, height=450, top=50%, left=50%") ;
+        	}
         }
         else {
 
@@ -361,19 +369,23 @@ function joinGroup(groupID, groupAvailable) {
 <script>
 
 //접속하기 버튼을 클릭하면 id,password,available value를 받는다
-function showPasswordPrompt(grID, grPassword, grAvailable) {
+function showPasswordPrompt(grID, grPassword, grAvailable, member) {
     var inputPassword = "";
     //활동중
     if(grAvailable == 1){
-	    while (inputPassword != grPassword) {
-	        inputPassword = prompt("비밀번호를 입력하세요");
-	        if(inputPassword == null){ //null은 취소버튼을 눌렀을 때를 의미한다. 아무것도 입력하지 않고 확인을 누르면 ""이다."
-	        	break;
-	        }
-	    }
-	    if (inputPassword == grPassword) {
-	        location.href = "groupView.jsp?groupID=" + grID;
-	    }
+    	if(member == "null"){
+    		alert("가입 후 접속해주세요");
+    	}else{
+		    while (inputPassword != grPassword) {
+		        inputPassword = prompt("비밀번호를 입력하세요");
+		        if(inputPassword == null){ //null은 취소버튼을 눌렀을 때를 의미한다. 아무것도 입력하지 않고 확인을 누르면 ""이다."
+		        	break;
+		        }
+		    }
+		    if (inputPassword == grPassword) {
+		        location.href = "groupView.jsp?groupID=" + grID;
+		    }
+    	}
 	//비활동중
     }else{
     	alert("비활동 중인 그룹입니다.");
@@ -390,7 +402,10 @@ function showPasswordPrompt(grID, grPassword, grAvailable) {
     */
 }
 </script>
-
+<script>
+opener.location.reload(); //부모창 리프레쉬
+self.close(); //로그인 후 팝업 창 닫기
+</script>
 <script src="js/qna.js"></script>
 
 </html>

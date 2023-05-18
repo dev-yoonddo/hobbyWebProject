@@ -114,7 +114,7 @@ public class MemberDAO {
 			return list; 
 		}
 		
-		//하나의 멤버 정보 가져오기
+		//해당 그룹에 유저가 가입했는지 검사
 		public MemberDTO getMemberVO(String userID, int groupID) {
 			String SQL = "SELECT * FROM member WHERE userID = ? AND groupID = ?";
 			try {
