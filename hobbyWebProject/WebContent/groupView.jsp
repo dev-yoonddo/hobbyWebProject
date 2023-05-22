@@ -3,7 +3,7 @@
 <%@page import="member.MemberDAO"%>
 <%@page import="java.io.PrintWriter"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" %>
+    pageEncoding="UTF-8" errorPage="/error/errorPage.jsp"%>
 <%@page import="user.UserDAO"%>
 <%@page import="user.UserDTO"%>
 <%@page import="group.GroupDTO"%>

@@ -164,7 +164,7 @@ BoardDTO board = new BoardDAO().getBoardVO(boardID);
 						<option value="0">CATEGORY</option>
 						<option value="SPORTS" >SPORTS</option>
 						<option value="LEISURE" >LEISURE</option>
-						<option value="ART&MUSIC" >ART & MUSIC</option>
+						<option value="MUSIC" >MUSIC</option>
 						<option value="OTHER" >OTHER</option>
 					</select>
 					</div>

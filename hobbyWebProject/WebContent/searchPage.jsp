@@ -247,7 +247,7 @@ border-bottom: solid 1px #E0E0E0;
 			if( userID != null ){
 		%>
 			<button type="button" class="btn-blue" id="search" onclick="location.href='community.jsp'"><span>돌아가기</span></button>
-			<button type="button" class="btn-blue" id="write" onclick="location.href='write.jsp?boardCategory=<%= boardCategory %>'"><span>글쓰기</span></button>
+			<button type="button" class="btn-blue" id="write" onclick="location.href='write.jsp?category=<%= boardCategory %>'"><span>글쓰기</span></button>
 		<% 
 			}
 		%>

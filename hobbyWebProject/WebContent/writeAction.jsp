@@ -64,7 +64,7 @@
 						PrintWriter script = response.getWriter();
 						script.println("<script>");
 						script.println("alert('작성이 완료되었습니다')");
-						script.println("location.href='community.jsp?'");
+						script.println("location.href='searchPage.jsp?searchField2="+board.getBoardCategory()+"'");
 						script.println("</script>");
 					}
 					

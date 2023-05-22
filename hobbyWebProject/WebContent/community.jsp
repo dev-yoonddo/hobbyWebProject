@@ -186,7 +186,7 @@ button{
 		<ul class="option-list">
 			<li class="option"><input type="hidden" name="searchField2" id="SPORTS" value="SPORTS"><span>SPORTS</span></li>
 			<li class="option"><input type="hidden" name="searchField2" id="LEISURE" value="LEISURE"><span>LEISURE</span></li>
-			<li class="option"><input type="hidden" name="searchField2" id="ART&MUSIC" value="ART&MUSIC"><span>ART & MUSIC</span></li>
+			<li class="option"><input type="hidden" name="searchField2" id="MUSIC" value="MUSIC"><span>MUSIC</span></li>
 			<li class="option"><input type="hidden" name="searchField2" id="OTHER" value="OTHER"><span>OTHER</span></li>
 		</ul>
 		</div>

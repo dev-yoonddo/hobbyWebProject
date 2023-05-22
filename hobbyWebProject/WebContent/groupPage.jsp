@@ -186,7 +186,6 @@ if(session.getAttribute("userID") != null){
 if(userID==null) {
 	response.sendRedirect(request.getContextPath()+"/login.jsp");
 }
-GroupDAO group = new GroupDAO();
 %>
 <header>
 <div id="header" class="de-active">
@@ -275,6 +274,10 @@ GroupDAO group = new GroupDAO();
 						MemberDAO mbDAO = new MemberDAO();
 						ArrayList<MemberDTO> mblist = mbDAO.getList(list.get(i).getGroupID());
 						
+						//해당 그룹을 만든 유저 정보 가져오기
+						GroupDTO groupuser = new GroupDAO().getGroupVO(list.get(i).getGroupID());
+						boolean leader = userID.equals(groupuser.getUserID());
+						
 						//해당 그룹에 유저가 이미 가입했는지 검사하기 위해 값 가져오기
 						MemberDTO member = new MemberDAO().getMemberVO(userID, list.get(i).getGroupID());
 					%>
@@ -286,7 +289,7 @@ GroupDAO group = new GroupDAO();
 					<button type="button" class="btn-blue" id="join-group-btn" value="그룹가입" onclick="joinGroup('<%=list.get(i).getGroupID()%>','<%= list.get(i).getGroupAvailable()%>','<%= mblist.size() %>','<%= list.get(i).getGroupNoP() %>','<%=member%>')">
 					<span>가입하기</span>
 					</button>
-					<button type="button" class="btn-blue" id="in-group-btn" value="그룹참가" onclick="showPasswordPrompt('<%=list.get(i).getGroupID()%>', '<%=list.get(i).getGroupPassword()%>','<%= list.get(i).getGroupAvailable()%>','<%=member%>')">
+					<button type="button" class="btn-blue" id="in-group-btn" value="그룹참가" onclick="showPasswordPrompt('<%=list.get(i).getGroupID()%>', '<%=list.get(i).getGroupPassword()%>','<%= list.get(i).getGroupAvailable()%>','<%=member%>','<%=leader%>')">
 					<span>접속하기</span>
 					</button>
 				</div>
@@ -368,20 +371,30 @@ function joinGroup(groupID, groupAvailable, mbNum, grNum, member) {
 </script>
 <script>
 
-//접속하기 버튼을 클릭하면 id,password,available value를 받는다
-function showPasswordPrompt(grID, grPassword, grAvailable, member) {
+//접속하기 버튼을 클릭하면 id,password,available value, member, leader를 받는다
+function showPasswordPrompt(grID, grPassword, grAvailable, member, leader) {
     var inputPassword = "";
     //활동중
     if(grAvailable == 1){
+    	//member에 데이터가 없으면 (userID, groupID가 일치하는 데이터가 없으면) 가입하지 않은 유저
     	if(member == "null"){
+    		//그룹을 만든 유저이면 접속
+    		if(leader == "true"){
+    			location.href = "groupView.jsp?groupID=" + grID;
+    		}else{
+    		//데이터도 없고 그룹을 만든 유저도 아니면
     		alert("가입 후 접속해주세요");
+    		}
+    	//member에 데이터가 있으면
     	}else{
+    		//비밀번호가 일치할때까지 입력창 띄우기
 		    while (inputPassword != grPassword) {
 		        inputPassword = prompt("비밀번호를 입력하세요");
-		        if(inputPassword == null){ //null은 취소버튼을 눌렀을 때를 의미한다. 아무것도 입력하지 않고 확인을 누르면 ""이다."
+		        if(inputPassword == null){ //null은 취소버튼을 눌렀을 때를 의미한다. 아무것도 입력하지 않고 확인을 누르면 ""이다.
 		        	break;
 		        }
 		    }
+    		//비밀번호가 일치하면 접속
 		    if (inputPassword == grPassword) {
 		        location.href = "groupView.jsp?groupID=" + grID;
 		    }

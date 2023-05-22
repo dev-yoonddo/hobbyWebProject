@@ -120,7 +120,7 @@ if(session.getAttribute("userID") != null){
 } //로그인 확인 후 id값 얻어오기
 
 //searchPage에서 글쓰기 버튼을 눌렀을 때 전달받는 카테고리 값 가져오기
-String category = request.getParameter("boardCategory");
+String bdcategory = request.getParameter("category");
 %>
 <!-- header start-->
 <header>
@@ -179,7 +179,7 @@ String category = request.getParameter("boardCategory");
 					<option value="0">CATEGORY</option>
 					<option value="SPORTS" >SPORTS</option>
 					<option value="LEISURE" >LEISURE</option>
-					<option value="ART&MUSIC" >ART & MUSIC</option>
+					<option value="MUSIC" >MUSIC</option>
 					<option value="OTHER" >OTHER</option>
 				</select>
 				</div>
@@ -214,12 +214,12 @@ String category = request.getParameter("boardCategory");
 
 <script>
 //글쓰기 버튼을 클릭했던 페이지의 카테고리가 글 작성시 선택되어있도록 한다.
-let boardCategory = '<%= category %>';
+let bdcategory = '<%= bdcategory %>';
 
 let selectBox = document.getElementsByName('boardCategory')[0];
 
 for (let i = 0; i < selectBox.options.length; i++) {
-  if (selectBox.options[i].value === boardCategory) {
+  if ((selectBox.options[i].value) === bdcategory) {
     selectBox.options[i].setAttribute('selected', 'selected');
     break;
   }
