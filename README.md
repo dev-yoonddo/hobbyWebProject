@@ -10,15 +10,17 @@
 ## ❔ 프로젝트 주제 선정 이유와 개발 목표
 
 1. 직장생활 중 몸과 마음을 refresh 할 수 있는 취미를 함께 할 사람을 찾고있는 사용자를 위한 웹페이지를 주제로 선정했습니다.  
-2. 팀 프로젝트에서 구현한 것 외에 다른 기능을 추가하고 나의 개성을 나타낼 수 있는 개발을 목표로 프로젝트를 제작 했습니다. <br>
+2. 팀 프로젝트에서 구현한 것 외에 다른 기능을 추가하고 처음부터 끝까지 직접 계획하고 개발하는 것을 목표로 했습니다. <br>
 
 <br><br>
 
 ## ❔ 프로젝트 진행 후 느낀점
 
-개발하면서 에러는 바늘과 실처럼 함께할 수 밖에 없기 때문에 문제를 해결하며 꼬박 반나절을 고민한 적도 있지만, 문제를 해결하며 완성도도 높아지고 그에따라
-만족감도 커짐을 많이 느꼈던 프로젝트입니다. 당장 오류를 놓고 머릿속으로 고민하기보다 책과 검색을 활용해 정보를 찾아보고 여러 코드를 짜서 실행해보며
-부딪히는 것이 해결 속도를 빠르게 하며 개발에 대한 흥미를 돋구는 아주 중요한 점이라는 깨달음을 얻은 프로젝트입니다.
+개발하면서 에러는 바늘과 실처럼 함께할 수 밖에 없기 때문에 해결하기 위해 꼬박 반나절을 고민한 적도 있습니다.
+하지만 문제를 해결하면서 프로젝트의 완성도도 높아졌고 그에따라 저의 만족감도 커짐을 많이 느끼며 시행착오를 겪었을 때
+더 큰 발전을 할 수 있다는 점을 깨달았던 프로젝트입니다. 그리고 오류가 발생했을 때 손 놓고 머릿속으로 고민하기보다
+책과 검색을 활용해 정보를 찾아보고 여러 코드를 짜서 실행해보며 부딪히는 것이 해결 속도를 빠르게 할 뿐만 아니라
+개발에 대한 흥미도 더욱 높아지도록  아주 중요한 점이라는 깨달음을 얻은 프로젝트입니다.
 앞으로도 프로젝트의 완성도를 더 높일 수 있을 때까지 꾸준히 공부하며 계속 개발하려고 노력하고 있습니다.
 
 <br><br>
@@ -110,9 +112,9 @@
 <br>
 
 <div style="display: flex;">
-<img src="https://user-images.githubusercontent.com/84071666/235858895-45401786-3627-4c3f-952c-0470a7179159.PNG" width="33%" height="500px">
-<img src="https://user-images.githubusercontent.com/84071666/235858897-2353fc7f-2503-49b2-b950-fa9782cd91c6.PNG" width="33%" height="500px">
-<img src="https://user-images.githubusercontent.com/84071666/235858889-3c1e81be-81fd-4606-8d12-6be50a1ea776.PNG" width="33%" height="500px">
+<img src="https://user-images.githubusercontent.com/84071666/235858895-45401786-3627-4c3f-952c-0470a7179159.PNG" width="32%" height="450px">
+<img src="https://user-images.githubusercontent.com/84071666/235858897-2353fc7f-2503-49b2-b950-fa9782cd91c6.PNG" width="32%" height="450px">
+<img src="https://user-images.githubusercontent.com/84071666/235858889-3c1e81be-81fd-4606-8d12-6be50a1ea776.PNG" width="32%" height="450px">
 </div>
 <br><br>
 
@@ -411,7 +413,7 @@
 <br>
 
 <div style="display: flex;">
-<img src="https://user-images.githubusercontent.com/84071666/235914397-0a34cfe3-f4ca-4691-9683-80bc11adc325.PNG" width="45%">
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/6e495049-bf79-4bd0-a918-9b75af3ad028.PNG" width="45%">
 <img src="https://user-images.githubusercontent.com/84071666/235914401-a34a3fa2-b2e7-4880-808e-1789ea48de19.PNG" width="50%">
 </div>
 
@@ -457,7 +459,11 @@
 
 <br>
 
-![write1](https://user-images.githubusercontent.com/84071666/235973478-509b923f-a9d6-4bca-87b0-e68e2c7f946f.PNG)
+### ⚙ 접속한 카테고리가 이미 선택되어 있고 변경 가능
+
+<br>
+
+![write1](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/018f0c0b-e1ee-414e-8104-c846f4be9f07)
 
 <br>
 
@@ -465,7 +471,7 @@
 
 <br>
 
-![write2](https://user-images.githubusercontent.com/84071666/235973481-509417f5-ac74-4ae2-b17c-fb799f2ad076.PNG)
+![write2](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/d051d399-80aa-4b96-8860-9393bca0717c)
 
 <br>
 
@@ -483,7 +489,7 @@
 
 <br>
 
-![write4](https://user-images.githubusercontent.com/84071666/235973500-1445e637-dbfb-4000-9c83-f0403769eeda.PNG)
+![write4](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/886d5339-c08e-4472-8553-82fde14aebd8)
 
 <br>
 
@@ -491,8 +497,8 @@
 
 <br>
 
-![view1](https://user-images.githubusercontent.com/84071666/235973512-095f9051-3692-4538-8b64-6cda65de0073.PNG)
-![view2](https://user-images.githubusercontent.com/84071666/235973436-b1483dea-6113-4b72-8207-32e4705f48fa.PNG)
+![view1](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/657929af-e409-4a6d-87e3-88a6f5ceed13)
+![view2](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/a30bd825-76f2-487f-80b4-18ef28e0c1fc)
 
 <br>
 
@@ -592,12 +598,12 @@
 
 <br><br>
 
-### ⚙ 다른 카테고리로 변경 가능 
+![boardupdate1](https://user-images.githubusercontent.com/84071666/235974307-9a9dcfc5-33c1-4b58-934c-6cd4946a63fe.PNG)
+![boardupdate2](https://user-images.githubusercontent.com/84071666/235974312-2bb5193c-b889-401d-82e0-318aa33785bf.PNG)
 
 <br>
 
-![boardupdate1](https://user-images.githubusercontent.com/84071666/235974307-9a9dcfc5-33c1-4b58-934c-6cd4946a63fe.PNG)
-![boardupdate2](https://user-images.githubusercontent.com/84071666/235974312-2bb5193c-b889-401d-82e0-318aa33785bf.PNG)
+### ⚙ 다른 카테고리로 변경 가능 
 ![boardupdate3](https://user-images.githubusercontent.com/84071666/235974314-df888c99-3984-4909-a505-efda4273481f.PNG)
 ![boardupdate4](https://user-images.githubusercontent.com/84071666/235974318-fc3bfe3b-1f77-4a7a-ab09-f1887c8e249d.PNG)
 ![boardupdate5](https://user-images.githubusercontent.com/84071666/235974300-cfeb5959-c208-4cec-998c-161bd275cc5f.PNG)
@@ -666,36 +672,31 @@
 
 <br><br>
 
-### ⚙ 그룹에 가입하지 않은 사람은 접속 불가
-
-### : 비밀번호 오류시 prompt창 무한 반복
-
-<br>
-
-![access1](https://user-images.githubusercontent.com/84071666/236120122-b697ac25-6e63-4fd1-a26b-cdc4beae9103.PNG)
-
-<br>
-
-<div style="display: flex;">
-<img src="https://user-images.githubusercontent.com/84071666/236120124-b565985e-d3ca-44fa-9aa0-69ba34558d30.PNG" width="40%">
-<img src="https://user-images.githubusercontent.com/84071666/236120119-35e17e24-4ed6-484e-bb79-43368f2103bf.PNG" width="54%">
-</div>
-
-<br><br>
-
-### ⚙ 그룹 가입
-
-<br><br>
-
 ![grouplist2](https://user-images.githubusercontent.com/84071666/236123166-a808e5ad-1588-449e-9c0f-7cb58631d34d.PNG)
 
+<br><br>
+
+### ⚙ 그룹가입 버튼을 누르면 가입여부를 묻는 팝업창 띄우기
+![그룹수정2](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/ae2bb252-54ed-4663-9972-9ca56d5b2e2c)
+
 <br>
 
-<img src="https://user-images.githubusercontent.com/84071666/236123160-70462d12-19c6-4c42-a872-209daf6cba5a.PNG" float="center">
+### ⚙ 유저가 이미 가입한 그룹일 경우
+![그룹수정4](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/db26b11e-3e26-4fdd-8492-220ac107d112)
+
+<br>
+
+### ⚙ 이미 정원이 다 찼을 경우
+![그룹수정3](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/a7deb910-54de-4eb9-bc15-d9b001af951c)
+
+<br>
+
+### ⚙ 그룹을 탈퇴했을 경우
+![그룹수정5](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/73baef42-755a-4dc0-8e91-99c5a76965cd)
 
 <br><br>
 
-### ⚙ 데이터베이스 오류, 공백 유무, 아이디 중복, 이미 존재하는 데이터인지 확인 후 가입 완료
+### ⚙ 위 조건에 해당되지 않으면 가입 팝업창을 띄우고 데이터베이스 오류, 공백 유무, 아이디 중복, 이미 존재하는 데이터인지 확인 후 가입 완료
 
 <br>
 
@@ -725,12 +726,33 @@
 <br><br>
 
 ### ⚙ 그룹 가입 완료시 가입한 사용자의 정보를 그룹 게시판에 출력
-  
+
 <br>
 
 ![view1](https://user-images.githubusercontent.com/84071666/236120957-d0ab98b0-ebd1-4cab-8193-420172182699.PNG)
   
 <br><br>
+
+## 🔘 3 ) 그룹 접속
+
+<br><br>
+
+![access1](https://user-images.githubusercontent.com/84071666/236120122-b697ac25-6e63-4fd1-a26b-cdc4beae9103.PNG)
+
+<br>
+
+### ⚙ 그룹에 가입하지 않은 사람은 접속 불가
+![그룹수정1](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/91febf94-f767-4ac5-9152-1a63cbada4bb)
+
+<br>
+
+### ⚙ 가입한 유저에게 입력창을 띄우고 비밀번호가 일치할 때 까지 반복
+
+<br>
+
+<div style="display: flex;">
+<img src="https://user-images.githubusercontent.com/84071666/236120124-b565985e-d3ca-44fa-9aa0-69ba34558d30.PNG">
+</div>
 
 ### ⚙ 그룹에 접속한 사용자가 그룹 생성자일 경우 그룹삭제 버튼, 가입한 사용자일 경우 그룹탈퇴 버튼 생성
   
@@ -745,7 +767,7 @@
 
 <br><br>
 
-## 🔘 3 ) 그룹 탈퇴
+## 🔘 4 ) 그룹 탈퇴
 
 <br><br>
 
@@ -780,7 +802,7 @@
 
 <br><br>
 
-## 🔘 4 ) 그룹 삭제
+## 🔘 5 ) 그룹 삭제
 
 <br><br>
 
