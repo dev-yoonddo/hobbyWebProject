@@ -137,6 +137,29 @@ public class MemberDAO {
 			}
 			return null;
 		}
+		//해당 그룹에 유저가 탈퇴했는지 검사
+		public MemberDTO getMemberDelVO(String userID, int groupID) {
+			String SQL = "SELECT * FROM member WHERE userID = ? AND groupID = ? AND mbAvailable = 0";
+			try {
+				PreparedStatement pstmt = conn.prepareStatement(SQL);
+				pstmt.setString(1, userID);
+				pstmt.setInt(2, groupID);
+				rs = pstmt.executeQuery();
+				if (rs.next()) {
+					MemberDTO mb = new MemberDTO();
+					mb.setMemberID(rs.getString(1));
+					mb.setGroupID(rs.getInt(2));
+					mb.setUserID(rs.getString(3));
+					mb.setMbAvailable(rs.getInt(4));
+					mb.setMbContent(rs.getString(5));
+					mb.setMbDate(rs.getString(6));
+					return mb;
+				}
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+			return null;
+		}
 		/*//그룹 탈퇴하기 (1. 데이터 삭제)
 		public int delete(String memberID) {
 			String SQL = "DELETE FROM member WHERE memberID = ?";
@@ -162,19 +185,19 @@ public class MemberDAO {
 			}
 			return -1; //데이터베이스 오류
 		}
-		//해당 userID 그룹 탈퇴하기
-				public int deleteByUser(String userID) {
-					String SQL = "UPDATE member SET mbAvailable = 0 WHERE userID = ? ";
-					try {
-						PreparedStatement pstmt = conn.prepareStatement(SQL);
-						pstmt.setString(1, userID);
-						//성공적으로 수행했다면 0이상의 결과 반환
-						return pstmt.executeUpdate();
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-					return -1; //데이터베이스 오류
-				}
+		//해당 userID가 가입한 그룹 전체 탈퇴하기
+		public int deleteByUser(String userID) {
+			String SQL = "UPDATE member SET mbAvailable = 0 WHERE userID = ? ";
+			try {
+				PreparedStatement pstmt = conn.prepareStatement(SQL);
+				pstmt.setString(1, userID);
+				//성공적으로 수행했다면 0이상의 결과 반환
+				return pstmt.executeUpdate();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return -1; //데이터베이스 오류
+		}
 		//특정 groupID에 해당되는 member의 갯수 구하기
 		public int getMemberCount(int groupID) {
 		    String SQL = "SELECT COUNT(*) FROM member WHERE groupID = ?";
