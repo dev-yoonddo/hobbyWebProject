@@ -674,6 +674,11 @@
 
 ![grouplist2](https://user-images.githubusercontent.com/84071666/236123166-a808e5ad-1588-449e-9c0f-7cb58631d34d.PNG)
 
+<br>
+
+### ⚙ 그룹생성자에겐 그룹접속 버튼만 노출
+![그룹수정6](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/e9a0c71c-9ee1-4346-a55a-aef3b37cca66)
+
 <br><br>
 
 ### ⚙ 그룹가입 버튼을 누르면 가입여부를 묻는 팝업창 띄우기
