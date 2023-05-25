@@ -1,4 +1,3 @@
-<%@page import="org.apache.tomcat.jni.Directory"%>
 <%@page import="java.io.PrintWriter"%>
 <%@page import="group.GroupDAO"%>
 <%@page import="group.GroupDTO"%>

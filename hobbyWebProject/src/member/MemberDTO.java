@@ -1,7 +1,5 @@
 package member;
 
-import java.util.Date;
-
 public class MemberDTO {
 
 	private String memberID;

@@ -2,6 +2,7 @@ package member;
 
 import java.sql.Connection;
 
+
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,16 +10,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import board.BoardDAO;
-import board.BoardDTO;
-import comment.CommentDAO;
-import comment.CommentDTO;
-import group.GroupDTO;
 
 public class MemberDAO {
 
 		private Connection conn;
-		private PreparedStatement pstmt;
 		private ResultSet rs;
 		
 		

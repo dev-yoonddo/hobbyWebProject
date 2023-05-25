@@ -1,7 +1,5 @@
 package board;
 
-import user.UserDTO;
-
 public class BoardDTO {
 	private int boardID;
 	private String boardTitle;
