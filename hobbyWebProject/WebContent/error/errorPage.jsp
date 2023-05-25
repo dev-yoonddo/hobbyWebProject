@@ -34,8 +34,10 @@ h1{
 	<div style="justify-content: center;">
 		<div style="font-size: 30px; display: flex; justify-content: center;"><i class="fa-regular fa-face-frown fa-10x"></i></div>
 		<h1>오류가 발생했습니다.</h1>
+		<div style="margin: 0 auto;">
 		<h1><%= exception.toString() %></h1>
 		<a onclick="history.back()">돌아가기</a>
+		</div>
 	</div>
 </div>
 </body>
