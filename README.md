@@ -835,6 +835,12 @@
 
 ![groupdelete4](https://user-images.githubusercontent.com/84071666/236124076-998c703f-a070-498c-afd8-7864477b50b3.PNG)
 
+<br><br>
+
+## 예외처리
+
+![errorPage](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/14bf63d6-60b8-4abf-85d2-ae0c47126bdb)
+
 <br><br><br><br><br><br>
 
 # 진행한 프로젝트는 여기까지이며 <br> 추후에도 새로운 기능을 추가할 예정입니다. <br> 읽어주셔서 감사합니다 🥰
