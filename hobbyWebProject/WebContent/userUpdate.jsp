@@ -659,7 +659,7 @@ $(document).ready(function(){
 
 	$("#more-btn").click(function(e){ //more-btn을 클릭했을때
 	    e.preventDefault();
-	    if($('.showWrite:hidden').length <= lastIndex || $('.showWrite:hidden').length == 0){ //만약 전체 글의 갯수보다 lastIndex가 크거나 같다면
+	    if($('.showWrite:hidden').length <= lastIndex + 1){ //만약 전체 글의 갯수보다 lastIndex가 크거나 같다면
 	        alert("마지막 글입니다"); //알림창 띄우기
 		    return; //return을 하지않으면 알림창을 띄우고 또 다음으로 실행된다.
 	    

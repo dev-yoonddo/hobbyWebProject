@@ -199,7 +199,9 @@ ArrayList<MemberDTO> mblist = mbDAO.getList(groupID); //해당 그룹의 멤버�
 	</div>
 </section>
 <script>
-
+$(document).ready(function() {
+	history.replaceState({}, null, location.pathname);  
+});
 </script>
 </body>
 </html>

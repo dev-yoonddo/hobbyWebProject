@@ -265,6 +265,7 @@ border-bottom: solid 1px #E0E0E0;
 </footer>
 <script>
 $(document).ready(function(){
+	history.replaceState({}, null, location.pathname);  
 	$('.board-row').hide();
     $('.board-row').slice(0, 10).show(); // 초기갯수
     $("#more-btn").click(function(e){ // 클릭시 more

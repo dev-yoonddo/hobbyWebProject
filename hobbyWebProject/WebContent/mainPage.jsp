@@ -75,7 +75,7 @@ if(session.getAttribute("userID") != null){
 
 <!-- section -->
 <section>
-	
+
 <div class="main">
 	<div class="main-text">
 		<div id="m1">

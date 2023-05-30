@@ -221,6 +221,9 @@ $(function(){
     });
 });
 
-
+//url 뒤 파라미터 안보이게하기
+$(document).ready(function() {
+	history.replaceState({}, null, location.pathname);  
+});
 });
 })(jQuery);
