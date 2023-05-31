@@ -1,4 +1,5 @@
 # 취미는 하고싶은데 혼자는 싫을 때 TOGETHER 🏌️‍♂️🏊‍♂️🏋️‍♀️🚴‍♀️
+
 프론트엔드, 백엔드를 혼자 맡아 제작한 개인 프로젝트입니다. 
 
 ✔팀 구성 : 1 명<br>
@@ -151,8 +152,14 @@
 <img src="https://user-images.githubusercontent.com/84071666/235858719-90f32f29-9f4b-406a-a47a-f46fb127c388.PNG" width="49%">
 <img src="https://user-images.githubusercontent.com/84071666/235858731-632754f5-3a23-4e32-a8d2-46941849ad1c.PNG" width="49%">
 </div>
+
 <br><br>
 
+### ⚙ 3 ) 비밀번호 SHA-256 암호화
+
+<br>
+
+![pwEncrypt](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/136579d2-ae9e-41de-8edd-e983c155b6e3)
 ---
 
 <br><br>
