@@ -53,3 +53,14 @@ function passwordCheck2() {
 		$('#passwordCheckMessage').html('');
 	}
 }
+
+//비밀번호 암호화
+function loginRSA(pw){
+	// rsa 암호화	
+	var rsa = new RSAKey();
+	rsa.setPublic($('#RSAModulus').val(),$('#RSAExponent').val());
+	    
+	$("#userPassword").val(rsa.encrypt(pw));
+	    
+    return true;
+}

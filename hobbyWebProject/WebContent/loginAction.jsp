@@ -1,3 +1,4 @@
+<%@page import="user.pwEncrypt"%>
 <%@page import="java.io.PrintWriter"%>
 <%@page import="user.UserDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" errorPage="/error/errorPage.jsp"%>
@@ -5,6 +6,7 @@
 <jsp:useBean id="user" class="user.UserDTO" scope="page"/>
 <jsp:setProperty name="user" property="userID" />
 <jsp:setProperty name="user" property="userPassword" />
+<
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,7 +28,7 @@
 			script.println("</script>");
 		}
 		UserDAO userDAO = new UserDAO();
-		int result = userDAO.login(user.getUserID(), user.getUserPassword(), user.getUserAvailable());
+		int result = userDAO.login(user.getUserID(), pwEncrypt.encoding(user.getUserPassword()), user.getUserAvailable());
 		if(result == 2){
 			PrintWriter script = response.getWriter();
 			script.println("<script>");

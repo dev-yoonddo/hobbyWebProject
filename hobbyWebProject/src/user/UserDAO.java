@@ -81,7 +81,7 @@ public class UserDAO {
 			pstmt.setString(2, user.getUserName());
 			pstmt.setString(3, user.getUserBirth());
 			pstmt.setString(4, user.getUserPhone());
-			pstmt.setString(5, user.getUserPassword());
+			pstmt.setString(5, pwEncrypt.encoding(user.getUserPassword()));
 			pstmt.setInt(6, 1);
 			return pstmt.executeUpdate();
 		} catch (Exception e) {

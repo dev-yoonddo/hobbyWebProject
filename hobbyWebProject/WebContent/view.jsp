@@ -273,9 +273,9 @@ HeartDTO heartvo = new HeartDAO().getHeartVO(boardID);
 						        <i id="heart1" class="fa-regular fa-heart" onclick="location.href='heartAction.jsp?boardID=<%=boardID%>'"></i>&nbsp;<%= board.getHeartCount()%>
 						<%
 						    }
-						} else {
+						} else { //userID == null이면 id=noUser로 변경해 클릭했을때 로그인팝업을 생성하도록 한다.
 						%>
-						    <i id="noUser" class="fa-regular fa-heart"></i>&nbsp;<%= board.getHeartCount()%>
+						    <i id="noUser" class="fa-regular fa-heart"></i>&nbsp;<%= board.getHeartCount()%> 
 						<%
 						}
 						%>
@@ -416,10 +416,6 @@ function cmtAction(){
 	document.getElementById('cmt-write').style.display = 'block';
 	document.getElementById('cmt-write-btn').style.display = 'none';
 }
-
-$(document).ready(function() {
-	history.replaceState({}, null, location.pathname);  
-});
 </script>
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>	

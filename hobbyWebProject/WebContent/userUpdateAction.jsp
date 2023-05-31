@@ -1,3 +1,4 @@
+<%@page import="user.pwEncrypt"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" errorPage="/error/errorPage.jsp"%>
 <%@ page import="user.UserDTO" %>
@@ -35,7 +36,7 @@
 		script.println("</script>");
 			}else{
 		UserDAO userDAO=new UserDAO();//하나의 인스턴스
-		int result=userDAO.update(userID,request.getParameter("userName"),request.getParameter("userBirth"),request.getParameter("userPhone"),request.getParameter("userPassword"));
+		int result=userDAO.update(userID,request.getParameter("userName"),request.getParameter("userBirth"),request.getParameter("userPhone"),pwEncrypt.encoding(request.getParameter("userPassword")));
 		if(result == -1){//데이터 베이스 오류가 날 때
 			PrintWriter script=response.getWriter();
 			script.println("<script>");

@@ -21,6 +21,10 @@
 <script src="https://kit.fontawesome.com/f95555e5d8.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 
+<script type="text/javascript" src="/js/rsa2/rsa.js"></script>
+<script type="text/javascript" src="/js/rsa2//jsbn.js"></script>
+<script type="text/javascript" src="/js/rsa2/rsa2js/prng4.js"></script>
+<script type="text/javascript" src="/js/rsa2/rsa2js/rng.js"></script>
 </head>
 
 <style>
@@ -82,6 +86,10 @@ if(session.getAttribute("userID") != null){
 <section>
  <div class="join-wrapper">
  	<div>
+ 	<!-- 서버에서 전달받은 공개키를 hidden에 설정한다.  -->
+	<input type="hidden" id="rsaPublicKeyModulus" value="${publicKeyModulus}" />
+	<input type="hidden" id="rsaPublicKeyExponent" value="${publicKeyExponent}" />
+	
         <h2>회원가입<h2>
         <form method="post" action="joinAction.jsp" id="join-form" onsubmit="return passwordCheck(this)">
             <input type="text" name="userID" id="userID" placeholder="아이디 입력">
@@ -95,6 +103,11 @@ if(session.getAttribute("userID") != null){
 			</div>
             <input type="submit" value="join">
         </form>
+        
+        <form id="frm" name="frm" method="post" action="/login">
+			<input type="hidden" name="securedUser_Id" id="securedUser_Id"value="" />
+			<input type="hidden" name="securedUser_Pwd" id="securedUser_Pwd" value="" />
+		</form>
     </div>
 
 </div>
