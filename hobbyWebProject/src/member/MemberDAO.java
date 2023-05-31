@@ -224,7 +224,7 @@ public class MemberDAO {
 		            int mbAvailable = rs.getInt("mbAvailable");
 		            //여기서 다른 속성도 가져올 수 있다.
 
-		            // BoardVO 객체 생성하고 가져온 속성을 BoardVO 객체에 저장한다.
+		            // memberDTO 객체 생성하고 가져온 속성을 객체에 저장한다.
 		            MemberDTO memberDTO = new MemberDTO();
 		            memberDTO.setMemberID(memberID); 
 		            memberDTO.setMbAvailable(mbAvailable);
