@@ -117,7 +117,7 @@ if(session.getAttribute("userID") != null){
 	        <div class="details">
 	          <h2>SPORTS</h2>
 	            <div class="info-item">
-	             <h2>인원 모집중</h2>
+	             <h2>함께 하러가기</h2>
 	            </div>
 	        	<form method="post" action="searchPage.jsp">
 			      <input type="hidden" name="searchField2" value="SPORTS">
@@ -132,7 +132,7 @@ if(session.getAttribute("userID") != null){
 	        <div class="details">
 	          <h2>LEISURE SPORTS</h2>
 	            <div class="info-item">
-	              <h2>인원 모집중</h2>
+	              <h2>함께 하러가기</h2>
 	            </div>           
 		        <form method="post" action="searchPage.jsp">
 			      <input type="hidden" name="searchField2" value="LEISURE">
@@ -145,9 +145,9 @@ if(session.getAttribute("userID") != null){
 	      <div class="slide">
 	        <img src="./image/music.png">
 	        <div class="details">
-	          <h2>ART & MUSIC</h2>
+	          <h2>MUSIC</h2>
 	            <div class="info-item">
-	              <h2>인원 모집중</h2>
+	              <h2>함께 하러가기</h2>
 	            </div>
 	          	<form method="post" action="searchPage.jsp">
 			      <input type="hidden" name="searchField2" value="ART&MUSIC">
@@ -162,7 +162,7 @@ if(session.getAttribute("userID") != null){
 	        <div class="details">
 	          <h2>OTHER</h2>
 	            <div class="info-item">
-	              <h2>찾아보기</h2>
+	              <h2>함께 하러가기</h2>
 	            </div>
 	            <form method="post" action="searchPage.jsp">
 			      <input type="hidden" name="searchField2" value="OTHER">
