@@ -65,7 +65,7 @@
                 PrintWriter script = response.getWriter();
                 script.println("<script>");
                 script.println("alert('댓글이 작성되었습니다.')");
-                script.println("location.href=document.referrer;");
+                script.println("location.href='view.jsp?boardID="+boardID+"'");
                 script.println("</script>");
              }
 	 	}

@@ -655,12 +655,13 @@ $(document).ready(function(){
 	//내가 작성한 게시글 더보기
 	var viewCount = 5; // 클릭할 때 마다 보여질 갯수
 	var lastIndex = viewCount - 1; //보여질 글의 마지막 인덱스
+	var rows = $('.showWrite').length; //전체 글 갯수
 	$('.showWrite').slice(viewCount).hide(); // 처음 viewCount개의 글을 제외하고 모두 숨기기
 
 	$("#more-btn").click(function(e){ //more-btn을 클릭했을때
 	    e.preventDefault();
-	    if($('.showWrite:hidden').length <= lastIndex + 1){ //만약 전체 글의 갯수보다 lastIndex가 크거나 같다면
-	        alert("마지막 글입니다"); //알림창 띄우기
+	    if(rows <= lastIndex + 1){ //만약 전체 글의 수가 lastIndex +1 한 값보다 작거나 같으면
+	        alert("마지막 글입니다"); //마지막 글이라는 알림창 띄우기
 		    return; //return을 하지않으면 알림창을 띄우고 또 다음으로 실행된다.
 	    
 	    }
@@ -672,12 +673,12 @@ $(document).ready(function(){
 	//내가 작성한 댓글 더보기 viewCount lastIndex는 이미 위에서 선언함
     var viewCount2 = 5;
 	var lastIndex2 = viewCount2 - 1;
-	var hiddenRows2 = $('.showCmt:hidden');
+	var rows2 = $('.showCmt').length;
 	$('.showCmt').slice(viewCount2).hide(); 
 
 	$("#more-btn-2").click(function(e){ 
 	    e.preventDefault();
-	    if($('.showCmt').length <= lastIndex2){ 
+	    if(rows2 <= lastIndex2 + 1){ 
 	        alert("마지막 댓글입니다");
 	        return;
 	    }
@@ -689,12 +690,12 @@ $(document).ready(function(){
 	//내가 생성한 그룹 더보기
 	var viewCount3 = 5;
 	var lastIndex3 = viewCount3 - 1;
-    var hiddenRows3 = $('.showGroup:hidden');
+	var rows3 = $('.showGroup').length;
 	$('.showGroup').slice(viewCount3).hide();
 
 	$("#more-btn-3").click(function(e){ 
 	    e.preventDefault();
-	    if($('.showGroup').length <= lastIndex3){ 
+	    if(rows3 <= lastIndex3 + 1){ 
 	        alert("마지막 그룹입니다");
 	        return;
 	    }
@@ -706,12 +707,12 @@ $(document).ready(function(){
 	//내가 가입한 그룹 더보기
 	var viewCount4 = 5;
 	var lastIndex4 = viewCount4 - 1;
-    var hiddenRows4 = $('.showMember:hidden'); 
+	var rows4 = $('.showMember').length;
 	$('.showMember').slice(viewCount4).hide();
 
 	$("#more-btn-4").click(function(e){ 
 	    e.preventDefault();
-	    if($('.showMember').length <= lastIndex4){ 
+	    if(rows4 <= lastIndex4 + 1){ 
 	        alert("마지막 그룹입니다"); 
 	        return;
 	    }
