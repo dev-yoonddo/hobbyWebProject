@@ -341,7 +341,7 @@ background-color: #E0EBFF;
 	</div>
 	
 	<!-- 데이터 관리하기 -->
-	<div id="userSet">
+	<div id="userSet" hidden="">
 		<div>
 			<h2>데이터 관리하기</h2>
 			<%
@@ -618,7 +618,6 @@ for (var i = 0; i < optionList.length; i++) {
 $(document).ready(function(){
 	//메뉴 클릭할때마다 보이고 숨기기
 	$('#userInfo').show();
-	$('#userSet').hide();
 
 	$('#menu1').on('click', function(){
 	    $('#userInfo').show();
