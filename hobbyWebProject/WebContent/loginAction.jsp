@@ -28,6 +28,7 @@
 			script.println("</script>");
 		}
 		UserDAO userDAO = new UserDAO();
+		//로그인시 입력한 패스워드를 암호화 한 뒤 데이터베이스 값과 비교한다.  
 		int result = userDAO.login(user.getUserID(), pwEncrypt.encoding(user.getUserPassword()), user.getUserAvailable());
 		if(result == 2){
 			PrintWriter script = response.getWriter();

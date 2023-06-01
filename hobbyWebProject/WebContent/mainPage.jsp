@@ -150,7 +150,7 @@ if(session.getAttribute("userID") != null){
 	              <h2>함께 하러가기</h2>
 	            </div>
 	          	<form method="post" action="searchPage.jsp">
-			      <input type="hidden" name="searchField2" value="ART&MUSIC">
+			      <input type="hidden" name="searchField2" value="MUSIC">
 			      <div class="btn"><button type="submit">TOGETHER</button></div>
 			    </form>
 	        </div>
