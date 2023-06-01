@@ -210,7 +210,7 @@ public class MemberDAO {
 		}
 		
 		//UserDAO - delete에서 사용되는 메서드
-		//delete된 userID와 board의 userID가 같은 값의 리스트를 가져온다.
+		//delete된 userID와 member의 userID가 같은 값의 리스트를 가져온다.
 		public List<MemberDTO> getDelMemberVOByUserID(String userID) {
 		    List<MemberDTO> memberDTOs = new ArrayList<>();
 		    String SQL = "SELECT memberID, mbAvailable FROM member WHERE userID = ?";//userID가 작성한 board의 boardID와 boardAvailable의 값을 가져온다.
@@ -224,12 +224,12 @@ public class MemberDAO {
 		            int mbAvailable = rs.getInt("mbAvailable");
 		            //여기서 다른 속성도 가져올 수 있다.
 
-		            // BoardVO 객체 생성하고 가져온 속성을 BoardVO 객체에 저장한다.
+		            // memberDTO 객체 생성하고 가져온 속성을 객체에 저장한다.
 		            MemberDTO memberDTO = new MemberDTO();
 		            memberDTO.setMemberID(memberID); 
 		            memberDTO.setMbAvailable(mbAvailable);
 
-		            // boardVOs list에 boardVO object 추가
+		            // memberDTOs list에 memberDTO object 추가
 		            memberDTOs.add(memberDTO);
 		        }
 		        rs.close();
