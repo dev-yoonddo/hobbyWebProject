@@ -10,7 +10,6 @@ import java.util.List;
 
 import member.MemberDTO;
 
-jjjjjaaaaaaaaa
 
 public class GroupDAO {
 	private Connection conn;
