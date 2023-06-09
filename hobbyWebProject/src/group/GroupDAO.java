@@ -11,7 +11,6 @@ import java.util.List;
 import member.MemberDTO;
 
 
-
 public class GroupDAO {
 	private Connection conn;
 	private ResultSet rs;

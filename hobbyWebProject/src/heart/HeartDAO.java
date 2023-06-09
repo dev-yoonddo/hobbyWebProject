@@ -37,7 +37,7 @@ public class HeartDAO {
       } catch(Exception e) {
          e.printStackTrace();
       }
-   return -1;//추천 중복 오류
+   return -1;//데이터베이스 오류
  }
 
    public HeartDTO getHeartVO(int boardID) {

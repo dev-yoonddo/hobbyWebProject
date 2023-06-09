@@ -155,8 +155,8 @@ public class MemberDAO {
 			}
 			return null;
 		}
-		/*//그룹 탈퇴하기 (1. 데이터 삭제)
-		public int delete(String memberID) {
+		//그룹 탈퇴하기 (1. 데이터 삭제)
+		public int drop(String memberID) {
 			String SQL = "DELETE FROM member WHERE memberID = ?";
 			try {
 				PreparedStatement pstmt = conn.prepareStatement(SQL);
@@ -166,7 +166,7 @@ public class MemberDAO {
 				e.printStackTrace();
 			}
 			return -1; // 데이터베이스 오류
-		}*/
+		}
 		//그룹 탈퇴하기 (2. mbAvailable = 0 으로 업데이트)
 		public int delete(String memberID) {
 			String SQL = "UPDATE member SET mbAvailable = 0 WHERE memberID = ? ";
