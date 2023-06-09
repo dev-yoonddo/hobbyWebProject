@@ -82,7 +82,7 @@ if(groupID == 0){
 	script.println("location.href = 'groupPage.jsp'");
 	script.println("</script>");
 }
-//groupPage에서 이미 가입,접속에 대한 처리를 했지만 실행 도중 로그아웃과같은 데이터 변경을 대비해 view 페이지에도 코드를 작성했다.
+//groupPage에서 이미 가입,접속에 대한 처리를 했지만 실행 도중 자동 로그아웃과같은 상황을 대비해 view 페이지에도 코드를 작성했다.
 //int userAccess = Integer.parseInt(request.getParameter("userAccess"));
 MemberDAO mbDAO = new MemberDAO();
 GroupDTO group = new GroupDAO().getGroupVO(groupID); //하나의 그룹 정보 가져오기
