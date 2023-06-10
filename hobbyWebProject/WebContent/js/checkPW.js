@@ -43,6 +43,7 @@ function passwordCheck(obj) {
 	}
 
 	return true;
+
 }
 function passwordCheck2() {
 	var userPassword = $('#userPassword').val();

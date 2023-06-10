@@ -7,10 +7,13 @@
 <title>Login</title>
 <link rel="icon" href="image/logo.png">
 <link rel="stylesheet" href="css/member.css?after">
+<script src="option/jquery/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="js/script.js"></script>
 </head>
 <style>
 .login-wrapper{
-	margin: 35px;
+	margin: 30px;
 	margin-top: 70px;
 	margin-bottom: 0;
 	height: 400px;
@@ -46,5 +49,13 @@
 
 </body>
 <script>
+$(function(){
+	  $('#goJoin').on('click',function(){
+	      self.close();
+	      window.reload();
+	      location.href='join.jsp';
+	    });
+
+	});
 </script>
 </html>

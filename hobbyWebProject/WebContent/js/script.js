@@ -6,15 +6,20 @@ $(function(){
   $('#go-group-1').on('click',function(){
     var login = confirm('로그인이 필요합니다');
     if (login) {
-      window.open("loginPopUp.jsp", "Login", "width=450, height=500, top=50%, left=50%") ;
+      window.open("loginPopUp.jsp", "Login", "width=450, height=500, top=50%, left=50%");
     }
     else {
     }
     });
 });
+
+//loginPopUp 페이지에서 회원가입을 클릭했을때
+
+
+// 그룹 생성하기를 클릭했을때
 $(function(){
   $('#create-group').on('click',function(){
-      window.open("groupPopup.jsp", "Login", "width=450, height=500, top=50%, left=50%") ;
+      window.open("groupPopup.jsp", "Login", "width=450, height=500, top=50%, left=50%");
     });
 });
 // $(function(){

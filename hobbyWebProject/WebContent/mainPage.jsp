@@ -202,7 +202,7 @@ if(session.getAttribute("userID") != null){
 <!-- footer -->
 <script>
 	opener.location.reload(); //부모창 리프레쉬
-    self.close(); //로그인 후 팝업창이
+    self.close(); //로그인 후 팝업창이 닫힌다.
 </script>
 </body>
 </html>

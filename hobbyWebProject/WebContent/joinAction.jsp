@@ -15,6 +15,9 @@
 <head>
 <meta charset="UTF-8">
 <title>JSP 게시판 웹 사이트</title>
+<script src="option/jquery/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="js/script.js"></script>
 </head>
 <body>
 	<%
@@ -48,16 +51,17 @@
 				script.println("</script>");
 			}
 			else {
-				
 				PrintWriter script = response.getWriter();
 				script.println("<script>");
-				script.println("alert('회원가입이 완료되었습니다.')");
-				script.println("location.href = 'login.jsp'");
+				script.println("alert('회원가입이 완료되었습니다.')");	
+				script.println("location.href = 'mainPage.jsp'");
 				script.println("</script>");
 			}
 			
 		}
-		
 	%>
 </body>
+<script>
+
+</script>
 </html>
