@@ -41,7 +41,7 @@
 		    </label>
 		    <input type="submit" value="Login">
 		</form>
-			<div id="goJoin" onclick="location.href='join.jsp'">
+			<div id="goJoin">
 				<h4>아직 회원이 아니신가요?</h4>
 			</div>
 	   </div>
@@ -49,11 +49,11 @@
 
 </body>
 <script>
+//아직 회원이 아니신가요? 를 클릭하면 팝업창을 닫고 회원가입 페이지로 이동한다.
 $(function(){
 	  $('#goJoin').on('click',function(){
 	      self.close();
-	      window.reload();
-	      location.href='join.jsp';
+	      opener.location.href='join.jsp';
 	    });
 
 	});
