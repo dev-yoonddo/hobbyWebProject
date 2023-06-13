@@ -380,6 +380,7 @@ function joinGroup(groupID, groupAvailable, mbNum, grNum, member,memberDel) {
 //접속하기 버튼을 클릭하면 id,password,available value, member, leader를 받는다
 function showPasswordPrompt(grID, grPassword, grAvailable, member, leader) {
     var inputPassword = "";
+    var pwCount = 0;
 	//그룹 생성자이면 비밀번호 입력 없이 접속
 	if(leader == "true"){
 		location.href = "groupView.jsp?groupID=" + grID;
@@ -394,7 +395,12 @@ function showPasswordPrompt(grID, grPassword, grAvailable, member, leader) {
 	    	}else{
 	    		//비밀번호가 일치하지 않으면 입력창 무한반복
 			    while (inputPassword != grPassword) {
-			        inputPassword = prompt("비밀번호를 입력하세요");
+			        pwCount++;
+			    	inputPassword = prompt("비밀번호를 입력하세요");
+			        if(pwCount > 5){
+			        	alert("비밀번호 5회 오류입니다");
+			        	break;
+			        }
 			        if(inputPassword == null){ //null은 취소버튼을 눌렀을 때를 의미한다. 아무것도 입력하지 않고 확인을 누르면 ""이다.
 			        	break;
 			        }
@@ -412,7 +418,7 @@ function showPasswordPrompt(grID, grPassword, grAvailable, member, leader) {
     
     /* 다른 while
     while(true) {
-        inputPassword = prompt("Enter group password:");
+        inputPassword = prompt("비밀번호를 입력하세요");
 	    if (inputPassword == grPassword) {
 	        location.href = "groupView.jsp?groupID=" + grID;
 	        break;
