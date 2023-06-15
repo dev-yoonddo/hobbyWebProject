@@ -52,7 +52,9 @@ h2{
 	width: 100px;
 	height: 50px;
 } 
-
+#btn-msg{
+	width: 120px;
+}
 </style>
 <body>
 <%
@@ -129,7 +131,7 @@ ArrayList<MemberDTO> mblist = mbDAO.getList(groupID); //해당 그룹의 멤버�
 			</div>
 			<ul class="navbar_menu" style="float: left;">
 				<li><a href="community.jsp" class ="menu">COMMUNITY</a></li>
-				<li><a class="menu" onclick="history.back()">GROUP</a></li>
+				<li><a class="menu" onclick="location.href='groupPage.jsp'">GROUP</a></li>
 			</ul>
 		</nav>
 			<ul class="navbar_login" >
@@ -162,15 +164,18 @@ ArrayList<MemberDTO> mblist = mbDAO.getList(groupID); //해당 그룹의 멤버�
 				<div id="title-text" style="width: 8500px; font-size: 25pt;">
 				<span><%= group.getGroupName() %> 에서 함께 취미를 즐겨보세요 </span>
 				</div>
-				<div id="del-btn" style="">
-				<!-- 그룹을 만든 userID일때는 그룹 삭제 버튼 생성 -->
-				<% if(userID.equals(group.getUserID())){ %>
-				<button type="button" class="btn-blue" id="btn-del" onclick="if(confirm('정말로 삭제하시겠습니까?')){location.href='groupDeleteAction.jsp?groupID=<%=groupID%>'}"><span>그룹삭제</span></button>
-				<%}else{ %>
-			
-				<!-- 그룹에 가입한 userID일때는 그룹 탈퇴 버튼 생성하고 memberID넘기기 -->
-				<button type="button" class="btn-blue" id="btn-del" onclick="if(confirm('탈퇴 후 재가입이 불가합니다.\n정말로 탈퇴하시겠습니까?')){location.href='memberDeleteAction.jsp?groupID=<%=groupID%>&memberID=<%=member.getMemberID()%>'}"><span>그룹탈퇴</span></button>
-				<%} %>
+				
+				<div id="del-btn" style="display: flex;">
+					<!-- 그룹을 만든 userID일때는 메세지확인, 그룹삭제 버튼 생성 -->
+					<% if(userID.equals(group.getUserID())){ %>
+						<button type="button" class="btn-blue" id="btn-msg" onclick="window.open('viewMsgPopUp.jsp')"><span>메세지확인</span></button>
+						<button type="button" class="btn-blue" id="btn-del" onclick="if(confirm('정말로 삭제하시겠습니까?')){location.href='groupDeleteAction.jsp?groupID=<%=groupID%>'}"><span>그룹삭제</span></button>
+					
+					<!-- 그룹에 가입한 userID일때는 메세지전송, 그룹탈퇴 버튼 생성하고 정보 넘기기 -->
+					<%}else{ %>
+						<button type="button" class="btn-blue" id="btn-msg" onclick="sendMSG('<%= group.getGroupID()%>')"><span>메세지전송</span></button>							
+						<button type="button" class="btn-blue" id="btn-del" onclick="if(confirm('탈퇴 후 재가입이 불가합니다.\n정말로 탈퇴하시겠습니까?')){location.href='memberDeleteAction.jsp?groupID=<%=groupID%>&memberID=<%=member.getMemberID()%>'}"><span>그룹탈퇴</span></button>
+					<%} %>
 				</div>
 			</div>
 			<hr style="width: 100%; height: 2px; background-color: black;"><br>
@@ -199,9 +204,15 @@ ArrayList<MemberDTO> mblist = mbDAO.getList(groupID); //해당 그룹의 멤버�
 	</div>
 </section>
 <script>
-$(document).ready(function() {
-	history.replaceState({}, null, location.pathname);  
-});
+//메시지전송을 클릭하면 그룹이름과 그룹생성자(메시지수신자) 정보를 받는다.
+function sendMSG(groupID) {
+   	//팝업창을 열때 groupID값을 넘겨준다.
+   	window.open("sendMsgPopUp.jsp?groupID=" + groupID , "Join", "width=450, height=450, top=50%, left=50%") ;
+}
+</script>
+<script>
+opener.location.reload(); //부모창 리프레쉬
+self.close(); // 팝업 창 닫기
 </script>
 </body>
 </html>

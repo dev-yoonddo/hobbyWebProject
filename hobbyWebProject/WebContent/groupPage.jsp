@@ -276,6 +276,7 @@ if(userID==null) {
 						
 						//해당 그룹을 만든 유저 정보 가져오기
 						GroupDTO groupuser = new GroupDAO().getGroupVO(groupID);
+						//그룹을 생성한 유저인지 확인하기
 						boolean leader = userID.equals(groupuser.getUserID());
 						
 						//해당 그룹에 유저가 이미 가입했는지 확인
@@ -380,7 +381,6 @@ function joinGroup(groupID, groupAvailable, mbNum, grNum, member,memberDel) {
 //접속하기 버튼을 클릭하면 id,password,available value, member, leader를 받는다
 function showPasswordPrompt(grID, grPassword, grAvailable, member, leader) {
     var inputPassword = "";
-    var pwCount = 0;
 	//그룹 생성자이면 비밀번호 입력 없이 접속
 	if(leader == "true"){
 		location.href = "groupView.jsp?groupID=" + grID;
@@ -395,12 +395,7 @@ function showPasswordPrompt(grID, grPassword, grAvailable, member, leader) {
 	    	}else{
 	    		//비밀번호가 일치하지 않으면 입력창 무한반복
 			    while (inputPassword != grPassword) {
-			        pwCount++;
-			    	inputPassword = prompt("비밀번호를 입력하세요");
-			        if(pwCount > 5){
-			        	alert("비밀번호 5회 오류입니다");
-			        	break;
-			        }
+			        inputPassword = prompt("비밀번호를 입력하세요");
 			        if(inputPassword == null){ //null은 취소버튼을 눌렀을 때를 의미한다. 아무것도 입력하지 않고 확인을 누르면 ""이다.
 			        	break;
 			        }
@@ -418,7 +413,7 @@ function showPasswordPrompt(grID, grPassword, grAvailable, member, leader) {
     
     /* 다른 while
     while(true) {
-        inputPassword = prompt("비밀번호를 입력하세요");
+        inputPassword = prompt("Enter group password:");
 	    if (inputPassword == grPassword) {
 	        location.href = "groupView.jsp?groupID=" + grID;
 	        break;
