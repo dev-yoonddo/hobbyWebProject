@@ -3,6 +3,8 @@
     pageEncoding="UTF-8"%>
 <%@page import="group.GroupDAO"%>
 <%@page import="group.GroupDTO"%>
+<%@page import="message.MessageDAO"%>
+<%@page import="message.MessageDTO"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -70,21 +72,35 @@ if(session.getAttribute("userID") != null){
 	userID = (String)session.getAttribute("userID");
 }
 
-//groupID 가져오기
+GroupDAO groupDAO = new GroupDAO();
+MessageDAO msgDAO = new MessageDAO();
+int msgID = 0;
 int groupID = 0;
+//groupView 페이지에서 groupID를 넘겨받았다면 넘겨받은 groupID를 저장하고 groupID = 0이면 답장하기 버튼을 클릭해 msgID를 넘겨받은 것이기 때문에 msgID를 저장한다.
 if(request.getParameter("groupID") != null){
 	groupID = Integer.parseInt(request.getParameter("groupID"));
 }
-GroupDAO groupDAO = new GroupDAO();
-String leaderID = groupDAO.getGroupVO(groupID).getUserID();
+if(request.getParameter("msgID") != null){
+	msgID = Integer.parseInt(request.getParameter("msgID"));
+}
 %>
 <div id="sendMsg">
-    <h2>To. <%=leaderID%><h2>
+	<!-- 메시지전송 버튼을 눌렀을때와 답장하기 버튼을 눌렀을때 가져온 값이 다르기때문에 따로 설정해준다. -->
+	<% if(msgID == 0){ %>
+    <h2>To. <%=groupDAO.getGroupVO(groupID).getUserID()%><h2>
     <form method="post" action="sendMsgAction.jsp?groupID=<%= groupID %>" id="send-form">
         <input type="text" placeholder="제목을 입력하세요" name="msgTitle" id="msgTitle" maxlength="20">
         <input type="text" placeholder="내용을 입력하세요" name="msgContent" id="msgContent" class="intro" maxlength="200">
-        <button type="submit" class="btn-blue" id="sb"><span>전송</span></button>
+        <button type="submit" class="btn-blue" id="sb"><span>메시지 전송</span></button>
     </form>
+    <%}else{ %>
+    <h2>To. <%=msgDAO.getMsgVO(msgID).getUserID()%><h2>
+    <form method="post" action="sendMsgAction.jsp?msgID=<%= msgID %>&groupID=<%=groupID%>" id="send-form">
+        <input type="text" placeholder="제목을 입력하세요" name="msgTitle" id="msgTitle" maxlength="20">
+        <input type="text" placeholder="내용을 입력하세요" name="msgContent" id="msgContent" class="intro" maxlength="200">
+        <button type="submit" class="btn-blue" id="sb"><span>답장 전송</span></button>
+    </form>
+    <%} %>
 </div>
 </body>
 </html>

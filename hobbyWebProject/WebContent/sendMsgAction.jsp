@@ -36,41 +36,58 @@
 			script.println("window.close()");
 			script.println("</script>");
 		}else{
+			GroupDAO groupDAO = new GroupDAO();
+			MessageDAO msgDAO = new MessageDAO();
+			
 			int groupID = 0; 
-		 	if (request.getParameter("groupID") != null){
-		 		groupID = Integer.parseInt(request.getParameter("groupID"));
-		 	}
-		 	if (groupID == 0){
-		 		PrintWriter script = response.getWriter();
-		 		script.println("<script>");
-		 		script.println("alert('유효하지 않은 그룹입니다.')");
-		 		script.println("history.back()");
-		 		script.println("</script>");
-		 	}
+			int msgID = 0;
+			if(request.getParameter("groupID") != null){
+				groupID = Integer.parseInt(request.getParameter("groupID"));
+			}
+			if(request.getParameter("msgID") != null){
+				msgID = Integer.parseInt(request.getParameter("msgID"));
+			}
+			//유저가 그룹생성자에게 메시지를 보낼땐 groupID를 가져오고 그룹생성자가 유저에게 답장할땐 msgID를 가져온다.
+			//따라서 각각 send()메서드에 넘겨주는 값이 다르고 전송 완료 후 이동하는 페이지도 다르게 만든다.
+			if(msgID == 0){
+				int result = msgDAO.send(userID, groupDAO.getGroupVO(groupID).getUserID(), groupID, message.getMsgTitle(), message.getMsgContent());
+				if(result == -1){ //데이터베이스 오류
+					PrintWriter script = response.getWriter();
+					script.println("<script>");
+					script.println("alert('데이터베이스 오류')");
+					script.println("history.back()");
+					script.println("</script>");
+				}
+				else {
+					PrintWriter script = response.getWriter();
+					script.println("<script>");
+					script.println("alert('메시지 전송이 완료되었습니다.')");
+					script.println("location.href = 'groupView.jsp?groupID=" + groupID +"'");
+					script.println("</script>");
+				}
+			}else{		
+				int result = msgDAO.send(userID, msgDAO.getMsgVO(msgID).getUserID(), groupID, message.getMsgTitle(), message.getMsgContent());
+				if(result == -1){ //데이터베이스 오류
+					PrintWriter script = response.getWriter();
+					script.println("<script>");
+					script.println("alert('데이터베이스 오류')");
+					script.println("history.back()");
+					script.println("</script>");
+				}
+				else {
+					PrintWriter script = response.getWriter();
+					script.println("<script>");
+					script.println("alert('메시지 전송이 완료되었습니다.')");
+					script.println("window.open('viewMsgListPopUp.jsp?groupID=" + groupID + "','MESSAGE', 'width=450, height=450, top=50%, left=50%')");
+					script.println("self.close()");
+					script.println("</script>");
+				}
+			}
 			if(message.getMsgTitle() == null || message.getMsgContent() == null) {
 				PrintWriter script = response.getWriter();
 				script.println("<script>");
 				script.println("alert('입력이 안된 사항이 있습니다.')");
 				script.println("history.back()");
-				script.println("</script>");
-			}
-			GroupDAO groupDAO = new GroupDAO();
-			MessageDAO msgDAO = new MessageDAO();
-			
-			int result = msgDAO.send(userID, groupDAO.getGroupVO(groupID).getUserID(), message.getMsgTitle(), message.getMsgContent());
-			if(result == -1){ //데이터베이스 오류
-				PrintWriter script = response.getWriter();
-				script.println("<script>");
-				script.println("alert('데이터베이스 오류')");
-				script.println("history.back()");
-				script.println("</script>");
-			}
-			else {
-				//가입시 비밀번호 알려주기
-				PrintWriter script = response.getWriter();
-				script.println("<script>");
-				script.println("alert('메시지 전송이 완료되었습니다.')");
-				script.println("location.href = 'groupPage.jsp'");
 				script.println("</script>");
 			}
 					

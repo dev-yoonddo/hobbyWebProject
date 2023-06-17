@@ -40,74 +40,74 @@ section{
 	height: 1000px;
 }
 .menu-bar{
-width: auto;
-height: auto;
-top: 150px;
-font-size: 15pt;
+	width: auto;
+	height: auto;
+	top: 150px;
+	font-size: 15pt;
 }
 #menu1{
-width: 200px;
-  height: 50px;
-left: -150px;
-  top: 150px;
-  background-color: #E0EBFF;
-  transition: left 1s;
-  position: fixed;
-display: flex;
- justify-content: center;
- align-items: center;
- cursor: pointer;
+	width: 200px;
+  	height: 50px;
+	left: -150px;
+	top: 150px;
+	background-color: #E0EBFF;
+	transition: left 1s;
+	position: fixed;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
 }
 #menu2{
 	width: 200px;
-  height: 50px;
-left: -150px;
-  top: 210px;
-  background-color: #E0EBFF;
-  transition: left 1s; 
-  position: fixed;
-  display: flex;
- justify-content: center;
-  align-items: center;
-  cursor: pointer;
+	height: 50px;
+	left: -150px;
+  	top: 210px;
+  	background-color: #E0EBFF;
+  	transition: left 1s; 
+  	position: fixed;
+  	display: flex;
+ 	justify-content: center;
+  	align-items: center;
+  	cursor: pointer;
  
 }
 #menu1:hover , #menu2:hover{
- left: 0;
-  transition: left 1s;
+ 	left: 0;
+  	transition: left 1s;
 }
 
 #menu1 > ul , #menu2 > ul{
-position: relative;
-  float: right;
-  list-style-type: none;
-  display: flex;
-align-items: center;
+	position: relative;
+  	float: right;
+  	list-style-type: none;
+  	display: flex;
+	align-items: center;
 }
 
 #menu1 > li , #menu2 > li{
-width: auto;
-height: auto;
-margin: 0 auto;
-float: right;
+	width: auto;
+	height: auto;
+	margin: 0 auto;
+	float: right;
 }
 .i{
-font-size: 20pt;
-margin-left: 20px;
-margin-top: 5px;
+	font-size: 20pt;
+	margin-left: 20px;
+	margin-top: 5px;
 
 }
 #more-btn{
-cursor: pointer;
+	cursor: pointer;
 }
 td{
-table-layout: fixed;
-height: 20px;
-border-bottom: solid 1px #C0C0C0;
-text-align: left;
+	table-layout: fixed;
+	height: 20px;
+	border-bottom: solid 1px #C0C0C0;
+	text-align: left;
 }
 #click-view:hover{
-text-decoration: underline;
+	text-decoration: underline;
 }
 .btn-blue{
 	width: 45px;
@@ -138,10 +138,10 @@ h3{
 }
 
 table{
-font-size: 10pt; 
-color: black; 
-width: 450px; 
-text-align: left; 
+	font-size: 10pt; 
+	color: black; 
+	width: 450px; 
+	text-align: left; 
 }
 tr{
 	align-items: center;
@@ -156,22 +156,22 @@ tr{
 
 /* select box */
 .select {
-  position: relative;
-  width: 500px;
+	position: relative;
+	width: 500px;
 }
 .select .option-list {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  width: 100%;
-  overflow: hidden;
-  max-height: 0;
-  background-color: white;
+	position: absolute;
+	top: 100%;
+	left: 0;
+	width: 100%;
+	overflow: hidden;
+	max-height: 0;
+	background-color: white;
 }
 
 .select.active .option-list {
-  max-height: none;
-  border: solid 3px #E0EBFF;
+	max-height: none;
+	border: solid 3px #E0EBFF;
 }
 #select-sec {
 	width: 300px;
@@ -183,38 +183,38 @@ tr{
 	display: flex;
 }
 #select-sec .select {
-border-style: solid;
+	border-style: solid;
 	border-color: #E0EBFF;
 	color: #6e6e6e;
-  border-radius: 15px;
-  padding: 10px;
-  cursor: pointer;
+	border-radius: 15px;
+	padding: 10px;
+	cursor: pointer;
 }
 
 #select-sec .select .text {
-font-size: 12pt;
-font-weight: bold;
-color: #6e6e6e;
-display: flex;
+	font-size: 12pt;
+	font-weight: bold;
+	color: #6e6e6e;
+	display: flex;
 }
 .option{
-display: flex;
+	display: flex;
 }
 span{
-margin: 0 auto;
+	margin: 0 auto;
 }
 
 #select-sec .select .option-list {
-  list-style: none;
-  padding: 0;
-  border-radius: 15px;
+  	list-style: none;
+ 	 padding: 0;
+  	border-radius: 15px;
 }
 #select-sec .select .option-list .option {
-  padding: 15px;
+  	padding: 15px;
 }
 #select-sec .select .option-list .option:hover {
-border-radius: 15px;
-background-color: #E0EBFF;
+	border-radius: 15px;
+	background-color: #E0EBFF;
 }
 #dl-btn{
 	border: 0;

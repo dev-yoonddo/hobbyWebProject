@@ -1,8 +1,10 @@
 package message;
 
 public class MessageDTO {
+	private int msgID;
 	private String userID;
 	private String toUserID;
+	private int groupID;
 	private String msgTitle;
 	private String msgContent;
 	private int msgCheck;
@@ -10,6 +12,12 @@ public class MessageDTO {
 	private String msgDate;
 	
 	
+	public int getMsgID() {
+		return msgID;
+	}
+	public void setMsgID(int msgID) {
+		this.msgID = msgID;
+	}
 	public String getUserID() {
 		return userID;
 	}
@@ -21,6 +29,12 @@ public class MessageDTO {
 	}
 	public void setToUserID(String toUserID) {
 		this.toUserID = toUserID;
+	}
+	public int getGroupID() {
+		return groupID;
+	}
+	public void setGroupID(int groupID) {
+		this.groupID = groupID;
 	}
 	public String getMsgTitle() {
 		return msgTitle;

@@ -288,7 +288,7 @@ public class BoardDAO {
 		String SQL = "UPDATE board SET viewCount = ? WHERE boardID = ?";
 		try {
 			PreparedStatement pstmt=conn.prepareStatement(SQL);
-			pstmt.setInt(1, viewCount);//물음표의 순서
+			pstmt.setInt(1, viewCount);
 			pstmt.setInt(2, boardID);
 			return pstmt.executeUpdate();//insert,delete,update			
 		} catch(Exception e) {
