@@ -74,12 +74,11 @@
 					script.println("history.back()");
 					script.println("</script>");
 				}
-				else {
+				else { //답장 보내기 완료시 메시지 리스트로 돌아가기
 					PrintWriter script = response.getWriter();
 					script.println("<script>");
 					script.println("alert('메시지 전송이 완료되었습니다.')");
 					script.println("window.open('viewMsgListPopUp.jsp?groupID=" + groupID + "','MESSAGE', 'width=450, height=450, top=50%, left=50%')");
-					script.println("self.close()");
 					script.println("</script>");
 				}
 			}

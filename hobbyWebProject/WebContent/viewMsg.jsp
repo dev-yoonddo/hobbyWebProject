@@ -140,6 +140,7 @@ function viewMsgList(groupID){
    	window.open("viewMsgListPopUp.jsp?groupID=" + groupID , "MESSAGE", "width=450, height=450, top=50%, left=50%") ;
    	self.close();
 }
+//답장하기 버튼을 클릭하면 답장하기 팝업을 띄운다.
 function writeReply(msgID, groupID){
 	window.open("sendMsgPopUp.jsp?msgID=" + msgID + "&groupID=" + groupID , "MESSAGE", "width=450, height=450, top=50%, left=50%") ;
    	self.close();
