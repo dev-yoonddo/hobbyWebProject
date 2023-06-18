@@ -31,7 +31,7 @@ h2{
 	font-family: 'Nanum Gothic', sans-serif;
 	font-weight: bold;
 	font-size: 20pt;
-	color: #2E2F49;
+	color: #646464;
 }
   
 #viewMsg{
@@ -39,7 +39,9 @@ h2{
 	height: auto;
 	margin: 50px;
 }
-
+#view-head{
+	color: black;
+}
 #more-btn{
 	cursor: pointer;
 }
@@ -53,15 +55,15 @@ td{
 	text-decoration: underline;
 }
 
-.view-head{
-	height: 20px;
-	border-bottom: solid 2px #C0C0C0;
-}
+thead{
+	height: 30px;
+	background-color: #C9D7FF;
+	text-align: center; 
+	}
 
 table{
 	font-size: 10pt; 
-	color: black; 
-	width: 450px; 
+	width: 400px; 
 	text-align: left; 
 }
 tr{
@@ -70,7 +72,6 @@ tr{
 
 #more-btn{
 	float: right;
-	margin-right: 20px;
 	font-size: 11pt;
 	font-weight: bold;
 }
@@ -120,7 +121,7 @@ ArrayList<MessageDTO> msglist = msgDAO.getMsgList(userID, groupID);
 
 <!-- 받은 메시지 리스트 -->
 <div id="viewMsg">
-	<tr class="view-head">
+	<tr id="view-head">
 		<!-- 나에게 온 메시지 중 안읽은 메시지 갯수 가져오기 -->
 		<td><h2>안 읽은 메시지 (<%=checklist.size() %>)<h2></td>
 	</tr>
@@ -128,9 +129,9 @@ ArrayList<MessageDTO> msglist = msgDAO.getMsgList(userID, groupID);
 		<thead>
 			<tr class="board-head">
 				<th style="width: 20%;"><span>보낸 사람</span></th>
-				<th style="width: 30%;"><span>제목</span></th>
+				<th style="width: 40%;"><span>제목</span></th>
 				<th style="width: 20%;"><span>확인</span></th>
-				<th style="width: 30%;"><span>날짜</span></th>
+				<th style="width: 20%;"><span>날짜</span></th>
 			</tr>
 		</thead>
 		<!-- 글이 0개이면 -->
@@ -176,7 +177,7 @@ ArrayList<MessageDTO> msglist = msgDAO.getMsgList(userID, groupID);
 </body>
 <script>
 //메시지 더보기
-var viewCount = 10; // 클릭할 때 마다 보여질 갯수
+var viewCount = 5; // 클릭할 때 마다 보여질 갯수
 var lastIndex = viewCount - 1; //보여질 글의 마지막 인덱스
 var rows = $('.showWrite').length; //전체 글 갯수
 $('.showWrite').slice(viewCount).hide(); // 처음 viewCount개의 글을 제외하고 모두 숨기기
@@ -195,7 +196,7 @@ $("#more-btn").click(function(e){ //more-btn을 클릭했을때
 
 
 function viewMsg(msgID){
-   	window.open("viewMsg.jsp?msgID=" + msgID , "VIEW MESSAGE", "width=500, height=550, top=50%, left=50%");
+   	window.open("viewMsg.jsp?msgID=" + msgID , "VIEW MESSAGE", "width=550, height=600, top=50%, left=50%");
    	self.close();
 }
 </script>

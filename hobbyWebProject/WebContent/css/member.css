@@ -8,9 +8,6 @@ body{
     font-size: 14px;
     font-family: 'Roboto', sans-serif;
 }
-header{
-	height: 100px;
-}
 section{
 	padding-top: 150px;
 	padding-bottom: 100px;
@@ -163,7 +160,7 @@ section{
 #user-delete:hover{
 	font-weight: bold;
 }
-
+/* 데이터 관리하기 */ 
 #userSet{
     width: 550px;
     height: 800px;
@@ -180,6 +177,28 @@ section{
 }
 
 #userSet > div > h2{
+    font-size: 24px;
+    color: #86A5FF;
+    margin-bottom: 20px;
+}
+
+/* 메시지 관리하기 */ 
+#userMsg{
+    width: 550px;
+    height: 800px;
+    padding: 40px;
+    box-sizing: border-box;
+    border-style: solid;
+    border-radius: 20px;
+    border-color: #b4b4b4;
+    border-width: 2px;
+    position: relative;
+}
+#userMsg > div{
+	margin: 0 auto;
+}
+
+#userMsg > div > h2{
     font-size: 24px;
     color: #86A5FF;
     margin-bottom: 20px;

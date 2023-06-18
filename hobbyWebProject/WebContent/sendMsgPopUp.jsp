@@ -25,28 +25,17 @@
 
 <style>
 h2{
-	font-family: 'Bruno Ace', cursive;
+	font-family: 'Nanum Gothic', monospace;
 	font-weight: bold;
-	font-size: 20pt;
+	font-size: 30pt;
 	color: #2E2F49;
 }
 #sb{
 width: 100%;
 }
 #sb span{
-color: #ffffff;
-  background-color: #2E2F49;
-  border: 1px solid #2E2F49;
   padding-top: 15px;
   padding-bottom: 15px;
-}
-#sb::before {
-  background-color: #2E2F49;
-}
-
-#sb span:hover {
-  color: #2E2F49;
-  background-color: #ffffff;
 }
   
 #sendMsg{

@@ -364,7 +364,7 @@ function joinGroup(groupID, groupAvailable, mbNum, grNum, member,memberDel) {
         		alert("정원이 다 찼습니다.");
         	}else{
         	//팝업창을 열때 groupID값을 넘겨준다.
-          	window.open("memberJoinPopUp.jsp?groupID=" + groupID , "Join", "width=450, height=450, top=50%, left=50%") ;
+          	window.open("memberJoinPopUp.jsp?groupID=" + groupID , "Join", "width=500, height=500, top=50%, left=50%") ;
         	}
         }
         else {

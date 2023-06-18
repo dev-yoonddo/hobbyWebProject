@@ -99,6 +99,32 @@ public class MessageDAO {
 		}
 		return list; 
 	}
+	//해당 유저가 보낸 메시지 전체 리스트 (userID가 내 아이디랑 일치하는 데이터)
+		public ArrayList<MessageDTO> getSendMessageList(String userID){
+			String SQL = "SELECT * FROM message WHERE userID = ? AND msgAvailable = 1 ORDER BY msgDate DESC"; 
+			ArrayList<MessageDTO> list = new ArrayList<MessageDTO>();
+			try {
+				PreparedStatement pstmt = conn.prepareStatement(SQL);
+				pstmt.setString(1, userID);
+				rs = pstmt.executeQuery();
+				while (rs.next()) {
+					MessageDTO msg = new MessageDTO();
+					msg.setMsgID(rs.getInt(1));
+					msg.setUserID(rs.getString(2));
+					msg.setToUserID(rs.getString(3));
+					msg.setGroupID(rs.getInt(4));
+					msg.setMsgTitle(rs.getString(5));
+					msg.setMsgContent(rs.getString(6));
+					msg.setMsgCheck(rs.getInt(7));
+					msg.setMsgAvailable(rs.getInt(8));
+					msg.setMsgDate(rs.getString(9));
+					list.add(msg);
+				}
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+			return list; 
+		}
 	//메시지 삭제하기 (msgAvailable = 0 으로 업데이트)
 	public int delete(int msgID) {
 		String SQL = "UPDATE message SET msgAvailable = 0 WHERE msgID = ? ";
@@ -153,7 +179,7 @@ public class MessageDAO {
 		}
 		return checklist;
 	}
-	//해당 userID에게 온 메세지 리스트 전체 가져오기
+	//내가 만든 그룹의 멤버인 userID에게 온 메세지 리스트 전체 가져오기
 	public ArrayList<MessageDTO> getMsgList(String toUserID, int groupID){
 		String SQL = "SELECT * FROM message WHERE toUserID = ? AND groupID = ? AND msgAvailable = 1 ORDER BY msgDate DESC"; 
 		ArrayList<MessageDTO> msglist = new ArrayList<MessageDTO>();

@@ -1,3 +1,5 @@
+<%@page import="message.MessageDTO"%>
+<%@page import="message.MessageDAO"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" errorPage="/error/errorPage.jsp"%>
@@ -30,14 +32,17 @@
 <script defer src="option/jquery/jquery.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script src="https://kit.fontawesome.com/f95555e5d8.js" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 <script type="text/javascript" src="js/checkPW.js"></script>
 <script type="text/javascript" src="js/script.js"></script>
+<script defer type="text/javascript" src="js/userdata.js"></script>
 
 </head>
 <style>
+header{
+	top: 0;
+}
 section{
-	height: 1000px;
+	top: 0;
 }
 .menu-bar{
 	width: auto;
@@ -45,11 +50,10 @@ section{
 	top: 150px;
 	font-size: 15pt;
 }
-#menu1{
+.sidemenu{
 	width: 200px;
   	height: 50px;
 	left: -150px;
-	top: 150px;
 	background-color: #E0EBFF;
 	transition: left 1s;
 	position: fixed;
@@ -58,26 +62,21 @@ section{
 	align-items: center;
 	cursor: pointer;
 }
-#menu2{
-	width: 200px;
-	height: 50px;
-	left: -150px;
-  	top: 210px;
-  	background-color: #E0EBFF;
-  	transition: left 1s; 
-  	position: fixed;
-  	display: flex;
- 	justify-content: center;
-  	align-items: center;
-  	cursor: pointer;
- 
+#menu1{
+	top: 150px;
 }
-#menu1:hover , #menu2:hover{
+#menu2{
+  	top: 210px;
+}
+#menu3{
+  	top: 270px;
+}
+#menu1:hover , #menu2:hover, #menu3:hover{
  	left: 0;
   	transition: left 1s;
 }
 
-#menu1 > ul , #menu2 > ul{
+#menu1 > ul , #menu2 > ul, #menu3 > ul{
 	position: relative;
   	float: right;
   	list-style-type: none;
@@ -85,7 +84,7 @@ section{
 	align-items: center;
 }
 
-#menu1 > li , #menu2 > li{
+#menu1 > li , #menu2 > li, #menu3 > li{
 	width: auto;
 	height: auto;
 	margin: 0 auto;
@@ -306,17 +305,23 @@ span{
 <section>
 	<!-- 사이드바 -->
 	<div class="menu-bar">
-		<div id="menu1">
-		<ul>
-			<li>&nbsp;&nbsp;&nbsp;&nbsp;정보수정</li>
-			<li class="i"><i class="fa-solid fa-angles-right"></i></li>
-		</ul>
+		<div id="menu1" class="sidemenu">
+			<ul>
+				<li>&nbsp;&nbsp;&nbsp;&nbsp;정보수정</li>
+				<li class="i"><i class="fa-solid fa-angles-right"></i></li>
+			</ul>
 		</div>
-		<div id="menu2">
-		<ul>
-			<li>데이터관리</li>
-			<li class="i"><i class="fa-solid fa-angles-right"></i></li>
-		</ul>
+		<div id="menu2" class="sidemenu">
+			<ul>
+				<li>데이터관리</li>
+				<li class="i"><i class="fa-solid fa-angles-right"></i></li>
+			</ul>
+		</div>
+		<div id="menu3" class="sidemenu">
+			<ul>
+				<li>메시지관리</li>
+				<li class="i"><i class="fa-solid fa-angles-right"></i></li>
+			</ul>
 		</div>
 	</div>
 	
@@ -584,7 +589,7 @@ span{
 				</div>
 			</div>
 		</div>
-		<!-- 데이터 정보 출력하기 끝 -->
+		<!-- 데이터 리스트 출력 끝 -->
 		
 		<!-- 원하는 데이터 삭제하기  -->
 		<div id="delete-sec">
@@ -597,12 +602,12 @@ span{
 							<span>삭제할 데이터 선택</span>
 							<span><i class="fa-solid fa-chevron-down"></i></span>
 						</div>
-					<ul class="option-list">
-						<li class="option"><input type="hidden" id="boards" name="deleteField" value="board"><span>게시글</span></li>
-						<li class="option"><input type="hidden" id="comments" name="deleteField" value="cmt"><span>댓글</span></li>
-						<li class="option"><input type="hidden" id="groups" name="deleteField" value="group"><span>생성그룹</span></li>
-						<li class="option"><input type="hidden" id="members" name="deleteField" value="mb"><span>가입그룹</span></li>
-					</ul>
+						<ul class="option-list">
+							<li class="option"><input type="hidden" id="boards" name="deleteField" value="board"><span>게시글</span></li>
+							<li class="option"><input type="hidden" id="comments" name="deleteField" value="cmt"><span>댓글</span></li>
+							<li class="option"><input type="hidden" id="groups" name="deleteField" value="group"><span>생성그룹</span></li>
+							<li class="option"><input type="hidden" id="members" name="deleteField" value="mb"><span>가입그룹</span></li>
+						</ul>
 					</div>
 					<div id="submit-btn">
 						<button type="submit" id="dl-btn"><span id="dl">삭제</span></button>
@@ -611,8 +616,139 @@ span{
 			</form>
 			</div>
 		</div>
-		<!-- 원하는 데이터 삭제하기 끝 -->
+	</div>
+	<!-- 데이터 관리하기 끝 -->
 		
+	<!-- 메시지 관리하기 -->
+	<div id="userMsg" hidden="">
+		<div>
+			<h2>메시지 관리하기</h2>
+			<%
+			MessageDAO msgDAO = new MessageDAO();
+			//받은 메시지 리스트
+			ArrayList<MessageDTO> msglist = msgDAO.getMessageList(userID);
+			//보낸 메시지 리스트
+			ArrayList<MessageDTO> sendmsglist = msgDAO.getSendMessageList(userID);
+			%>
+			<!-- 받은 메시지 목록 -->
+			<div class="userDataBoard">
+				<tr class="view-head">
+					<td><h3>받은 메시지 (<%= msglist.size() %>)개</h3></td>
+				</tr>
+				<div class="userData" id="msgData">
+					<table>
+						<thead>
+							<tr class="board-head">
+								<th style="width: 20%;"><span>그룹</span></th>
+								<th style="width: 15%;"><span>보낸 사람</span></th>
+								<th style="width: 30%;"><span>제목</span></th>
+								<th style="width: 10%;"><span>확인</span></th>
+								<th style="width: 25%;"><span>날짜</span></th>
+							</tr>
+						</thead>
+						<!-- 받은 메시지가 0개이면 -->
+						<% if (msglist.size() == 0) { %>
+						<tbody>
+							<tr>
+								<td colspan="5" class="none-list">받은 메시지가 없습니다.</td>
+							</tr>
+						</tbody>
+						
+						<!-- 받은 메시지가 1개 이상이면 -->
+						<% }else{ %>
+						<tbody>
+							<%
+								for (int i = 0; i < msglist.size(); i++) {
+									// MsgVO()에서 groupID를 구한 뒤 각 메시지를 보낸 그룹이름을 구한다.
+									int groupID = msgDAO.getMsgVO(msglist.get(i).getMsgID()).getGroupID();
+									String groupName = groupDAO.getGroupVO(groupID).getGroupName();
+							%>
+							<tr class="showRcvMsg" style="height: 20px;">
+								<td><%=groupName%></td>
+								<td><%=msglist.get(i).getUserID()%></td>
+								<td><a id="click-view" onclick="viewMsg('<%= msglist.get(i).getMsgID()%>')"><%= msglist.get(i).getMsgTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></a></td>
+								<!-- msgCheck == 0이면 안읽음, 1이면 읽음 표시하기 -->
+								<% if(msglist.get(i).getMsgCheck() == 0){ %>
+								<td>안읽음</td>						
+								<% }else{ %>
+								<td>읽음</td>						
+								<% } %>
+								<td><%=msglist.get(i).getMsgDate()%></td>
+							</tr>
+							<%
+								}
+							%>
+						</tbody>
+						<%
+							}
+						%>
+					</table><br>
+					<!-- 메시지 갯수가 1 이상이면 MORE 버튼 보이기 -->
+					<% if (msglist.size() != 0) { %>
+					<div id="more-btn-5">MORE</div>
+					<%} %>
+				</div>
+			</div>
+			<!-- 보낸 메시지 목록 -->
+			<div class="userDataBoard">
+				<tr class="view-head">
+					<td><h3>보낸 메시지 (<%= sendmsglist.size() %>)개</h3></td>
+				</tr>
+				<div class="userData" id="sendMsgData">
+					<table>
+						<thead>
+							<tr class="board-head">
+								<th style="width: 20%;"><span>그룹</span></th>
+								<th style="width: 15%;"><span>받은 사람</span></th>
+								<th style="width: 30%;"><span>제목</span></th>
+								<th style="width: 10%;"><span>확인</span></th>
+								<th style="width: 25%;"><span>날짜</span></th>
+							</tr>
+						</thead>
+						<!-- 보낸 메시지가 0개이면 -->
+						<% if (sendmsglist.size() == 0) { %>
+						<tbody>
+							<tr>
+								<td colspan="5" class="none-list">보낸 메시지가 없습니다.</td>
+							</tr>
+						</tbody>
+						
+						<!-- 보낸 메시지가 1개 이상이면 -->
+						<% }else{ %>
+						<tbody>
+							<%
+								for (int i = 0; i < sendmsglist.size(); i++) {
+									// MsgVO()에서 groupID를 구한 뒤 각 메시지를 보낸 그룹이름을 구한다.
+									int groupID = msgDAO.getMsgVO(sendmsglist.get(i).getMsgID()).getGroupID();
+									String groupName = groupDAO.getGroupVO(groupID).getGroupName();
+							%>
+							<tr class="showSendMsg" style="height: 20px;">
+								<td><%=groupName%></td>
+								<td><%=sendmsglist.get(i).getToUserID()%></td>
+								<td><a id="click-view" onclick="viewMsg('<%= sendmsglist.get(i).getMsgID()%>')"><%= msglist.get(i).getMsgTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></a></td>
+								<!-- msgCheck == 0이면 안읽음, 1이면 읽음 표시하기 -->
+								<% if(sendmsglist.get(i).getMsgCheck() == 0){ %>
+								<td>안읽음</td>						
+								<% }else{ %>
+								<td>읽음</td>						
+								<% } %>
+								<td><%=sendmsglist.get(i).getMsgDate()%></td>
+							</tr>
+							<%
+								}
+							%>
+						</tbody>
+						<%
+							}
+						%>
+					</table><br>
+					<!-- 글 갯수가 1 이상이면 MORE 버튼 보이기 -->
+					<% if (sendmsglist.size() != 0) { %>
+					<div id="more-btn-6">MORE</div>
+					<%} %>
+				</div>
+			</div>
+		</div>
 	</div>
 </section>
 <script>
@@ -639,113 +775,6 @@ for (var i = 0; i < optionList.length; i++) {
  }
 </script>
 <script>
-$(document).ready(function(){
-	//메뉴 클릭할때마다 보이고 숨기기
-	$('#userInfo').show();
-
-	$('#menu1').on('click', function(){
-	    $('#userInfo').show();
-		    $('#userSet').hide();
-	  });
-	$('#menu2').on('click', function(){
-	  $('#userInfo').hide();
-	   $('#userSet').show();
-	});
-	
-	//원하는 데이터 목록 보기
-	//게시글 목록은 무조건 보이기
-	$('#boardData').show(); $('#cmtData').hide(); $('#groupData').hide(); $('#memberData').hide();
-	
-	//나머지는 리스트 결과가 없을때 텍스트를 표시하기 위해 show를 해준다.
-	
-	$('#view1').on('click', function(){
-		$('#boardData').show();
-		$('#cmtData').hide(); $('#groupData').hide(); $('#memberData').hide();
-	});
-	$('#view2').on('click', function(){
-		$('#cmtData').show();
-		$('#boardData').hide(); $('#groupData').hide(); $('#memberData').hide();
-	});
-	$('#view3').on('click', function(){
-		$('#groupData').show();
-		$('#boardData').hide(); $('#cmtData').hide(); $('#memberData').hide();
-	});
-	$('#view4').on('click', function(){
-		$('#memberData').show();
-		$('#boardData').hide(); $('#cmtData').hide(); $('#groupData').hide();
-	});
-	
-	//내가 작성한 게시글 더보기
-	var viewCount = 5; // 클릭할 때 마다 보여질 갯수
-	var lastIndex = viewCount - 1; //보여질 글의 마지막 인덱스
-	var rows = $('.showWrite').length; //전체 글 갯수
-	$('.showWrite').slice(viewCount).hide(); // 처음 viewCount개의 글을 제외하고 모두 숨기기
-
-	$("#more-btn").click(function(e){ //more-btn을 클릭했을때
-	    e.preventDefault();
-	    if(rows <= lastIndex + 1){ //만약 전체 글의 수가 lastIndex +1 한 값보다 작거나 같으면
-	        alert("마지막 글입니다"); //마지막 글이라는 알림창 띄우기
-		    return; //return을 하지않으면 알림창을 띄우고 또 다음으로 실행된다.
-	    
-	    }
-	    $('.showWrite').slice(lastIndex + 1, lastIndex + 1 + viewCount).show('slow'); // 처음 출력한 글의 다음 글들을 보여준다.
-	    $('.showWrite').slice(0, lastIndex + 1).hide(); // 0부터 이전의 글들을 모두 숨긴다.
-	    lastIndex += viewCount; // 다음 글 출력을 위해 lastIndex에 viewCount를 더해준다.
-	});
-	 
-	//내가 작성한 댓글 더보기 viewCount lastIndex는 이미 위에서 선언함
-    var viewCount2 = 5;
-	var lastIndex2 = viewCount2 - 1;
-	var rows2 = $('.showCmt').length;
-	$('.showCmt').slice(viewCount2).hide(); 
-
-	$("#more-btn-2").click(function(e){ 
-	    e.preventDefault();
-	    if(rows2 <= lastIndex2 + 1){ 
-	        alert("마지막 댓글입니다");
-	        return;
-	    }
-	    $('.showCmt').slice(lastIndex2 + 1, lastIndex2 + 1 + viewCount2).show('slow'); 
-	    $('.showCmt').slice(0, lastIndex2 + 1).hide();
-	    lastIndex2 += viewCount2;
-	});
-	
-	//내가 생성한 그룹 더보기
-	var viewCount3 = 5;
-	var lastIndex3 = viewCount3 - 1;
-	var rows3 = $('.showGroup').length;
-	$('.showGroup').slice(viewCount3).hide();
-
-	$("#more-btn-3").click(function(e){ 
-	    e.preventDefault();
-	    if(rows3 <= lastIndex3 + 1){ 
-	        alert("마지막 그룹입니다");
-	        return;
-	    }
-	    $('.showGroup').slice(lastIndex3 + 1, lastIndex3 + 1 + viewCount3).show('slow');
-	    $('.showGroup').slice(0, lastIndex3 + 1).hide(); 
-	    lastIndex3 += viewCount3;
-	});
-	
-	//내가 가입한 그룹 더보기
-	var viewCount4 = 5;
-	var lastIndex4 = viewCount4 - 1;
-	var rows4 = $('.showMember').length;
-	$('.showMember').slice(viewCount4).hide();
-
-	$("#more-btn-4").click(function(e){ 
-	    e.preventDefault();
-	    if(rows4 <= lastIndex4 + 1){ 
-	        alert("마지막 그룹입니다"); 
-	        return;
-	    }
-	    $('.showMember').slice(lastIndex4 + 1, lastIndex4 + 1 + viewCount4).show('slow'); 
-	    $('.showMember').slice(0, lastIndex4 + 1).hide();
-	    lastIndex4 += viewCount4; 
-	});
-});
-</script>
-<script>
 //접속하기 버튼을 클릭하면 id,password,available value, member, leader를 받는다
 function showPasswordPrompt(grID, grPW, grAvl) {
     var inputPassword = "";
@@ -767,6 +796,12 @@ function showPasswordPrompt(grID, grPW, grAvl) {
     	alert("비활동 중인 그룹입니다.");
     }
 
+}
+
+//메시지 리스트에서 제목을 클릭하면 해당 메시지 상세보기 팝업이 열린다.
+function viewMsg(msgID){
+   	window.open("viewMsg.jsp?msgID=" + msgID , "VIEW MESSAGE", "width=550, height=600, top=50%, left=50%");
+   	self.close();
 }
 </script>
 </body>

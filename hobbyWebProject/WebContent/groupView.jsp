@@ -206,12 +206,12 @@ ArrayList<MemberDTO> mblist = mbDAO.getList(groupID); //해당 그룹의 멤버�
 <script>
 //메시지확인을 클릭하면 메시지 리스트 팝업을 띄운다.
 function viewMsgList(groupID){
-   	window.open("viewMsgListPopUp.jsp?groupID=" + groupID , "MESSAGE", "width=450, height=450, top=50%, left=50%") ;
+   	window.open("viewMsgListPopUp.jsp?groupID=" + groupID , "MESSAGE", "width=500, height=500, top=50%, left=50%") ;
 }
 //메시지전송을 클릭하면 그룹이름과 그룹생성자(메시지수신자) 정보를 받는다.
 function sendMSG(groupID) {
    	//팝업창을 열때 groupID값을 넘겨준다.
-   	window.open("sendMsgPopUp.jsp?groupID=" + groupID , "MESSAGE", "width=450, height=450, top=50%, left=50%") ;
+   	window.open("sendMsgPopUp.jsp?groupID=" + groupID , "MESSAGE", "width=500, height=500, top=50%, left=50%") ;
 }
 </script>
 <script>
