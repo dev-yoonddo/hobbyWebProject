@@ -61,6 +61,7 @@ section{
 	justify-content: center;
 	align-items: center;
 	cursor: pointer;
+	z-index: 500;
 }
 #menu1{
 	top: 150px;
@@ -146,7 +147,7 @@ tr{
 	align-items: center;
 }
 
-#more-btn ,#more-btn-2, #more-btn-3, #more-btn-4{
+#more-btn ,#more-btn-2, #more-btn-3, #more-btn-4, #more-btn-5, #more-btn-6{
 	float: right;
 	margin-right: 20px;
 	font-size: 11pt;
@@ -627,8 +628,6 @@ span{
 			MessageDAO msgDAO = new MessageDAO();
 			//받은 메시지 리스트
 			ArrayList<MessageDTO> msglist = msgDAO.getMessageList(userID);
-			//보낸 메시지 리스트
-			ArrayList<MessageDTO> sendmsglist = msgDAO.getSendMessageList(userID);
 			%>
 			<!-- 받은 메시지 목록 -->
 			<div class="userDataBoard">
@@ -689,6 +688,10 @@ span{
 					<%} %>
 				</div>
 			</div>
+			<%
+			//보낸 메시지 리스트
+			ArrayList<MessageDTO> sendmsglist = msgDAO.getSendMessageList(userID);
+			%>
 			<!-- 보낸 메시지 목록 -->
 			<div class="userDataBoard">
 				<tr class="view-head">
@@ -725,7 +728,7 @@ span{
 							<tr class="showSendMsg" style="height: 20px;">
 								<td><%=groupName%></td>
 								<td><%=sendmsglist.get(i).getToUserID()%></td>
-								<td><a id="click-view" onclick="viewMsg('<%= sendmsglist.get(i).getMsgID()%>')"><%= msglist.get(i).getMsgTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></a></td>
+								<td><a id="click-view" onclick="viewMsg('<%= sendmsglist.get(i).getMsgID()%>')"><%= sendmsglist.get(i).getMsgTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></a></td>
 								<!-- msgCheck == 0이면 안읽음, 1이면 읽음 표시하기 -->
 								<% if(sendmsglist.get(i).getMsgCheck() == 0){ %>
 								<td>안읽음</td>						

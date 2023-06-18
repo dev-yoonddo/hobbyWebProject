@@ -1,9 +1,7 @@
 $(document).ready(function(){
 	//메뉴 클릭할때마다 보이고 숨기기
 	$('#userInfo').show();
-	$('#userSet').hide();
-	$('#userMsg').hide();
-	
+
 	$('#menu1').on('click', function(){
 	    $('#userInfo').show();
 		$('#userSet').hide();
