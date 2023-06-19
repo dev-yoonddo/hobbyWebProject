@@ -19,11 +19,10 @@ $(document).ready(function(){
 	});
 	
 	//원하는 데이터 목록 보기
-	//게시글 목록은 무조건 보이기
-	$('#boardData').show(); $('#cmtData').hide(); $('#groupData').hide(); $('#memberData').hide();
+	//게시글 목록은 제외하고 모두 숨기기
+	$('#cmtData').hide(); $('#groupData').hide(); $('#memberData').hide();
 	
 	//나머지는 리스트 결과가 없을때 텍스트를 표시하기 위해 show를 해준다.
-	
 	$('#view1').on('click', function(){
 		$('#boardData').show();
 		$('#cmtData').hide(); $('#groupData').hide(); $('#memberData').hide();
@@ -39,6 +38,17 @@ $(document).ready(function(){
 	$('#view4').on('click', function(){
 		$('#memberData').show();
 		$('#boardData').hide(); $('#cmtData').hide(); $('#groupData').hide();
+	});
+	
+	//메시지관리
+	$('#sendMsgData').hide();
+	$('#view5').on('click', function(){
+		$('#msgData').show();
+		$('#sendMsgData').hide();
+	});
+	$('#view6').on('click', function(){
+		$('#sendMsgData').show();
+		$('#msgData').hide();
 	});
 	
 	//내가 작성한 게시글 더보기
@@ -119,7 +129,7 @@ $(document).ready(function(){
 	$("#more-btn-5").click(function(e){ 
 	    e.preventDefault();
 	    if(rows5 <= lastIndex5 + 1){ 
-	        alert("마지막 그룹입니다"); 
+	        alert("마지막 메시지입니다"); 
 	        return;
 	    }
 	    $('.showMsg').slice(lastIndex5 + 1, lastIndex5 + 1 + viewCount5).show('slow'); 
@@ -135,7 +145,7 @@ $(document).ready(function(){
 	$("#more-btn-6").click(function(e){ 
 	    e.preventDefault();
 	    if(rows6 <= lastIndex6 + 1){ 
-	        alert("마지막 그룹입니다"); 
+	        alert("마지막 메시지입니다"); 
 	        return;
 	    }
 	    $('.showRcvMsg').slice(lastIndex6 + 1, lastIndex6 + 1 + viewCount6).show('slow'); 

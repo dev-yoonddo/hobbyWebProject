@@ -43,6 +43,8 @@ header{
 }
 section{
 	top: 0;
+	height: auto;
+	margin-bottom: 200px;
 }
 .menu-bar{
 	width: auto;
@@ -155,11 +157,11 @@ tr{
 }
 
 /* select box */
-.select {
+.select , .select1{
 	position: relative;
 	width: 500px;
 }
-.select .option-list {
+.select .option-list , .select1 .option-list1{
 	position: absolute;
 	top: 100%;
 	left: 0;
@@ -169,11 +171,11 @@ tr{
 	background-color: white;
 }
 
-.select.active .option-list {
+.select.active .option-list , .select1.active .option-list1{
 	max-height: none;
 	border: solid 3px #E0EBFF;
 }
-#select-sec {
+#select-sec , #select-sec1{
 	width: 300px;
 	height: 45px;
 	font-size: 11pt;
@@ -182,7 +184,7 @@ tr{
 	font-family: 'Nanum Gothic', sans-serif;
 	display: flex;
 }
-#select-sec .select {
+#select-sec .select , #select-sec1 .select1{
 	border-style: solid;
 	border-color: #E0EBFF;
 	color: #6e6e6e;
@@ -191,28 +193,28 @@ tr{
 	cursor: pointer;
 }
 
-#select-sec .select .text {
+#select-sec .select .text , #select-sec1 .select1 .text1{
 	font-size: 12pt;
 	font-weight: bold;
 	color: #6e6e6e;
 	display: flex;
 }
-.option{
+.option , .option1{
 	display: flex;
 }
 span{
 	margin: 0 auto;
 }
 
-#select-sec .select .option-list {
+#select-sec .select .option-list , #select-sec1 .select1 .option-list1 {
   	list-style: none;
  	 padding: 0;
   	border-radius: 15px;
 }
-#select-sec .select .option-list .option {
+#select-sec .select .option-list .option , #select-sec1 .select1 .option-list1 .option1{
   	padding: 15px;
 }
-#select-sec .select .option-list .option:hover {
+#select-sec .select .option-list .option:hover , #select-sec1 .select1 .option-list1 .option1:hover{
 	border-radius: 15px;
 	background-color: #E0EBFF;
 }
@@ -237,7 +239,7 @@ span{
 	text-align: center; 
 	padding: 10px; 
 }
-#delete-sec{
+#delete-sec , #delete-sec1{
 	height: 10%;
 	bottom: 0;
 	position: absolute;
@@ -633,6 +635,7 @@ span{
 			<div class="userDataBoard">
 				<tr class="view-head">
 					<td><h3>받은 메시지 (<%= msglist.size() %>)개</h3></td>
+					<td><button type="button" class="btn-blue" id="view5"><span>보기</span></button></td>
 				</tr>
 				<div class="userData" id="msgData">
 					<table>
@@ -668,9 +671,9 @@ span{
 								<td><a id="click-view" onclick="viewMsg('<%= msglist.get(i).getMsgID()%>')"><%= msglist.get(i).getMsgTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></a></td>
 								<!-- msgCheck == 0이면 안읽음, 1이면 읽음 표시하기 -->
 								<% if(msglist.get(i).getMsgCheck() == 0){ %>
-								<td>안읽음</td>						
+								<td>NO</td>						
 								<% }else{ %>
-								<td>읽음</td>						
+								<td>YES</td>						
 								<% } %>
 								<td><%=msglist.get(i).getMsgDate()%></td>
 							</tr>
@@ -696,6 +699,7 @@ span{
 			<div class="userDataBoard">
 				<tr class="view-head">
 					<td><h3>보낸 메시지 (<%= sendmsglist.size() %>)개</h3></td>
+					<td><button type="button" class="btn-blue" id="view6"><span>보기</span></button></td>
 				</tr>
 				<div class="userData" id="sendMsgData">
 					<table>
@@ -731,9 +735,9 @@ span{
 								<td><a id="click-view" onclick="viewMsg('<%= sendmsglist.get(i).getMsgID()%>')"><%= sendmsglist.get(i).getMsgTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></a></td>
 								<!-- msgCheck == 0이면 안읽음, 1이면 읽음 표시하기 -->
 								<% if(sendmsglist.get(i).getMsgCheck() == 0){ %>
-								<td>안읽음</td>						
+								<td>NO</td>						
 								<% }else{ %>
-								<td>읽음</td>						
+								<td>YES</td>						
 								<% } %>
 								<td><%=sendmsglist.get(i).getMsgDate()%></td>
 							</tr>
@@ -750,6 +754,31 @@ span{
 					<div id="more-btn-6">MORE</div>
 					<%} %>
 				</div>
+			</div>
+		</div>
+		
+		<!-- 원하는 데이터 삭제하기  -->
+		<div id="delete-sec1">
+			<div class="select-msg">
+			<form method="post" id ="deleteField" action="userMsgDelete.jsp">
+				<div id="select-sec1">
+					<div class="select1">
+						<div class="text1">
+							<input type="hidden" name="deleteField">
+							<span>삭제할 메시지 선택</span>
+							<span><i class="fa-solid fa-chevron-down"></i></span>
+						</div>
+						<ul class="option-list1">
+							<li class="option1"><input type="hidden" id="boards" name="deleteField" value="rcvMsg"><span>받은메시지</span></li>
+							<li class="option1"><input type="hidden" id="comments" name="deleteField" value="sendMsg"><span>보낸메시지</span></li>
+							<li class="option1"><input type="hidden" id="groups" name="deleteField" value="allMsg"><span>전체</span></li>
+						</ul>
+					</div>
+					<div id="submit-btn">
+						<button type="submit" id="dl-btn"><span id="dl">삭제</span></button>
+					</div>
+				</div>
+			</form>
 			</div>
 		</div>
 	</div>
@@ -776,6 +805,28 @@ for (var i = 0; i < optionList.length; i++) {
   var option = optionList[i];
   option.addEventListener("click", onClickOption);
  }
+ 
+ 
+function onClickSelect2(e) {
+	  const isActive2 = e.currentTarget.className.indexOf("active") !== -1;
+	  if (isActive2) {
+	    e.currentTarget.className = "select1";
+	  } else {
+	    e.currentTarget.className = "select1 active";
+	  }
+	}
+	document.querySelector("#select-sec1 .select1").addEventListener("click", onClickSelect2);
+
+function onClickOption2(e) {
+const selectedValue2 = e.currentTarget.innerHTML;
+document.querySelector("#select-sec1 .text1").innerHTML = selectedValue2;
+}
+
+var optionList2 = document.querySelectorAll("#select-sec1 .option1");
+for (var i = 0; i < optionList2.length; i++) {
+var option2 = optionList2[i];
+option2.addEventListener("click", onClickOption2);
+}
 </script>
 <script>
 //접속하기 버튼을 클릭하면 id,password,available value, member, leader를 받는다

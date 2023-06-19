@@ -138,14 +138,40 @@ public class MessageDAO {
 		}
 		return -1; //데이터베이스 오류
 	}
-	//메시지 전체 삭제하기
-	public int deleteMsgByUser(String userID) {
+	//받은 메시지 삭제하기 : toUserID == userID 이면 받은메시지이다.
+	public int deleteRcvMsg(String userID) {
+		String SQL = "UPDATE message SET msgAvailable = 0 WHERE toUserID = ? ";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, userID);
+			//성공적으로 수행했다면 0이상의 결과 반환
+			
+			return pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return -1; //데이터베이스 오류
+	}
+	//받은 메시지 삭제하기
+	public int deleteSendMsg(String userID) {
 		String SQL = "UPDATE message SET msgAvailable = 0 WHERE userID = ? ";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
 			//성공적으로 수행했다면 0이상의 결과 반환
 			return pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return -1; //데이터베이스 오류
+	}
+	//메시지 전체 삭제하기
+	public int deleteAllMsgByUser(String userID) {
+		try {
+			deleteRcvMsg(userID);
+			deleteSendMsg(userID);
+			//성공적으로 수행했다면 0이상의 결과 반환
+			return 1;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
