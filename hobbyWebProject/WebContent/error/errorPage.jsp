@@ -30,6 +30,19 @@ h1{
 }
 </style>
 <body>
+<%
+String userID=null;
+if(session.getAttribute("userID")!=null){
+	userID=(String)session.getAttribute("userID");
+}
+if(userID == null){
+	PrintWriter script = response.getWriter();
+	script.println("<script>");
+	script.println("alert('로그인이 필요합니다.')");
+	script.println("window.open('loginPopUp.jsp', 'Login', 'width=450, height=500, top=50%, left=50%')");
+	script.println("</script>");
+}
+%>
 <div id="error" style="width:auto; display: flex; justify-content: center;">
 	<div style="justify-content: center;">
 		<div style="font-size: 30px; display: flex; justify-content: center;"><i class="fa-regular fa-face-frown fa-10x"></i></div>

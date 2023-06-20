@@ -769,9 +769,9 @@ span{
 							<span><i class="fa-solid fa-chevron-down"></i></span>
 						</div>
 						<ul class="option-list1">
-							<li class="option1"><input type="hidden" id="boards" name="deleteField" value="rcvMsg"><span>받은메시지</span></li>
-							<li class="option1"><input type="hidden" id="comments" name="deleteField" value="sendMsg"><span>보낸메시지</span></li>
-							<li class="option1"><input type="hidden" id="groups" name="deleteField" value="allMsg"><span>전체</span></li>
+							<li class="option1" onclick="getRcvCount('<%=msglist.size()%>')"><input type="hidden" id="boards" name="deleteField" value="rcvMsg"><span>받은메시지</span></li>
+							<li class="option1" onclick="getSendCount('<%=sendmsglist.size()%>')"><input type="hidden" id="comments" name="deleteField" value="sendMsg"><span>보낸메시지</span></li>
+							<li class="option1" onclick="getAllCount('<%=msglist.size() + sendmsglist.size()%>')"><input type="hidden" id="groups" name="deleteField" value="allMsg"><span>전체</span></li>
 						</ul>
 					</div>
 					<div id="submit-btn">
@@ -806,27 +806,59 @@ for (var i = 0; i < optionList.length; i++) {
   option.addEventListener("click", onClickOption);
  }
  
- 
+//메시지 삭제 select box
 function onClickSelect2(e) {
-	  const isActive2 = e.currentTarget.className.indexOf("active") !== -1;
-	  if (isActive2) {
-	    e.currentTarget.className = "select1";
-	  } else {
-	    e.currentTarget.className = "select1 active";
-	  }
-	}
-	document.querySelector("#select-sec1 .select1").addEventListener("click", onClickSelect2);
+  const isActive2 = e.currentTarget.className.indexOf("active") !== -1;
+  if (isActive2) {
+    e.currentTarget.className = "select1";
+  } else {
+    e.currentTarget.className = "select1 active";
+  }
+}
+document.querySelector("#select-sec1 .select1").addEventListener("click", onClickSelect2);	
 
 function onClickOption2(e) {
-const selectedValue2 = e.currentTarget.innerHTML;
-document.querySelector("#select-sec1 .text1").innerHTML = selectedValue2;
+	const selectedValue2 = e.currentTarget.innerHTML;
+	document.querySelector("#select-sec1 .text1").innerHTML = selectedValue2;
 }
 
-var optionList2 = document.querySelectorAll("#select-sec1 .option1");
-for (var i = 0; i < optionList2.length; i++) {
-var option2 = optionList2[i];
-option2.addEventListener("click", onClickOption2);
+
+//넘겨받은 메시지 갯수가 0이 아닐때만 옵션이 선택되도록 한다.
+function getRcvCount(count1){
+	if(count1 != 0){
+		var optionList2 = document.querySelectorAll("#select-sec1 .option1");
+		for (var i = 0; i < optionList2.length; i++) {
+			var option2 = optionList2[i];
+			option2.addEventListener("click", onClickOption2);
+		}
+	}else{
+		alert("삭제할 데이터가 없습니다.");
+	}
 }
+function getSendCount(count2){
+	if(count2 != 0){
+		var optionList2 = document.querySelectorAll("#select-sec1 .option1");
+		for (var i = 0; i < optionList2.length; i++) {
+			var option2 = optionList2[i];
+			option2.addEventListener("click", onClickOption2);
+		}
+	}else{
+		alert("삭제할 데이터가 없습니다.");
+	}
+}
+function getAllCount(count3){
+	if(count3 != 0){
+		var optionList2 = document.querySelectorAll("#select-sec1 .option1");
+		for (var i = 0; i < optionList2.length; i++) {
+			var option2 = optionList2[i];
+			option2.addEventListener("click", onClickOption2);
+		}
+	}else{
+		alert("삭제할 데이터가 없습니다.");
+	}
+}
+
+
 </script>
 <script>
 //접속하기 버튼을 클릭하면 id,password,available value, member, leader를 받는다
@@ -857,6 +889,9 @@ function viewMsg(msgID){
    	window.open("viewMsg.jsp?msgID=" + msgID , "VIEW MESSAGE", "width=550, height=600, top=50%, left=50%");
    	self.close();
 }
+
+//메시지를 삭제할 목록을 클릭했을때 삭제할 데이터가 없으면 알림창을 띄운다.
+
 </script>
 </body>
 </html>

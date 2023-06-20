@@ -138,6 +138,21 @@ public class MessageDAO {
 		}
 		return -1; //데이터베이스 오류
 	}
+	//삭제되지않은 메시지 갯수 구하기
+	public int msgCount(String toUserID, String userID) {
+		String SQL = "SELECT COUNT(*) FROM message WHERE toUserID = ? AND userID = ? ";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, userID);
+			pstmt.setString(2, userID);
+			//성공적으로 수행했다면 0이상의 결과 반환	
+			return pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return -1; //데이터베이스 오류
+	}
+	
 	//받은 메시지 삭제하기 : toUserID == userID 이면 받은메시지이다.
 	public int deleteRcvMsg(String userID) {
 		String SQL = "UPDATE message SET msgAvailable = 0 WHERE toUserID = ? ";
