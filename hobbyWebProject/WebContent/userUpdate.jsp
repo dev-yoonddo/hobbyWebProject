@@ -808,55 +808,25 @@ for (var i = 0; i < optionList.length; i++) {
  
 //메시지 삭제 select box
 function onClickSelect2(e) {
-  const isActive2 = e.currentTarget.className.indexOf("active") !== -1;
-  if (isActive2) {
-    e.currentTarget.className = "select1";
-  } else {
-    e.currentTarget.className = "select1 active";
-  }
-}
-document.querySelector("#select-sec1 .select1").addEventListener("click", onClickSelect2);	
-
+	  const isActive2 = e.currentTarget.className.indexOf("active") !== -1;
+	  if (isActive2) {
+	    e.currentTarget.className = "select1";
+	  } else {
+	    e.currentTarget.className = "select1 active";
+	  }
+	}
+	document.querySelector("#select-sec1 .select1").addEventListener("click", onClickSelect2);
+	
 function onClickOption2(e) {
 	const selectedValue2 = e.currentTarget.innerHTML;
 	document.querySelector("#select-sec1 .text1").innerHTML = selectedValue2;
+	}
+var optionList2 = document.querySelectorAll("#select-sec1 .option1");
+for (var i = 0; i < optionList2.length; i++) {
+	var option2 = optionList2[i];
+	option2.addEventListener("click", onClickOption2);
 }
 
-
-//넘겨받은 메시지 갯수가 0이 아닐때만 옵션이 선택되도록 한다.
-function getRcvCount(count1){
-	if(count1 != 0){
-		var optionList2 = document.querySelectorAll("#select-sec1 .option1");
-		for (var i = 0; i < optionList2.length; i++) {
-			var option2 = optionList2[i];
-			option2.addEventListener("click", onClickOption2);
-		}
-	}else{
-		alert("삭제할 데이터가 없습니다.");
-	}
-}
-function getSendCount(count2){
-	if(count2 != 0){
-		var optionList2 = document.querySelectorAll("#select-sec1 .option1");
-		for (var i = 0; i < optionList2.length; i++) {
-			var option2 = optionList2[i];
-			option2.addEventListener("click", onClickOption2);
-		}
-	}else{
-		alert("삭제할 데이터가 없습니다.");
-	}
-}
-function getAllCount(count3){
-	if(count3 != 0){
-		var optionList2 = document.querySelectorAll("#select-sec1 .option1");
-		for (var i = 0; i < optionList2.length; i++) {
-			var option2 = optionList2[i];
-			option2.addEventListener("click", onClickOption2);
-		}
-	}else{
-		alert("삭제할 데이터가 없습니다.");
-	}
-}
 
 
 </script>
