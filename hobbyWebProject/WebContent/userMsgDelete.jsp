@@ -32,9 +32,9 @@
 		script.println("</script>");
 	}
 	else{
-		String deleteField = request.getParameter("deleteField");
+		String deleteField2 = request.getParameter("deleteField2");
 	
-		if(deleteField == null) {
+		if(deleteField2 == null) {
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
 			script.println("alert('삭제할 메시지를 선택하세요.')");
@@ -43,29 +43,29 @@
 		}else{
 		    int result = 0;
 		
-			    if(deleteField.equals("rcvMsg")) {
-			        result = message.deleteRcvMsg(userID);
-			    } else if(deleteField.equals("sendMsg")) {
-			        result = message.deleteSendMsg(userID);
-			    } else if(deleteField.equals("allMsg")) {
-			        result = message.deleteAllMsgByUser(userID);
-			    }
-			
-			    if(result > 0) {
-			    	PrintWriter script = response.getWriter();
-					script.println("<script>");
-					script.println("alert('삭제 성공')");
-					script.println("location.href='userUpdate.jsp'");
-					script.println("</script>");
-			    } else {
-			    	PrintWriter script = response.getWriter();
-					script.println("<script>");
-					script.println("alert('삭제 실패')");
-					script.println("history.back()");
-					script.println("</script>");
-			    }
-			}
+		    if(deleteField2.equals("rcvMsg")) {
+		        result = message.deleteRcvMsg(userID);
+		    } else if(deleteField2.equals("sendMsg")) {
+		        result = message.deleteSendMsg(userID);
+		    } else if(deleteField2.equals("allMsg")) {
+		        result = message.deleteRcvMsg(userID) + message.deleteSendMsg(userID);
+		    }
+		
+		    if(result > 0) {
+		    	PrintWriter script = response.getWriter();
+				script.println("<script>");
+				script.println("alert('메시지가 삭제되었습니다.')");
+				script.println("location.href='userUpdate.jsp'");
+				script.println("</script>");
+		    } else {
+		    	PrintWriter script = response.getWriter();
+				script.println("<script>");
+				script.println("alert('삭제할 메시지가 없습니다.')");
+				script.println("history.back()");
+				script.println("</script>");
+		    }
 		}
+	}
 %>
 </body>
 </html>

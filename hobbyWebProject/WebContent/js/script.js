@@ -169,7 +169,7 @@ btn[0].addEventListener('click', function(e){
     e.previousElementSibling.classList.add('showing')
     e.classList.remove('showing')     
   }   
-})
+});
 
 //오른쪽 버튼
 btn[1].addEventListener('click', function(e){
@@ -187,7 +187,7 @@ btn[1].addEventListener('click', function(e){
     e.nextElementSibling.classList.add('showing')
     e.classList.remove('showing')  
   }  
-})
+});
 
 //자동으로 슬라이드
 function autoPlay() {

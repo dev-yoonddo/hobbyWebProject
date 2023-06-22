@@ -124,7 +124,7 @@ $(document).ready(function(){
 	var viewCount5 = 5;
 	var lastIndex5 = viewCount5 - 1;
 	var rows5 = $('.showMsg').length;
-	$('.showMsg').slice(viewCount5).hide();
+	$('.showRcvMsg').slice(viewCount5).hide();
 
 	$("#more-btn-5").click(function(e){ 
 	    e.preventDefault();
@@ -132,15 +132,15 @@ $(document).ready(function(){
 	        alert("마지막 메시지입니다"); 
 	        return;
 	    }
-	    $('.showMsg').slice(lastIndex5 + 1, lastIndex5 + 1 + viewCount5).show('slow'); 
-	    $('.showMsg').slice(0, lastIndex5 + 1).hide();
+	    $('.showRcvMsg').slice(lastIndex5 + 1, lastIndex5 + 1 + viewCount5).show('slow'); 
+	    $('.showRcvMsg').slice(0, lastIndex5 + 1).hide();
 	    lastIndex5 += viewCount5; 
 	});
 	//보낸 메시지 더보기
 	var viewCount6 = 5;
 	var lastIndex6 = viewCount6 - 1;
-	var rows6 = $('.showMsg').length;
-	$('.showMsg').slice(viewCount6).hide();
+	var rows6 = $('.showSendMsg').length;
+	$('.showSendMsg').slice(viewCount6).hide();
 
 	$("#more-btn-6").click(function(e){ 
 	    e.preventDefault();
@@ -148,8 +148,8 @@ $(document).ready(function(){
 	        alert("마지막 메시지입니다"); 
 	        return;
 	    }
-	    $('.showRcvMsg').slice(lastIndex6 + 1, lastIndex6 + 1 + viewCount6).show('slow'); 
-	    $('.showRcvMsg').slice(0, lastIndex6 + 1).hide();
+	    $('.showSendMsg').slice(lastIndex6 + 1, lastIndex6 + 1 + viewCount6).show('slow'); 
+	    $('.showSendMsg').slice(0, lastIndex6 + 1).hide();
 	    lastIndex6 += viewCount6; 
 	});
 });

@@ -218,7 +218,7 @@ span{
 	border-radius: 15px;
 	background-color: #E0EBFF;
 }
-#dl-btn{
+#dl-btn, #dl-btn2{
 	border: 0;
 	outline: 0;
 	width: 50px;
@@ -760,22 +760,22 @@ span{
 		<!-- 원하는 데이터 삭제하기  -->
 		<div id="delete-sec1">
 			<div class="select-msg">
-			<form method="post" id ="deleteField" action="userMsgDelete.jsp">
+			<form method="post" id ="deleteField2" action="userMsgDelete.jsp">
 				<div id="select-sec1">
 					<div class="select1">
 						<div class="text1">
-							<input type="hidden" name="deleteField">
+							<input type="hidden" name="deleteField2">
 							<span>삭제할 메시지 선택</span>
 							<span><i class="fa-solid fa-chevron-down"></i></span>
 						</div>
 						<ul class="option-list1">
-							<li class="option1" onclick="getRcvCount('<%=msglist.size()%>')"><input type="hidden" id="boards" name="deleteField" value="rcvMsg"><span>받은메시지</span></li>
-							<li class="option1" onclick="getSendCount('<%=sendmsglist.size()%>')"><input type="hidden" id="comments" name="deleteField" value="sendMsg"><span>보낸메시지</span></li>
-							<li class="option1" onclick="getAllCount('<%=msglist.size() + sendmsglist.size()%>')"><input type="hidden" id="groups" name="deleteField" value="allMsg"><span>전체</span></li>
+							<li class="option1" onclick="getCount('<%=msglist.size()%>')"><input type="hidden" id="rcvs" name="deleteField2" value="rcvMsg"><span>받은메시지</span></li>
+							<li class="option1" onclick="getCount('<%=sendmsglist.size()%>')"><input type="hidden" id="sends" name="deleteField2" value="sendMsg"><span>보낸메시지</span></li>
+							<li class="option1" onclick="getCount('<%=msglist.size() + sendmsglist.size()%>')"><input type="hidden" id="all" name="deleteField2" value="allMsg"><span>전체</span></li>
 						</ul>
 					</div>
 					<div id="submit-btn">
-						<button type="submit" id="dl-btn"><span id="dl">삭제</span></button>
+						<button type="submit" id="dl-btn2"><span id="dl">삭제</span></button>
 					</div>
 				</div>
 			</form>
@@ -807,6 +807,26 @@ for (var i = 0; i < optionList.length; i++) {
  }
  
 //메시지 삭제 select box
+//메시지를 삭제할 목록을 클릭했을때 삭제할 데이터가 없으면 알림창을 띄운다.
+
+function getCount(count){
+	if(count > 0){
+		var optionList2 = document.querySelectorAll("#select-sec1 .option1");
+		for (var i = 0; i < optionList2.length; i++) {
+			var option2 = optionList2[i];
+			option2.addEventListener("click", onClickOption2);
+		}
+		function onClickOption2(e) {
+			const selectedValue2 = e.currentTarget.innerHTML;
+			document.querySelector("#select-sec1 .text1").innerHTML = selectedValue2;
+		}
+	}
+	else{
+		alert("삭제할 메시지가 없습니다.");
+	}
+}
+
+
 function onClickSelect2(e) {
 	  const isActive2 = e.currentTarget.className.indexOf("active") !== -1;
 	  if (isActive2) {
@@ -815,17 +835,10 @@ function onClickSelect2(e) {
 	    e.currentTarget.className = "select1 active";
 	  }
 	}
-	document.querySelector("#select-sec1 .select1").addEventListener("click", onClickSelect2);
 	
-function onClickOption2(e) {
-	const selectedValue2 = e.currentTarget.innerHTML;
-	document.querySelector("#select-sec1 .text1").innerHTML = selectedValue2;
-	}
-var optionList2 = document.querySelectorAll("#select-sec1 .option1");
-for (var i = 0; i < optionList2.length; i++) {
-	var option2 = optionList2[i];
-	option2.addEventListener("click", onClickOption2);
-}
+	document.querySelector("#select-sec1 .select1").addEventListener("click", onClickSelect2);
+
+	
 
 
 
@@ -860,7 +873,6 @@ function viewMsg(msgID){
    	self.close();
 }
 
-//메시지를 삭제할 목록을 클릭했을때 삭제할 데이터가 없으면 알림창을 띄운다.
 
 </script>
 </body>
