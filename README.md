@@ -1,40 +1,38 @@
 # 취미는 하고싶은데 혼자는 싫을 때 TOGETHER 🏌️‍♂️🏊‍♂️🏋️‍♀️🚴‍♀️
 
 프론트엔드, 백엔드를 혼자 맡아 제작한 개인 프로젝트입니다.
-기획부터 배포까지 총 4주 소요되었고 아래 링크로 접속하실 수 있습니다.
-https://toogether.me
+기획부터 배포까지 총 8주 소요되었고 아래 링크로 접속하실 수 있습니다.
+## https://toogether.me
 
 ✔팀 구성 : 1 명<br>
 ✔파트 : 풀 스택<br>
-✔기간 : 3주 (2023)
+✔기간 : 8주
 
 <br><br><br>
 
 ## ❔ 프로젝트 주제 선정 이유와 개발 목표
 
-1. 직장생활 중 몸과 마음을 refresh 할 수 있는 취미를 갖고싶지만 함께 할 사람을 찾고있는 사용자를 위한 웹페이지를 주제로 선정했습니다.  
-2. 팀 프로젝트에서 구현한 기능 외에 좋아요,조회수,그룹가입 기능을 추가하고 처음부터 끝까지 직접 계획하고 개발하는 것을 목표로 정했습니다. <br>
+직장생활을 하면서 지친 몸과 마음을 건강하게 만들 수 있는 취미를 갖고싶은 사용자를 위한 웹페이지를 주제로 선정했습니다.  
+팀 프로젝트에서 구현한 기능 외에 좋아요,조회수,그룹가입,메시지 기능을 추가하고 처음부터 끝까지 직접 계획하고 개발하는 것을 목표로 정했습니다. <br>
 
 <br><br>
 
 ## ❔ 프로젝트 진행 후 느낀점
 
-개발하면서 에러는 바늘과 실처럼 함께할 수 밖에 없기 때문에 해결하기 위해 꼬박 반나절을 고민한 적도 있습니다.
-하지만 문제를 해결하면서 프로젝트의 완성도도 더 높아졌고 그에 따라 저의 만족감도 커짐을 느끼며 시행착오를 겪으면서
-더 큰 발전을 할 수 있다는 점을 깨달았던 프로젝트입니다. 그리고 오류가 발생했을 때 손을 놓고 머릿속으로 고민하기보다
-책과 검색을 활용해 정보를 찾아보고 다양한 코드를 짜서 실행해보며 부딪히는 것이 문제해결 속도를 빠르게 할 뿐만 아니라
-개발에 대한 흥미도 더욱 높아지도록 하는 아주 중요한 점이라는 깨달음을 얻은 프로젝트입니다.
-앞으로 그룹신청시 수락 후 가입할 수 있는 기능을 추가할 계획이며 프로젝트의 완성도를 더 높일 수 있을 때까지 꾸준히 공부하고 개발하도록 노력하고 있습니다.
+개발부터 배포까지 작고 큰 오류들을 접하며 하나의 오류를 해결하기 위해 하루 동안 고민한 적도 있지만 문제를 해결하면서 프로젝트의 완성도도 더 높아졌고
+그에 따라 성취감도 높아짐을 느끼면서 시행착오를 겪었을 때 더 좋은 결과물을 얻을 수 있다는 점을 깨달았던 프로젝트입니다.
+그리고 오류 해결 방식에 있어서 문제가 발생했을 때 머릿속으로 생각만 하기보단 검색과 책을 활용해 정보를 찾아보고 다양한 코드를 실행해 보며
+행동으로 부딪히는 것이 문제 해결 속도를 빠르게 할 뿐만 아니라 개발에 대한 흥미도 더욱 높아지도록 하는 아주 중요한 점을 알게 된 프로젝트입니다.
 
 <br><br>
 
 
 ## ❔ 기술
 
-- IDE : Eclipse<br>
+- IDE : Eclipse, DBeaver
 - DBMS : MySQL 5.5<br>
-- WAS : Apache Tomcat 8.5<br>
-- Frontend : JavaScript, HTML5, CSS3, JQuery, Bootstrap<br>
+- WAS : Apache Tomcat 8.5
+- Frontend : JavaScript, HTML5, CSS3, JQuery, Bootstrap <br>
 - Backend : Java, Spring
 
 ### DB 관계도
@@ -217,8 +215,8 @@ https://toogether.me
 <br>
 
 <div style="display: flex-start;">
-<img src="https://user-images.githubusercontent.com/84071666/235875451-a4c6e412-bfc7-4a1d-be78-2e919a4da178.PNG" width="20%" height="100px" align="left">
-<img src="https://user-images.githubusercontent.com/84071666/235889071-96bee41d-7978-4858-8000-708e4d4ae448.PNG" width="35%">
+<img src="https://user-images.githubusercontent.com/84071666/235875451-a4c6e412-bfc7-4a1d-be78-2e919a4da178.PNG" width="30%" height="100px" align="left">
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/ae5608a8-cd14-4950-9fdf-0a889a38d75b.PNG" width="35%">
 </div> <br><br>
 
 ![update1](https://user-images.githubusercontent.com/84071666/235870955-c9c3824f-3916-4450-adb7-6fe3a3887d4d.PNG)
@@ -326,7 +324,7 @@ https://toogether.me
 
 <br>
 
-![userdeleteinfo2](https://user-images.githubusercontent.com/84071666/235871008-e326944a-da41-4c1b-922d-674e2068d8f3.PNG)
+![btn-side2](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/ca8ca440-9e95-4b21-afa9-3e8499cfa67e)
 ![userdeleteinfo3](https://user-images.githubusercontent.com/84071666/235871010-4624d8e5-8806-49f8-8739-80f9ae72b888.PNG)
 ![userdeleteinfo4](https://user-images.githubusercontent.com/84071666/235871014-36e71b8f-5547-4cbb-afb2-d99f5cae57c7.PNG)
 
@@ -407,6 +405,41 @@ https://toogether.me
 <br><br>
 
 ---
+
+<br>
+
+## 🔘 4 ) 메시지 관리
+
+<br><br>
+
+### ⚙ 데이터 관리와 마찬가지로 메시지 전체를 관리 가능
+
+<br>
+
+![btn-side3](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/d005d98f-eb9d-4bd4-9135-4f853bdb20e0)
+![update1](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/ee34a997-73f6-4f55-a0c4-c1c7b9efae31)
+![update2](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/142c3cf0-a62a-4554-af79-09982af3b5ac)
+![update3](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/72db7750-30cf-4cb7-b5d2-5c5dd9ff8ba4)
+![update4](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/b76196dc-a5ab-461d-af67-077f56ccbce0)
+![update5](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/38d99019-81c6-45aa-bcac-ae7e7b07a601)
+
+<br>
+
+### ⚙ 메시지 보기
+
+<br>
+
+![update7](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/123e49c4-4b95-4432-b67f-5d32aef220cc)
+![update8](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/de340b9d-2f56-4be9-81f1-3eeb2954f112)
+![update8PNG](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/d74efadb-09e4-4fa8-9072-a8aa27f56c7d)
+
+<br>
+
+### ⚙ 메시지 삭제
+
+<br>
+
+![update9](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/d9f7aa12-d95f-4d4c-a24a-58fe9b10993c)
 
 <br><br>
 
@@ -771,20 +804,63 @@ https://toogether.me
 <img src="https://user-images.githubusercontent.com/84071666/236120124-b565985e-d3ca-44fa-9aa0-69ba34558d30.PNG">
 </div>
 
-### ⚙ 그룹에 접속한 사용자가 그룹 생성자일 경우 그룹삭제 버튼, 가입한 사용자일 경우 그룹탈퇴 버튼 생성
-  
+<br>
+
+### ⚙ 접속한 유저가 그룹생성자면 메시지확인&그룹삭제 버튼, 그룹가입자면 메시지전송&그룹탈퇴 버튼 생성
+
 <br>
 
 <div style="display: flex;">
-<img src="https://user-images.githubusercontent.com/84071666/236120959-34788413-5bb4-4ea2-bb2b-b99651318494.PNG" width="20%">
-<img src="https://user-images.githubusercontent.com/84071666/236120961-08539a42-987f-4082-a9f7-3ef9b3d5ea1e.PNG" width="20%">
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/b61f532e-24ec-4f98-b80f-fbfa767ff838.PNG" width="30%">
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/8adb6285-13a4-412d-99b7-be155f1cd674.PNG" width="32%">
 </div>
+
+<br>
+
+---
+
+## 🔘 4 ) 메시지 확인 및 전송
+
+<br><br>
+
+### ⚙ 메시지 확인 버튼 클릭시 해당 그룹의 멤버가 보낸 메시지 목록 팝업창 생성
+:메시지 목록 팝업창에서는 해당 그룹의 멤버에게 받은 메시지만 확인할 수 있다.
+
+<br>
+
+<div style="display: flex;">
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/f7344195-a4cb-41d4-9fa4-e41bfd91f921.PNG" width="47%">
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/bbdede0b-3dd5-4dd0-bf52-83c21c24e17e.PNG" width="47%">
+</div>
+
+<br>
+
+### ⚙ 답장하기, 메시지 전송 버튼 클릭시 toUserID에 그룹생성자의 userID 또는 메시지를 보낸 사용자의 userID로 메시지를 전송한다.
+
+<br>
+<div style="display: flex;">
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/7446116d-59e0-4029-be24-57fe3e384cdf.PNG" width="47%">
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/d3c7f0cc-cce8-49ce-9b7a-b309248b50af.PNG" width="47%">
+</div>
+
+<br>
+
+![btn-member3](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/b8ebaddd-51e7-41b0-9590-8204cc25344a)
+
+<br>
+
+### ⚙ 메시지 DB
+
+<br>
+
+![msg-db](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/7b10ce08-a9ab-450c-a44b-9d387d248343)
+
 
 ---
 
 <br><br>
 
-## 🔘 4 ) 그룹 탈퇴
+## 🔘 5 ) 그룹 탈퇴
 
 <br><br>
 
