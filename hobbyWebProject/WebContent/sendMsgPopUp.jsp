@@ -75,7 +75,7 @@ if(request.getParameter("msgID") != null){
 %>
 <div id="sendMsg">
 	<!-- 메시지전송 버튼을 눌렀을때와 답장하기 버튼을 눌렀을때 가져온 값이 다르기때문에 따로 설정해준다. -->
-	<% if(msgID == 0){  //msgID = 0 이면 그룹장에게 메시지를 보내는 사용자이다. %>
+	<% if(msgID == 0){  //msgID = 0 이면 메시지전송을 클릭했다는 의미이다. %>
     <h2>To. <%=groupDAO.getGroupVO(groupID).getUserID()%><h2>
     <form method="post" action="sendMsgAction.jsp?groupID=<%= groupID %>" id="send-form">
         <input type="text" placeholder="제목을 입력하세요" name="msgTitle" id="msgTitle" maxlength="20">

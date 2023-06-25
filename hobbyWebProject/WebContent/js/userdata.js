@@ -1,17 +1,20 @@
 $(document).ready(function(){
 	//메뉴 클릭할때마다 보이고 숨기기
 	$('#userInfo').show();
-
+	
+	//정보 수정
 	$('#menu1').on('click', function(){
 	    $('#userInfo').show();
 		$('#userSet').hide();
 		$('#userMsg').hide();
 	  });
+	//데이터 관리
 	$('#menu2').on('click', function(){
 	  $('#userSet').show();
 	  $('#userInfo').hide();
 	  $('#userMsg').hide();
 	});
+	//메시지 관리
 	$('#menu3').on('click', function(){
 	  $('#userMsg').show();
 	  $('#userInfo').hide();
@@ -22,7 +25,7 @@ $(document).ready(function(){
 	//게시글 목록은 제외하고 모두 숨기기
 	$('#cmtData').hide(); $('#groupData').hide(); $('#memberData').hide();
 	
-	//나머지는 리스트 결과가 없을때 텍스트를 표시하기 위해 show를 해준다.
+	//보기를 클릭한 데이터 외 나머지는 숨기기
 	$('#view1').on('click', function(){
 		$('#boardData').show();
 		$('#cmtData').hide(); $('#groupData').hide(); $('#memberData').hide();
@@ -67,6 +70,7 @@ $(document).ready(function(){
 	    $('.showWrite').slice(lastIndex + 1, lastIndex + 1 + viewCount).show('slow'); // 처음 출력한 글의 다음 글들을 보여준다.
 	    $('.showWrite').slice(0, lastIndex + 1).hide(); // 0부터 이전의 글들을 모두 숨긴다.
 	    lastIndex += viewCount; // 다음 글 출력을 위해 lastIndex에 viewCount를 더해준다.
+	    
 	});
 	 
 	//내가 작성한 댓글 더보기 viewCount lastIndex는 이미 위에서 선언함
@@ -123,7 +127,7 @@ $(document).ready(function(){
 	//받은 메시지 더보기
 	var viewCount5 = 5;
 	var lastIndex5 = viewCount5 - 1;
-	var rows5 = $('.showMsg').length;
+	var rows5 = $('.showRcvMsg').length;
 	$('.showRcvMsg').slice(viewCount5).hide();
 
 	$("#more-btn-5").click(function(e){ 

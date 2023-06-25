@@ -21,6 +21,7 @@
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script type="text/javascript" src="js/script.js"></script>
 <script type="text/javascript" src="js/checkPW.js"></script>
+<script defer type="text/javascript" src="js/userdata.js"></script>
 
 <style>
 body{
@@ -42,9 +43,7 @@ h2{
 #view-head{
 	color: black;
 }
-#more-btn{
-	cursor: pointer;
-}
+
 td{
 	table-layout: fixed;
 	height: 20px;
@@ -70,10 +69,12 @@ tr{
 	align-items: center;
 }
 
-#more-btn{
+#more-btn-5{
 	float: right;
 	font-size: 11pt;
 	font-weight: bold;
+	cursor: pointer;
+
 }
 .none-list{
 	text-align: center; 
@@ -148,7 +149,7 @@ ArrayList<MessageDTO> msglist = msgDAO.getMsgList(userID, groupID);
 			<%
 				for (int i = 0; i < msglist.size(); i++) {
 			%>
-			<tr class="showMsg" style="height: 20px;">
+			<tr class="showRcvMsg" style="height: 20px;">
 				<td><%=msglist.get(i).getUserID()%></td>
 				<td><a id="click-view" onclick="viewMsg('<%= msglist.get(i).getMsgID()%>')"><%= msglist.get(i).getMsgTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></a></td>
 				<!-- msgCheck == 0이면 안읽음, 1이면 읽음 표시하기 -->
@@ -169,35 +170,18 @@ ArrayList<MessageDTO> msglist = msgDAO.getMsgList(userID, groupID);
 	</table><br>
 	<!-- 글 갯수가 1 이상이면 MORE 버튼 보이기 -->
 	<% if (msglist.size() != 0) { %>
-		<div id="more-btn">MORE</div>
+		<div id="more-btn-5">MORE</div>
 	<%} %>
 </div>
 
 
 </body>
 <script>
-//메시지 더보기
-var viewCount = 5; // 클릭할 때 마다 보여질 갯수
-var lastIndex = viewCount - 1; //보여질 글의 마지막 인덱스
-var rows = $('.showMsg').length; //전체 글 갯수
-$('.show').slice(viewCount).hide(); // 처음 viewCount개의 글을 제외하고 모두 숨기기
 
-$("#more-btn").click(function(e){ //more-btn을 클릭했을때
-    e.preventDefault();
-    if(rows <= lastIndex + 1){ //만약 전체 글의 수가 lastIndex +1 한 값보다 작거나 같으면
-        alert("마지막 글입니다"); //마지막 글이라는 알림창 띄우기
-	    return; //return을 하지않으면 알림창을 띄우고 또 다음으로 실행된다.
-    
-    }
-    $('.showWrite').slice(lastIndex + 1, lastIndex + 1 + viewCount).show('slow'); // 처음 출력한 글의 다음 글들을 보여준다.
-    $('.showWrite').slice(0, lastIndex + 1).hide(); // 0부터 이전의 글들을 모두 숨긴다.
-    lastIndex += viewCount; // 다음 글 출력을 위해 lastIndex에 viewCount를 더해준다.
-});
-
-
+//메시지 제목을 클릭하면 상세팝업 띄우기
 function viewMsg(msgID){
    	window.open("viewMsg.jsp?msgID=" + msgID , "VIEW MESSAGE", "width=550, height=600, top=50%, left=50%");
-   	self.close();
+   	self.close(); //이전 팝업 닫기
 }
 </script>
 </html>

@@ -34,8 +34,6 @@
 <script src="https://kit.fontawesome.com/f95555e5d8.js" crossorigin="anonymous"></script>
 <script type="text/javascript" src="js/checkPW.js"></script>
 <script type="text/javascript" src="js/script.js"></script>
-<script defer type="text/javascript" src="js/userdata.js"></script>
-
 </head>
 <style>
 header{
@@ -255,7 +253,7 @@ span{
 		PrintWriter script = response.getWriter();
 		script.println("<script>");
 		script.println("alert('로그인이 필요합니다.')");
-		script.println("window.open('loginPopUp.jsp', 'Login', 'width=450, height=500, top=50%, left=50%')");
+		script.println("window.open('loginPopUp.jsp', 'Login', 'width=500, height=550, top=50%, left=50%')");
 		script.println("</script>");
 	}
 	
@@ -810,7 +808,7 @@ for (var i = 0; i < optionList.length; i++) {
 //메시지를 삭제할 목록을 클릭했을때 삭제할 데이터가 없으면 알림창을 띄운다.
 
 function getCount(count){
-	if(count > 0){
+	if(count >= 1){
 		var optionList2 = document.querySelectorAll("#select-sec1 .option1");
 		for (var i = 0; i < optionList2.length; i++) {
 			var option2 = optionList2[i];
@@ -872,8 +870,8 @@ function viewMsg(msgID){
    	window.open("viewMsg.jsp?msgID=" + msgID , "VIEW MESSAGE", "width=550, height=600, top=50%, left=50%");
    	self.close();
 }
-
-
 </script>
+<script defer type="text/javascript" src="js/userdata.js"></script>
+
 </body>
 </html>
