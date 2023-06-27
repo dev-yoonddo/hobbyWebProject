@@ -595,7 +595,7 @@ span{
 		<!-- 원하는 데이터 삭제하기  -->
 		<div id="delete-sec">
 			<div class="select-hobby">
-			<form method="post" id ="deleteField" action="userSetDelete.jsp">
+			<form method="post" id ="deleteField" action="userSetDeleteAction.jsp">
 				<div id="select-sec">
 					<div class="select">
 						<div class="text">
@@ -758,7 +758,7 @@ span{
 		<!-- 원하는 데이터 삭제하기  -->
 		<div id="delete-sec1">
 			<div class="select-msg">
-			<form method="post" id ="deleteField2" action="userMsgDelete.jsp">
+			<form method="post" id ="deleteField2" action="userMsgDeleteAction.jsp">
 				<div id="select-sec1">
 					<div class="select1">
 						<div class="text1">
