@@ -25,33 +25,39 @@
 <br><br>
 
 
-## ❔ 기술
+## ❔ Tech Skills
 
 - IDE : Eclipse, DBeaver
 - DBMS : MySQL 5.5<br>
 - WAS : Apache Tomcat 8.5
 - Frontend : JavaScript, HTML5, CSS3, JQuery, Bootstrap <br>
 - Backend : Java, Spring
+- Infra : AWS (EC2, RDS, Route53, ELB, ALB, ACM)
+<br>
 
-### DB 관계도
+### Database ERD
 
-![DB관계도](https://user-images.githubusercontent.com/84071666/235856555-9732e223-7613-47cd-aadb-b98b5e9eedfc.PNG)
-
-### 파일 구성
-
-![프로젝트 구성도](https://user-images.githubusercontent.com/84071666/236287196-7092c751-5119-449c-8e66-2ed0ec144527.PNG)
+![ERD](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/3e07c268-d2a3-4ae9-b55e-bfbcc01d3fcf)
 
 <br><br>
 
+### 배포 과정
+
+1. AWS EC2 인스턴스 생성 후 퍼블릭ip를 발급받아 인스턴스와 연결
+2. FileZilla로 AWS EC2 인스턴스에 업로드
+3. AWS RDS로 DB인스턴스 생성 후 Dbeaver로 MySQL과 연결
+4. 주소 뒤 8080을 항상 입력하기 번거롭기 때문에 80 to 8080 포트포워딩
+5. 가비아에서 구매한 도메인을 AWS Route53에서 호스팅영역을 생성한 뒤 연결
+6. AWS ACM에서 발급받은 SSL인증서를 사용하여 ELB(ALB)를 통해 HTTPS를 적용
 <hr>
 
 <br><br><br>
 
-# 💻 View Project
+# 💻 Detailed Description
 
 <br>
 
-## www.toogether.me 🖱
+## 🖱 www.toogether.me
 <br><br>
 
 ⚫ [메인](#--메인-)
@@ -217,8 +223,8 @@
 <img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/ae5608a8-cd14-4950-9fdf-0a889a38d75b.PNG" width="35%">
 </div> <br><br>
 
-![update1](https://user-images.githubusercontent.com/84071666/235870955-c9c3824f-3916-4450-adb7-6fe3a3887d4d.PNG)
-![update2](https://user-images.githubusercontent.com/84071666/235870959-edbc0a9b-00f2-44a7-bfce-53d8e90a94be.PNG)
+![update1](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/ba4b16aa-5566-4872-8e97-3dd12945362a)
+![userupdate2](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/4d711143-8127-4b7a-b8c5-5b32ca8e2f7c)
 
 <br><br>
 
@@ -323,8 +329,8 @@
 <br>
 
 ![btn-side2](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/ca8ca440-9e95-4b21-afa9-3e8499cfa67e)
-![userdeleteinfo3](https://user-images.githubusercontent.com/84071666/235871010-4624d8e5-8806-49f8-8739-80f9ae72b888.PNG)
-![userdeleteinfo4](https://user-images.githubusercontent.com/84071666/235871014-36e71b8f-5547-4cbb-afb2-d99f5cae57c7.PNG)
+![userupdate3](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/788c8728-2494-4041-9912-e9b124d7ecc1)
+![userupdate4](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/7829e25c-7dc8-4568-82c5-1ae8a35a9ba2)
 
 <br><br>
 
@@ -372,7 +378,7 @@
 
 <br>
 
-
+<div style="display: flex;">
 <img src="https://user-images.githubusercontent.com/84071666/235871066-4d332b60-2647-42d6-a776-66b3790d2eba.PNG" width="45%" align="left">
 <img src="https://user-images.githubusercontent.com/84071666/235871071-9e489c07-0ac8-46ad-879f-edcb3f900a31.PNG" width="50%" align="right">
 </div>
@@ -415,9 +421,6 @@
 <br>
 
 ![btn-side3](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/d005d98f-eb9d-4bd4-9135-4f853bdb20e0)
-![update1](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/ee34a997-73f6-4f55-a0c4-c1c7b9efae31)
-![update2](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/142c3cf0-a62a-4554-af79-09982af3b5ac)
-![update3](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/72db7750-30cf-4cb7-b5d2-5c5dd9ff8ba4)
 ![update4](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/b76196dc-a5ab-461d-af67-077f56ccbce0)
 ![update5](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/38d99019-81c6-45aa-bcac-ae7e7b07a601)
 
@@ -427,9 +430,13 @@
 
 <br>
 
-![update7](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/123e49c4-4b95-4432-b67f-5d32aef220cc)
-![update8](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/de340b9d-2f56-4be9-81f1-3eeb2954f112)
-![update8PNG](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/d74efadb-09e4-4fa8-9072-a8aa27f56c7d)
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/123e49c4-4b95-4432-b67f-5d32aef220cc.PNG">
+
+<div style="display: flex;">
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/d74efadb-09e4-4fa8-9072-a8aa27f56c7d.PNG" width="45%">
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/de340b9d-2f56-4be9-81f1-3eeb2954f112.PNG" width="47%">
+</div>
+
 
 <br>
 
