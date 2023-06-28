@@ -280,11 +280,12 @@ public class MessageDAO {
 			return null; 
 		}
 	//메시지 읽음 (getMsgVO에서 해도 된다)
-	public int viewMsgUpdate(int msgID) {
-		String SQL = "UPDATE message SET msgCheck = 1 WHERE msgID = ?";
+	public int viewMsgUpdate(int msgID, String toUserID) {
+		String SQL = "UPDATE message SET msgCheck = 1 WHERE msgID = ? AND toUserID = ?";
 		try {
 			PreparedStatement pstmt=conn.prepareStatement(SQL);
 			pstmt.setInt(1, msgID);
+			pstmt.setString(2, toUserID);
 			return pstmt.executeUpdate();//insert,delete,update			
 		} catch(Exception e) {
 			e.printStackTrace();
