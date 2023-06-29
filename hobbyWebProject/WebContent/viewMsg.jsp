@@ -88,7 +88,14 @@ MessageDAO msgDAO = new MessageDAO();
 //msgID에 해당하는 글의 정보 가져오기
 MessageDTO msg = new MessageDAO().getMsgVO(msgID);
 //페이지 접속시 msgCheck = 1 로 변경해서 메시지 읽음으로 변경하기
-msgDAO.msgCheckUpdate(msgID, userID);
+int result = msgDAO.msgCheckUpdate(msgID, userID);
+if(result == -1){
+	PrintWriter script = response.getWriter();
+	script.println("<script>");
+	script.println("alert('데이터베이스 오류')");
+	script.println("history.back()");
+	script.println("</script>");
+}
 %>
 <div class="board-container">
 	<div>
