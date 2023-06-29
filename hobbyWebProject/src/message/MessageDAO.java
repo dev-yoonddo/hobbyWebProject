@@ -53,6 +53,19 @@ public class MessageDAO {
 		}
 		return ""; //빈 문자열을 반환함으로써 데이터베이스 오류를 알려준다.
 	}
+	//메시지 읽음 (getMsgVO에서 해도 된다)
+	public int msgCheckUpdate(int msgID, String toUserID) {
+		String SQL = "UPDATE message SET msgCheck = 1 WHERE msgID = ? AND toUserID = ?";
+		try {
+			PreparedStatement pstmt=conn.prepareStatement(SQL);
+			pstmt.setInt(1, msgID);
+			pstmt.setString(2, toUserID);
+			return pstmt.executeUpdate();//insert,delete,update			
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return -1;//데이터베이스 오류
+	}
 	//메시지 전송하기
 	public int send(String userID, String toUserID, int groupID, String msgTitle, String msgContent) {
 		String SQL ="INSERT INTO message VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -248,48 +261,35 @@ public class MessageDAO {
 		return msglist; 
 	}
 	//한 개의 메시지 정보
-		public MessageDTO getMsgVO(int msgID) {
-			String SQL = "SELECT * FROM message WHERE msgID = ?";
-			try {
-				PreparedStatement pstmt = conn.prepareStatement(SQL);
-				pstmt.setInt(1, msgID);
-				rs = pstmt.executeQuery();
-				if(rs.next()) {
-					MessageDTO msg = new MessageDTO();
-					msg.setMsgID(rs.getInt(1));
-					msg.setUserID(rs.getString(2));
-					msg.setToUserID(rs.getString(3));
-					msg.setGroupID(rs.getInt(4));
-					msg.setMsgTitle(rs.getString(5));
-					msg.setMsgContent(rs.getString(6));
-					msg.setMsgCheck(rs.getInt(7));
-					msg.setMsgAvailable(rs.getInt(8));
-					msg.setMsgDate(rs.getString(9));
-
-					/* 메시지 조회 처리 다른 방법
-					int viewCount=rs.getInt(8);
-					board.setViewCount(viewCount);
-					viewCount++;
-					viewCountUpdate(viewCount,boardID);
-					*/
-					return msg;
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			return null; 
-		}
-	//메시지 읽음 (getMsgVO에서 해도 된다)
-	public int viewMsgUpdate(int msgID, String toUserID) {
-		String SQL = "UPDATE message SET msgCheck = 1 WHERE msgID = ? AND toUserID = ?";
+	public MessageDTO getMsgVO(int msgID) {
+		String SQL = "SELECT * FROM message WHERE msgID = ?";
 		try {
-			PreparedStatement pstmt=conn.prepareStatement(SQL);
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, msgID);
-			pstmt.setString(2, toUserID);
-			return pstmt.executeUpdate();//insert,delete,update			
-		} catch(Exception e) {
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				MessageDTO msg = new MessageDTO();
+				msg.setMsgID(rs.getInt(1));
+				msg.setUserID(rs.getString(2));
+				msg.setToUserID(rs.getString(3));
+				msg.setGroupID(rs.getInt(4));
+				msg.setMsgTitle(rs.getString(5));
+				msg.setMsgContent(rs.getString(6));
+				msg.setMsgCheck(rs.getInt(7));
+				msg.setMsgAvailable(rs.getInt(8));
+				msg.setMsgDate(rs.getString(9));
+
+				/* 메시지 조회 처리 다른 방법
+				int viewCount=rs.getInt(8);
+				board.setViewCount(viewCount);
+				viewCount++;
+				viewCountUpdate(viewCount,boardID);
+				*/
+				return msg;
+			}
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return -1;//데이터베이스 오류
+		return null; 
 	}
 }
