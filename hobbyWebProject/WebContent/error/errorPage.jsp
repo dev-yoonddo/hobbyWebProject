@@ -42,6 +42,7 @@ if(userID == null){
 	script.println("window.open('loginPopUp.jsp', 'Login', 'width=450, height=500, top=50%, left=50%')");
 	script.println("</script>");
 }
+if(userID != null){
 %>
 <div id="error" style="width:auto; display: flex; justify-content: center;">
 	<div style="justify-content: center;">
@@ -53,5 +54,6 @@ if(userID == null){
 		</div>
 	</div>
 </div>
+<%} %>
 </body>
 </html>
