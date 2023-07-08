@@ -381,13 +381,13 @@ function joinGroup(groupID, groupAvailable, mbNum, grNum, member,memberDel) {
 //접속하기 버튼을 클릭하면 id,password,available value, member, leader를 받는다
 function showPasswordPrompt(grID, grPassword, grAvailable, member, leader) {
     var inputPassword = "";
-	//그룹 생성자이면 비밀번호 입력 없이 접속
-	if(leader == "true"){
-		location.href = "groupView.jsp?groupID=" + grID;
-	}else{
-	//그룹 생성자가 아니면
-	    //그룹 활동중
-	    if(grAvailable == 1){
+ 	 //그룹 활동중
+    if(grAvailable == 1){
+		//그룹 생성자이면 비밀번호 입력 없이 접속
+		if(leader == "true"){
+			location.href = "groupView.jsp?groupID=" + grID;
+		}else{
+		//그룹 생성자가 아니면
 	    	//member에 데이터가 없으면 (userID, groupID가 일치하는 데이터가 없으면) 가입하지 않은 유저
 	    	if(member == "null"){
 	    		alert("가입 후 접속해주세요");
@@ -405,11 +405,11 @@ function showPasswordPrompt(grID, grPassword, grAvailable, member, leader) {
 			        location.href = "groupView.jsp?groupID=" + grID;
 			    }
 	    	}
-		//그룹 비활동중
-	    }else{
-	    	alert("비활동 중인 그룹입니다.");
-	    }
-	}
+		}
+	//그룹 비활동중
+    }else{
+    	alert("비활동 중인 그룹입니다.");
+    }
     
     /* 다른 while
     while(true) {
