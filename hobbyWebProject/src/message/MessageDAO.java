@@ -30,7 +30,7 @@ public class MessageDAO {
 		        ResultSet rs = pstmt.executeQuery();
 		        if (rs.next()) {
 		            int maxMsgID = rs.getInt(1);
-		            return maxMsgID + 1;
+		            return maxMsgID + 1; 
 		        } else {
 	            return 1;
 		        }
