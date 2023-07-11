@@ -55,7 +55,7 @@ public class MessageDAO {
 	}
 	//메시지 읽음 (getMsgVO에서 해도 된다)
 	public int msgCheckUpdate(int msgID, String toUserID) {
-		String SQL = "UPDATE message SET msgCheck = 1 WHERE msgID = ? AND toUserID = ?";
+		String SQL = "UPDATE message SET msgCheck = 1 WHERE msgID = ? AND toUserID = ?"; //msgID만 넣으면 보낸사람이 읽어도 읽음으로 처리되기 때문에 toUserID == userID일 때만 읽음처리한다.
 		try {
 			PreparedStatement pstmt=conn.prepareStatement(SQL);
 			pstmt.setInt(1, msgID);
