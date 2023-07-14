@@ -131,8 +131,14 @@ if(result == -1){
 			<%
 				if(userID != null){
 			%>
-			<button type="button" class="btn-blue" onclick="viewMsgList('<%=msg.getGroupID()%>')"><span>목록</span></button>
-			<button type="button" class="btn-blue" id="cmt-write-btn" onclick="writeReply('<%=msg.getMsgID()%>',<%=msg.getGroupID()%>)"><span>답장하기</span></button>
+				<button type="button" class="btn-blue" onclick="viewMsgList('<%=msg.getGroupID()%>')"><span>목록</span></button>
+				<% 
+					if(!userID.equals(msg.getUserID())){
+				%>
+					<button type="button" class="btn-blue" id="cmt-write-btn" onclick="writeReply('<%=msg.getMsgID()%>',<%=msg.getGroupID()%>)"><span>답장하기</span></button>
+				<%
+					}
+				%>
 			<%
 				}
 			%>
