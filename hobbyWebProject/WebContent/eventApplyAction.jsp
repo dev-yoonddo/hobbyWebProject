@@ -8,8 +8,6 @@
 	request.setCharacterEncoding("UTF-8");
 %>
 
-<%@ page import="java.io.File" %>
-<%@ page import="java.util.Enumeration" %>
 
 <jsp:useBean id="board" class="board.BoardDTO" scope="page"/>
 <jsp:setProperty property="boardTitle" name="board"/>
