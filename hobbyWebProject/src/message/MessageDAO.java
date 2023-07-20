@@ -4,7 +4,11 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
+
+import member.MemberDTO;
 
 public class MessageDAO {
 	private Connection conn;
@@ -23,22 +27,22 @@ public class MessageDAO {
 		}
 	}
 	//msgID 번호매기기
-		public int getNext() {
-		    String SQL = "SELECT MAX(msgID) FROM message";
-		    try {
-		    	PreparedStatement pstmt = conn.prepareStatement(SQL);
-		        ResultSet rs = pstmt.executeQuery();
-		        if (rs.next()) {
-		            int maxMsgID = rs.getInt(1);
-		            return maxMsgID + 1; 
-		        } else {
-	            return 1;
-		        }
-		    } catch (Exception e) {
-		        e.printStackTrace();
-		    }
-		    return -1;
-		}
+	public int getNext() {
+	    String SQL = "SELECT MAX(msgID) FROM message";
+	    try {
+	    	PreparedStatement pstmt = conn.prepareStatement(SQL);
+	        ResultSet rs = pstmt.executeQuery();
+	        if (rs.next()) {
+	            int maxMsgID = rs.getInt(1);
+	            return maxMsgID + 1; 
+	        } else {
+            return 1;
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return -1;
+	}
 	//날짜 가져오기
 	public String getDate() { //현재 시간을 가져오는 함수
 		String SQL = "SELECT NOW()"; //현재 시간을 가져오는 MySQL의 문장
@@ -291,5 +295,49 @@ public class MessageDAO {
 			e.printStackTrace();
 		}
 		return null; 
+	}
+	
+	//UserDAO - delete에서 사용되는 메서드
+	//delete된 userID와 message의 userID가 같은 값의 리스트를 가져온다.
+	public List<MessageDTO> getDelMsgVOByUserID(String userID) {
+	    List<MessageDTO> messageDTOs = new ArrayList<>();
+	    String SQL = "SELECT msgID, msgAvailable FROM message WHERE userID = ?";//userID가 전송한 msgID와 삭제여부 msgAvailable을 가져온다.
+	    try {
+	        PreparedStatement pstmt = conn.prepareStatement(SQL);
+	        pstmt.setString(1, userID);
+	        ResultSet rs = pstmt.executeQuery();
+	        while (rs.next()) { //user 한명이 여러개의 member를 생성하면 데이터가 1개 이상 나오기때문에 while을 사용한다.
+	            int msgID = rs.getInt("msgID");
+	            int msgAvailable = rs.getInt("msgAvailable");
+	            //여기서 다른 속성도 가져올 수 있다.
+
+	            // memberDTO 객체를 생성하고 가져온 속성을 객체에 저장한다.
+	            MessageDTO messageDTO = new MessageDTO();
+	            messageDTO.setMsgID(msgID); 
+	            messageDTO.setMsgAvailable(msgAvailable);
+
+	            // memberDTOs list에 memberDTO object 추가
+	            messageDTOs.add(messageDTO);
+	        }
+	        rs.close();
+	        pstmt.close();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return messageDTOs;
+	}
+	
+	//UserDAO - delete에서 삭제된 user와 관련된 정보를 업데이트 한다.
+	public void updateMsgVO(MessageDTO messageDTO){
+	    String SQL = "UPDATE message SET msgAvailable = ? WHERE msgID = ?";
+	    try {
+	        PreparedStatement pstmt = conn.prepareStatement(SQL);
+	        pstmt.setInt(1, messageDTO.getMsgAvailable());
+	        pstmt.setInt(2, messageDTO.getMsgID());
+	        pstmt.executeUpdate();
+	        pstmt.close();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
 	}
 }

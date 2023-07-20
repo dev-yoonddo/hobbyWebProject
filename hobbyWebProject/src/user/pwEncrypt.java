@@ -19,4 +19,12 @@ public class pwEncrypt {
 		}
 		return encodeString;
 	}
+	/* 테스트
+	public static void main(String[] args) {
+		String raw = "1234";
+		String after = "";
+		
+		after = pwEncrypt.encoding(raw);
+		System.out.println(after);
+	}*/
 }

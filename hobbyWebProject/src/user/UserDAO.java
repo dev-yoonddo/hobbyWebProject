@@ -16,6 +16,8 @@ import group.GroupDAO;
 import group.GroupDTO;
 import member.MemberDAO;
 import member.MemberDTO;
+import message.MessageDAO;
+import message.MessageDTO;
 
 public class UserDAO {
 
@@ -179,8 +181,15 @@ public class UserDAO {
 	            MemberDAO memberDAO = new MemberDAO(); 
 	            List<MemberDTO> memberVOList = memberDAO.getDelMemberVOByUserID(userID);
 	            for (MemberDTO memberDTO : memberVOList) {
-	            	memberDTO.setMbAvailable(0);
-	            	memberDAO.updateMemberVO(memberDTO);
+	            	memberDTO.setMbAvailable(0); //모든 mbAvailable 값을 0으로 변경한다.
+	            	memberDAO.updateMemberVO(memberDTO); //변경한 후 업데이트 한다.
+	            }
+	            
+	            MessageDAO messageDAO = new MessageDAO(); 
+	            List<MessageDTO> messageVOList = messageDAO.getDelMsgVOByUserID(userID);
+	            for (MessageDTO messageDTO : messageVOList) {
+	            	messageDTO.setMsgAvailable(0); //모든 mbAvailable 값을 0으로 변경한다.
+	            	messageDAO.updateMsgVO(messageDTO); //변경한 후 업데이트 한다.
 	            }
 	        }
 	        return result;

@@ -132,6 +132,7 @@ public class MemberDAO {
 		}
 		return null;
 	}
+	
 	//해당 그룹에 유저가 탈퇴했는지 검사
 	public MemberDTO getMemberDelVO(String userID, int groupID) {
 		String SQL = "SELECT * FROM member WHERE userID = ? AND groupID = ? AND mbAvailable = 0";
@@ -155,6 +156,7 @@ public class MemberDAO {
 		}
 		return null;
 	}
+	
 	//그룹 탈퇴하기 (1. 데이터 삭제)
 	public int drop(String memberID) {
 		String SQL = "DELETE FROM member WHERE memberID = ?";
@@ -167,6 +169,7 @@ public class MemberDAO {
 		}
 		return -1; // 데이터베이스 오류
 	}
+	
 	//그룹 탈퇴하기 (2. mbAvailable = 0 으로 업데이트)
 	public int delete(String memberID) {
 		String SQL = "UPDATE member SET mbAvailable = 0 WHERE memberID = ? ";
@@ -180,6 +183,7 @@ public class MemberDAO {
 		}
 		return -1; //데이터베이스 오류
 	}
+	
 	//해당 userID가 가입한 그룹 전체 탈퇴하기
 	public int deleteByUser(String userID) {
 		String SQL = "UPDATE member SET mbAvailable = 0 WHERE userID = ? ";
@@ -193,7 +197,8 @@ public class MemberDAO {
 		}
 		return -1; //데이터베이스 오류
 	}
-	//특정 groupID에 해당되는 member의 갯수 구하기
+	
+	//특정 groupID에 해당되는 member수 구하기
 	public int getMemberCount(int groupID) {
 	    String SQL = "SELECT COUNT(*) FROM member WHERE groupID = ?";
 	    try {
@@ -213,18 +218,17 @@ public class MemberDAO {
 	//delete된 userID와 member의 userID가 같은 값의 리스트를 가져온다.
 	public List<MemberDTO> getDelMemberVOByUserID(String userID) {
 	    List<MemberDTO> memberDTOs = new ArrayList<>();
-	    String SQL = "SELECT memberID, mbAvailable FROM member WHERE userID = ?";//userID가 작성한 board의 boardID와 boardAvailable의 값을 가져온다.
+	    String SQL = "SELECT memberID, mbAvailable FROM member WHERE userID = ?";//userID가 가입한 memberID와 탈퇴여부 mbAvailable을 가져온다.
 	    try {
 	        PreparedStatement pstmt = conn.prepareStatement(SQL);
 	        pstmt.setString(1, userID);
 	        ResultSet rs = pstmt.executeQuery();
-	        
-	        while (rs.next()) { //user 한명이 여러개의 board를 생성하면 데이터가 1개 이상 나오기때문에 while을 사용한다.
+	        while (rs.next()) { //user 한명이 여러개의 member를 생성하면 데이터가 1개 이상 나오기때문에 while을 사용한다.
 	            String memberID = rs.getString("memberID");
 	            int mbAvailable = rs.getInt("mbAvailable");
 	            //여기서 다른 속성도 가져올 수 있다.
 
-	            // memberDTO 객체 생성하고 가져온 속성을 객체에 저장한다.
+	            // memberDTO 객체를 생성하고 가져온 속성을 객체에 저장한다.
 	            MemberDTO memberDTO = new MemberDTO();
 	            memberDTO.setMemberID(memberID); 
 	            memberDTO.setMbAvailable(mbAvailable);

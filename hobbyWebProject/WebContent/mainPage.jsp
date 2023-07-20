@@ -1,5 +1,9 @@
+<%@page import="java.io.PrintWriter"%>
+<%@page import="com.sun.java.swing.plaf.windows.resources.windows"%>
+<%@page import="board.BoardDAO"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="java.util.Map"%>
+<%@page import="user.pwEncrypt"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" errorPage="/error/errorPage.jsp"%>
 <!DOCTYPE html>
@@ -26,6 +30,14 @@
 String userID = null;
 if(session.getAttribute("userID") != null){
 	userID = (String) session.getAttribute("userID");
+}
+BoardDAO bdDAO = new BoardDAO();
+int boardCount = bdDAO.getListByUser(userID).size();
+if(boardCount >= 5){
+	PrintWriter script = response.getWriter();
+	script.println("<script>");
+	script.println("window.open('eventPopUp.jsp', 'EVENT', 'width=500, height=550, top=50%, left=50%')");
+	script.println("</script>");
 }
 %>
 <!-- header -->
@@ -75,15 +87,13 @@ if(session.getAttribute("userID") != null){
 
 <!-- section -->
 <section>
-
 <div class="main">
 	<div class="main-text">
 		<div id="m1">
 		<i class="fa-regular fa-lightbulb fa-2x" style="padding-bottom: 20px;"></i><br>
 		취미활동도 같이하고<br>지원금도 받고싶다면?
 		<hr id="line">
-		</div>
-		
+		</div>		
 		<% if(userID == null) {%>
 		<div id="m2" onclick="location.href='join.jsp'">
 		TOGETHER 회원가입
@@ -201,8 +211,15 @@ if(session.getAttribute("userID") != null){
 </footer>
 <!-- footer -->
 <script>
-	opener.location.reload(); //부모창 리프레쉬
-    self.close(); //로그인 후 팝업창이 닫힌다.
+opener.location.reload(); //부모창 리프레쉬
+self.close(); //로그인 후 팝업창이 닫힌다.
+   
+function event(boardCount){
+	if(boardCount >= 5){
+		window.open("eventPopUp.jsp?userID=" + userID , "EVENT", "width=500, height=500, top=50%, left=50%") ;
+	  	self.close();
+	}
+}
 </script>
 </body>
 </html>
