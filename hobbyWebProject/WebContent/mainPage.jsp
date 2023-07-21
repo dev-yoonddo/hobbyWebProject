@@ -1,3 +1,4 @@
+<%@page import="event.EventDAO"%>
 <%@page import="java.io.PrintWriter"%>
 <%@page import="com.sun.java.swing.plaf.windows.resources.windows"%>
 <%@page import="board.BoardDAO"%>
@@ -24,6 +25,11 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 
 </head>
+<style>
+#updateicon, #toggleicon{
+	margin-top: 15px;
+}
+</style>
 <body>
 <header>
 <% 
@@ -32,8 +38,12 @@ if(session.getAttribute("userID") != null){
 	userID = (String) session.getAttribute("userID");
 }
 BoardDAO bdDAO = new BoardDAO();
-int boardCount = bdDAO.getListByUser(userID).size();
-if(boardCount >= 5){
+EventDAO eventDAO = new EventDAO();
+//작성한 게시글이 5개 이상일 때 이벤트에 응모할 수 있는 팝업창이 뜨도록 한다.
+//이벤트에 응모는 아이디당 한번씩만 가능하다.
+int boardCount = bdDAO.getListByUser(userID).size(); //유저가 작성한 게시글 수 가져오기
+int eventCount = eventDAO.getListByUser(userID).size(); //이벤트 응모 기록 가져오기
+if(boardCount >= 5 && eventCount == 0){ //게시글이 5개 이상이고 이벤트 응모 기록이 없으면 팝업창 띄우기
 	PrintWriter script = response.getWriter();
 	script.println("<script>");
 	script.println("window.open('eventPopUp.jsp', 'EVENT', 'width=500, height=550, top=50%, left=50%')");
@@ -71,13 +81,13 @@ if(boardCount >= 5){
 				<%
 					}else{
 				%>
-				<li><a href="userUpdate.jsp"><i class="fa-solid fa-gear"></i></a></li>
+				<li><a href="userUpdate.jsp"><i class="fa-solid fa-gear" id="updateicon"></i></a></li>
 				<li><a href="logout.jsp">LOGOUT</a></li>
 				<%
 					}
 				%>
 			</ul>
-			<a onclick="toggleAct()" class="navbar_toggleBtn">
+			<a onclick="toggleAct()" class="navbar_toggleBtn" id="toggleicon">
 				<i class="fa-solid fa-bars"></i>
 			</a>
 	</nav>

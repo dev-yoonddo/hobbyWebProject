@@ -1,18 +1,21 @@
+<%@page import="user.pwEncrypt"%>
 <%@page import="org.apache.tomcat.jni.Directory"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" errorPage="/error/errorPage.jsp"%>
-<%@ page import="board.BoardDAO" %>
-<%@ page import="board.BoardDTO" %>
+<%@ page import="user.UserDAO" %>
+<%@ page import="event.EventDAO" %>
+<%@ page import="event.EventDTO" %>
+
 <%@ page import="java.io.PrintWriter" %>
 <%
 	request.setCharacterEncoding("UTF-8");
 %>
 
 
-<jsp:useBean id="board" class="board.BoardDTO" scope="page"/>
-<jsp:setProperty property="boardTitle" name="board"/>
-<jsp:setProperty property="boardContent" name="board"/>
-<jsp:setProperty property="boardCategory" name="board"/>
+<jsp:useBean id="event" class="event.EventDTO" scope="page"/>
+<jsp:setProperty property="groupName" name="event"/>
+<jsp:setProperty property="eventContent" name="event"/>
+<jsp:setProperty property="userPassword" name="event"/>
 
 <!DOCTYPE html>
 <html>
@@ -29,45 +32,63 @@
 		if(userID == null){
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
-			script.println("alert('로그인을 하세요')");
-			script.println("location.href = 'loginPopUp.jsp'");
+			script.println("alert('로그인이 필요합니다')");
+			script.println("self.close()");
+			script.println("opener.location.href='login.jsp'");
 			script.println("</script>");
 		}else{
-			if(board.getBoardTitle() == null || board.getBoardContent() == null || board.getBoardCategory() == null) {
+			UserDAO user = new UserDAO();
+			//응모하는 회원의 비밀번호를 가져온다.
+			String userPW = user.getUserVO(userID).getUserPassword();
+			//암호화된 비밀번호와 비교하기 위해 입력한 비밀번호를 암호화한다.
+			String inputPW = pwEncrypt.encoding(event.getUserPassword());
+			//입력한 정보 검사
+			//받아온 값이 0이면 응모 기준에는 충족하지만 활동중인 그룹이 없음을 의미한다.
+			if(event.getGroupName().equals("0")) {
 				PrintWriter script = response.getWriter();
 				script.println("<script>");
-				script.println("alert('정보를 모두 입력해주세요')");
+				script.println("alert('그룹을 선택해주세요')");
 				script.println("history.back()");
 				script.println("</script>");
-				
-				}else{
-					
-					BoardDAO boardDAO = new BoardDAO();
-					int result = boardDAO.write(board.getBoardTitle(), userID, board.getBoardContent(), board.getBoardCategory(), board.getViewCount(), board.getHeartCount());
-					if(result == -1){
-						PrintWriter script = response.getWriter();
-						script.println("<script>");
-						script.println("alert('글쓰기에 실패했습니다')");
-						script.println("history.back()");
-						script.println("</script>");
-					}
-					if((board.getBoardCategory()).equals("0")){
-						PrintWriter script = response.getWriter();
-						script.println("<script>");
-						script.println("alert('카테고리를 선택해주세요')");
-						script.println("history.back()");
-						script.println("</script>");
-					}
-					else {
-						PrintWriter script = response.getWriter();
-						script.println("<script>");
-						script.println("alert('작성이 완료되었습니다')");
-						script.println("location.href='searchPage.jsp?searchField2="+board.getBoardCategory()+"'");
-						script.println("</script>");
-					}
-					
-					
+			}else if(event.getEventContent() == null) {
+				PrintWriter script = response.getWriter();
+				script.println("<script>");
+				script.println("alert('내용을 입력해주세요')");
+				script.println("history.back()");
+				script.println("</script>");
+			}else if(event.getUserPassword() == null) {
+				PrintWriter script = response.getWriter();
+				script.println("<script>");
+				script.println("alert('비밀번호를 입력해주세요')");
+				script.println("history.back()");
+				script.println("</script>");
+			}else if(!userPW.equals(inputPW)) { //유저의 회원비밀번호가 일치하는지 검사
+				PrintWriter script = response.getWriter();
+				script.println("<script>");
+				script.println("alert('비밀번호가 일치하지 않습니다')");
+				script.println("history.back()");
+				script.println("</script>");
+			}else{
+				//모든 검사 완료시 이벤트 응모하기
+				EventDAO eventDAO = new EventDAO();
+				int result = eventDAO.apply(userID, event.getGroupName(), event.getEventContent(), inputPW);
+				if(result == -1){ //데이터베이스 오류
+					PrintWriter script = response.getWriter();
+					script.println("<script>");
+					script.println("alert('응모 실패')");
+					script.println("history.back()");
+					script.println("</script>");
+				}else {
+					PrintWriter script = response.getWriter();
+					script.println("<script>");
+					script.println("alert('응모가 완료되었습니다')");
+					script.println("self.close()");
+					script.println("opener.location.href='mainPage.jsp'");
+					script.println("</script>");
 				}
+				
+				
+			}
 			
 			
 		}

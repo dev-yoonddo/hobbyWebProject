@@ -7,7 +7,7 @@ public class EventDTO {
 	private String groupName;
 	private int eventAvailable;
 	private int eventWin;
-	
+	private String userPassword;
 	
 	public int getEventID() {
 		return eventID;
@@ -44,6 +44,12 @@ public class EventDTO {
 	}
 	public void setEventWin(int eventWin) {
 		this.eventWin = eventWin;
+	}
+	public String getUserPassword() {
+		return userPassword;
+	}
+	public void setUserPassword(String userPassword) {
+		this.userPassword = userPassword;
 	}
 	
 	

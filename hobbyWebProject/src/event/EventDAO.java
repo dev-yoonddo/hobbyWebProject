@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+
 
 public class EventDAO {
 	private Connection conn;
@@ -26,7 +28,7 @@ public class EventDAO {
 	    String SQL = "SELECT MAX(eventID) FROM event";
 	    try {
 	    	PreparedStatement pstmt = conn.prepareStatement(SQL);
-	        ResultSet rs = pstmt.executeQuery();
+	        rs = pstmt.executeQuery();
 	        if (rs.next()) {
 	            int maxEventID = rs.getInt(1);
 	            return maxEventID + 1; 
@@ -39,8 +41,8 @@ public class EventDAO {
 	    return -1;
 	}
 	//이벤트 응모하기
-	public int apply(String userID, String eventContent, String groupName) {
-		String SQL ="INSERT INTO message VALUES (?, ?, ?, ?, ?, ?)";
+	public int apply(String userID, String eventContent, String groupName, String userPassword) {
+		String SQL ="INSERT INTO event VALUES (?, ?, ?, ?, ?, ?, ?)";
 		try {
 			PreparedStatement pstmt=conn.prepareStatement(SQL);
 			pstmt.setInt(1, getNext());
@@ -48,11 +50,36 @@ public class EventDAO {
 			pstmt.setString(3, eventContent);
 			pstmt.setString(4, groupName);
 			pstmt.setInt(5, 1);
-			pstmt.setString(6, null);
+			pstmt.setInt(6, 0);
+			pstmt.setString(7, userPassword);
 			return pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return -1; //데이터베이스 오류
+	}
+	//유저가 응모한 이벤트 목록 가져오기
+	public ArrayList<EventDTO> getListByUser(String userID){
+		String SQL = "SELECT * FROM event WHERE userID = ? AND eventAvailable = 1";
+		ArrayList<EventDTO> list = new ArrayList<EventDTO>();
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			 pstmt.setString(1, userID);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				EventDTO event = new EventDTO();
+				event.setEventID(rs.getInt(1));
+				event.setUserID(rs.getString(2));
+				event.setGroupName(rs.getString(3));
+				event.setEventContent(rs.getString(4));
+				event.setEventAvailable(rs.getInt(5));
+				event.setEventWin(rs.getInt(6));
+				event.setUserPassword(rs.getString(7));
+				list.add(event);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list; 
 	}
 }
