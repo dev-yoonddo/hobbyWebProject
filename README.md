@@ -3,15 +3,14 @@
 프론트엔드, 백엔드를 혼자 맡아 제작한 개인 프로젝트입니다. <br>
 기획부터 배포까지 총 8주 소요되었고 아래 링크로 접속하실 수 있습니다.
 
-### 테스트 아이디 : test / 비밀번호 : 1234
-### https://toogether.me
+## 테스트 아이디 : test / 비밀번호 : 1234 <br> https://toogether.me
 
 <br><br>
 
 ## ❔ 프로젝트 주제 선정 이유와 개발 목표
 
 직장생활을 하면서 지친 몸과 마음을 건강하게 만들 수 있는 취미를 갖고싶은 사용자를 위한 웹페이지를 주제로 선정했습니다.  
-팀 프로젝트에서 구현한 기능 외에 좋아요, 조회수, 그룹생성 및 그룹가입, 메시지 기능을 추가하고 처음부터 끝까지 직접 계획하고 개발하는 것을 <br>
+팀 프로젝트에서 구현한 기능 외에 좋아요, 조회수, 그룹생성 및 그룹가입, 메시지 기능을 추가하고 처음부터 끝까지 직접 계획하고 <br> 개발하는 것을
 목표로 했습니다.
 
 <br><br>
@@ -38,8 +37,7 @@
 <br>
 
 ### Database ERD
-
-![ERD](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/3e07c268-d2a3-4ae9-b55e-bfbcc01d3fcf)
+![ERD](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/4f78c133-2233-4472-89af-b42264e129ea)
 
 <br><br>
 
@@ -58,10 +56,6 @@
 # 💻 Detailed Description
 
 <br>
-
-## 🖱 www.toogether.me
-
-<br><br>
 
 ⚫ [메인](#--메인-)
 
