@@ -21,7 +21,11 @@
 <script type="text/javascript" src="js/script.js"></script>
 
 </head>
-
+<style>
+.login-wrapper{
+margin: 20px;
+}
+</style>
 <body>
 <header>
 <% 

@@ -66,7 +66,7 @@ if(session.getAttribute("userID") != null){
 }
 
 GroupDAO grDAO = new GroupDAO();
-ArrayList<GroupDTO> list = grDAO.getListActiveByUser(userID);
+ArrayList<GroupDTO> list = grDAO.getListByUser(userID);
 %>
 	<div class="login-wrapper">
 	 <div>
@@ -79,10 +79,12 @@ ArrayList<GroupDTO> list = grDAO.getListActiveByUser(userID);
 					<option value="0">SELECT GROUP</option>
 					<%
 				    	for (int i = 0; i < list.size(); i++) {
+				    		if(list.get(i).getGroupAvailable() == 1){
 				  	%>
 						<option class="group" value="<%=list.get(i).getGroupName()%>"><%= list.get(i).getGroupName() %></option>
 					<%	
-		    			}
+				    		}
+				    	}
 					%>
 				</select>
 			</div>

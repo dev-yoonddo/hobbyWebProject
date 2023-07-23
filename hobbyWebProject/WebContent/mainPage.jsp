@@ -26,7 +26,7 @@
 
 </head>
 <style>
-#updateicon, #toggleicon{
+#updateicon{
 	margin-top: 15px;
 }
 </style>
