@@ -1,3 +1,4 @@
+<%@page import="event.EventDTO"%>
 <%@page import="event.EventDAO"%>
 <%@page import="java.io.PrintWriter"%>
 <%@page import="com.sun.java.swing.plaf.windows.resources.windows"%>
@@ -51,10 +52,13 @@ if(boardCount >= 5 && eventCount == 0){ //게시글이 5개 이상이고 이벤�
 }
 //유저의 이벤트 정보 가져오기
 //eventWin == 1이면 이벤트에 당첨된것을 의미한다.
-if(eventDAO.getEventVO(userID).getEventWin() == 1 & eventDAO.getEventVO(userID).getEventAvailable() != 0){
-	script.println("<script>");
-	script.println("window.open('eventWinPopUp.jsp', 'EVENT', 'width=500, height=300, top=50%, left=50%')");
-	script.println("</script>");
+if(userID != null){
+EventDTO event = new EventDAO().getEventVO(userID);
+	if(event != null && event.getEventWin() == 1 && event.getEventAvailable() != 0){
+		script.println("<script>");
+		script.println("window.open('eventWinPopUp.jsp', 'EVENT', 'width=500, height=300, top=50%, left=50%')");
+		script.println("</script>");
+	}
 }
 %>
 <!-- header -->
@@ -231,12 +235,6 @@ if(eventDAO.getEventVO(userID).getEventWin() == 1 & eventDAO.getEventVO(userID).
 opener.location.reload(); //부모창 리프레쉬
 self.close(); //로그인 후 팝업창이 닫힌다.
    
-function event(boardCount){
-	if(boardCount >= 5){
-		window.open("eventPopUp.jsp?userID=" + userID , "EVENT", "width=500, height=500, top=50%, left=50%") ;
-	  	self.close();
-	}
-}
 </script>
 </body>
 </html>

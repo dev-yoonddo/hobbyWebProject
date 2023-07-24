@@ -72,9 +72,6 @@ String userID = null;
 if(session.getAttribute("userID") != null){
 	userID = (String) session.getAttribute("userID");
 }
-
-GroupDAO grDAO = new GroupDAO();
-ArrayList<GroupDTO> list = grDAO.getListByUser(userID);
 %>
 	<div class="login-wrapper">
 	 	<div id="eventWin">

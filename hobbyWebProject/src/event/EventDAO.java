@@ -1,13 +1,11 @@
 package event;
 
 import java.sql.Connection;
+
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-
-import board.BoardDTO;
-import user.UserDTO;
 
 
 public class EventDAO {
@@ -79,7 +77,7 @@ public class EventDAO {
 				event.setEventWin(rs.getInt(6));
 				event.setUserPassword(rs.getString(7));
 				event.setEventWinMsg(rs.getString(8));
-				return event;//6개의 항목을 user인스턴스에 넣어 반환한다.
+				return event;//8개의 항목을 user인스턴스에 넣어 반환한다.
 			}			
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -102,6 +100,7 @@ public class EventDAO {
 				event.setEventAvailable(rs.getInt(5));
 				event.setEventWin(rs.getInt(6));
 				event.setUserPassword(rs.getString(7));
+				event.setEventWinMsg(rs.getString(8));
 				list.add(event);
 			}
 		} catch (Exception e) {
@@ -126,6 +125,7 @@ public class EventDAO {
 				event.setEventAvailable(rs.getInt(5));
 				event.setEventWin(rs.getInt(6));
 				event.setUserPassword(rs.getString(7));
+				event.setEventWinMsg(rs.getString(8));
 				list.add(event);
 			}
 		} catch (Exception e) {
