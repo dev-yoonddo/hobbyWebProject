@@ -242,6 +242,25 @@ span{
 	bottom: 0;
 	position: absolute;
 }
+
+#event{
+	width: 70px;
+	height: 70px;
+	float: right;
+	position: fixed;
+	right: 50px;
+	z-index: 500;
+	text-align: center;
+	font-weight: bold;
+	display: flex;
+	padding: 5px;
+	margin: 0 auto;
+	align-items: center;
+	justify-content: center;
+	border-radius: 100%;
+	background-color: #4646CD;
+	color: white;
+}
 </style>
 <body>
 <%
@@ -325,7 +344,6 @@ span{
 			</ul>
 		</div>
 	</div>
-	
 	<!-- 정보 수정하기 -->
 	<div id="userInfo">
 	 	<div>
@@ -780,6 +798,9 @@ span{
 			</div>
 		</div>
 	</div>
+	<% if(userID.equals("manager")){ %>
+			<div id="event" onclick="viewEvent()"><div>이벤트 관리 CLICK</div></div>
+		<%} %>
 </section>
 <script>
 //select box 클릭하면 접고 펼치기
@@ -869,6 +890,10 @@ function showPasswordPrompt(grID, grPW, grAvl) {
 function viewMsg(msgID){
    	window.open("viewMsg.jsp?msgID=" + msgID , "VIEW MESSAGE", "width=550, height=600, top=50%, left=50%");
    	self.close();
+}
+//이벤트 응모 현황 관리 (manager 권한)
+function viewEvent(){
+	window.open("eventRafflePopUp.jsp","EVENT","width=500, height=550, top=50%, left=50%")
 }
 </script>
 <script defer type="text/javascript" src="js/userdata.js"></script>

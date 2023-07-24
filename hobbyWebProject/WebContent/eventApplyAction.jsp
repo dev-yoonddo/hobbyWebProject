@@ -81,7 +81,7 @@
 				}else {
 					PrintWriter script = response.getWriter();
 					script.println("<script>");
-					script.println("alert('응모가 완료되었습니다<br>당첨여부는 메시지로 알려드리겠습니다')");
+					script.println("alert('응모가 완료되었습니다\\n당첨여부는 메시지로 알려드리겠습니다')");
 					script.println("self.close()");
 					script.println("opener.location.href='mainPage.jsp'");
 					script.println("</script>");

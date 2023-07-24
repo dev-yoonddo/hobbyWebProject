@@ -8,6 +8,7 @@ public class EventDTO {
 	private int eventAvailable;
 	private int eventWin;
 	private String userPassword;
+	private String eventWinMsg;
 	
 	public int getEventID() {
 		return eventID;
@@ -50,6 +51,12 @@ public class EventDTO {
 	}
 	public void setUserPassword(String userPassword) {
 		this.userPassword = userPassword;
+	}
+	public String getEventWinMsg() {
+		return eventWinMsg;
+	}
+	public void setEventWinMsg(String eventWinMsg) {
+		this.eventWinMsg = eventWinMsg;
 	}
 	
 	

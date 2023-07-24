@@ -281,5 +281,6 @@ function viewMsg(msgID){
 $(document).ready(function() {
 	history.replaceState({}, null, location.pathname);  
 });
+
 });
 })(jQuery);

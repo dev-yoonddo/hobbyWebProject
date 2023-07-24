@@ -114,22 +114,22 @@ public class UserDAO {
 		return null;
 	}
 // 회원 정보 수정	
-	public int update(String userID, String userName, String userBirth, String userPhone, String userPassword ) {
-		String SQL="UPDATE user SET userName = ?, userBirth = ?, userPhone = ?, userPassword = ? WHERE userID = ?";//특정한 아이디에 해당하는 제목과 내용을 바꿔준다. 
-		try {
-			PreparedStatement pstmt=conn.prepareStatement(SQL);
-			pstmt.setString(1, userName);
-			pstmt.setString(2, userBirth);
-			pstmt.setString(3, userPhone);
-			pstmt.setString(4, userPassword);
-			pstmt.setString(5, userID);
+public int update(String userID, String userName, String userBirth, String userPhone, String userPassword ) {
+	String SQL="UPDATE user SET userName = ?, userBirth = ?, userPhone = ?, userPassword = ? WHERE userID = ?";//특정한 아이디에 해당하는 제목과 내용을 바꿔준다. 
+	try {
+		PreparedStatement pstmt=conn.prepareStatement(SQL);
+		pstmt.setString(1, userName);
+		pstmt.setString(2, userBirth);
+		pstmt.setString(3, userPhone);
+		pstmt.setString(4, userPassword);
+		pstmt.setString(5, userID);
 
-			return pstmt.executeUpdate();		
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-		return -1;//데이터베이스 오류
+		return pstmt.executeUpdate();		
+	} catch(Exception e) {
+		e.printStackTrace();
 	}
+	return -1;//데이터베이스 오류
+}
 	
 //	회원 탈퇴
 //	1. 데이터 베이스 삭제

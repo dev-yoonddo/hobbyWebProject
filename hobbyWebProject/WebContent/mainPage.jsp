@@ -33,6 +33,7 @@
 <body>
 <header>
 <% 
+PrintWriter script = response.getWriter();
 String userID = null;
 if(session.getAttribute("userID") != null){
 	userID = (String) session.getAttribute("userID");
@@ -44,9 +45,15 @@ EventDAO eventDAO = new EventDAO();
 int boardCount = bdDAO.getListByUser(userID).size(); //유저가 작성한 게시글 수 가져오기
 int eventCount = eventDAO.getListByUser(userID).size(); //이벤트 응모 기록 가져오기
 if(boardCount >= 5 && eventCount == 0){ //게시글이 5개 이상이고 이벤트 응모 기록이 없으면 팝업창 띄우기
-	PrintWriter script = response.getWriter();
 	script.println("<script>");
 	script.println("window.open('eventPopUp.jsp', 'EVENT', 'width=500, height=550, top=50%, left=50%')");
+	script.println("</script>");
+}
+//유저의 이벤트 정보 가져오기
+//eventWin == 1이면 이벤트에 당첨된것을 의미한다.
+if(eventDAO.getEventVO(userID).getEventWin() == 1 & eventDAO.getEventVO(userID).getEventAvailable() != 0){
+	script.println("<script>");
+	script.println("window.open('eventWinPopUp.jsp', 'EVENT', 'width=500, height=300, top=50%, left=50%')");
 	script.println("</script>");
 }
 %>

@@ -20,11 +20,9 @@
 </head>
 <style>
 .login-wrapper{
-	margin: 30px;
-	margin-top: 30px;
-	margin-bottom: 0;
+	margin: 25px;
 	width: 450px;
-	height: 500px;
+	height: 250px;
 	justify-content: center;
 }
 
@@ -37,6 +35,7 @@ body{
 }
 
 h2{
+	padding: 0;
 	margin: 0;
 }
 input{
@@ -56,6 +55,15 @@ option{
 	color: #B3C1EE;
 	height: 50px;
 }
+#eventWin{
+	margin: 0 auto;
+	justify-content: center;
+	align-items: center;
+}
+#exit{
+	cursor: pointer;
+	margin-top: 30px;
+}
 </style>
 
 <body>
@@ -69,31 +77,17 @@ GroupDAO grDAO = new GroupDAO();
 ArrayList<GroupDTO> list = grDAO.getListByUser(userID);
 %>
 	<div class="login-wrapper">
-	 <div>
-		<h2 style="font-size: 25pt; margin-gottom: 10px;">활동 지원금 이벤트</h2>
-		<h2 style="margin-bottom: 40px; font-size: 30pt;">응모 대상자입니다!</h2>
-		<form method="post" action="eventApplyAction.jsp" role="form" id="login-form">
-			<div class="category-sel">
-				<select name="groupName">
-					<!-- select에서는 option의 value값이 넘어간다. -->
-					<option value="0">SELECT GROUP</option>
-					<%
-				    	for (int i = 0; i < list.size(); i++) {
-				    		if(list.get(i).getGroupAvailable() == 1){
-				  	%>
-						<option class="group" value="<%=list.get(i).getGroupName()%>"><%= list.get(i).getGroupName() %></option>
-					<%	
-				    		}
-				    	}
-					%>
-				</select>
-			</div>
-		    <input type="text" name="eventContent" id="eventContent" maxlength="500" placeholder="이벤트 응모 당첨시 활동 지원금 사용 계획을 입력해주세요">
-		    <input type="password" name="userPassword" id="userPassword" placeholder="회원 비밀번호를 입력해주세요">
-		    <input type="submit" value="응모하기">
-		</form>
+	 	<div id="eventWin">
+			<h2 style="font-size: 25pt;">활동지원금 이벤트에</h2>
+			<h2 style="font-size: 30pt;">당첨 되셨습니다!</h2>
+			<button type="button" id="exit" onclick="eventMsgExit()">더이상 보지않기 Ⅹ</button>
 	   </div>
 	</div>
-
+<script>
+function eventMsgExit(){
+   	window.open('eventMsgExit.jsp', '', 'width=100, height=100, top=50%, left=50%');
+   	self.close(); //이전 팝업 닫기
+}
+</script>
 </body>
 </html>
