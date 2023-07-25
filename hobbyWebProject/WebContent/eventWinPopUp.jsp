@@ -1,3 +1,4 @@
+<%@page import="event.EventDAO"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="group.GroupDTO"%>
 <%@page import="group.GroupDAO"%>
@@ -72,11 +73,12 @@ String userID = null;
 if(session.getAttribute("userID") != null){
 	userID = (String) session.getAttribute("userID");
 }
+EventDAO eventDAO = new EventDAO();
+String msg = eventDAO.getEventVO(userID).getEventWinMsg();
 %>
 	<div class="login-wrapper">
 	 	<div id="eventWin">
-			<h2 style="font-size: 25pt;">활동지원금 이벤트에</h2>
-			<h2 style="font-size: 30pt;">당첨 되셨습니다!</h2>
+			<h2 style="font-size: 30pt;"><%= msg %></h2>
 			<button type="button" id="exit" onclick="eventMsgExit()">더이상 보지않기 Ⅹ</button>
 	   </div>
 	</div>

@@ -53,8 +53,8 @@ if(boardCount >= 5 && eventCount == 0){ //게시글이 5개 이상이고 이벤�
 //유저의 이벤트 정보 가져오기
 //eventWin == 1이면 이벤트에 당첨된것을 의미한다.
 if(userID != null){
-EventDTO event = new EventDAO().getEventVO(userID);
-	if(event != null && event.getEventWin() == 1 && event.getEventAvailable() != 0){
+EventDTO eventvo = new EventDAO().getEventVO(userID);
+	if(eventvo != null && eventvo.getEventWin() == 1 && eventvo.getEventAvailable() != 0){
 		script.println("<script>");
 		script.println("window.open('eventWinPopUp.jsp', 'EVENT', 'width=500, height=300, top=50%, left=50%')");
 		script.println("</script>");
