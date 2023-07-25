@@ -1,6 +1,7 @@
 package event;
 
 import java.sql.Connection;
+
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -104,7 +105,7 @@ public class EventDAO {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
+		} 
 		return list; 
 	}
 	//로그인 유저가 응모한 이벤트 목록 가져오기

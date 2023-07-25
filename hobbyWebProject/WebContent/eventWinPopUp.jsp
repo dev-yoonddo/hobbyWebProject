@@ -2,8 +2,6 @@
 <%@page import="event.EventDTO"%>
 <%@page import="event.EventDAO"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="group.GroupDTO"%>
-<%@page import="group.GroupDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" errorPage="/error/errorPage.jsp"%>
 <!DOCTYPE html>
@@ -75,17 +73,17 @@ String userID = null;
 if(session.getAttribute("userID") != null){
 	userID = (String) session.getAttribute("userID");
 }
-/*
-String msg = eventDAO.getEventVO(userID).getEventWinMsg();
-*/
-String msg = "";
+
 EventDAO eventDAO = new EventDAO();
+String msg = eventDAO.getEventVO(userID).getEventWinMsg();
+
+/*String msg = "";
 ArrayList<EventDTO> list = eventDAO.getListByUser(userID);
 for(int i = 0; i < list.size(); i++){
 	if(list != null & list.get(i).getEventWin() == 1 & list.get(i).getEventAvailable() == 1 ){
 		msg = list.get(i).getEventWinMsg();
 	}
-}
+}*/
 %>
 	<div class="login-wrapper">
 	 	<div id="eventWin">

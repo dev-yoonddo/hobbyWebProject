@@ -2,10 +2,7 @@
 <%@page import="event.EventDTO"%>
 <%@page import="event.EventDAO"%>
 <%@page import="java.io.PrintWriter"%>
-<%@page import="com.sun.java.swing.plaf.windows.resources.windows"%>
 <%@page import="board.BoardDAO"%>
-<%@page import="java.util.HashMap"%>
-<%@page import="java.util.Map"%>
 <%@page import="user.pwEncrypt"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" errorPage="/error/errorPage.jsp"%>
