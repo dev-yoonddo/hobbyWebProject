@@ -37,10 +37,12 @@
 			script.println("</script>");
 		}else{
 			EventDAO eventDAO = new EventDAO();
+			//파라미터 값들을 배열에 저장한다.
 		    String[] events = request.getParameterValues("event");
+			//배열의 길이만큼 반복한다.
 		    for(int i = 0 ; i < events.length ; i++){
+		    	//userID와 입력한 메시지를 raffleWinMsg() 메서드에 넘겨 저장한다.
 		    	int result = eventDAO.raffleWinMsg(events[i], event.getEventWinMsg());
-		    	
 		    	if(result == -1){
 					PrintWriter script = response.getWriter();
 					script.println("<script>");
@@ -48,8 +50,10 @@
 					script.println("history.back()");
 					script.println("</script>");
 				}
+		    	//성공적으로 실행시 seccess + 1 해준다.
 		    	success++;
 		    }
+			//배열의 길이와 seccess의 크기가 같으면 모든 userID의 eventWinMsg에 값이 정상적으로 들어감을 의미한다.
 		    if(events.length == success){
 		    	PrintWriter script = response.getWriter();
 				script.println("<script>");

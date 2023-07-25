@@ -23,14 +23,10 @@
 .login-wrapper{
 	margin: 25px;
 	width: 450px;
-	height: 250px;
+	height: 260px;
 	justify-content: center;
 }
 
-.category-sel{
-width: 400px;
-
-}
 body{
 	font-family: 'Nanum Gothic', monospace;
 }
@@ -39,31 +35,16 @@ h2{
 	padding: 0;
 	margin: 0;
 }
-input{
-	width: 350px;
-}
-select{
-	width: 250px;
-	height: 50px;
-	margin-bottom: 10px;
-	text-align: center;
-	font-size: 15pt;
-	font-weight: 500;
-	color: #B3C1EE;
-	border : 2px solid  #dddddd;
-}
-option{
-	color: #B3C1EE;
-	height: 50px;
-}
+
 #eventWin{
+	width: 400px;
 	margin: 0 auto;
 	justify-content: center;
 	align-items: center;
 }
 #exit{
 	cursor: pointer;
-	margin-top: 30px;
+	margin-top: 20px;
 }
 </style>
 
@@ -73,21 +54,11 @@ String userID = null;
 if(session.getAttribute("userID") != null){
 	userID = (String) session.getAttribute("userID");
 }
-
 EventDAO eventDAO = new EventDAO();
-String msg = eventDAO.getEventVO(userID).getEventWinMsg();
-
-/*String msg = "";
-ArrayList<EventDTO> list = eventDAO.getListByUser(userID);
-for(int i = 0; i < list.size(); i++){
-	if(list != null & list.get(i).getEventWin() == 1 & list.get(i).getEventAvailable() == 1 ){
-		msg = list.get(i).getEventWinMsg();
-	}
-}*/
 %>
 	<div class="login-wrapper">
 	 	<div id="eventWin">
-			<h2 style="font-size: 30pt;"><%= msg %></h2>
+			<h2 style="font-size: 19pt; ">TO. <%=userID%>님 <br><br> <%= eventDAO.getEventVO(userID).getEventWinMsg().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>") %></h2>
 			<button type="button" id="exit" onclick="eventMsgExit()">더이상 보지않기 Ⅹ</button>
 	   </div>
 	</div>

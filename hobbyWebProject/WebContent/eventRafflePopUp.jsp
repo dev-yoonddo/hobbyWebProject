@@ -158,7 +158,7 @@ ArrayList<EventDTO> list = eventDAO.getList();
 				<th style="width: 60%;"><span>응모내용</span></th>
 			</tr>
 		</thead>
-		<!-- 글이 0개이면 -->
+		<!-- 리스트가 0개이면 -->
 		<% if (list.size() == 0) { %>
 		<tbody>
 			<tr>
@@ -166,7 +166,7 @@ ArrayList<EventDTO> list = eventDAO.getList();
 			</tr>
 		</tbody>
 		
-		<!-- 글이 1개 이상이면 -->
+		<!-- 리스트가 1개 이상이면 -->
 		<% }else{ %>
 		<tbody>
 			<%
@@ -204,7 +204,7 @@ $(document).ready(function(){
     $('.showEventList').slice(0, 10).show(); // 초기갯수
     $("#more-btn").click(function(e){ // 클릭시 more
         if($('.showEventList:hidden').length == 0){ // 컨텐츠 남아있는지 확인
-            alert("마지막 글입니다."); // 컨텐츠 없을시 alert 창 띄우기
+            alert("마지막입니다."); // 컨텐츠 없을시 alert 창 띄우기
             break;
         }
         e.preventDefault();

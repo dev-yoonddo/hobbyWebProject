@@ -158,6 +158,23 @@ public class EventDAO {
 		}
 		return -1;//데이터베이스 오류
 	}
+	//당첨메시지 출력하기
+	public EventDTO getEventWinMsg(String userID) {
+		String SQL="SELECT eventWinMsg FROM event WHERE userID = ?";
+		try {
+			PreparedStatement pstmt=conn.prepareStatement(SQL);
+			pstmt.setString(1, userID);//물음표
+			rs=pstmt.executeQuery();//select
+			if(rs.next()) {//결과가 있다면
+				EventDTO event = new EventDTO();
+				event.setEventWinMsg(rs.getString(1));
+				return event;//8개의 항목을 인스턴스에 넣어 반환한다.
+			}			
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 	//당첨메시지 더이상 보지않기
 	public int raffleMsgExit(String userID) {
 		String SQL="UPDATE event SET eventAvailable = 0 WHERE userID = ?";//특정한 아이디에 해당하는 제목과 내용을 바꿔준다. 
