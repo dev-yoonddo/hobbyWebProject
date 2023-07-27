@@ -1,7 +1,8 @@
 # 취미는 하고싶은데 혼자는 싫을 때 TOGETHER 🏌️‍♂️🏊‍♂️🏋️‍♀️🚴‍♀️
 
 프론트엔드, 백엔드를 혼자 맡아 제작한 개인 프로젝트입니다. <br>
-기획부터 배포까지 총 8주 소요되었고 아래 링크로 접속하실 수 있습니다.
+기획부터 배포까지 총 2달 소요되었고 현재도 새로운 기능을 구상해 추가하고 있으며 <br>
+아래의 링크로 웹페이지에 접속하실 수 있습니다.
 
 ## https://toogether.me <br><br> 테스트 아이디 : test / 비밀번호 : 1234
 
@@ -17,7 +18,7 @@
 
 ## ❔ 프로젝트 진행 후 느낀점
 
-개발부터 배포까지 많은 오류들을 접하며 하나의 오류를 해결하기 위해 긴 시간이 소요된 적도 있습니다. 하지만 문제를 해결하는 과정에서 <br> 
+개발부터 배포까지 많은 오류들을 접하며 하나의 오류를 해결하기 위해 하루가 소요된 적도 있습니다. 하지만 문제를 해결하는 과정에서 <br> 
 프로젝트의 완성도와 그에 따른 성취감도 높아짐을 느끼며 시행착오를 겪었을 때 더 좋은 결과물을 얻을 수 있다는 점을 <br>
 깨달았습니다. 또한 오류 해결 방식에 있어서 문제가 발생했을 때 머릿속으로 생각만 하기보단 검색과 책을 활용해 정보를 찾아보고 <br>
 다양한 코드를 실행해보며 부딪히는 것이 문제 해결 속도를 빠르게 할 뿐만 아니라 개발에 대한 흥미도 더욱 높아지도록 하는 것을 <br>
@@ -37,7 +38,8 @@
 <br>
 
 ### Database ERD
-![ERD](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/4f78c133-2233-4472-89af-b42264e129ea)
+
+![ERD](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/38d85948-ef43-406a-ae44-230e7ff31928)
 
 <br><br>
 
@@ -68,6 +70,10 @@
 ⚫ [커뮤니티](#--커뮤니티-)
 
 ⚫ [그룹](#--그룹-)
+
+⚫ [메시지](#--메시지-)
+
+⚫ [이벤트](#--이벤트-)
 
 <br><br>
 
@@ -216,8 +222,8 @@
 <br>
 
 <div style="display: flex-start;">
-<img src="https://user-images.githubusercontent.com/84071666/235875451-a4c6e412-bfc7-4a1d-be78-2e919a4da178.PNG" width="30%" height="100px" align="left">
-<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/ae5608a8-cd14-4950-9fdf-0a889a38d75b.PNG" width="35%">
+<img src="https://user-images.githubusercontent.com/84071666/235875451-a4c6e412-bfc7-4a1d-be78-2e919a4da178.PNG" width="30%" height="150px" align="left">
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/ae5608a8-cd14-4950-9fdf-0a889a38d75b.PNG" width="40%">
 </div> <br><br>
 
 ![update1](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/ba4b16aa-5566-4872-8e97-3dd12945362a)
@@ -225,7 +231,15 @@
 
 <br><br>
 
-### ⚙ 회원가입과 동일하게 비밀번호 일치 확인 후 수정완료
+### ⚙ 입력받은 비밀번호를 암호화해 기존의 비밀번호와 비교하고 동일하면 정보수정 불가
+
+<br>
+
+![encryptPW](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/511a7bca-1a26-49ee-a94a-5e3877119348)
+
+<br>
+
+### ⚙ 회원가입과 동일하게 비밀번호 일치 확인 후 수정 완료
 
 <br>
 
@@ -233,6 +247,8 @@
 <img src="https://user-images.githubusercontent.com/84071666/235870960-ed4d85d3-6fd0-4e4c-8ac5-b235d6f0cb63.PNG" width="49%">
 <img src="https://user-images.githubusercontent.com/84071666/235870965-67e21f23-1dde-4073-83cc-eed8f08f08e2.PNG" width="49%" align="right">
 </div>
+
+<br><br>
 
 <img src="https://user-images.githubusercontent.com/84071666/235870969-7c856888-bc11-4b1a-be33-0b7f2876275f.PNG">
 
@@ -821,48 +837,9 @@
 
 ---
 
-## 🔘 4 ) 메시지 확인 및 전송
-
 <br><br>
 
-### ⚙ 메시지 확인 버튼 클릭시 해당 그룹의 멤버가 보낸 메시지 목록 팝업창 생성
-:메시지 목록 팝업창에서는 해당 그룹의 멤버에게 받은 메시지만 확인할 수 있다.
-
-<br>
-
-<div style="display: flex;">
-<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/f7344195-a4cb-41d4-9fa4-e41bfd91f921.PNG" width="47%">
-<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/bbdede0b-3dd5-4dd0-bf52-83c21c24e17e.PNG" width="47%">
-</div>
-
-<br>
-
-### ⚙ 답장하기, 메시지 전송 버튼 클릭시 toUserID에 그룹생성자의 userID 또는 메시지를 보낸 사용자의 userID로 메시지를 전송한다.
-
-<br>
-<div style="display: flex;">
-<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/7446116d-59e0-4029-be24-57fe3e384cdf.PNG" width="47%">
-<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/d3c7f0cc-cce8-49ce-9b7a-b309248b50af.PNG" width="47%">
-</div>
-
-<br>
-
-![btn-member3](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/b8ebaddd-51e7-41b0-9590-8204cc25344a)
-
-<br>
-
-### ⚙ 메시지 DB
-
-<br>
-
-![msg-db](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/7b10ce08-a9ab-450c-a44b-9d387d248343)
-
-
----
-
-<br><br>
-
-## 🔘 5 ) 그룹 탈퇴
+## 🔘 4 ) 그룹 탈퇴
 
 <br><br>
 
@@ -925,12 +902,137 @@
 
 ![groupdelete4](https://user-images.githubusercontent.com/84071666/236124076-998c703f-a070-498c-afd8-7864477b50b3.PNG)
 
+--
+
+<br><br><br>
+
+# - 메시지 📍
+
 <br><br>
+
+## 🔘 1 ) 메시지 확인 및 전송
+
+<br><br>
+
+### ⚙ 메시지 확인 버튼 클릭시 해당 그룹의 리더가 보낸 메시지 목록 팝업창 생성
+:메시지 목록 팝업창에서는 해당 그룹의 멤버에게 받은 메시지만 확인할 수 있다.
+
+<br>
+
+<div style="display: flex;">
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/f7344195-a4cb-41d4-9fa4-e41bfd91f921.PNG" width="47%">
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/bbdede0b-3dd5-4dd0-bf52-83c21c24e17e.PNG" width="45%">
+</div>
+
+<br><br>
+
+### ⚙ 답장하기, 메시지 전송 버튼 클릭시 toUserID에 그룹생성자의 userID 또는 메시지를 보낸 사용자의 userID로 메시지를 전송한다.
+
+<br>
+<div style="display: flex;">
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/7446116d-59e0-4029-be24-57fe3e384cdf.PNG" width="47%">
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/d3c7f0cc-cce8-49ce-9b7a-b309248b50af.PNG" width="47%">
+</div>
+
+<br>
+
+![btn-member3](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/b8ebaddd-51e7-41b0-9590-8204cc25344a)
+
+<br><br>
+
+### ⚙ 메시지 DB
+
+<br>
+
+![msg-db](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/7b10ce08-a9ab-450c-a44b-9d387d248343)
+
+
+---
+
+<br><br><br>
+
+# - 이벤트 📍
+
+<br><br>
+
+### ⚙ 작성한 게시글이 5개 이상이고 본인이 생성한 그룹이 있으면 메인페이지에 팝업창이 뜬다.
+
+<br>
+
+<div style="display: flex;">
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/99a6f871-e29f-40b4-ab5f-507ae4949792.PNG" width="47%">
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/4a8a967c-65b9-4ae2-ae1d-359a32698d40.PNG" width="47%">
+</div>
+
+<br><br>
+
+### ⚙ 그룹 선택, 응모 내용, 회원 비밀번호를 입력하면 빈칸,비밀번호 일치 확인 후 응모완료
+
+<br>
+
+<div style="display: flex;">
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/ea7e70f0-693a-49db-b27c-b9f0ad76e3ac.PNG" width="47%">
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/6a8dcbcb-df6a-4d50-a747-c973d0cddde3.PNG" width="47%">
+</div>
+
+<div style="display: flex;">
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/1f19664e-21b5-4231-8750-33e01a49eb06.PNG" width="47%">
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/e5fdb05f-02b8-40f7-b9ba-42595a4a4f5d.PNG" width="47%">
+</div>
+
+<div style="display: flex;">
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/8dfc22de-8d4a-4991-829f-ec35d5471bde.PNG" width="47%">
+</div>
+
+<br><br>
+
+### ⚙ 관리자 계정으로 로그인 후 정보 수정 페이지로 접속시 이벤트 관리 버튼 생성
+
+<br>
+
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/ad2b1ca3-66e6-4b55-8646-22116b91bbd7.PNG" width="20%">
+
+<br><br>
+
+### ⚙ 당첨 처리 할 회원을 체크한 후 당첨 버튼 클릭시 당첨 처리되며 회원에게 보낼 메시지를 입력할 팝업창 생성
+
+<br>
+
+<div style="display: flex;">
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/cd7a281f-784b-477c-a2f3-64d4fe50f26a.PNG" width="47%">
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/9648b18a-20db-4dfa-a4ab-05d18e422edb.PNG" width="47%">
+</div>
+
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/3b3fdd2d-8026-404d-b616-38f7e96f8832.PNG" width="47%">
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/34d8ef4c-c577-4a01-8e37-c7b28e0675fa.PNG" width="47%">
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/b81d5dc4-daf6-49d2-bb09-26597d2449a0.PNG" width="47%">
+
+<br><br>
+
+### ⚙ eventWin = 0 -> eventWin = 1 로 변경되며 당첨 메시지가 DB에 들어간다.
+
+<br>
+
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/f948d278-9a94-4f27-b621-a247187db695.PNG" width="47%">
+
+<br><br>
+
+### ⚙ 당첨된 회원 로그인시 메인페이지에 당첨 메시지가 생성되며 더이상 보지않기 클릭한 이후부터 생성되지 않는다.
+
+<br>
+
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/02f002d3-faea-4a4a-8b32-bfa93d21e71b.PNG" width="47%">
+
+<br><br>
+
 
 ## 예외처리
 
 ![errorPage](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/14bf63d6-60b8-4abf-85d2-ae0c47126bdb)
+![error-500](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/ec0c8ec8-1e50-4df5-a8b5-5e66353c3d32)
 
-<br><br><br><br><br><br>
+<br><br>
+
+<br><br>
 
 # 진행한 프로젝트는 여기까지이며 <br> 추후에도 새로운 기능을 추가할 예정입니다. <br> 읽어주셔서 감사합니다 🥰
