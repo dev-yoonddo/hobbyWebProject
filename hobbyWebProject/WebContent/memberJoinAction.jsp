@@ -27,7 +27,7 @@
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
 			script.println("alert('로그인이 필요합니다.')");
-			script.println("window.open('loginPopUp.jsp', 'Login', 'width=450, height=500, top=50%, left=50%')");
+			script.println("window.open('loginPopUp', 'Login', 'width=450, height=500, top=50%, left=50%')");
 			script.println("</script>");
 		}else{
 			int groupID = 0; 
@@ -100,7 +100,7 @@
 							PrintWriter script = response.getWriter();
 							script.println("<script>");
 							script.println("alert('가입이 완료되었습니다. 비밀번호는" + pw + "입니다')");
-							script.println("location.href = 'groupPage.jsp'");
+							script.println("location.href = 'groupPage'");
 							script.println("</script>");
 						}
 					}

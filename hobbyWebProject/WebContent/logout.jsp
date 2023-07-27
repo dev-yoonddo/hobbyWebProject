@@ -12,7 +12,7 @@ session.invalidate(); // 세션 초기화
 %>
 <script>
 alert("로그아웃 되었습니다.");
-location.href='mainPage.jsp';
+location.href='mainPage';
 </script>
 </body>
 </html>

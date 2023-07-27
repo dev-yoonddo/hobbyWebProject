@@ -29,7 +29,7 @@
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
 			script.println("alert('이미 로그인이 되어있습니다.')");
-			script.println("location.href = 'mainPage.jsp'");
+			script.println("location.href = 'mainPage'");
 			script.println("</script>");
 		}
 		if(user.getUserID() == null || user.getUserPassword() == null || user.getUserName() == null
@@ -54,7 +54,7 @@
 				PrintWriter script = response.getWriter();
 				script.println("<script>");
 				script.println("alert('회원가입이 완료되었습니다.')");	
-				script.println("location.href = 'mainPage.jsp'");
+				script.println("location.href = 'mainPage'");
 				script.println("</script>");
 			}
 			

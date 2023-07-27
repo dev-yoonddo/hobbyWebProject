@@ -33,8 +33,8 @@
 			script.println("<script>");
 			script.println("alert('로그인이 필요합니다')");
 			script.println("self.close()");
-			script.println("opener.location.href='login.jsp'");
-			script.println("</script>");
+			script.println("window.open('loginPopUp', 'Login', 'width=500, height=550, top=50%, left=50%')");
+			script.println("<script>");
 		}else{
 			EventDAO eventDAO = new EventDAO();
 			//파라미터 값들을 배열에 저장한다.

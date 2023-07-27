@@ -32,7 +32,7 @@
 		PrintWriter script = response.getWriter();
 		script.println("<script>");
 		script.println("alert('로그인이 필요합니다.')");
-		script.println("history.back()");
+		script.println("window.open('loginPopUp', 'Login', 'width=500, height=550, top=50%, left=50%')");
 		script.println("</script>");
 	}
 	else{
@@ -61,7 +61,7 @@
 			    	PrintWriter script = response.getWriter();
 					script.println("<script>");
 					script.println("alert('삭제 성공')");
-					script.println("location.href='userUpdate.jsp'");
+					script.println("location.href='userUpdate'");
 					script.println("</script>");
 			    } else {
 			    	PrintWriter script = response.getWriter();

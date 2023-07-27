@@ -70,7 +70,7 @@ width: 100%;
 		if(userID == null){
 			script.println("<script>");
 			script.println("alert('로그인이 필요합니다.')");
-			script.println("window.open('loginPopUp.jsp', 'Login', 'width=500, height=550, top=50%, left=50%')");
+			script.println("window.open('loginPopUp', 'Login', 'width=500, height=550, top=50%, left=50%')");
 			script.println("</script>");
 		}else{
 		    int result = eventDAO.raffleMsgExit(userID);

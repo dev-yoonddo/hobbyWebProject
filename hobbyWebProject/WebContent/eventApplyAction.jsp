@@ -34,7 +34,7 @@
 			script.println("<script>");
 			script.println("alert('로그인이 필요합니다')");
 			script.println("self.close()");
-			script.println("opener.location.href='login.jsp'");
+			script.println("opener.location.href='login'");
 			script.println("</script>");
 		}else{
 			UserDAO user = new UserDAO();
@@ -83,7 +83,8 @@
 					script.println("<script>");
 					script.println("alert('응모가 완료되었습니다\\n당첨여부는 메시지로 알려드리겠습니다')");
 					script.println("self.close()");
-					script.println("opener.location.href='mainPage.jsp'");
+					//부모창 페이지 이동하기
+					script.println("opener.location.href='mainPage'");
 					script.println("</script>");
 				}
 				

@@ -13,7 +13,7 @@
 </head>
 <style>
 .login-wrapper{
-	margin: 30px;
+	margin: 40px;
 	margin-top: 70px;
 	margin-bottom: 0;
 	height: 400px;
@@ -53,7 +53,7 @@
 $(function(){
 	  $('#goJoin').on('click',function(){
 	      self.close();
-	      opener.location.href='join.jsp';
+	      opener.location.href='join';
 	    });
 
 	});

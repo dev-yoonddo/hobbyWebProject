@@ -170,7 +170,6 @@ int boardID = 0;
 if(request.getParameter("boardID") != null){
 	boardID = Integer.parseInt(request.getParameter("boardID"));
 }
-
 //글이 유효하다면 1이상의 숫자가 반환되기 때문에 boardID == 0일때  글이 유효하지 않다는 알림창 띄우기
 if(boardID == 0){
 	PrintWriter script = response.getWriter();
@@ -190,10 +189,10 @@ HeartDTO heartvo = new HeartDAO().getHeartVO(boardID);
 	<nav class="navbar">
 		<nav class="navbar_left">
 			<div class="navbar_logo">
-				<a href="mainPage.jsp" id="mainlogo" >TOGETHER</a>
+				<a href="mainPage" id="mainlogo" >TOGETHER</a>
 			</div>
 			<ul class="navbar_menu" style="float: left;">
-				<li><a href="community.jsp" class ="menu">COMMUNITY</a></li>
+				<li><a href="community" class ="menu">COMMUNITY</a></li>
 				<% 
 					if(userID == null){
 				%>
@@ -201,7 +200,7 @@ HeartDTO heartvo = new HeartDAO().getHeartVO(boardID);
 				<%
 					} else { 
 				%>
-				<li><a id="go-group-2" class="menu" onclick="location.href='groupPage.jsp'">GROUP</a></li>
+				<li><a id="go-group-2" class="menu" onclick="location.href='groupPage'">GROUP</a></li>
 				<%
 					}
 				%>
@@ -211,13 +210,13 @@ HeartDTO heartvo = new HeartDAO().getHeartVO(boardID);
 				<%
 					if(userID == null){
 				%>	
-				<li><a href="login.jsp">LOGIN</a></li>
-				<li><a href="join.jsp">JOIN</a></li>
+				<li><a href="login">LOGIN</a></li>
+				<li><a href="join">JOIN</a></li>
 				<%
 					}else{
 				%>
-				<li><a href="userUpdate.jsp"><i class="fa-solid fa-gear"></i></a></li>
-				<li><a href="logout.jsp">LOGOUT</a></li>
+				<li><a href="userUpdate"><i class="fa-solid fa-gear"></i></a></li>
+				<li><a href="logout">LOGOUT</a></li>
 				<%
 					}
 				%>
@@ -311,7 +310,7 @@ HeartDTO heartvo = new HeartDAO().getHeartVO(boardID);
 				
 			</div><br>
 			
-			<button type="button" class="btn-blue" onclick="location.href= 'searchPage.jsp?searchField2=<%=board.getBoardCategory()%>'"><span>목록</span></button>
+			<button type="button" class="btn-blue" onclick="location.href= 'searchPage?searchField2=<%=board.getBoardCategory()%>'"><span>목록</span></button>
 			<%
 				if(userID != null){
 			%>
@@ -324,7 +323,7 @@ HeartDTO heartvo = new HeartDAO().getHeartVO(boardID);
 					}
 					else if(userID.equals(board.getUserID())){
 			%>
-						<button type="button" class="btn-blue" onclick="location.href='update.jsp?boardID=<%=boardID%>'"><span>수정</span></button>
+						<button type="button" class="btn-blue" onclick="location.href='update?boardID=<%=boardID%>'"><span>수정</span></button>
 						<button type="button" class="btn-blue" id="btn-del" onclick="if(confirm('정말로 삭제하시겠습니까?')){location.href='deleteAction.jsp?boardID=<%=boardID%>'}"><span>삭제</span></button>
 			<%
 					}
@@ -405,7 +404,7 @@ $(function(){
 	$('#noUser').on('click',function(){
 	  var login = confirm('로그인을 해주세요');
 	  if (login) {
-	    window.open("loginPopUp.jsp", "Login", "width=450, height=500, top=50%, left=50%") ;
+	    window.open("loginPopUp", "Login", "width=450, height=500, top=50%, left=50%") ;
 	  }
 	  else {
 	  }

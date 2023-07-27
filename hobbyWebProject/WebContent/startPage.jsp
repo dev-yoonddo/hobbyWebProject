@@ -145,7 +145,7 @@ section{
 <script>
   setTimeout('pageStart()', 6000); //5초후에 move_page함수실행
   function pageStart(){
-  location.href="mainPage.jsp"  // 페이지 이동
+  location.href="mainPage"  // 페이지 이동
   }
 </script>
 <script>

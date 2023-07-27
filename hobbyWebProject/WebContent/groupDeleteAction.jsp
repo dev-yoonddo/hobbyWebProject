@@ -26,7 +26,7 @@
 		PrintWriter script = response.getWriter();
 		script.println("<script>");
 		script.println("alert('로그인을 하세요')");
-		script.println("location.href = 'loginPopUp.jsp'");
+		script.println("location.href = 'loginPopUp'");
 		script.println("</script>");
 	}
 	int groupID = 0;
@@ -61,7 +61,7 @@
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
 			script.println("alert('삭제가 완료되었습니다.')");
-			script.println("location.href = 'groupPage.jsp'");
+			script.println("location.href = 'groupPage'");
 			script.println("</script>");
 		}
 

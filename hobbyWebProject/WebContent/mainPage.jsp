@@ -45,7 +45,7 @@ int boardCount = bdDAO.getListByUser(userID).size(); //유저가 작성한 게�
 int eventCount = eventDAO.getListByUser(userID).size(); //이벤트 응모 기록 가져오기
 if(boardCount >= 5 && eventCount == 0){ //게시글이 5개 이상이고 이벤트 응모 기록이 없으면 팝업창 띄우기
 	script.println("<script>");
-	script.println("window.open('eventPopUp.jsp', 'EVENT', 'width=500, height=550, top=50%, left=50%')");
+	script.println("window.open('eventPopUp', 'EVENT', 'width=500, height=550, top=50%, left=50%')");
 	script.println("</script>");
 }
 //유저의 이벤트 정보 가져오기
@@ -53,7 +53,7 @@ if(boardCount >= 5 && eventCount == 0){ //게시글이 5개 이상이고 이벤�
 EventDTO eventvo = new EventDAO().getEventVO(userID);
 if(eventvo != null && eventvo.getEventWin() == 1 && eventvo.getEventAvailable() != 0){
 	script.println("<script>");
-	script.println("window.open('eventWinPopUp.jsp', 'EVENT', 'width=500, height=300, top=50%, left=50%')");
+	script.println("window.open('eventWinPopUp', 'EVENT', 'width=500, height=300, top=50%, left=50%')");
 	script.println("</script>");
 }
 %>
@@ -62,10 +62,10 @@ if(eventvo != null && eventvo.getEventWin() == 1 && eventvo.getEventAvailable() 
 	<nav class="navbar">
 		<nav class="navbar_left">
 			<div class="navbar_logo">
-				<a href="mainPage.jsp" id="mainlogo" >TOGETHER</a>
+				<a href="mainPage" id="mainlogo" >TOGETHER</a>
 			</div>
 			<ul class="navbar_menu" style="float: left;">
-				<li><a href="community.jsp" class ="menu">COMMUNITY</a></li>
+				<li><a href="community" class ="menu">COMMUNITY</a></li>
 				<% 
 					if(userID == null){
 				%>
@@ -73,7 +73,7 @@ if(eventvo != null && eventvo.getEventWin() == 1 && eventvo.getEventAvailable() 
 				<%
 					} else { 
 				%>
-				<li><a id="go-group-2" class="menu" onclick="location.href='groupPage.jsp'">GROUP</a></li>
+				<li><a id="go-group-2" class="menu" onclick="location.href='groupPage'">GROUP</a></li>
 				<%
 					}
 				%>
@@ -83,12 +83,12 @@ if(eventvo != null && eventvo.getEventWin() == 1 && eventvo.getEventAvailable() 
 				<%
 					if(userID == null){
 				%>	
-				<li><a href="login.jsp">LOGIN</a></li>
-				<li><a href="join.jsp">JOIN</a></li>
+				<li><a href="login">LOGIN</a></li>
+				<li><a href="join">JOIN</a></li>
 				<%
 					}else{
 				%>
-				<li><a href="userUpdate.jsp"><i class="fa-solid fa-gear" id="updateicon"></i></a></li>
+				<li><a href="userUpdate"><i class="fa-solid fa-gear" id="updateicon"></i></a></li>
 				<li><a href="logout.jsp">LOGOUT</a></li>
 				<%
 					}
@@ -112,11 +112,11 @@ if(eventvo != null && eventvo.getEventWin() == 1 && eventvo.getEventAvailable() 
 		<hr id="line">
 		</div>		
 		<% if(userID == null) {%>
-		<div id="m2" onclick="location.href='join.jsp'">
+		<div id="m2" onclick="location.href='join'">
 		TOGETHER 회원가입
 		</div>
 		<%} else{%>
-		<div id="m2" onclick="location.href='write.jsp'">
+		<div id="m2" onclick="location.href='write'">
 		글 작성하기
 		</div>
 		<%} %>
@@ -146,7 +146,7 @@ if(eventvo != null && eventvo.getEventWin() == 1 && eventvo.getEventAvailable() 
 	            <div class="info-item">
 	             <h2>함께 하러가기</h2>
 	            </div>
-	        	<form method="post" action="searchPage.jsp">
+	        	<form method="post" action="searchPage">
 			      <input type="hidden" name="searchField2" value="SPORTS">
 			      <div class="btn"><button type="submit">TOGETHER</button></div>
 			    </form>
@@ -161,7 +161,7 @@ if(eventvo != null && eventvo.getEventWin() == 1 && eventvo.getEventAvailable() 
 	            <div class="info-item">
 	              <h2>함께 하러가기</h2>
 	            </div>           
-		        <form method="post" action="searchPage.jsp">
+		        <form method="post" action="searchPage">
 			      <input type="hidden" name="searchField2" value="LEISURE">
 			      <div class="btn"><button type="submit">TOGETHER</button></div>
 			    </form>
@@ -176,7 +176,7 @@ if(eventvo != null && eventvo.getEventWin() == 1 && eventvo.getEventAvailable() 
 	            <div class="info-item">
 	              <h2>함께 하러가기</h2>
 	            </div>
-	          	<form method="post" action="searchPage.jsp">
+	          	<form method="post" action="searchPage">
 			      <input type="hidden" name="searchField2" value="MUSIC">
 			      <div class="btn"><button type="submit">TOGETHER</button></div>
 			    </form>
@@ -191,7 +191,7 @@ if(eventvo != null && eventvo.getEventWin() == 1 && eventvo.getEventAvailable() 
 	            <div class="info-item">
 	              <h2>함께 하러가기</h2>
 	            </div>
-	            <form method="post" action="searchPage.jsp">
+	            <form method="post" action="searchPage">
 			      <input type="hidden" name="searchField2" value="OTHER">
 			      <div class="btn"><button type="submit">GO</button></div>
 			    </form>

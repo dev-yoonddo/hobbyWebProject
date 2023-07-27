@@ -6,20 +6,20 @@ $(function(){
   $('#go-group-1').on('click',function(){
     var login = confirm('로그인이 필요합니다');
     if (login) {
-      window.open("loginPopUp.jsp", "Login", "width=500, height=500, top=50%, left=50%");
+      window.open("loginPopUp", "Login", "width=500, height=550, top=50%, left=50%");
     }
     else {
     }
     });
 });
-
+ 
 //loginPopUp 페이지에서 회원가입을 클릭했을때
 
 
 // 그룹 생성하기를 클릭했을때
 $(function(){
   $('#create-group').on('click',function(){
-      window.open("groupPopup.jsp", "CREATE", "width=500, height=500, top=50%, left=50%");
+      window.open("groupPopUp", "CREATE", "width=500, height=500, top=50%, left=50%");
     });
 });
 // $(function(){
@@ -61,10 +61,10 @@ mouseCursor.style.top = e.pageY - scrollY + "px";
 // $(function loginPU(){
 // 		var login = confirm('로그인시 이용이 가능합니다. 로그인 페이지로 이동하시겠습니까?');
 // 		if (login) {
-// 			window.open("login.jsp", "Login", "width=410, height=400, top=50%, left=50%") ;
+// 			window.open("login", "Login", "width=410, height=400, top=50%, left=50%") ;
 //     }
 // 		else {
-// 			location.href='mainPage.jsp';
+// 			location.href='mainPage';
 // 		}
 // });
 
@@ -73,10 +73,10 @@ mouseCursor.style.top = e.pageY - scrollY + "px";
 //     $("#go-qna").on('click', function(){
 //       var login = confirm('로그인시 이용이 가능합니다. 로그인 페이지로 이동하시겠습니까?');
 //       if (login) {
-//         window.open("login.jsp", "Login", "width=410, height=400, top=50%, left=50%") ;
+//         window.open("login", "Login", "width=410, height=400, top=50%, left=50%") ;
 //       }
 //       else {
-//         location.href='mainPage.jsp';
+//         location.href='mainPage';
 //       }
 //     });
 // });
@@ -263,7 +263,7 @@ function showPasswordPrompt(grID, grPW, grAvl) {
 	    }
    		//비밀번호가 일치하면 접속
 	    if (inputPassword == grPW) {
-	        location.href = "groupView.jsp?groupID=" + grID;
+	        location.href = "groupView?groupID=" + grID;
 	    }
 	//그룹 비활동중
     }else{
@@ -274,7 +274,7 @@ function showPasswordPrompt(grID, grPW, grAvl) {
 
 //메시지 리스트에서 제목을 클릭하면 해당 메시지 상세보기 팝업이 열린다.
 function viewMsg(msgID){
-   	window.open("viewMsg.jsp?msgID=" + msgID , "VIEW MESSAGE", "width=550, height=600, top=50%, left=50%");
+   	window.open("viewMsg?msgID=" + msgID , "VIEW MESSAGE", "width=550, height=600, top=50%, left=50%");
    	self.close();
 }
 //url 뒤 파라미터 안보이게하기

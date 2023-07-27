@@ -118,10 +118,10 @@ button{
 	<nav class="navbar">
 		<nav class="navbar_left">
 			<div class="navbar_logo">
-				<a href="mainPage.jsp" id="mainlogo" >TOGETHER</a>
+				<a href="mainPage" id="mainlogo" >TOGETHER</a>
 			</div>
 			<ul class="navbar_menu" style="float: left;">
-				<li><a href="community.jsp" class ="menu">COMMUNITY</a></li>
+				<li><a href="community" class ="menu">COMMUNITY</a></li>
 				<% 
 					if(userID == null){
 				%>
@@ -129,7 +129,7 @@ button{
 				<%
 					} else { 
 				%>
-				<li><a id="go-group-2" class="menu" onclick="location.href='groupPage.jsp'">GROUP</a></li>
+				<li><a id="go-group-2" class="menu" onclick="location.href='groupPage'">GROUP</a></li>
 				<%
 					}
 				%>
@@ -139,13 +139,13 @@ button{
 				<%
 					if(userID == null){
 				%>	
-				<li><a href="login.jsp">LOGIN</a></li>
-				<li><a href="join.jsp">JOIN</a></li>
+				<li><a href="login">LOGIN</a></li>
+				<li><a href="join">JOIN</a></li>
 				<%
 					}else{
 				%>
-				<li><a href="userUpdate.jsp"><i class="fa-solid fa-gear"></i></a></li>
-				<li><a href="logout.jsp">LOGOUT</a></li>
+				<li><a href="userUpdate"><i class="fa-solid fa-gear"></i></a></li>
+				<li><a href="logout">LOGOUT</a></li>
 				<%
 					}
 				%>
@@ -175,7 +175,7 @@ button{
 </div>
 -->
 <div class="select-hobby">
-<form method="post" id ="searchField2" action="searchPage.jsp">
+<form method="post" id ="searchField2" action="searchPage">
 	<div id="select-sec">
 		<div class="select">
 			<div class="text">

@@ -272,7 +272,7 @@ span{
 		PrintWriter script = response.getWriter();
 		script.println("<script>");
 		script.println("alert('로그인이 필요합니다.')");
-		script.println("window.open('loginPopUp.jsp', 'Login', 'width=500, height=550, top=50%, left=50%')");
+		script.println("window.open('loginPopUp', 'Login', 'width=500, height=550, top=50%, left=50%')");
 		script.println("</script>");
 	}
 	
@@ -285,10 +285,10 @@ span{
 	<nav class="navbar">
 		<nav class="navbar_left">
 			<div class="navbar_logo">
-				<a href="mainPage.jsp" id="mainlogo" >TOGETHER</a>
+				<a href="mainPage" id="mainlogo" >TOGETHER</a>
 			</div>
 			<ul class="navbar_menu" style="float: left;">
-				<li><a href="community.jsp" class ="menu">COMMUNITY</a></li>
+				<li><a href="community" class ="menu">COMMUNITY</a></li>
 				<% 
 					if(userID == null){
 				%>
@@ -296,7 +296,7 @@ span{
 				<%
 					} else { 
 				%>
-				<li><a id="go-group-2" class="menu" onclick="location.href='groupPage.jsp'">GROUP</a></li>
+				<li><a id="go-group-2" class="menu" onclick="location.href='groupPage'">GROUP</a></li>
 				<%
 					}
 				%>
@@ -306,12 +306,12 @@ span{
 				<%
 					if(userID == null){
 				%>	
-				<li><a href="login.jsp">LOGIN</a></li>
-				<li><a href="join.jsp">JOIN</a></li>
+				<li><a href="login">LOGIN</a></li>
+				<li><a href="join">JOIN</a></li>
 				<%
 					}else{
 				%>
-				<li><a href="logout.jsp">LOGOUT</a></li>
+				<li><a href="logout">LOGOUT</a></li>
 				<%
 					}
 				%>
@@ -409,7 +409,7 @@ span{
 							%>
 							<tr class="showWrite" style="height: 20px;">
 								<td><%=list.get(i).getBoardCategory()%></td>
-								<td><a id="click-view" href="view.jsp?boardID=<%= list.get(i).getBoardID() %>"><%= list.get(i).getBoardTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></a></td>
+								<td><a id="click-view" href="view?boardID=<%= list.get(i).getBoardID() %>"><%= list.get(i).getBoardTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></a></td>
 								<td><%= list.get(i).getBoardDate().substring(0 ,11) + "<br>" + list.get(i).getBoardDate().substring(11, 13) + "시" + list.get(i).getBoardDate().substring(14, 16) + "분" %></td>
 								<td><%=list.get(i).getHeartCount()%></td>
 								<td><%= cmtlist.size() %></td>
@@ -462,7 +462,7 @@ span{
 								for (int i = 0; i < cmtlist2.size(); i++) {
 							%>
 							<tr class="showCmt" style="height: 20px;">
-								<td><a id="click-view" href="view.jsp?boardID=<%= cmtlist2.get(i).getBoardID() %>"><%= cmtlist2.get(i).getCmtContent().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></a></td>
+								<td><a id="click-view" href="view?boardID=<%= cmtlist2.get(i).getBoardID() %>"><%= cmtlist2.get(i).getCmtContent().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></a></td>
 								<td><%= cmtlist2.get(i).getCmtDate().substring(0 ,11) + cmtlist2.get(i).getCmtDate().substring(11, 13) + "시" + cmtlist2.get(i).getCmtDate().substring(14, 16) + "분" %></td>
 							</tr>
 							<%
@@ -514,7 +514,7 @@ span{
 								for (int i = 0; i < grouplist.size(); i++) {										
 							%>
 							<tr class="showGroup" style="height: 20px;">
-								<td><a id="click-view" href="groupView.jsp?groupID=<%= grouplist.get(i).getGroupID() %>"><%= grouplist.get(i).getGroupName().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></a></td>
+								<td><a id="click-view" href="groupView?groupID=<%= grouplist.get(i).getGroupID() %>"><%= grouplist.get(i).getGroupName().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></a></td>
 								<td><%= grouplist.get(i).getGroupPassword() %></td>
 								<!-- 그룹이 비활동중이면 -->
 								<%if(grouplist.get(i).getGroupAvailable() == 0){ %>
@@ -877,7 +877,7 @@ function showPasswordPrompt(grID, grPW, grAvl) {
 	    }
    		//비밀번호가 일치하면 접속
 	    if (inputPassword == grPW) {
-	        location.href = "groupView.jsp?groupID=" + grID;
+	        location.href = "groupView?groupID=" + grID;
 	    }
 	//그룹 비활동중
     }else{
@@ -888,12 +888,12 @@ function showPasswordPrompt(grID, grPW, grAvl) {
 
 //메시지 리스트에서 제목을 클릭하면 해당 메시지 상세보기 팝업이 열린다.
 function viewMsg(msgID){
-   	window.open("viewMsg.jsp?msgID=" + msgID , "VIEW MESSAGE", "width=550, height=600, top=50%, left=50%");
+   	window.open("viewMsg?msgID=" + msgID , "VIEW MESSAGE", "width=550, height=600, top=50%, left=50%");
    	self.close();
 }
 //이벤트 응모 현황 관리 (manager 권한)
 function viewEvent(){
-	window.open("eventRafflePopUp.jsp","EVENT","width=500, height=550, top=50%, left=50%")
+	window.open("eventRafflePopUp","EVENT","width=500, height=550, top=50%, left=50%")
 }
 </script>
 <script defer type="text/javascript" src="js/userdata.js"></script>

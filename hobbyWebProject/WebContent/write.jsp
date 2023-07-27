@@ -118,7 +118,13 @@ String userID = null;
 if(session.getAttribute("userID") != null){
 	userID = (String) session.getAttribute("userID");
 } //로그인 확인 후 id값 얻어오기
-
+if(userID == null){
+	PrintWriter script = response.getWriter();
+	script.println("<script>");
+	script.println("alert('로그인이 필요합니다.')");
+	script.println("window.open('loginPopUp', 'Login', 'width=500, height=550, top=50%, left=50%')");
+	script.println("</script>");
+}
 //searchPage에서 글쓰기 버튼을 눌렀을 때 전달받는 카테고리 값 가져오기
 String bdcategory = request.getParameter("category");
 %>

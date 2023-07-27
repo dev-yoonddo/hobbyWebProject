@@ -93,7 +93,7 @@ if(userID == null){
 	PrintWriter script = response.getWriter();
 	script.println("<script>");
 	script.println("alert('로그인이 필요합니다.')");
-	script.println("window.open('loginPopUp.jsp', 'Login', 'width=450, height=500, top=50%, left=50%')");
+	script.println("window.open('loginPopUp', 'Login', 'width=450, height=500, top=50%, left=50%')");
 	script.println("</script>");
 }
 
@@ -107,7 +107,7 @@ if(groupID == 0){
 	PrintWriter script = response.getWriter();
 	script.println("<script>");
 	script.println("alert('해당 그룹이 존재하지 않습니다.')");
-	script.println("location.href = 'groupPage.jsp'");
+	script.println("location.href = 'groupPage'");
 	script.println("</script>");
 }
 
@@ -180,7 +180,7 @@ ArrayList<MessageDTO> msglist = msgDAO.getMsgList(userID, groupID);
 
 //메시지 제목을 클릭하면 상세팝업 띄우기
 function viewMsg(msgID){
-   	window.open("viewMsg.jsp?msgID=" + msgID , "VIEW MESSAGE", "width=550, height=600, top=50%, left=50%");
+   	window.open("viewMsg?msgID=" + msgID , "VIEW MESSAGE", "width=550, height=600, top=50%, left=50%");
    	self.close(); //이전 팝업 닫기
 }
 </script>

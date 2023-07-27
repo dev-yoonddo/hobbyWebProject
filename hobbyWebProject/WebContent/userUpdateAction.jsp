@@ -24,7 +24,7 @@
 		PrintWriter script=response.getWriter();
 		script.println("<script>");
 		script.println("alert('로그인을 하세요.')");
-		script.println("location.href='login.jsp'");
+		script.println("location.href='login'");
 		script.println("</script>");
 		}
 		//test계정에서 비밀번호 수정요청이 들어올때
@@ -58,7 +58,7 @@
 					PrintWriter script=response.getWriter();
 					script.println("<script>");
 					script.println("alert('회원정보 수정이 완료되었습니다.')");
-					script.println("location.href='mainPage.jsp'");
+					script.println("location.href='userUpdate'");
 					script.println("</script>");
 				}
 			}

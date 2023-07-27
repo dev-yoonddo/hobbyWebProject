@@ -32,7 +32,7 @@
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
 			script.println("alert('로그인이 필요합니다.')");
-			script.println("window.open('loginPopUp.jsp', 'Login', 'width=450, height=500, top=50%, left=50%')");
+			script.println("window.open('loginPopUp', 'Login', 'width=450, height=500, top=50%, left=50%')");
 			script.println("window.close()");
 			script.println("</script>");
 		}else{
@@ -62,7 +62,7 @@
 					PrintWriter script = response.getWriter();
 					script.println("<script>");
 					script.println("alert('메시지 전송이 완료되었습니다.')");
-					script.println("location.href = 'groupView.jsp?groupID=" + groupID +"'");
+					script.println("location.href = 'groupView?groupID=" + groupID +"'");
 					script.println("</script>");
 				}
 			}else{		
@@ -78,7 +78,7 @@
 					PrintWriter script = response.getWriter();
 					script.println("<script>");
 					script.println("alert('메시지 전송이 완료되었습니다.')");
-					script.println("window.open('viewMsgListPopUp.jsp?groupID=" + groupID + "','MESSAGE', 'width=450, height=450, top=50%, left=50%')");
+					script.println("window.open('viewMsgListPopUp?groupID=" + groupID + "','MESSAGE', 'width=450, height=450, top=50%, left=50%')");
 					script.println("</script>");
 				}
 			}

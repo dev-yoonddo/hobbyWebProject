@@ -27,8 +27,8 @@
 		if(userID == null){
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
-			script.println("alert('로그인을 하세요')");
-			script.println("location.href = 'loginPopUp.jsp'");
+			script.println("alert('로그인이 필요합니다.')");
+			script.println("window.open('loginPopUp', 'Login', 'width=500, height=550, top=50%, left=50%')");
 			script.println("</script>");
 		}
 		int boardID = board.getBoardID();
@@ -67,7 +67,7 @@
 						PrintWriter script = response.getWriter();
 						script.println("<script>");
 						script.println("alert('작성이 완료되었습니다')");
-						script.println("location.href='view.jsp?boardID=" + boardID + "'");
+						script.println("location.href='view?boardID=" + boardID + "'");
 						script.println("</script>");
 					}
 					

@@ -129,10 +129,10 @@ border-bottom: solid 1px #E0E0E0;
 	<nav class="navbar">
 		<nav class="navbar_left">
 			<div class="navbar_logo">
-				<a href="mainPage.jsp" id="mainlogo" >TOGETHER</a>
+				<a href="mainPage" id="mainlogo" >TOGETHER</a>
 			</div>
 			<ul class="navbar_menu" style="float: left;">
-				<li><a href="community.jsp" class ="menu">COMMUNITY</a></li>
+				<li><a href="community" class ="menu">COMMUNITY</a></li>
 				<% 
 					if(userID == null){
 				%>
@@ -140,7 +140,7 @@ border-bottom: solid 1px #E0E0E0;
 				<%
 					} else { 
 				%>
-				<li><a id="go-group-2" class="menu" onclick="location.href='groupPage.jsp'">GROUP</a></li>
+				<li><a id="go-group-2" class="menu" onclick="location.href='groupPage'">GROUP</a></li>
 				<%
 					}
 				%>
@@ -150,13 +150,13 @@ border-bottom: solid 1px #E0E0E0;
 				<%
 					if(userID == null){
 				%>	
-				<li><a href="login.jsp">LOGIN</a></li>
-				<li><a href="join.jsp">JOIN</a></li>
+				<li><a href="login">LOGIN</a></li>
+				<li><a href="join">JOIN</a></li>
 				<%
 					}else{
 				%>
-				<li><a href="userUpdate.jsp"><i class="fa-solid fa-gear"></i></a></li>
-				<li><a href="logout.jsp">LOGOUT</a></li>
+				<li><a href="userUpdate"><i class="fa-solid fa-gear"></i></a></li>
+				<li><a href="logout">LOGOUT</a></li>
 				<%
 					}
 				%>
@@ -211,7 +211,7 @@ border-bottom: solid 1px #E0E0E0;
 				
 					<tr class="board-row">
 						<td><%=list.get(i).getViewCount()%></td>
-						<td><a id="click-view" href="view.jsp?boardID=<%= list.get(i).getBoardID() %>"><%= list.get(i).getBoardTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></a></td>
+						<td><a id="click-view" href="view?boardID=<%= list.get(i).getBoardID() %>"><%= list.get(i).getBoardTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></a></td>
 						<td><%= list.get(i).getUserID() %></td>
 						<td><%=list.get(i).getHeartCount()%></td>
 						<%
@@ -243,11 +243,11 @@ border-bottom: solid 1px #E0E0E0;
 			}
 		%>
 		
-			<button type="button" class="btn-blue" id="search" onclick="location.href='community.jsp'"><span>돌아가기</span></button>
+			<button type="button" class="btn-blue" id="search" onclick="location.href='community'"><span>돌아가기</span></button>
 		<% 
 			if( userID != null ){
 		%>
-			<button type="button" class="btn-blue" id="write" onclick="location.href='write.jsp?category=<%= boardCategory %>'"><span>글쓰기</span></button>
+			<button type="button" class="btn-blue" id="write" onclick="location.href='write?category=<%= boardCategory %>'"><span>글쓰기</span></button>
 		<% 
 			}
 		%>

@@ -25,16 +25,16 @@
 		userID=(String)session.getAttribute("userID");
 		}
 		if(userID == null){
-		PrintWriter script=response.getWriter();
-		script.println("<script>");
-		script.println("alert('로그인을 하세요.')");
-		script.println("location.href='loginPopUp.jsp'");
-		script.println("</script>");
+			PrintWriter script = response.getWriter();
+			script.println("<script>");
+			script.println("alert('로그인이 필요합니다.')");
+			script.println("window.open('loginPopUp', 'Login', 'width=500, height=550, top=50%, left=50%')");
+			script.println("</script>");
 		}
 		int groupID=0;
-		if(request.getParameter("groupID")!=null)
+		if(request.getParameter("groupID")!=null){
 			groupID=Integer.parseInt(request.getParameter("groupID"));
-		
+		}
 		//memberID값 가져오기
 		String memberID = request.getParameter("memberID");
 
@@ -51,7 +51,7 @@
 			PrintWriter script=response.getWriter();
 			script.println("<script>");
 			script.println("alert('탈퇴에 성공했습니다.')");
-			script.println("location.href='groupPage.jsp'");	
+			script.println("location.href='groupPage'");	
 			script.println("</script>");
 		}
 			

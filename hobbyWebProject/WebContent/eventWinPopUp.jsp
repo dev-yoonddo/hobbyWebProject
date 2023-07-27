@@ -64,7 +64,7 @@ EventDAO eventDAO = new EventDAO();
 	</div>
 <script>
 function eventMsgExit(){
-   	window.open('eventMsgExit.jsp', '', 'width=100, height=100, top=50%, left=50%');
+   	window.open('eventMsgExit', '', 'width=100, height=100, top=50%, left=50%');
    	self.close(); //이전 팝업 닫기
 }
 </script>

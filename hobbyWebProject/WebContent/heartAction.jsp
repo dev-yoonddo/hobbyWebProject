@@ -21,11 +21,11 @@
 		if(session.getAttribute("userID")!=null){
 			userID=(String)session.getAttribute("userID");
 		}
-		if(userID==null){
-			PrintWriter script=response.getWriter();
+		if(userID == null){
+			PrintWriter script = response.getWriter();
 			script.println("<script>");
-			script.println("alert('로그인을 해주세요.')");
-			script.println("location.href='loginPopUp.jsp'");
+			script.println("alert('로그인이 필요합니다.')");
+			script.println("window.open('loginPopUp', 'Login', 'width=500, height=550, top=50%, left=50%')");
 			script.println("</script>");
 		}
 		int boardID=0;
@@ -39,6 +39,7 @@
 			script.println("history.back()");
 			script.println("</script>");
 		}
+		
 		BoardDAO boardDAO = new BoardDAO();
 		HeartDAO heartDAO = new HeartDAO();
 		int result = heartDAO.heart(userID,boardID);
@@ -48,7 +49,7 @@
 				PrintWriter script=response.getWriter();
 				script.println("<script>");
 				script.println("alert('추천이 완료되었습니다.')");
-				script.println("location.href= \'view.jsp?boardID="+boardID+"\'"); //해당 글로 다시 돌아가기
+				script.println("location.href= \'view?boardID="+boardID+"\'"); //해당 글로 다시 돌아가기
 				script.println("</script>");
 			} else{
 				PrintWriter script=response.getWriter();

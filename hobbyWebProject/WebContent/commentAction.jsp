@@ -29,7 +29,7 @@
  		PrintWriter script = response.getWriter();
  		script.println("<script>");
 		script.println("alert('로그인을 하세요.')");
- 		script.println("location.href = 'loginPopUp.jsp'");
+ 		script.println("location.href = 'loginPopUp'");
  		script.println("</script>");
  	} 
  	else{
@@ -65,7 +65,7 @@
                 PrintWriter script = response.getWriter();
                 script.println("<script>");
                 script.println("alert('댓글이 작성되었습니다.')");
-                script.println("location.href='view.jsp?boardID="+boardID+"'");
+                script.println("location.href='view?boardID="+boardID+"'");
                 script.println("</script>");
              }
 	 	}

@@ -28,10 +28,10 @@
 			userID=(String)session.getAttribute("userID");
 		}
 		if(userID == null){
-			PrintWriter script=response.getWriter();
+			PrintWriter script = response.getWriter();
 			script.println("<script>");
-			script.println("alert('로그인을 하세요.')");
-			script.println("location.href='login.jsp'");
+			script.println("alert('로그인이 필요합니다.')");
+			script.println("window.open('loginPopUp', 'Login', 'width=500, height=550, top=50%, left=50%')");
 			script.println("</script>");
 		}else{
 			UserDAO userDAO=new UserDAO();
@@ -78,7 +78,7 @@
 			PrintWriter script=response.getWriter();
 			script.println("<script>");
 			script.println("alert('회원탈퇴에 성공했습니다.')");
-			script.println("location.href='mainPage.jsp'");
+			script.println("location.href='mainPage'");
 			script.println("</script>");
 		
 			}

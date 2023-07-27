@@ -73,7 +73,7 @@ if(userID == null){
 	PrintWriter script = response.getWriter();
 	script.println("<script>");
 	script.println("alert('로그인이 필요합니다.')");
-	script.println("window.open('loginPopUp.jsp', 'Login', 'width=450, height=500, top=50%, left=50%')");
+	script.println("window.open('loginPopUp', 'Login', 'width=450, height=500, top=50%, left=50%')");
 	script.println("</script>");
 }
 //유효하지 않은 그룹일때
@@ -81,7 +81,7 @@ if(groupID == 0){
 	PrintWriter script = response.getWriter();
 	script.println("<script>");
 	script.println("alert('해당 그룹이 존재하지 않습니다.')");
-	script.println("location.href = 'groupPage.jsp'");
+	script.println("location.href = 'groupPage'");
 	script.println("</script>");
 }
 //groupPage에서 이미 가입,접속에 대한 처리를 했지만 실행 도중 자동 로그아웃과같은 상황을 대비해 view 페이지에도 코드를 작성했다.
@@ -104,7 +104,7 @@ if(group.getGroupAvailable() == 0){
 		PrintWriter script = response.getWriter();
 		script.println("<script>");
 		script.println("alert('가입하지 않은 회원입니다.')");
-		script.println("location.href = 'groupPage.jsp'");
+		script.println("location.href = 'groupPage'");
 		script.println("</script>");
 		}
 		//데이터는 있지만 available값이 0이면
@@ -112,7 +112,7 @@ if(group.getGroupAvailable() == 0){
 		PrintWriter script = response.getWriter();
 		script.println("<script>");
 		script.println("alert('탈퇴한 회원입니다.')");
-		script.println("location.href = 'groupPage.jsp'");
+		script.println("location.href = 'groupPage'");
 		script.println("</script>");
 		}
 	}
@@ -127,24 +127,24 @@ ArrayList<MemberDTO> mblist = mbDAO.getList(groupID); //해당 그룹의 멤버�
 	<nav class="navbar">
 		<nav class="navbar_left">
 			<div class="navbar_logo">
-				<a href="mainPage.jsp" id="mainlogo" >TOGETHER</a>
+				<a href="mainPage" id="mainlogo" >TOGETHER</a>
 			</div>
 			<ul class="navbar_menu" style="float: left;">
-				<li><a href="community.jsp" class ="menu">COMMUNITY</a></li>
-				<li><a class="menu" onclick="location.href='groupPage.jsp'">GROUP</a></li>
+				<li><a href="community" class ="menu">COMMUNITY</a></li>
+				<li><a class="menu" onclick="location.href='groupPage'">GROUP</a></li>
 			</ul>
 		</nav>
 			<ul class="navbar_login" >
 				<%
 					if(userID == null){
 				%>	
-				<li><a href="login.jsp">LOGIN</a></li>
-				<li><a href="join.jsp">JOIN</a></li>
+				<li><a href="login">LOGIN</a></li>
+				<li><a href="join">JOIN</a></li>
 				<%
 					}else{
 				%>
-				<li><a href="userUpdate.jsp"><i class="fa-solid fa-gear"></i></a></li>
-				<li><a href="logout.jsp">LOGOUT</a></li>
+				<li><a href="userUpdate"><i class="fa-solid fa-gear"></i></a></li>
+				<li><a href="logout">LOGOUT</a></li>
 				<%
 					}
 				%>
@@ -206,12 +206,12 @@ ArrayList<MemberDTO> mblist = mbDAO.getList(groupID); //해당 그룹의 멤버�
 <script>
 //메시지확인을 클릭하면 메시지 리스트 팝업을 띄운다.
 function viewMsgList(groupID){
-   	window.open("viewMsgListPopUp.jsp?groupID=" + groupID , "MESSAGE", "width=500, height=500, top=50%, left=50%") ;
+   	window.open("viewMsgListPopUp?groupID=" + groupID , "MESSAGE", "width=500, height=500, top=50%, left=50%") ;
 }
 //메시지전송을 클릭하면 그룹이름과 그룹생성자(메시지수신자) 정보를 받는다.
 function sendMSG(groupID) {
    	//팝업창을 열때 groupID값을 넘겨준다.
-   	window.open("sendMsgPopUp.jsp?groupID=" + groupID , "MESSAGE", "width=500, height=500, top=50%, left=50%") ;
+   	window.open("sendMsgPopUp?groupID=" + groupID , "MESSAGE", "width=500, height=500, top=50%, left=50%") ;
 }
 </script>
 <script>

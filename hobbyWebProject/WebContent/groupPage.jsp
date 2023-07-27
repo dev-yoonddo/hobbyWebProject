@@ -183,7 +183,7 @@ if(session.getAttribute("userID") != null){
 	userID = (String) session.getAttribute("userID");
 }
 if(userID==null) {
-	response.sendRedirect(request.getContextPath()+"/login.jsp");
+	response.sendRedirect(request.getContextPath()+"/login");
 }
 %>
 <header>
@@ -191,10 +191,10 @@ if(userID==null) {
 	<nav class="navbar">
 		<nav class="navbar_left">
 			<div class="navbar_logo">
-				<a href="mainPage.jsp" id="mainlogo" >TOGETHER</a>
+				<a href="mainPage" id="mainlogo" >TOGETHER</a>
 			</div>
 			<ul class="navbar_menu" style="float: left;">
-				<li><a href="community.jsp" class ="menu">COMMUNITY</a></li>
+				<li><a href="community" class ="menu">COMMUNITY</a></li>
 				<li><a class="menu">GROUP</a></li>
 			</ul>
 		</nav>
@@ -202,13 +202,13 @@ if(userID==null) {
 				<%
 					if(userID == null){
 				%>	
-				<li><a href="login.jsp">LOGIN</a></li>
-				<li><a href="join.jsp">JOIN</a></li>
+				<li><a href="login">LOGIN</a></li>
+				<li><a href="join">JOIN</a></li>
 				<%
 					}else{
 				%>
-				<li><a href="userUpdate.jsp"><i class="fa-solid fa-gear"></i></a></li>
-				<li><a href="logout.jsp">LOGOUT</a></li>
+				<li><a href="userUpdate"><i class="fa-solid fa-gear"></i></a></li>
+				<li><a href="logout">LOGOUT</a></li>
 				<%
 					}
 				%>
@@ -364,7 +364,7 @@ function joinGroup(groupID, groupAvailable, mbNum, grNum, member,memberDel) {
         		alert("정원이 다 찼습니다.");
         	}else{
         	//팝업창을 열때 groupID값을 넘겨준다.
-          	window.open("memberJoinPopUp.jsp?groupID=" + groupID , "Join", "width=500, height=500, top=50%, left=50%") ;
+          	window.open("memberJoinPopUp?groupID=" + groupID , "Join", "width=500, height=500, top=50%, left=50%") ;
         	}
         }
         else {
@@ -385,7 +385,7 @@ function showPasswordPrompt(grID, grPassword, grAvailable, member, leader) {
     if(grAvailable == 1){
 		//그룹 생성자이면 비밀번호 입력 없이 접속
 		if(leader == "true"){
-			location.href = "groupView.jsp?groupID=" + grID;
+			location.href = "groupView?groupID=" + grID;
 		}else{
 		//그룹 생성자가 아니면
 	    	//member에 데이터가 없으면 (userID, groupID가 일치하는 데이터가 없으면) 가입하지 않은 유저
@@ -402,7 +402,7 @@ function showPasswordPrompt(grID, grPassword, grAvailable, member, leader) {
 			    }
 	    		//비밀번호가 일치하면 접속
 			    if (inputPassword == grPassword) {
-			        location.href = "groupView.jsp?groupID=" + grID;
+			        location.href = "groupView?groupID=" + grID;
 			    }
 	    	}
 		}

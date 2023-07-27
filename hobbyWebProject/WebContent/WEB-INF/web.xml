@@ -218,4 +218,12 @@
     <url-pattern>/eventMsgExit</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+    <servlet-name>logout.jsp</servlet-name>
+    <jsp-file>/logout.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>logout.jsp</servlet-name>
+    <url-pattern>/logout</url-pattern>
+  </servlet-mapping>
 </web-app>
