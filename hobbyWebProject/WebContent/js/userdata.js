@@ -156,4 +156,16 @@ $(document).ready(function(){
 	    $('.showSendMsg').slice(0, lastIndex6 + 1).hide();
 	    lastIndex6 += viewCount6; 
 	});
+	//그룹 수신 메시지 더보기
+	$('.showRcvGrMsg').hide();
+    $('.showRcvGrMsg').slice(0, 5).show(); // 초기갯수
+    $("#more-btn-msg").click(function(e){ // 클릭시 more
+        if($('.showRcvGrMsg:hidden').length == 0){ // 컨텐츠 남아있는지 확인
+            alert("마지막 글입니다."); // 컨텐츠 없을시 alert 창 띄우기 
+        }
+        e.preventDefault();
+        $('.showRcvGrMsg:hidden').slice(0, 5).show('slow'); // 클릭시 more 갯수 지저정
+	});
+
+
 });

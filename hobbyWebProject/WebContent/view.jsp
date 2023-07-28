@@ -265,7 +265,7 @@ HeartDTO heartvo = new HeartDAO().getHeartVO(boardID);
 						    }
 						    if (heartMatch){ //heartMatch == true 이면 (이미 하트를 눌렀으면)
 						%>
-						        <i id="heart2" class="fa-solid fa-heart"></i>&nbsp;<%=board.getHeartCount()%>
+						        <i id="heart2" class="fa-solid fa-heart"onclick="location.href='heartAction.jsp?boardID=<%=boardID%>'"></i>&nbsp;<%=board.getHeartCount()%>
 						<%
 						    } else {
 						%>
@@ -404,7 +404,7 @@ $(function(){
 	$('#noUser').on('click',function(){
 	  var login = confirm('로그인을 해주세요');
 	  if (login) {
-	    window.open("loginPopUp", "Login", "width=450, height=500, top=50%, left=50%") ;
+	    window.open("loginPopUp", "Login", "width=500, height=550, top=50%, left=50%") ;
 	  }
 	  else {
 	  }

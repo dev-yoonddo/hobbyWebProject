@@ -19,9 +19,11 @@
 <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square.css" rel="stylesheet">
 <script src="option/jquery/jquery.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script defer type="text/javascript" src="js/userdata.js"></script>
 <script type="text/javascript" src="js/script.js"></script>
 <script type="text/javascript" src="js/checkPW.js"></script>
-<script defer type="text/javascript" src="js/userdata.js"></script>
+<script src="https://kit.fontawesome.com/f95555e5d8.js" crossorigin="anonymous"></script>
+
 
 <style>
 body{
@@ -31,7 +33,7 @@ body{
 h2{
 	font-family: 'Nanum Gothic', sans-serif;
 	font-weight: bold;
-	font-size: 20pt;
+	font-size: 15pt;
 	color: #646464;
 }
   
@@ -63,18 +65,28 @@ thead{
 table{
 	font-size: 10pt; 
 	width: 400px; 
-	text-align: left; 
+	text-align: left;
+	color: black;
 }
 tr{
 	align-items: center;
 }
 
-#more-btn-5{
-	float: right;
-	font-size: 11pt;
+#row-btn-sec{
+	width:auto;
+	display: flex;
+	margin: 0;
+	padding: 0;
+}
+#more-btn-msg{
+	margin: 0 auto;
+	font-size: 15pt;
 	font-weight: bold;
+	color: #404040;
 	cursor: pointer;
-
+}
+#more-btn-msg:hover{
+	color: #E0E0E0;
 }
 .none-list{
 	text-align: center; 
@@ -110,21 +122,30 @@ if(groupID == 0){
 	script.println("location.href = 'groupPage'");
 	script.println("</script>");
 }
-
+GroupDAO grDAO = new GroupDAO();
 MessageDAO msgDAO = new MessageDAO();
 
 //msgCheck = 0(안읽은 메시지)인 리스트 가져오기
 ArrayList<MessageDTO> checklist = msgDAO.getMessageCheck(userID, groupID);
 
-//내가 만든 그룹의 멤버가 나에게 보낸 메시지 리스트 가져오기
+//같은 그룹의 멤버가 나에게 보낸 메시지 리스트 가져오기
 ArrayList<MessageDTO> msglist = msgDAO.getMsgList(userID, groupID);
 %>
 
 <!-- 받은 메시지 리스트 -->
 <div id="viewMsg">
 	<tr id="view-head">
+		<!-- 그룹 이름 출력 -->
+		<td>
+		<div style="height: 50px; display: flex; justify-content: center; align-items: center;">
+		<h2 style="font-size: 25pt;">
+		<i class="fa-regular fa-envelope" style="font-size: 30pt;"></i>
+		<%=grDAO.getGroupVO(groupID).getGroupName()%>
+		</h2>
+		</div><br>
+		</td>
 		<!-- 나에게 온 메시지 중 안읽은 메시지 갯수 가져오기 -->
-		<td><h2>안 읽은 메시지 (<%=checklist.size() %>)<h2></td>
+		<td><h2>안 읽은 메시지 (<%=checklist.size() %>)</h2></td>
 	</tr>
 	<table>
 		<thead>
@@ -149,7 +170,7 @@ ArrayList<MessageDTO> msglist = msgDAO.getMsgList(userID, groupID);
 			<%
 				for (int i = 0; i < msglist.size(); i++) {
 			%>
-			<tr class="showRcvMsg" style="height: 20px;">
+			<tr class="showRcvGrMsg" style="height: 20px;">
 				<td><%=msglist.get(i).getUserID()%></td>
 				<td><a id="click-view" onclick="viewMsg('<%= msglist.get(i).getMsgID()%>')"><%= msglist.get(i).getMsgTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></a></td>
 				<!-- msgCheck == 0이면 안읽음, 1이면 읽음 표시하기 -->
@@ -158,7 +179,7 @@ ArrayList<MessageDTO> msglist = msgDAO.getMsgList(userID, groupID);
 				<% }else{ %>
 				<td>YES</td>						
 				<% } %>
-				<td><%=msglist.get(i).getMsgDate()%></td>
+				<td><%=msglist.get(i).getMsgDate().substring(0 ,11) + msglist.get(i).getMsgDate().substring(11, 13) + "시" + msglist.get(i).getMsgDate().substring(14, 16) + "분" %></td>
 			</tr>
 			<%
 				}
@@ -168,14 +189,19 @@ ArrayList<MessageDTO> msglist = msgDAO.getMsgList(userID, groupID);
 			}
 		%>
 	</table><br>
-	<!-- 글 갯수가 1 이상이면 MORE 버튼 보이기 -->
-	<% if (msglist.size() != 0) { %>
-		<div id="more-btn-5">MORE</div>
+	<% if (msglist.size() > 5) { %>
+		<div id="row-btn-sec">
+			<div id="more-btn-msg">
+				<a>
+				<span>MORE</span>	    
+				<i class="fa-solid fa-chevron-down"></i>
+				</a>
+			</div>
+		</div>
 	<%} %>
 </div>
 
 
-</body>
 <script>
 
 //메시지 제목을 클릭하면 상세팝업 띄우기
@@ -184,4 +210,5 @@ function viewMsg(msgID){
    	self.close(); //이전 팝업 닫기
 }
 </script>
+</body>
 </html>

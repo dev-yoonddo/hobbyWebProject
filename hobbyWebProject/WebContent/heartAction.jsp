@@ -39,32 +39,50 @@
 			script.println("history.back()");
 			script.println("</script>");
 		}
-		
 		BoardDAO boardDAO = new BoardDAO();
 		HeartDAO heartDAO = new HeartDAO();
-		int result = heartDAO.heart(userID,boardID);
-		if(result == 1){ //heart에 데이터가 정상적으로 들어갔으면
-			result = boardDAO.heart(boardID); //board에 heartCount + 1
-			if(result == 1){ //둘 다 정상적으로 실행됐으면
-				PrintWriter script=response.getWriter();
-				script.println("<script>");
-				script.println("alert('추천이 완료되었습니다.')");
-				script.println("location.href= \'view?boardID="+boardID+"\'"); //해당 글로 다시 돌아가기
-				script.println("</script>");
-			} else{
+		//해당 게시판에 이미 하트를 눌렀는지 확인한다.
+		HeartDTO heartvo = new HeartDAO().getHeartVOByUser(userID, boardID);
+		//하트를 눌렀으면
+		if(heartvo != null){
+			//하트 취소 메서드 실행
+			int delete = heartDAO.delete(userID, boardID);
+			if(delete == 1){ //하트가 정상적으로 취소
+				delete = boardDAO.heartDelete(boardID);
+				if(delete == 1){ //하트 갯수가 정상적으로 -1
+					PrintWriter script=response.getWriter();
+					script.println("<script>");
+					script.println("location.href= \'view?boardID="+boardID+"\'"); //해당 글로 다시 돌아가기
+					script.println("</script>");
+				}
+			}else{
 				PrintWriter script=response.getWriter();
 				script.println("<script>");
 				script.println("alert('데이터베이스 오류가 발생했습니다.')");
 				script.println("history.back()");
 				script.println("</script>");
 			}
-		} else{
-			PrintWriter script=response.getWriter();
-			script.println("<script>");
-			script.println("alert('이미 추천을 누른 글입니다.')");
-			script.println("history.back()");
-			script.println("</script>");
+		//하트를 누르지 않았으면
+		}else{
+			int result = heartDAO.heart(userID,boardID);
+			if(result == 1){ //heart에 데이터가 정상적으로 들어갔으면
+				result = boardDAO.heart(boardID); //board에 heartCount + 1
+				if(result == 1){ //둘 다 정상적으로 실행됐으면
+					PrintWriter script=response.getWriter();
+					script.println("<script>");
+					script.println("alert('추천이 완료되었습니다.')");
+					script.println("location.href= \'view?boardID="+boardID+"\'"); //해당 글로 다시 돌아가기
+					script.println("</script>");
+				}
+			}else{
+				PrintWriter script=response.getWriter();
+				script.println("<script>");
+				script.println("alert('데이터베이스 오류가 발생했습니다.')");
+				script.println("history.back()");
+				script.println("</script>");
+			}
 		}
+		
 %>
 </body>
 </html>

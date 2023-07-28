@@ -271,9 +271,21 @@ public class BoardDAO {
 			}
 			return -1; //데이터베이스 오류
 		}
-	//좋아요
+	//좋아요 갯수
 	public int heart(int boardID) {
 		String SQL = "UPDATE board SET heartCount = heartCount + 1 WHERE boardID = ?";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt.setInt(1, boardID);
+			return pstmt.executeUpdate();
+		} catch(Exception e) {
+			e.printStackTrace();
+		} 
+		return -1;
+	}
+	//좋아요 취소
+	public int heartDelete(int boardID) {
+		String SQL = "UPDATE board SET heartCount = heartCount - 1 WHERE boardID = ?";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, boardID);

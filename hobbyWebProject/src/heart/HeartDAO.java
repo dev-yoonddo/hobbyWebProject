@@ -1,15 +1,13 @@
 package heart;
 
 import java.sql.Connection;
+
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
-import board.BoardDTO;
-import comment.CommentDTO;
 
 public class HeartDAO {
    private Connection conn;//데이터베이스에 접근하게 해주는 하나의 객체
@@ -37,9 +35,20 @@ public class HeartDAO {
       } catch(Exception e) {
          e.printStackTrace();
       }
-   return -1;//데이터베이스 오류
- }
-
+		 return -1;//데이터베이스 오류
+   }	
+   public int delete(String userID, int boardID) {
+	   String SQL = "DELETE FROM heart WHERE userID = ? AND boardID = ?";
+	      try {
+	         PreparedStatement pstmt = conn.prepareStatement(SQL);
+	         pstmt.setString(1, userID);
+	         pstmt.setInt(2, boardID);
+	         return pstmt.executeUpdate();
+	      } catch(Exception e) {
+	         e.printStackTrace();
+	      }
+			 return -1;//데이터베이스 오류
+   }
    public HeartDTO getHeartVO(int boardID) {
 		String SQL = "SELECT * FROM heart WHERE boardID = ?";
 		try {
@@ -58,9 +67,26 @@ public class HeartDAO {
 		}
 		return null; 
 	}
+   public HeartDTO getHeartVOByUser(String userID, int boardID) {
+		String SQL = "SELECT * FROM heart WHERE userID = ? AND boardID = ?";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, userID);
+			pstmt.setInt(2, boardID);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				HeartDTO heart = new HeartDTO();
+				heart.setUserID(rs.getString(1));
+				heart.setBoardID(rs.getInt(2));
+				return heart;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null; 
+	}
    
-   
-   
+
    public ArrayList<HeartDTO> getHeartList(int boardID){
 		String SQL = "SELECT * FROM heart WHERE boardID = ? AND userID IS NOT NULL"; //boardID가 일치하고 userID가 null이 아닌 heart의 리스트를 가져온다
 		ArrayList<HeartDTO> hearts = new ArrayList<HeartDTO>();

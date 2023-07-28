@@ -19,7 +19,6 @@
     <servlet-name>startPage.jsp</servlet-name>
     <url-pattern>/startPage</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <servlet-name>mainPage.jsp</servlet-name>
     <jsp-file>/mainPage.jsp</jsp-file>
@@ -28,7 +27,6 @@
     <servlet-name>mainPage.jsp</servlet-name>
     <url-pattern>/mainPage</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <servlet-name>join.jsp</servlet-name>
     <jsp-file>/join.jsp</jsp-file>
@@ -37,7 +35,6 @@
     <servlet-name>join.jsp</servlet-name>
     <url-pattern>/join</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <servlet-name>login.jsp</servlet-name>
     <jsp-file>/login.jsp</jsp-file>
@@ -46,8 +43,7 @@
     <servlet-name>login.jsp</servlet-name>
     <url-pattern>/login</url-pattern>
   </servlet-mapping>
-
-<servlet>
+  <servlet>
     <servlet-name>loginPopUp.jsp</servlet-name>
     <jsp-file>/loginPopUp.jsp</jsp-file>
   </servlet>
@@ -55,7 +51,6 @@
     <servlet-name>loginPopUp.jsp</servlet-name>
     <url-pattern>/loginPopUp</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <servlet-name>userUpdate.jsp</servlet-name>
     <jsp-file>/userUpdate.jsp</jsp-file>
@@ -64,7 +59,6 @@
     <servlet-name>userUpdate.jsp</servlet-name>
     <url-pattern>/userUpdate</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <servlet-name>community.jsp</servlet-name>
     <jsp-file>/community.jsp</jsp-file>
@@ -73,7 +67,6 @@
     <servlet-name>community.jsp</servlet-name>
     <url-pattern>/community</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <servlet-name>searchPage.jsp</servlet-name>
     <jsp-file>/searchPage.jsp</jsp-file>
@@ -82,7 +75,6 @@
     <servlet-name>searchPage.jsp</servlet-name>
     <url-pattern>/searchPage</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <servlet-name>write.jsp</servlet-name>
     <jsp-file>/write.jsp</jsp-file>
@@ -91,7 +83,6 @@
     <servlet-name>write.jsp</servlet-name>
     <url-pattern>/write</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <servlet-name>view.jsp</servlet-name>
     <jsp-file>/view.jsp</jsp-file>
@@ -100,7 +91,6 @@
     <servlet-name>view.jsp</servlet-name>
     <url-pattern>/view</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <servlet-name>update.jsp</servlet-name>
     <jsp-file>/update.jsp</jsp-file>
@@ -109,7 +99,6 @@
     <servlet-name>update.jsp</servlet-name>
     <url-pattern>/update</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <servlet-name>groupPage.jsp</servlet-name>
     <jsp-file>/groupPage.jsp</jsp-file>
@@ -118,7 +107,6 @@
     <servlet-name>groupPage.jsp</servlet-name>
     <url-pattern>/groupPage</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <servlet-name>groupView.jsp</servlet-name>
     <jsp-file>/groupView.jsp</jsp-file>
@@ -127,7 +115,6 @@
     <servlet-name>groupView.jsp</servlet-name>
     <url-pattern>/groupView</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <servlet-name>groupPopUp.jsp</servlet-name>
     <jsp-file>/groupPopUp.jsp</jsp-file>
@@ -136,7 +123,6 @@
     <servlet-name>groupPopUp.jsp</servlet-name>
     <url-pattern>/groupPopUp</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <servlet-name>memberJoinPopUp.jsp</servlet-name>
     <jsp-file>/memberJoinPopUp.jsp</jsp-file>
@@ -145,7 +131,6 @@
     <servlet-name>memberJoinPopUp.jsp</servlet-name>
     <url-pattern>/memberJoinPopUp</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <servlet-name>viewMsg.jsp</servlet-name>
     <jsp-file>/viewMsg.jsp</jsp-file>
@@ -154,7 +139,6 @@
     <servlet-name>viewMsg.jsp</servlet-name>
     <url-pattern>/viewMsg</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <servlet-name>viewMsgListPopUp.jsp</servlet-name>
     <jsp-file>/viewMsgListPopUp.jsp</jsp-file>
@@ -163,7 +147,6 @@
     <servlet-name>viewMsgListPopUp.jsp</servlet-name>
     <url-pattern>/viewMsgListPopUp</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <servlet-name>sendMsgPopUp.jsp</servlet-name>
     <jsp-file>/sendMsgPopUp.jsp</jsp-file>
@@ -172,7 +155,6 @@
     <servlet-name>sendMsgPopUp.jsp</servlet-name>
     <url-pattern>/sendMsgPopUp</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <servlet-name>eventPopUp.jsp</servlet-name>
     <jsp-file>/eventPopUp.jsp</jsp-file>
@@ -181,7 +163,6 @@
     <servlet-name>eventPopUp.jsp</servlet-name>
     <url-pattern>/eventPopUp</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <servlet-name>eventRafflePopUp.jsp</servlet-name>
     <jsp-file>/eventRafflePopUp.jsp</jsp-file>
@@ -190,7 +171,6 @@
     <servlet-name>eventRafflePopUp.jsp</servlet-name>
     <url-pattern>/eventRafflePopUp</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <servlet-name>eventMsgPopUp.jsp</servlet-name>
     <jsp-file>/eventMsgPopUp.jsp</jsp-file>
@@ -199,7 +179,6 @@
     <servlet-name>eventMsgPopUp.jsp</servlet-name>
     <url-pattern>/eventMsgPopUp</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <servlet-name>eventWinPopUp.jsp</servlet-name>
     <jsp-file>/eventWinPopUp.jsp</jsp-file>
@@ -208,7 +187,6 @@
     <servlet-name>eventWinPopUp.jsp</servlet-name>
     <url-pattern>/eventWinPopUp</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <servlet-name>eventMsgExit.jsp</servlet-name>
     <jsp-file>/eventMsgExit.jsp</jsp-file>
@@ -217,7 +195,6 @@
     <servlet-name>eventMsgExit.jsp</servlet-name>
     <url-pattern>/eventMsgExit</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <servlet-name>logout.jsp</servlet-name>
     <jsp-file>/logout.jsp</jsp-file>

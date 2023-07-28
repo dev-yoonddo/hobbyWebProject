@@ -32,6 +32,7 @@
 <script defer src="option/jquery/jquery.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script src="https://kit.fontawesome.com/f95555e5d8.js" crossorigin="anonymous"></script>
+<script defer type="text/javascript" src="js/userdata.js"></script>
 <script type="text/javascript" src="js/checkPW.js"></script>
 <script type="text/javascript" src="js/script.js"></script>
 </head>
@@ -896,7 +897,5 @@ function viewEvent(){
 	window.open("eventRafflePopUp","EVENT","width=500, height=550, top=50%, left=50%")
 }
 </script>
-<script defer type="text/javascript" src="js/userdata.js"></script>
-
 </body>
 </html>

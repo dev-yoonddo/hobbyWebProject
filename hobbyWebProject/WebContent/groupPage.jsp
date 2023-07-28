@@ -228,7 +228,7 @@ if(userID==null) {
 		</div>
 		<div style="width: 600px; margin: 0 auto;">
 			<span class="text" style="font-size: 25pt; display: flex; justify-content: center; color: #2E2F49;">그룹을 만들거나 참여해보세요</span><br>
-			<button type="button" class="btn-blue" id="create-group" value="그룹생성"><span>그룹 만들기</span></button>	
+			<button type="button" class="btn-blue" id="create-group" onclick="createGroup()" value="그룹생성"><span>그룹 만들기</span></button>	
 		</div>
 	</div>
 </div>
@@ -333,21 +333,25 @@ if(userID==null) {
 </body>
 
 <script>
+//텍스트 타이핑
 const content = "ALWAYS BETTER TOGETHER";
 const text = document.querySelector('#ani-text');
 let i = 0;
 function typing() {
-	
-
-	    if (i < content.length) {
-		    let txt = content.charAt(i);
-		    text.innerHTML += txt;
-		    i++;
-	    }
+    if (i < content.length) {
+	    let txt = content.charAt(i);
+	    text.innerHTML += txt;
+	    i++;
+    }
 }
 	setInterval(typing, 150)
 </script>
 <script>
+//그룹 만들기 버튼 클릭시 그룹 팝업을 띄운다.
+function createGroup(){
+  	window.open("groupPopUp" , "CREATE", "width=450, height=500, top=50%, left=50%") ;
+}
+
 //가입하기 버튼을 클릭하면 id,available값과 현재 멤버 수, 가입 가능 멤버 수, 유저 가입 여부를 받는다.
 function joinGroup(groupID, groupAvailable, mbNum, grNum, member,memberDel) {
 	//활동중
@@ -364,7 +368,7 @@ function joinGroup(groupID, groupAvailable, mbNum, grNum, member,memberDel) {
         		alert("정원이 다 찼습니다.");
         	}else{
         	//팝업창을 열때 groupID값을 넘겨준다.
-          	window.open("memberJoinPopUp?groupID=" + groupID , "Join", "width=500, height=500, top=50%, left=50%") ;
+          	window.open("memberJoinPopUp?groupID=" + groupID , "Join", "width=450, height=500, top=50%, left=50%") ;
         	}
         }
         else {

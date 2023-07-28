@@ -16,12 +16,12 @@ $(function(){
 //loginPopUp 페이지에서 회원가입을 클릭했을때
 
 
-// 그룹 생성하기를 클릭했을때
-$(function(){
-  $('#create-group').on('click',function(){
-      window.open("groupPopUp", "CREATE", "width=500, height=500, top=50%, left=50%");
-    });
-});
+//// 그룹 생성하기를 클릭했을때
+//$(function(){
+//  $('#create-group').on('click',function(){
+//      window.open("groupPopUp", "CREATE", "width=500, height=500, top=50%, left=50%");
+//    });
+//});
 // $(function(){
 //   $('#join-group-btn').on('click',function(){
 //     var groupID = '<%= list.get(i).getGroupID() %>';

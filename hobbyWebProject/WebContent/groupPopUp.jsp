@@ -48,7 +48,7 @@ color: #ffffff;
   
 #createGroup{
 	width: 370px;
-	margin: 50px;
+	margin: 40px;
 	padding-top: 30px;
 }
 
@@ -57,8 +57,8 @@ color: #ffffff;
 <body>
 <%
 String userID = null;
-if(session.getAttribute(userID) != null){
-	userID = (String)session.getAttribute(userID);
+if(session.getAttribute("userID") != null){
+	userID = (String) session.getAttribute("userID");
 }
 if(userID == null){
 	PrintWriter script = response.getWriter();
