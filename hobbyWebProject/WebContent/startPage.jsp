@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta name="viewport" content="width = (device-width) + 50px , initial-scale = 1, user-scalable = no, maximum-scale = 1 , minimum-scale = 1">
 <meta charset="UTF-8">
 <title>TOGETHER</title>
 <link rel="icon" href="image/logo.png">
@@ -101,6 +102,18 @@ section{
   to { transform: translateX(80%); }
 }
 
+@media screen and (max-width:768px) {
+	.start-text{
+		font-size: 20pt;
+		width: 450px;
+	}
+	#track1 , #teack2, #track3, #track4{
+		width: 500px;
+	}
+	#animated-icon {
+		font-size:20px;
+	}
+}
 </style>
 </head>
 <body>

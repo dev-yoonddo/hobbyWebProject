@@ -17,7 +17,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width-device-width", initial-scale="1">
+<meta name="viewport" content="width = device-width , initial-scale = 1, user-scalable =yes , maximum-scale = 1 , minimum-scale = 1">
 <meta charset="UTF-8">
 <title>TOGETHER</title>
 <link rel="icon" href="image/logo.png">
@@ -47,25 +47,22 @@ section{
 	margin: 0 auto;
 }
 .inquiry{
-padding-bottom: 100px;
+	padding-bottom: 100px;
 }
 #view-table{
-width: 1000px;
-height: 500px;
-border-collapse: collapse;
-border: 1px solid #C0C0C0;
-font-size: 12pt;
+	width: 1000px;
+	height: 500px;
+	border-collapse: collapse;
+	border: 1px solid #C0C0C0;
+	font-size: 12pt;
 }
+table caption{font-size:0; text-indent:-9999px;}
 
-thead{
-
-}
 .td{
-text-align: center;
-font-size: 13pt;
+	text-align: center;
+	font-size: 13pt;
 }
-.td span{
-	
+.td span{	
 padding: 10px 20px;
 border-radius: 20px;
 background-color: #CCE5FF;
@@ -92,6 +89,7 @@ animation: fadeInLeft 2s;
 
 #tb-top{
 	display: flex;
+	justify-content: center;
 }
 #tb-top-1{
 	width: 50%;
@@ -152,6 +150,45 @@ padding: 8px 60px;
 #cmt-btn span:hover {
   color: #323232;
   background-color: #ffffff
+}
+
+@media screen and (max-width:650px) {
+	.board-container{
+		max-width:  400px;
+	}
+	.inquiry{
+		max-width:  400px;
+	}
+	#view-table , thead , tbody , .tr{
+		max-width:  400px;
+	}
+	#view-table{
+	table-layout:fixed; border-spacing:0;
+	}
+	#user-item{
+		width: 150px;
+		font-size: 11pt;
+		margin-bottom: 10px;
+	}
+	#cmt-write{
+		max-width: 400px;
+		height: 200px;
+	}
+	#cmt-line{
+		max-width: 400px;
+	}
+	#count{
+		padding: 8px 30px;
+	}
+	.btn-blue span{
+		font-size: 11pt;
+	}
+	.cmt-table input{
+		max-width: 400px;
+	}
+	.cmt-view , .cmt-list , .cmt-table{
+		max-width: 400px;		
+	}
 }
 </style>
 <body>
@@ -237,75 +274,73 @@ HeartDTO heartvo = new HeartDAO().getHeartVO(boardID);
 				<a id="view-title"><%=board.getBoardCategory()%></a><br><br>
 				
 				<div id="tb-top">
-				<div id="tb-top-1">
-					<div id="user-item">
-					<span>작성자 <%=board.getUserID()%></span>
-					<span>&nbsp;&nbsp;|&nbsp;&nbsp; <%=board.getBoardDate().substring(0 ,11) + board.getBoardDate().substring(11, 13) + "시" + board.getBoardDate().substring(14, 16) + "분"%></span>
+					<div id="tb-top-1">
+						<div id="user-item">
+						<span>작성자 <%=board.getUserID()%></span>
+						<span>&nbsp;&nbsp;|&nbsp;&nbsp; <%=board.getBoardDate().substring(0 ,11) + board.getBoardDate().substring(11, 13) + "시" + board.getBoardDate().substring(14, 16) + "분"%></span>
+						</div>
 					</div>
-				</div>
-				
-				<div id="tb-top-2">
-					<div id="count-item">
-						<div id="count">
-						<span>
 					
-						<%
-	                 	HeartDAO heartDAO = new HeartDAO();
-						ArrayList<HeartDTO> hearts = heartDAO.getHeartList(boardID);
-						
-						if (userID != null) {
-						    boolean heartMatch = false;
-						    for (HeartDTO heart: hearts) {
-						    	//hearts 리스트안에 boardID와 userID값이 모두 일치하는 값이 있으면 해당 글에 이미 좋아요를 눌렀음을 의미한다.
-						        if (userID.equals(heart.getUserID()) && boardID == heart.getBoardID()) {
-						        	heartMatch = true;
-						            break; // 일치하는 값을 찾으면 반복문을 나간다.
-						        }
-						        heartMatch = false;
-						    }
-						    if (heartMatch){ //heartMatch == true 이면 (이미 하트를 눌렀으면)
-						%>
-						        <i id="heart2" class="fa-solid fa-heart"onclick="location.href='heartAction.jsp?boardID=<%=boardID%>'"></i>&nbsp;<%=board.getHeartCount()%>
-						<%
-						    } else {
-						%>
-						        <i id="heart1" class="fa-regular fa-heart" onclick="location.href='heartAction.jsp?boardID=<%=boardID%>'"></i>&nbsp;<%= board.getHeartCount()%>
-						<%
-						    }
-						} else { //userID == null이면 id=noUser로 변경해 클릭했을때 로그인팝업을 생성하도록 한다.
-						%>
-						    <i id="noUser" class="fa-regular fa-heart"></i>&nbsp;<%= board.getHeartCount()%> 
-						<%
-						}
-						%>
-	                	
-						
-						</span>&nbsp;&nbsp;
-						<span><i class="fa-solid fa-eye"></i>&nbsp;<%=board.getViewCount()+1%></span>
+					<div id="tb-top-2">
+						<div id="count-item">
+							<div id="count">
+								<span>
+							
+								<%
+			                 	HeartDAO heartDAO = new HeartDAO();
+								ArrayList<HeartDTO> hearts = heartDAO.getHeartList(boardID);
+								
+								if (userID != null) {
+								    boolean heartMatch = false;
+								    for (HeartDTO heart: hearts) {
+								    	//hearts 리스트안에 boardID와 userID값이 모두 일치하는 값이 있으면 해당 글에 이미 좋아요를 눌렀음을 의미한다.
+								        if (userID.equals(heart.getUserID()) && boardID == heart.getBoardID()) {
+								        	heartMatch = true;
+								            break; // 일치하는 값을 찾으면 반복문을 나간다.
+								        }
+								        heartMatch = false;
+								    }
+								    if (heartMatch){ //heartMatch == true 이면 (이미 하트를 눌렀으면)
+								%>
+								        <i id="heart2" class="fa-solid fa-heart"onclick="location.href='heartAction.jsp?boardID=<%=boardID%>'"></i>&nbsp;<%=board.getHeartCount()%>
+								<%
+								    } else {
+								%>
+								        <i id="heart1" class="fa-regular fa-heart" onclick="location.href='heartAction.jsp?boardID=<%=boardID%>'"></i>&nbsp;<%= board.getHeartCount()%>
+								<%
+								    }
+								} else { //userID == null이면 id=noUser로 변경해 클릭했을때 로그인팝업을 생성하도록 한다.
+								%>
+								    <i id="noUser" class="fa-regular fa-heart"></i>&nbsp;<%= board.getHeartCount()%> 
+								<%
+								}
+								%>
+			                	
+								
+								</span>&nbsp;&nbsp;
+								<span><i class="fa-solid fa-eye"></i>&nbsp;<%=board.getViewCount()+1%></span>
+							</div>
 						</div>
 					</div>
 				</div>
-				</div>
 				<table id="view-table">
-					<tbody>
-						<tr height="25%" style="border-bottom: 1px solid #C0C0C0;">
-							<td class="td" style="width:20%;"><span>제목</span></td>
-							<td><%=board.getBoardTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></td>
-						</tr>
-						<tr height="75%" valign="top">
-							<td class="td" style="padding-top: 50px;"><span>내용</span></td>
-							<!-- 특수문자 처리 -->
-							<td style="padding-top: 50px;"><%=board.getBoardContent().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></td>
-						</tr>
-						<!-- <tr>
-							<td class="td"><span>조회수</span></td>
-							<td colspan="2"board.getViewCount()+1)+1 %></td>
-						</tr>
-						<tr>
-							<td class="td"><span>하트</span></td>
-							<td colspan="2"board.getHeartCount()t() %></td>
-						</tr> -->
-					</tbody>
+					<tr class="tr" height="25%" style="border-bottom: 1px solid #C0C0C0;">
+						<td class="td" style="width:20%;"><span>제목</span></td>
+						<td><%=board.getBoardTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></td>
+					</tr>
+					<tr class="tr" height="75%" valign="top">
+						<td class="td" style="padding-top: 50px;"><span>내용</span></td>
+						<!-- 특수문자 처리 -->
+						<td style="padding-top: 50px;"><%=board.getBoardContent().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></td>
+					</tr>
+					<!-- <tr>
+						<td class="td"><span>조회수</span></td>
+						<td colspan="2"board.getViewCount()+1)+1 %></td>
+					</tr>
+					<tr>
+						<td class="td"><span>하트</span></td>
+						<td colspan="2"board.getHeartCount()t() %></td>
+					</tr> -->
 				</table>
 				
 			</div><br>
@@ -335,7 +370,7 @@ HeartDTO heartvo = new HeartDAO().getHeartVO(boardID);
             	CommentDAO cmtDAO = new CommentDAO();
             	ArrayList<CommentDTO> cmtlist = cmtDAO.getList(boardID);
             %>
-			<h5 style="font-size: 15pt; color: #646464; float: left;">댓글 (<%= cmtlist.size() %>)<br></h5><hr style="width: 1000px;"><br>
+			<h5 style="font-size: 15pt; color: #646464; float: left;">댓글 (<%= cmtlist.size() %>)<br></h5><hr id="cmt-line" style="width: 1000px;"><br>
 			
             <!-- 답변쓰기 버튼을 눌렀을 때만 답변쓰기 섹션이 나타나도록 설정 -->
 			<div id="cmt-write" style="display: none; width: 600px; height: 220px;"> 

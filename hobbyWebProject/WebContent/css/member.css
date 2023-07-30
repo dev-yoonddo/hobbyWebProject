@@ -102,6 +102,13 @@ section{
     background-color: #86A5FF;
     margin-top: 20px;
 }
+@media screen (min-width: 760px) {
+	.join-wrapper{
+		width: 350px;
+		height: 600px;
+	}
+}
+
 /* userUpdate.jsp */
 #userInfo{
     width: 450px;

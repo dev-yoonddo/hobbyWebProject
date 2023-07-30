@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width-device-width , initial-scale = 1, user-scalable = no, maximum-scale = 1 , minimum-scale = 1">
+<meta name="viewport" content="width = device-width , initial-scale = 1, user-scalable = no, maximum-scale = 1 , minimum-scale = 1">
 <meta charset="UTF-8">
 <title>TOGETHER</title>
 <link rel="icon" href="image/logo.png">
@@ -107,17 +107,17 @@ if(eventvo != null && eventvo.getEventWin() == 1 && eventvo.getEventAvailable() 
 <div class="main">
 	<div class="main-text">
 		<div id="m1">
-		<i class="fa-regular fa-lightbulb fa-2x" style="padding-bottom: 20px;"></i><br>
-		취미활동도 같이하고<br>지원금도 받고싶다면?
-		<hr id="line">
+			<i class="fa-regular fa-lightbulb fa-2x" style="padding-bottom: 20px;"></i><br>
+			취미활동도 같이하고<br>지원금도 받고싶다면?
+			<hr id="line">
 		</div>		
 		<% if(userID == null) {%>
 		<div id="m2" onclick="location.href='join'">
-		TOGETHER 회원가입
+			TOGETHER 회원가입
 		</div>
 		<%} else{%>
 		<div id="m2" onclick="location.href='write'">
-		글 작성하기
+			글 작성하기
 		</div>
 		<%} %>
 	</div>
@@ -193,7 +193,7 @@ if(eventvo != null && eventvo.getEventWin() == 1 && eventvo.getEventAvailable() 
 	            </div>
 	            <form method="post" action="searchPage">
 			      <input type="hidden" name="searchField2" value="OTHER">
-			      <div class="btn"><button type="submit">GO</button></div>
+			      <div class="btn"><button type="submit">TOGETHER</button></div>
 			    </form>
 	        </div>
 	      </div>

@@ -10,7 +10,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width-device-width", initial-scale="1">
+<meta name="viewport" content="width = device-width , initial-scale = 1, user-scalable = no, maximum-scale = 1 , minimum-scale = 1">
 <meta charset="UTF-8">
 <title>TOGETHER</title>
 <link rel="icon" href="image/logo.png">
@@ -26,6 +26,9 @@
 <script type="text/javascript" src="js/pagenation.js"></script>
 </head>
 <style>
+body{
+	display: block;
+}
 section{
 padding-top: 150px;
 padding-bottom: 150px;
@@ -46,6 +49,9 @@ margin: 0 auto;
 	position: relative;
     animation: fadeInLeft 2s;
 }
+#search-title h4 {
+	margin-left: 30px;
+}
 @keyframes fadeInLeft {
     0% {
         opacity: 0;
@@ -57,7 +63,8 @@ margin: 0 auto;
     }
 }
 table{
-width: 1000px;
+width: auto;
+min-width: 1000px;
 text-align: center;
 border-collapse: collapse;
 }
@@ -93,6 +100,7 @@ border-bottom: solid 1px #E0E0E0;
 	padding: 0;
 }
 #more-btn{
+	width: 100px;
 	margin: 0 auto;
 	font-size: 15pt;
 	font-weight: bold;
@@ -106,6 +114,73 @@ border-bottom: solid 1px #E0E0E0;
 	font-weight: 400;
 	text-decoration: underline;
 	color: #606060;
+}
+
+@media screen and (max-width:900px) {
+	table{
+		min-width: 600px;
+	}
+	th span{
+		font-size: 12pt;
+	}
+	#search-title{
+		display: block;
+		margin-bottom: 50px;
+	}
+	#search-title h2{
+		margin: 0;
+	}
+	#search-title h4{
+		margin: 0;
+		font-size: 16pt;
+	}
+	td{
+		font-size: 12pt;
+	}
+	#click-view{
+		overflow:hidden;
+		white-space:nowrap;
+		text-overflow:ellipsis;
+		max-width:200px;
+	}
+}
+
+@media screen and (max-width:650px) {
+	table{
+		min-width: 350px;
+	}
+	th span{
+		font-size: 11pt;
+	}
+	#search-title{
+		display: block;
+		margin-bottom: 50px;
+	}
+	#search-title h2{
+		margin: 0;
+	}
+	#search-title h4{
+		margin: 0;
+		font-size: 16pt;
+	}
+	.date{
+		display: none;
+	}
+	td{
+		font-size: 12pt;
+	}
+	.ttt{
+		width: 100px;
+	}
+	#click-view{
+		overflow:hidden;
+		white-space:nowrap;
+		text-overflow:ellipsis;
+		max-width:100px;
+	}
+	.btn-blue span{
+		font-size: 10pt;
+	}
 }
 </style>
 <body>
@@ -174,18 +249,18 @@ border-bottom: solid 1px #E0E0E0;
 				String boardCategory = request.getParameter("searchField2");
 		%>
 		<div id="search-title">
-		<h2><%=boardCategory%></h2>&nbsp;&nbsp;<h4>함께 할 사람들과 이야기 나눠보세요</h4>
+		<h2><%=boardCategory%></h2><h4>함께 할 사람들과 이야기 나눠보세요</h4>
 		</div><br>
 		<div class="row">
 			<table>
 				<thead>
 					<tr class="board-head">
-						<th style="width: 10%;"><span>조회수</span></th>
-						<th style="width: 30%;"><span>제목</span></th>
-						<th style="width: 10%;"><span>작성자</span></th>
-						<th style="width: 10%;"><span>좋아요</span></th>
-						<th style="width: 10%;"><span>댓글</span></th>
-						<th style="width: 25%;"><span>작성일</span></th>
+						<th class="ttt" style="width: 10%;"><span>조회수</span></th>
+						<th class="tt" style="width: 30%;"><span>제목</span></th>
+						<th class="ttt" style="width: 10%;"><span>작성자</span></th>
+						<th class="ttt" style="width: 10%;"><span>좋아요</span></th>
+						<th class="ttt" style="width: 10%;"><span>댓글</span></th>
+						<th class="date" style="width: 25%;"><span>작성일</span></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -219,7 +294,7 @@ border-bottom: solid 1px #E0E0E0;
 	                 	ArrayList<CommentDTO> cmtlist = cmtDAO.getList(list.get(i).getBoardID());
 	                 	%>
 						<td><%= cmtlist.size() %></td>
-						<td><%= list.get(i).getBoardDate().substring(0 ,11) + list.get(i).getBoardDate().substring(11, 13) + "시" + list.get(i).getBoardDate().substring(14, 16) + "분" %></td>
+						<td class="date" ><%= list.get(i).getBoardDate().substring(0 ,11) + list.get(i).getBoardDate().substring(11, 13) + "시" + list.get(i).getBoardDate().substring(14, 16) + "분" %></td>
 					</tr>
 					
 					<%

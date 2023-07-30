@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width-device-width", initial-scale="1">
+<meta name="viewport" content="width = device-width , initial-scale = 1, user-scalable = no, maximum-scale = 1 , minimum-scale = 1">
 <meta charset="UTF-8">
 <title>TOGETHER</title>
 <link rel="icon" href="image/logo.png">
@@ -23,7 +23,9 @@
 </head>
 <style>
 section{
+  width: 100%;
   height: 500px;
+  display: flex;
 }
 .select {
   position: relative;
@@ -103,7 +105,14 @@ button{
 	color: 6e6e6e;
 	font-family: 'Nanum Gothic', sans-serif;
 }
-
+@media screen and (max-width:650px) {
+	#select-sec{
+		width: 400px;
+	}
+	#select-sec .select .text{
+		font-size: 13pt;
+	}
+}
 </style>
 <body>
 <%

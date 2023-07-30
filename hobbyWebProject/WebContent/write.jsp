@@ -10,7 +10,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width-device-width", initial-scale="1">
+<meta name="viewport" content="width = device-width , initial-scale = 1, user-scalable = no, maximum-scale = 1 , minimum-scale = 1">
 <meta charset="UTF-8">
 <title>TOGETHER</title>
 <link rel="icon" href="image/logo.png">
@@ -109,6 +109,21 @@ font-size: 12pt;
 .btn-blue span:hover {
   color: #7D95E5;
   background-color: #ffffff
+}
+
+@media screen and (max-width:900px) {
+	.board-container , .write-table , textarea , #view-table{
+		max-width: 650px;
+	}
+}
+
+@media screen and (max-width:650px) {
+	.board-container , .write-table , textarea , #view-table{
+		max-width: 450px;
+	}
+	.board-container{
+		margin: 20px;
+	}
 }
 </style>
 <body>
@@ -210,13 +225,6 @@ String bdcategory = request.getParameter("category");
 		</div>
 	</div>
 </section>
-
-<!-- footer start -->
-<footer><hr>
-
-   	
-</footer>
-<!-- footer end-->
 
 <script>
 //글쓰기 버튼을 클릭했던 페이지의 카테고리가 글 작성시 선택되어있도록 한다.
