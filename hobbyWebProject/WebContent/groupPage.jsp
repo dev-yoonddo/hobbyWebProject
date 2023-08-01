@@ -28,6 +28,9 @@
 
 </head>
 <style>
+body{
+	height: auto;
+}
 section{
 padding-top: 100px;
 display: flex;
@@ -431,6 +434,4 @@ function showPasswordPrompt(grID, grPassword, grAvailable, member, leader) {
 opener.location.reload(); //부모창 리프레쉬
 self.close(); //로그인 후 팝업 창 닫기
 </script>
-<script src="js/qna.js"></script>
-
 </html>

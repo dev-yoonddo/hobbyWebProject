@@ -27,8 +27,8 @@
 		if(userID == null){
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
-			script.println("alert('로그인을 해주세요.')");
-			script.println("location.href = 'loginPopUp'");
+			script.println("alert('로그인이 필요합니다.')");
+			script.println("window.open('loginPopUp', 'Login', 'width=500, height=550, top=50%, left=50%')");
 			script.println("</script>");
 		}else{
 			if(group.getGroupName() == null || group.getGroupPassword() == null
@@ -48,15 +48,7 @@
 					script.println("alert('그룹 생성이 실패했습니다.')");
 					script.println("history.back()");
 					script.println("</script>");
-				}
-				if(group.getGroupNoP() == 0){
-					PrintWriter script = response.getWriter();
-					script.println("<script>");
-					script.println("alert('그룹 인원을 입력해주세요')");
-					script.println("history.back()");
-					script.println("</script>");
-				}
-				else {
+				}else {
 					session.setAttribute("groupID", group.getGroupID());
 					PrintWriter script = response.getWriter();
 					script.println("<script>");
