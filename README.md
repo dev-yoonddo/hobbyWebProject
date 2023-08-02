@@ -35,6 +35,7 @@
 - Frontend : JavaScript, HTML5, CSS3, JQuery, Bootstrap <br>
 - Backend : Java, Spring
 - Infra : AWS (EC2, RDS, Route53, ELB, ALB, ACM)
+
 <br>
 
 ### Database ERD
