@@ -105,7 +105,7 @@ section{
 @media screen and (max-width:768px) {
 	.start-text{
 		font-size: 20pt;
-		width: 450px;
+		width: 400px;
 	}
 	#track1 , #teack2, #track3, #track4{
 		width: 500px;

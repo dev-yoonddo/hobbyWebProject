@@ -42,6 +42,16 @@ h2{
 	font-size: 20pt;
 	color: #2E2F49;
 }
+#group-title{
+	width: 100%;
+	height: 100px;
+	display: flex;
+	align-items: center;
+}
+#title-text{
+	font-size: 25pt;
+	width: 730px;
+}
 #group-main{
 	width: 1000px;
 	height: auto;
@@ -55,6 +65,61 @@ h2{
 } 
 #btn-msg{
 	width: 120px;
+}
+#title-btn{
+	display: flex;
+	float: right;
+}
+#member-list{
+	width: 500px;
+	height: auto;
+}
+@media screen and (max-width:850px) {
+
+	#title-text{
+		font-size: 17pt;
+	}
+	#group-main{
+		width: 650px;
+	}
+	#title-btn{
+	}
+	#member-list{
+		width: 550px;
+		height: auto;
+	}
+}
+@media screen and (max-width:650px) {
+	#group-title{
+		height: 120px;
+	}
+	#title-text{
+		width: 170px;
+		font-size: 16pt;
+	}
+	#group-main{
+		width: 450px;
+	}
+	#title-btn{
+	}
+	.btn-blue span{
+		width: 65px;
+		font-size: 8pt;
+	}
+	.btn-blue{
+		width: 65px;
+		margin: 0;
+	}
+	#btn-msg{
+		width: 95px;
+	}
+	#member-list{
+		width: 350px;
+		height: auto;
+	}
+	#member{
+		font-size: 10pt;
+	}
 }
 </style>
 <body>
@@ -161,12 +226,12 @@ ArrayList<MemberDTO> mblist = mbDAO.getList(groupID); //해당 그룹의 멤버�
 
 	<div id="group-main">
 		<div id="group-info">
-			<div id="group-title" style="width: 100%; height: 100px; display: flex; align-items: center;">
-				<div id="title-text" style="width: 8500px; font-size: 25pt;">
+			<div id="group-title">
+				<div id="title-text">
 				<span><%= group.getGroupName() %> 에서 함께 취미를 즐겨보세요 </span>
 				</div>
 				
-				<div id="del-btn" style="display: flex;">
+				<div id="title-btn">
 					<!-- 그룹을 만든 userID일때는 메세지확인, 그룹삭제 버튼 생성 -->
 					<% if(userID.equals(group.getUserID())){ %>
 						<button type="button" class="btn-blue" id="btn-msg" onclick="viewMsgList('<%= group.getGroupID()%>')"><span>메세지확인</span></button>
@@ -183,7 +248,7 @@ ArrayList<MemberDTO> mblist = mbDAO.getList(groupID); //해당 그룹의 멤버�
 			Member : <%= mblist.size() %>명&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Leader : <%= group.getUserID() %>
 		</div>
 	
-		<div id="member-list" style="width: 500px; height: auto;">
+		<div id="member-list">
 		<%
 			for(int i=0; i<mblist.size(); i++){
 		%>

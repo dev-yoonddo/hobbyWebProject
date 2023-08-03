@@ -147,7 +147,12 @@ table{
 tr{
 	align-items: center;
 }
-
+.data-tb{
+	font-size: 10pt; 
+	color: black; 
+	width: 450px; 
+	text-align: left;
+}
 #more-btn ,#more-btn-2, #more-btn-3, #more-btn-4, #more-btn-5, #more-btn-6{
 	float: right;
 	margin-right: 20px;
@@ -261,6 +266,38 @@ span{
 	border-radius: 100%;
 	background-color: #4646CD;
 	color: white;
+}
+/*화면 축소 시*/
+@media screen and (max-width:650px) {
+	#userInfo{
+		width: 400px;
+		padding: 20px;
+	}
+	#userSet{
+		width: 400px;
+		padding: 20px;
+	
+	}
+	#userMsg{
+		width: 400px;
+		padding: 20px;
+	}
+	table , .data-tb{
+		width: 350px;
+	}
+	.sidemenu{
+		height: 35px;
+	}
+	#menu1{
+		top: 80px;
+	}
+	#menu2{
+	  	top: 120px;
+	}
+	#menu3{
+		top: 160px;
+	}
+ 
 }
 </style>
 <body>
@@ -384,9 +421,9 @@ span{
 						<thead>
 							<tr class="board-head">
 								<th style="width: 20%;"><span>카테고리</span></th>
-								<th style="width: 37%;"><span>제목</span></th>
+								<th style="width: 35%;"><span>제목</span></th>
 								<th style="width: 23%;"><span>작성일</span></th>
-								<th style="width: 10%;"><span>좋아요</span></th>
+								<th style="width: 12%;"><span>좋아요</span></th>
 								<th style="width: 10%;"><span>댓글</span></th>
 							</tr>
 						</thead>
@@ -441,7 +478,7 @@ span{
 					<td><button type="button" class="btn-blue" id="view2"><span>보기</span></button></td>	
 				</tr>
 				<div class="userData" id="cmtData">
-					<table style="font-size: 10pt; color: black; width: 450px; text-align: left;">
+					<table class="data-tb">
 						<thead>
 							<tr class="board-head">
 								<th style="width: 60%;"><span>댓글</span></th>
@@ -491,7 +528,7 @@ span{
 					<td><button type="button" class="btn-blue" id="view3"><span>보기</span></button></td>	
 				</tr>
 				<div class="userData" id="groupData">
-					<table style="font-size: 10pt; color: black; width: 450px; text-align: left;">
+					<table class="data-tb">
 						<thead>
 							<tr class="board-head">
 								<th style="width: 50%;"><span>그룹</span></th>
@@ -549,7 +586,7 @@ span{
 					<td><button type="button" class="btn-blue" id="view4"><span>보기</span></button></td>	
 				</tr>
 				<div class="userData" id="memberData">
-					<table style="font-size: 10pt; color: black; width: 450px; text-align: left;">
+					<table class="data-tb">
 						<thead>
 							<tr class="board-head">
 								<th style="width: 35%;"><span>그룹</span></th>
@@ -658,9 +695,9 @@ span{
 					<table>
 						<thead>
 							<tr class="board-head">
-								<th style="width: 20%;"><span>그룹</span></th>
-								<th style="width: 15%;"><span>보낸 사람</span></th>
-								<th style="width: 35%;"><span>제목</span></th>
+								<th style="width: 23%;"><span>그룹</span></th>
+								<th style="width: 17%;"><span>보낸 사람</span></th>
+								<th style="width: 30%;"><span>제목</span></th>
 								<th style="width: 10%;"><span>확인</span></th>
 								<th style="width: 20%;"><span>날짜</span></th>
 							</tr>
@@ -692,7 +729,7 @@ span{
 								<% }else{ %>
 								<td>YES</td>						
 								<% } %>
-								<td><%=msglist.get(i).getMsgDate()%></td>
+								<td><%=msglist.get(i).getMsgDate().substring(0 ,11) + msglist.get(i).getMsgDate().substring(11, 13) + "시" + msglist.get(i).getMsgDate().substring(14, 16) + "분"%></td>
 							</tr>
 							<%
 								}
@@ -722,9 +759,9 @@ span{
 					<table>
 						<thead>
 							<tr class="board-head">
-								<th style="width: 20%;"><span>그룹</span></th>
-								<th style="width: 15%;"><span>받은 사람</span></th>
-								<th style="width: 35%;"><span>제목</span></th>
+								<th style="width: 23%;"><span>그룹</span></th>
+								<th style="width: 17%;"><span>받은 사람</span></th>
+								<th style="width: 30%;"><span>제목</span></th>
 								<th style="width: 10%;"><span>확인</span></th>
 								<th style="width: 20%;"><span>날짜</span></th>
 							</tr>
@@ -756,7 +793,7 @@ span{
 								<% }else{ %>
 								<td>YES</td>						
 								<% } %>
-								<td><%=sendmsglist.get(i).getMsgDate()%></td>
+								<td><%=sendmsglist.get(i).getMsgDate().substring(0 ,11) + sendmsglist.get(i).getMsgDate().substring(11, 13) + "시" + sendmsglist.get(i).getMsgDate().substring(14, 16) + "분"%></td>
 							</tr>
 							<%
 								}

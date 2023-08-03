@@ -33,6 +33,13 @@
 			script.println("alert('로그인이 필요합니다.')");
 			script.println("window.open('loginPopUp', 'Login', 'width=500, height=550, top=50%, left=50%')");
 			script.println("</script>");
+		}
+		if(userID.equals("test")){
+			PrintWriter script = response.getWriter();
+			script.println("<script>");
+			script.println("alert('테스트 계정은 탈퇴할 수 없습니다.')");
+			script.println("history.back()");
+			script.println("</script>");
 		}else{
 			UserDAO userDAO=new UserDAO();
 			/* DAO페이지에서 이미 실행한 작업

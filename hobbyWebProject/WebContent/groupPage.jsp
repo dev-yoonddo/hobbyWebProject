@@ -10,7 +10,6 @@
 <html>
 <head>
 <meta name="viewport" content="width = device-width , initial-scale = 1, user-scalable = yes, maximum-scale = 1 , minimum-scale = 1">
-<meta name="viewport" content="width-device-width", initial-scale="1">
 <meta charset="UTF-8">
 <title>TOGETHER</title>
 <link rel="icon" href="image/logo.png">
@@ -32,22 +31,32 @@ body{
 	height: auto;
 }
 section{
-padding-top: 100px;
-display: flex;
-justify-content: center;
-align-items: center;
+	padding-top: 100px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 #sec-top{
-
-width: 100%;
-display: flex;
-justify-content: center;
+	width: 100%;
+	display: flex;
+	justify-content: center;
 }
-.text{
-font-weight: bold; 
-font-size: 35pt; 
-color: #646464; 
-font-family: 'Noto Sans KR', sans-serif;
+
+#ani-text{
+	color: #646464;
+	font-size: 35pt;
+	font-weight: bold;
+	font-family: 'Noto Sans KR', sans-serif;
+	display: flex;
+	justify-content: center;
+}
+#main-text{
+	font-weight: bold; 
+	font-size: 25pt;
+	color: #2E2F49;
+	font-family: 'Noto Sans KR', sans-serif;
+	display: flex;
+	justify-content: center;
 }
 .btn-blue{
 	width: 250px;
@@ -70,27 +79,27 @@ font-family: 'Noto Sans KR', sans-serif;
 }
 
 .btn-blue::before {
-  background-color: #2E2F49;
+	background-color: #2E2F49;
 }
 
 .btn-blue span:hover {
-  color: #2E2F49;
-  background-color: #ffffff
+	color: #2E2F49;
+	background-color: #ffffff
 }
 #row{
-height: auto;
-margin-top: 100px;
+	height: auto;
+	margin-top: 100px;
 }
 
 #gallery {
-height: 3000px;
+	height: auto;
 	display: flex;
-  justify-content: center;
+  	justify-content: center;
 }
 #gal-inner{
 	max-width: 1100px;
 	width: auto;
-	height: 3000px;
+	height: auto;
 	padding-top: 100px;
 	
 }
@@ -98,40 +107,40 @@ height: 3000px;
 	display: flex;
 }
 .group-box {
-  border-radius: 10px;
-  transition: transform 0.5s ease;
-  height: 300px;
-  width: 300px;
-  background-color: #C9D7FF;
-  margin: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+	border-radius: 10px;
+	transition: transform 0.5s ease;
+	height: 300px;
+	width: 300px;
+	background-color: #C9D7FF;
+	margin: 20px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .group-box:hover {
-  transform: scale(1.2);
+	transform: scale(1.2);
 }
 .group-box:hover > .info-box{
 	opacity: 0;
 }
 .group-box:hover > .group-inner-box {
-  opacity: 1;
-  transform: scale(1);
+	opacity: 1;
+	transform: scale(1);
 }
 
 .group-inner-box {
-  width: 300px;
-  height: 300px;
-  opacity: 0;
-  transition: opacity 0.5s ease,
-    transform 0.5s ease;
-  position: absolute;
-  background-color: #2E2F49;
-  border-radius: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+	width: 300px;
+	height: 300px;
+	opacity: 0;
+	transition: opacity 0.5s ease,
+	  transform 0.5s ease;
+	position: absolute;
+	background-color: #2E2F49;
+	border-radius: 10px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 .info-box{
 	width: 230px;
@@ -142,30 +151,30 @@ height: 3000px;
 	margin: 30px;
 }
 div > .info-a{
-display: flex;
-justify-content: center;
-font-size: 15pt; 
-border-radius: 50px; 
-background-color: white; 
-width: 100px;
-height: 40px; 
-margin-top: 10px;
+	display: flex;
+	justify-content: center;
+	font-size: 15pt; 
+	border-radius: 50px; 
+	background-color: white; 
+	width: 100px;
+	height: 40px; 
+	margin-top: 10px;
 }
 div > .info-a > a{
-width:auto; 
-height: auto; 
-display: flex; 
-justify-content: center; 
-align-items: center;
+	width:auto; 
+	height: auto; 
+	display: flex; 
+	justify-content: center; 
+	align-items: center;
 }
 .info-b{
-position: absolute;
-bottom: 0;
+	position: absolute;
+	bottom: 0;
 }
 .info-l , .info-p{
-height: 35px;
-font-size: 18pt;
-font-weight: 400;
+	height: 35px;
+	font-size: 18pt;
+	font-weight: 400;
 }
 .access-group{
 	width: auto;
@@ -176,6 +185,25 @@ font-weight: 400;
 }
 .in-group-btn{
 	margin: 0 auto;
+}
+@media screen and (max-width:650px) {
+	#ani-text{
+		font-size: 23pt;
+	}
+	#main-text{
+		font-size: 20pt;
+	}
+	#gallary{
+		width: 500px;
+	}
+	.group-row{
+		display: inline;
+		justify-content: center;
+	}
+	.group-box {
+		margin: 30px;
+	}
+	
 }
   </style>
 </head>
@@ -238,7 +266,7 @@ if(userID == null){
 			<span class="text" id="ani-text"></span><br><br><br>
 		</div>
 		<div style="width: 600px; margin: 0 auto;">
-			<span class="text" style="font-size: 25pt; display: flex; justify-content: center; color: #2E2F49;">그룹을 만들거나 참여해보세요</span><br>
+			<span id="main-text">그룹을 만들거나 참여해보세요</span><br>
 			<button type="button" class="btn-blue" id="create-group" onclick="createGroup()" value="그룹생성"><span>그룹 만들기</span></button>	
 		</div>
 	</div>

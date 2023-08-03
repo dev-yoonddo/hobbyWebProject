@@ -163,7 +163,10 @@ padding: 8px 60px;
 		max-width:  400px;
 	}
 	#view-table{
-	table-layout:fixed; border-spacing:0;
+		table-layout:fixed; border-spacing:0;
+	}
+	#tr1 , #tr2{
+		max-width:  400px;
 	}
 	#user-item{
 		width: 150px;
@@ -324,11 +327,11 @@ HeartDTO heartvo = new HeartDAO().getHeartVO(boardID);
 					</div>
 				</div>
 				<table id="view-table">
-					<tr class="tr" height="25%" style="border-bottom: 1px solid #C0C0C0;">
+					<tr class="tr" id="tr1" height="25%" style="border-bottom: 1px solid #C0C0C0;">
 						<td class="td" style="width:20%;"><span>제목</span></td>
 						<td><%=board.getBoardTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></td>
 					</tr>
-					<tr class="tr" height="75%" valign="top">
+					<tr class="tr" id="tr2" height="75%" valign="top">
 						<td class="td" style="padding-top: 50px;"><span>내용</span></td>
 						<!-- 특수문자 처리 -->
 						<td style="padding-top: 50px;"><%=board.getBoardContent().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></td>

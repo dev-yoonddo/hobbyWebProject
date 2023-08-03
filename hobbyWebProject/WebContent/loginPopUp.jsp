@@ -28,6 +28,12 @@
 #goJoin:hover{
 	text-decoration: underline;
 }
+@media screen and (max-width:500px) {
+	.login-wrapper{
+		margin: 20px;
+		margin-top: 40px;
+	}
+}
 </style>
 <body>
 	<div class="login-wrapper">
