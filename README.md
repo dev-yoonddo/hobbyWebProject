@@ -12,7 +12,7 @@
 
 직장생활을 하면서 지친 몸과 마음을 건강하게 만들 수 있는 취미를 갖고싶은 사용자를 위한 웹페이지를 주제로 선정했습니다.  
 팀 프로젝트에서 구현한 기능 외에 좋아요, 조회수, 그룹생성 및 그룹가입, 메시지, 이벤트 기능을 추가하고 처음부터 끝까지 <br>
-직접 계획하고 개발하는 것을 목표로 했습니다.
+직접 계획하고 개발하는 것을 목표로 개발했습니다.
 
 <br><br>
 
@@ -35,6 +35,7 @@
 - Frontend : JavaScript, HTML5, CSS3, JQuery, Bootstrap <br>
 - Backend : Java, Spring
 - Infra : AWS (EC2, RDS, Route53, ELB, ALB, ACM)
+
 <br>
 
 ### Database ERD
