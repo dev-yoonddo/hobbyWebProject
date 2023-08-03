@@ -660,9 +660,9 @@ span{
 							<tr class="board-head">
 								<th style="width: 20%;"><span>그룹</span></th>
 								<th style="width: 15%;"><span>보낸 사람</span></th>
-								<th style="width: 30%;"><span>제목</span></th>
+								<th style="width: 35%;"><span>제목</span></th>
 								<th style="width: 10%;"><span>확인</span></th>
-								<th style="width: 25%;"><span>날짜</span></th>
+								<th style="width: 20%;"><span>날짜</span></th>
 							</tr>
 						</thead>
 						<!-- 받은 메시지가 0개이면 -->
@@ -724,9 +724,9 @@ span{
 							<tr class="board-head">
 								<th style="width: 20%;"><span>그룹</span></th>
 								<th style="width: 15%;"><span>받은 사람</span></th>
-								<th style="width: 30%;"><span>제목</span></th>
+								<th style="width: 35%;"><span>제목</span></th>
 								<th style="width: 10%;"><span>확인</span></th>
-								<th style="width: 25%;"><span>날짜</span></th>
+								<th style="width: 20%;"><span>날짜</span></th>
 							</tr>
 						</thead>
 						<!-- 보낸 메시지가 0개이면 -->

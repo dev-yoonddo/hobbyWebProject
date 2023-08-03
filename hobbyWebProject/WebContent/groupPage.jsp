@@ -186,9 +186,16 @@ String userID = null;
 if(session.getAttribute("userID") != null){
 	userID = (String) session.getAttribute("userID");
 }
-if(userID==null) {
-	response.sendRedirect(request.getContextPath()+"/login");
+if(userID == null){
+	PrintWriter script = response.getWriter();
+	script.println("<script>");
+	script.println("alert('로그인이 필요합니다.')");
+	script.println("window.open('loginPopUp', 'Login', 'width=500, height=550, top=50%, left=50%')");
+	script.println("</script>");
 }
+//if(userID==null) {
+//	response.sendRedirect(request.getContextPath()+"/login");
+//}
 %>
 <header>
 <div id="header" class="de-active">
@@ -243,7 +250,7 @@ if(userID==null) {
 			ArrayList<GroupDTO> list = groupDAO.getList();
 			int counter = 0;
 			for (int i = 0; i < list.size(); i++) {	
-			int groupID = list.get(i).getGroupID();
+			//int groupID = list.get(i).getGroupID();
 		%>
 		<%
 		//group을 한개씩 출력할 때 마다 counter++ 해서 3개가 출력될 때 마다 group-row로 감싸도록 한다.
@@ -276,17 +283,17 @@ if(userID==null) {
 					<%
 						//그룹에 가입한 멤버숫자 가져오기
 						MemberDAO mbDAO = new MemberDAO();
-						ArrayList<MemberDTO> mblist = mbDAO.getList(groupID);
+						ArrayList<MemberDTO> mblist = mbDAO.getList(list.get(i).getGroupID());
 						
 						//해당 그룹을 만든 유저 정보 가져오기
-						GroupDTO groupuser = new GroupDAO().getGroupVO(groupID);
+						GroupDTO groupuser = new GroupDAO().getGroupVO(list.get(i).getGroupID());
 						//그룹을 생성한 유저인지 확인하기
 						boolean leader = userID.equals(groupuser.getUserID());
 						
 						//해당 그룹에 유저가 이미 가입했는지 확인
-						MemberDTO member = new MemberDAO().getMemberVO(userID, groupID);
+						MemberDTO member = new MemberDAO().getMemberVO(userID, list.get(i).getGroupID());
 						//해당 그룹에 유저가 이미 탈퇴했는지 확인
-						MemberDTO memberDel = new MemberDAO().getMemberDelVO(userID, groupID);
+						MemberDTO memberDel = new MemberDAO().getMemberDelVO(userID, list.get(i).getGroupID());
 					%>
 					<div class="info-p"><a><%= mblist.size() %>명 / <%= list.get(i).getGroupNoP() %>명</a></div>
 				</div>
@@ -294,11 +301,11 @@ if(userID==null) {
   			<div class="group-inner-box">
 				<div class="access-group">
 				<% if(!userID.equals(list.get(i).getUserID())){%>
-					<button type="button" class="btn-blue" id="join-group-btn" value="그룹가입" onclick="joinGroup('<%=groupID%>','<%= list.get(i).getGroupAvailable()%>','<%= mblist.size() %>','<%= list.get(i).getGroupNoP() %>','<%=member%>','<%=memberDel%>')">
+					<button type="button" class="btn-blue" id="join-group-btn" value="그룹가입" onclick="joinGroup('<%=list.get(i).getGroupID()%>','<%= list.get(i).getGroupAvailable()%>','<%= mblist.size() %>','<%= list.get(i).getGroupNoP() %>','<%=member%>','<%=memberDel%>')">
 					<span>가입하기</span>
 					</button>
 				<%} %>
-					<button type="button" class="btn-blue" id="in-group-btn" value="그룹참가" onclick="showPasswordPrompt('<%=groupID%>', '<%=list.get(i).getGroupPassword()%>','<%= list.get(i).getGroupAvailable()%>','<%=member%>','<%=leader%>')">
+					<button type="button" class="btn-blue" id="in-group-btn" value="그룹참가" onclick="showPasswordPrompt('<%=list.get(i).getGroupID()%>', '<%=list.get(i).getGroupPassword()%>','<%= list.get(i).getGroupAvailable()%>','<%=member%>','<%=leader%>')">
 					<span>접속하기</span>
 					</button>
 				</div>
@@ -334,8 +341,6 @@ if(userID==null) {
     </section>
   </div>
 -->
-</body>
-
 <script>
 //텍스트 타이핑
 const content = "ALWAYS BETTER TOGETHER";
@@ -432,6 +437,8 @@ function showPasswordPrompt(grID, grPassword, grAvailable, member, leader) {
 </script>
 <script>
 opener.location.reload(); //부모창 리프레쉬
-self.close(); //로그인 후 팝업 창 닫기
+self.close();
 </script>
+</body>
+
 </html>

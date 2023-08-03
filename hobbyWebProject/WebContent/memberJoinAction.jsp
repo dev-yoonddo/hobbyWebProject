@@ -50,6 +50,8 @@
 			}
 			GroupDAO groupDAO = new GroupDAO();
 			MemberDAO memberDAO = new MemberDAO();
+			//가입시 비밀번호 알려주기위해 해당 그룹의 비밀번호를 가져온다.
+			String pw = groupDAO.getGroupVO(groupID).getGroupPassword();
 			//해당group을 만든 userID와 가입하려는 userID가 같으면 가입할 수 없도록 한다.
 			if(userID.equals(groupDAO.getGroupVO(groupID).getUserID())){
 				PrintWriter script = response.getWriter();
@@ -95,8 +97,6 @@
 							script.println("</script>");
 						}
 						else {
-							//가입시 비밀번호 알려주기
-							String pw = groupDAO.getGroupVO(groupID).getGroupPassword();
 							PrintWriter script = response.getWriter();
 							script.println("<script>");
 							script.println("alert('가입이 완료되었습니다. 비밀번호는" + pw + "입니다')");
