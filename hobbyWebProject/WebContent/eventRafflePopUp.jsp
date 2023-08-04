@@ -18,11 +18,12 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
 <link href="https://fonts.googleapis.com/css2?family=Bruno+Ace&family=Gowun+Dodum&family=IBM+Plex+Sans+KR:wght@300;600&family=Jua&family=Merriweather:wght@700&family=Nanum+Gothic&family=Nanum+Gothic+Coding&family=Noto+Sans+KR:wght@400&family=Noto+Serif+KR:wght@200&display=swap" rel="stylesheet">
 <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square.css" rel="stylesheet">
-<script src="https://kit.fontawesome.com/f95555e5d8.js" crossorigin="anonymous"></script>
 <script src="option/jquery/jquery.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<script defer type="text/javascript" src="js/script.js"></script>
-<script type="text/javascript" src="js/userdata.js"></script>
+<script defer type="text/javascript" src="js/userdata.js"></script>
+<script type="text/javascript" src="js/script.js"></script>
+<script type="text/javascript" src="js/checkPW.js"></script>
+<script src="https://kit.fontawesome.com/f95555e5d8.js" crossorigin="anonymous"></script>
 </head>
 <style>
 body{
@@ -37,7 +38,7 @@ h2{
 	color: #646464;
 }
   
-#viewMsg{
+#viewEvent{
 	width: 450px;
 	height: auto;
 	margin: 25px;
@@ -74,13 +75,6 @@ tr{
 	align-items: center;
 }
 
-#more-btn-5{
-	float: right;
-	font-size: 11pt;
-	font-weight: bold;
-	cursor: pointer;
-
-}
 .none-list{
 	text-align: center; 
 	padding: 10px; 
@@ -92,17 +86,17 @@ tr{
 	margin: 0;
 	padding: 0;
 }
-#more-btn{
+#more-btn-event{
 	margin: 0 auto;
 	font-size: 15pt;
 	font-weight: bold;
 	color: #404040;
 	cursor: pointer;
 }
-#more-btn:hover{
+#more-btn-event:hover{
 	color: #E0E0E0;
 }
-#bottom{
+#top{
 	width: 450px;
 	height: 70px;
 	display: flex;
@@ -145,9 +139,9 @@ if(!userID.equals("manager")){
 EventDAO eventDAO = new EventDAO();
 ArrayList<EventDTO> list = eventDAO.getList();
 %>
-<div id="viewMsg">
+<div id="viewEvent">
 	<form action="eventRaffleAction.jsp">
-	<div id="bottom">
+	<div id="top">
 		<div id='result'></div>
 		<button type="submit" class="btn-blue" id="eventWin"><span>당첨</span></button>
 	</div>
@@ -174,7 +168,7 @@ ArrayList<EventDTO> list = eventDAO.getList();
 				for (int i = 0; i < list.size(); i++) {
 			%>
 			<tr class="showEventList" style="height: 50px;">
-				<td><input type="checkbox" name="event" onclick="getCheckboxValue()" value="<%=list.get(i).getUserID()%>"><%=list.get(i).getUserID()%></td>
+				<td><input type="checkbox" id="event" name="event" onclick="getCheckboxValue()" value="<%=list.get(i).getUserID()%>"><%=list.get(i).getUserID()%></td>
 				<td><%=list.get(i).getGroupName() %></td>
 				<td><%=list.get(i).getEventContent() %></td>			
 			</tr>
@@ -188,33 +182,25 @@ ArrayList<EventDTO> list = eventDAO.getList();
 	</table><br>
 	
 	<br>
+	<% 
+		if( list.size() >= 5 ){ //검색된 리스트의 갯수가 10개 이상일때만 더보기 버튼 보이기
+	%>
 	<div id="row-btn-sec">
-		<div id="more-btn">
+		<div id="more-btn-event">
 			<a>
 			<span>MORE</span>	    
 			<i class="fa-solid fa-chevron-down"></i>
 			</a>
 		</div>
 	</div>
+	<% 
+		} 
+	%>
 	</form>
 </div>
 
 <script>
-$(document).ready(function(){
-	$('.showEventList').hide();
-    $('.showEventList').slice(0, 10).show(); // 초기갯수
-    $("#more-btn").click(function(e){ // 클릭시 more
-        if($('.showEventList:hidden').length == 0){ // 컨텐츠 남아있는지 확인
-            alert("마지막입니다."); // 컨텐츠 없을시 alert 창 띄우기
-            break;
-        }
-        e.preventDefault();
-        $('.showEventList:hidden').slice(0, 5).show('slow'); // 클릭시 more 갯수 지저정
-	});
-});
-</script>
-<script>
-//선택한 유저 보기
+//이벤트 추첨 팝업
 function getCheckboxValue(){
 	  // 선택된 목록 가져오기
 	  const query = 'input[name="event"]:checked';
@@ -231,10 +217,6 @@ function getCheckboxValue(){
 	  document.getElementById('result').innerText
 	    = result;
 }
-
-</script>
-<script>
-
 </script>
 </body>
 </html>

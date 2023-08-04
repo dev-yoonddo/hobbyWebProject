@@ -30,14 +30,13 @@ body{
 	display: block;
 }
 section{
-padding-top: 150px;
-padding-bottom: 150px;
-height: auto;
-display: flex;
-
+	padding-top: 150px;
+	padding-bottom: 150px;
+	height: auto;
+	display: flex;
 }
 .board-container{
-margin: 0 auto;
+	margin: 0 auto;
 }
 #search-title{
 	font-family: 'Noto Sans KR', sans-serif;
@@ -63,34 +62,34 @@ margin: 0 auto;
     }
 }
 table{
-width: auto;
-min-width: 1000px;
-text-align: center;
-border-collapse: collapse;
+	width: auto;
+	min-width: 1000px;
+	text-align: center;
+	border-collapse: collapse;
 }
 thead{
-height: 30px;
-font-size: 13pt;
+	height: 30px;
+	font-size: 13pt;
 }
 tbody{
 }
 th{
-color: #6e6e6e;
-text-align: center;
-height: 35px;
-border-radius: 30px;
-background-color: #D9E1FC;
-margin-right: 10px;
+	color: #6e6e6e;
+	text-align: center;
+	height: 35px;
+	border-radius: 30px;
+	background-color: #D9E1FC;
+	margin-right: 10px;
 }
 th span{
-font-size: 14pt;
+	font-size: 14pt;
 }
 .board-head{
-padding: 20px;
+	padding: 20px;
 
 }
 .board-row{
-border-bottom: solid 1px #E0E0E0;
+	border-bottom: solid 1px #E0E0E0;
 }
 
 #row-btn-sec{

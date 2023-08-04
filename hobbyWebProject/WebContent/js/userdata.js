@@ -140,6 +140,7 @@ $(document).ready(function(){
 	    $('.showRcvMsg').slice(0, lastIndex5 + 1).hide();
 	    lastIndex5 += viewCount5; 
 	});
+	
 	//보낸 메시지 더보기
 	var viewCount6 = 5;
 	var lastIndex6 = viewCount6 - 1;
@@ -156,6 +157,7 @@ $(document).ready(function(){
 	    $('.showSendMsg').slice(0, lastIndex6 + 1).hide();
 	    lastIndex6 += viewCount6; 
 	});
+	
 	//그룹 수신 메시지 더보기
 	$('.showRcvGrMsg').hide();
     $('.showRcvGrMsg').slice(0, 5).show(); // 초기갯수
@@ -166,6 +168,16 @@ $(document).ready(function(){
         e.preventDefault();
         $('.showRcvGrMsg:hidden').slice(0, 5).show('slow'); // 클릭시 more 갯수 지저정
 	});
-
+    
+    //이벤트신청 리스트 더보기
+    $('.showEventList').hide();
+    $('.showEventList').slice(0, 5).show(); // 초기갯수
+    $("#more-btn-event").click(function(e){ // 클릭시 more
+        if($('.showEventList:hidden').length == 0){ // 컨텐츠 남아있는지 확인
+            alert("마지막입니다."); // 컨텐츠 없을시 alert 창 띄우기
+        }
+        e.preventDefault();
+        $('.showEventList:hidden').slice(0, 5).show('slow'); // 클릭시 more 갯수 지저정
+	});
 
 });
