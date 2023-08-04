@@ -192,6 +192,9 @@ padding: 8px 60px;
 	.cmt-view , .cmt-list , .cmt-table{
 		max-width: 400px;		
 	}
+	#list , #update, #btn-del, #cmt-cpl{
+		width: 60px;
+	}
 }
 </style>
 <body>
@@ -348,7 +351,7 @@ HeartDTO heartvo = new HeartDAO().getHeartVO(boardID);
 				
 			</div><br>
 			
-			<button type="button" class="btn-blue" onclick="location.href= 'searchPage?searchField2=<%=board.getBoardCategory()%>'"><span>목록</span></button>
+			<button type="button" id="list" class="btn-blue" onclick="location.href= 'searchPage?searchField2=<%=board.getBoardCategory()%>'"><span>목록</span></button>
 			<%
 				if(userID != null){
 			%>
@@ -361,7 +364,7 @@ HeartDTO heartvo = new HeartDAO().getHeartVO(boardID);
 					}
 					else if(userID.equals(board.getUserID())){
 			%>
-						<button type="button" class="btn-blue" onclick="location.href='update?boardID=<%=boardID%>'"><span>수정</span></button>
+						<button type="button" class="btn-blue" id="update" onclick="location.href='update?boardID=<%=boardID%>'"><span>수정</span></button>
 						<button type="button" class="btn-blue" id="btn-del" onclick="if(confirm('정말로 삭제하시겠습니까?')){location.href='deleteAction.jsp?boardID=<%=boardID%>'}"><span>삭제</span></button>
 			<%
 					}

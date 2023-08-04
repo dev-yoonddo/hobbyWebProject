@@ -95,7 +95,7 @@ tr{
 }
 </style>
 </head>
-<body>
+<body id="header">
 <%
 //userID 가져오기
 String userID = null;

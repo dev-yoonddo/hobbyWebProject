@@ -19,12 +19,15 @@
 <script src="option/jquery/jquery.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script type="text/javascript" src="js/script.js"></script>
+<script src="https://kit.fontawesome.com/f95555e5d8.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+
 </head>
 <style>
 .login-wrapper{
 	margin: 25px;
 	width: 450px;
-	height: 260px;
+	height: 450px;
 	justify-content: center;
 }
 
@@ -32,7 +35,7 @@ body{
 	font-family: 'Nanum Gothic', monospace;
 }
 
-h2{
+h2 , h3{
 	padding: 0;
 	margin: 0;
 }
@@ -46,20 +49,24 @@ h2{
 #exit{
 	cursor: pointer;
 	margin-top: 20px;
+	top: 400px;
+	position: fixed;
 }
 </style>
 
-<body>
+<body id="header"> <!-- 커서이벤트를 위해 id=header로 지정 -->
 <%
 String userID = null;
 if(session.getAttribute("userID") != null){
 	userID = (String) session.getAttribute("userID");
 }
 EventDAO eventDAO = new EventDAO();
+String msg = eventDAO.getEventVO(userID).getEventWinMsg().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>");
 %>
 	<div class="login-wrapper">
 	 	<div id="eventWin">
-			<h2 style="font-size: 19pt; ">TO. <%=userID%>님 <br><br> <%= eventDAO.getEventVO(userID).getEventWinMsg().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>") %></h2>
+			<h2 style="font-size: 20pt;">TO. <%=userID%>님</h2> <br><br>
+			<h3 style="font-size: 16pt; color: #86A5FF; "><%=msg%></h3>
 			<button type="button" id="exit" onclick="eventMsgExit()">더이상 보지않기 Ⅹ</button>
 	   </div>
 	</div>

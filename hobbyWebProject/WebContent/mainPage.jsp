@@ -53,7 +53,7 @@ if(boardCount >= 5 && eventCount == 0){ //게시글이 5개 이상이고 이벤�
 EventDTO eventvo = new EventDAO().getEventVO(userID);
 if(eventvo != null && eventvo.getEventWin() == 1 && eventvo.getEventAvailable() != 0){
 	script.println("<script>");
-	script.println("window.open('eventWinPopUp', 'EVENT', 'width=500, height=300, top=50%, left=50%')");
+	script.println("window.open('eventWinPopUp', 'EVENT', 'width=500, height=500, top=50%, left=50%')");
 	script.println("</script>");
 }
 %>

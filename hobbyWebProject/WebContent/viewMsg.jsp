@@ -59,7 +59,7 @@ thead{
 	height: 50px;
 }
 </style>
-<body>
+<body id="header">
 <%
 //userID 가져오기
 String userID = null;

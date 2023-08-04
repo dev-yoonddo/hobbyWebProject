@@ -35,7 +35,7 @@
 	}
 }
 </style>
-<body>
+<body id="header">
 	<div class="login-wrapper">
 	 <div>
 		<h2>로그인

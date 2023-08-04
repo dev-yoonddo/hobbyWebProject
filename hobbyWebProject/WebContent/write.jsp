@@ -10,7 +10,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width = device-width , initial-scale = 1, user-scalable = no, maximum-scale = 1 , minimum-scale = 1">
+<meta name="viewport" content="width = device-width , initial-scale = 1, user-scalable = yes, maximum-scale = 1 , minimum-scale = 1">
 <meta charset="UTF-8">
 <title>TOGETHER</title>
 <link rel="icon" href="image/logo.png">
@@ -112,17 +112,27 @@ font-size: 12pt;
 }
 
 @media screen and (max-width:900px) {
-	.board-container , .write-table , textarea , #view-table{
+	.board-container , .write-table , form, textarea, table, tbody, tr, th, td{
 		max-width: 650px;
 	}
 }
 
 @media screen and (max-width:650px) {
-	.board-container , .write-table , textarea , #view-table{
-		max-width: 450px;
+	.board-container , .write-table , form, textarea, table, tbody, tr, th, td{
+		max-width: 350px;
 	}
-	.board-container{
-		margin: 20px;
+	thead{
+		display: none;
+	}
+	textarea{
+		padding: 0;
+		float: left;
+	}
+	td{
+		padding: 10px;
+	}
+	.btn-blue{
+		width: 100px;
 	}
 }
 </style>

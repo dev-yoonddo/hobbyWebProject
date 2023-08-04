@@ -94,24 +94,26 @@ h2{
 		height: 120px;
 	}
 	#title-text{
-		width: 170px;
+		width: 160px;
 		font-size: 16pt;
 	}
 	#group-main{
 		width: 450px;
 	}
 	#title-btn{
+		width: 180px;
 	}
 	.btn-blue span{
 		width: 65px;
 		font-size: 8pt;
+		margin: 0;
 	}
 	.btn-blue{
 		width: 65px;
 		margin: 0;
 	}
 	#btn-msg{
-		width: 95px;
+		width: 100px;
 	}
 	#member-list{
 		width: 350px;

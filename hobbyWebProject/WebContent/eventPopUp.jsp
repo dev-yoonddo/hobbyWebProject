@@ -60,7 +60,7 @@ option{
 }
 </style>
 
-<body>
+<body id="header">
 <%
 String userID = null;
 if(session.getAttribute("userID") != null){

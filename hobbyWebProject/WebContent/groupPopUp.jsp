@@ -55,7 +55,7 @@ color: #ffffff;
 
 </style>
 </head>
-<body>
+<body id="header">
 <%
 String userID = null;
 if(session.getAttribute("userID") != null){
