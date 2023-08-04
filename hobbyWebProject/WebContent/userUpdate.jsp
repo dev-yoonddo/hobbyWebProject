@@ -696,8 +696,8 @@ span{
 						<thead>
 							<tr class="board-head">
 								<th style="width: 23%;"><span>그룹</span></th>
-								<th style="width: 17%;"><span>보낸 사람</span></th>
-								<th style="width: 30%;"><span>제목</span></th>
+								<th style="width: 16%;"><span>보낸 사람</span></th>
+								<th style="width: 29%;"><span>제목</span></th>
 								<th style="width: 10%;"><span>확인</span></th>
 								<th style="width: 20%;"><span>날짜</span></th>
 							</tr>
@@ -760,8 +760,8 @@ span{
 						<thead>
 							<tr class="board-head">
 								<th style="width: 23%;"><span>그룹</span></th>
-								<th style="width: 17%;"><span>받은 사람</span></th>
-								<th style="width: 30%;"><span>제목</span></th>
+								<th style="width: 16%;"><span>받은 사람</span></th>
+								<th style="width: 29%;"><span>제목</span></th>
 								<th style="width: 10%;"><span>확인</span></th>
 								<th style="width: 20%;"><span>날짜</span></th>
 							</tr>

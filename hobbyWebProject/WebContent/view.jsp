@@ -56,23 +56,26 @@ section{
 	border: 1px solid #C0C0C0;
 	font-size: 12pt;
 }
-table caption{font-size:0; text-indent:-9999px;}
+table caption{
+	font-size:0;
+	text-indent:-9999px;
+}
 
 .td{
 	text-align: center;
 	font-size: 13pt;
 }
 .td span{	
-padding: 10px 20px;
-border-radius: 20px;
-background-color: #CCE5FF;
+	padding: 10px 20px;
+	border-radius: 20px;
+	background-color: #CCE5FF;
 }
 #view-title{
-font-weight: bold;
-font-size: 25pt;
-color: #646464;
-font-family: 'Noto Sans KR', sans-serif;
-animation: fadeInLeft 2s;
+	font-weight: bold;
+	font-size: 25pt;
+	color: #646464;
+	font-family: 'Noto Sans KR', sans-serif;
+	animation: fadeInLeft 2s;
 }
 
 @keyframes fadeInLeft {
@@ -118,9 +121,9 @@ animation: fadeInLeft 2s;
 	float: right;
 }
 #count{
-display: flex;
-justify-content: center;
-padding: 8px 60px;
+	display: flex;
+	justify-content: center;
+	padding: 8px 60px;
 }
 #count span{
 	color: #282557;
@@ -140,16 +143,16 @@ padding: 8px 60px;
 	font-size: 10pt;
 	padding: 6px;
 	color: #ffffff;
-	  background-color: #323232;
-	  border: 1px solid #323232;
+	background-color: #323232;
+	border: 1px solid #323232;
 }
 #cmt-btn::before {
-  background-color: #323232;
+  	background-color: #323232;
 }
 
 #cmt-btn span:hover {
-  color: #323232;
-  background-color: #ffffff
+	color: #323232;
+	background-color: #ffffff
 }
 
 @media screen and (max-width:650px) {
@@ -182,6 +185,9 @@ padding: 8px 60px;
 	}
 	#count{
 		padding: 8px 30px;
+	}
+	.btn-blue{
+		margin: 7px;
 	}
 	.btn-blue span{
 		font-size: 11pt;

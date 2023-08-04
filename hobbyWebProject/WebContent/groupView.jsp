@@ -103,17 +103,21 @@ h2{
 	#title-btn{
 		width: 180px;
 	}
+	.btn-blue{
+		width: 60px;
+		margin: 0;
+	}
 	.btn-blue span{
-		width: 65px;
+		width: 60px;
 		font-size: 8pt;
 		margin: 0;
 	}
-	.btn-blue{
-		width: 65px;
-		margin: 0;
-	}
 	#btn-msg{
-		width: 100px;
+		width: 70px;
+		margin-right: 30px;
+	}
+	#btn-msg > span{
+		width: 70px;
 	}
 	#member-list{
 		width: 350px;
