@@ -1,3 +1,4 @@
+
 # 취미는 갖고 싶은데 혼자는 싫을 때 TOGETHER 🏊‍♂️🏋️‍♀️🚴‍♀️
 
 프론트엔드, 백엔드를 혼자 맡아 제작한 개인 프로젝트입니다. <br>
@@ -183,27 +184,27 @@
 ![login1](https://user-images.githubusercontent.com/84071666/235856990-35ef5e84-1699-49eb-a050-c2ebc76d6b6b.PNG)
 
 <div style="display: flex-start;">
-<img src="https://user-images.githubusercontent.com/84071666/235856997-7642fd3b-6c5b-4672-b806-08d205f5a4de.PNG" width="49%">
-<img src="https://user-images.githubusercontent.com/84071666/235856998-920a1440-5738-4bf8-b40d-90c24d145dcd.PNG" width="49%" align="right">
+<img src="https://user-images.githubusercontent.com/84071666/235856997-7642fd3b-6c5b-4672-b806-08d205f5a4de.PNG" width="48%">
+<img src="https://user-images.githubusercontent.com/84071666/235856998-920a1440-5738-4bf8-b40d-90c24d145dcd.PNG" width="48%">
 </div>
 
 <div style="display: flex;">
-<img src="https://user-images.githubusercontent.com/84071666/235857000-64eaa871-c3b7-4a13-83c3-473ffe19c13b.PNG" width="49%">
-<img src="https://user-images.githubusercontent.com/84071666/235857004-48a40e5d-c729-410b-b159-a4c36204f838.PNG" width="49%" align="right">
+<img src="https://user-images.githubusercontent.com/84071666/235857000-64eaa871-c3b7-4a13-83c3-473ffe19c13b.PNG" width="48%">
+<img src="https://user-images.githubusercontent.com/84071666/235857004-48a40e5d-c729-410b-b159-a4c36204f838.PNG" width="48%">
 </div>
 
 <div style="display: flex;">
-<img src="https://user-images.githubusercontent.com/84071666/235857005-6a1448d8-aad3-441e-acaf-42dca90413cd.PNG" width="49%">
-<img src="https://user-images.githubusercontent.com/84071666/235857007-87c978de-f9de-431a-815d-571870d542be.PNG" width="49%" align="right">
+<img src="https://user-images.githubusercontent.com/84071666/235857005-6a1448d8-aad3-441e-acaf-42dca90413cd.PNG" width="48%">
+<img src="https://user-images.githubusercontent.com/84071666/235857007-87c978de-f9de-431a-815d-571870d542be.PNG" width="48%">
 </div> <br><br>
 
 <div style="display: flex;">
-<img src="https://user-images.githubusercontent.com/84071666/235857008-547bcad1-d68b-40c9-85dc-afe04d879634.PNG" width="60%">
+<img src="https://user-images.githubusercontent.com/84071666/235857008-547bcad1-d68b-40c9-85dc-afe04d879634.PNG" width="59%">
 <img src="https://user-images.githubusercontent.com/84071666/235857012-af99212f-752d-4d7e-bfe0-f40986e8ce44.PNG" width="39%" height="180px">
 </div> 
 
 <div style="display: flex;">
-<img src="https://user-images.githubusercontent.com/84071666/235856984-26cf668a-4f84-41b1-86d4-7d3d12ad8610.PNG" width="60%">
+<img src="https://user-images.githubusercontent.com/84071666/235856984-26cf668a-4f84-41b1-86d4-7d3d12ad8610.PNG" width="59%">
 <img src="https://user-images.githubusercontent.com/84071666/235856986-3ec5b33b-8783-48c9-a9da-911c6488c789.PNG" width="39%" height="180px">
 </div>
 
@@ -353,9 +354,9 @@
 <br>
 
 <div style="display: flex;">
-<img src="https://user-images.githubusercontent.com/84071666/235871017-46c8dca4-b563-417f-ae61-cb47dda79e5a.PNG" width="33%">
-<img src="https://user-images.githubusercontent.com/84071666/235871019-5ab77eea-e706-4371-b5a1-5ea6f1bb2571.PNG" width="33%">
-<img src="https://user-images.githubusercontent.com/84071666/235871024-b09a12bb-5957-4cdf-aea2-154595b4581b.PNG" width="33%">
+<img src="https://user-images.githubusercontent.com/84071666/235871017-46c8dca4-b563-417f-ae61-cb47dda79e5a.PNG" width="32%">
+<img src="https://user-images.githubusercontent.com/84071666/235871019-5ab77eea-e706-4371-b5a1-5ea6f1bb2571.PNG" width="32%">
+<img src="https://user-images.githubusercontent.com/84071666/235871024-b09a12bb-5957-4cdf-aea2-154595b4581b.PNG" width="32%">
 </div>
 
 <br><br>
@@ -364,8 +365,11 @@
 
 <br>
 
-![userdeleteinfo8](https://user-images.githubusercontent.com/84071666/235896891-71adf65e-b96a-4b4f-9c22-761cef1656a0.PNG)
-![userdeleteinfo9](https://user-images.githubusercontent.com/84071666/235896898-a60e1e9c-f2f0-4376-9435-f99dcc701946.PNG)
+<div style="display: flex;">
+<img src="https://user-images.githubusercontent.com/84071666/235896891-71adf65e-b96a-4b4f-9c22-761cef1656a0.PNG" width="48%">
+<img src="https://user-images.githubusercontent.com/84071666/235896898-a60e1e9c-f2f0-4376-9435-f99dcc701946.PNG" width="48%">
+</div>
+
 ![userdeleteinfo10](https://user-images.githubusercontent.com/84071666/235910389-414c9eeb-b2d6-4277-95ff-e2f05a261ee2.PNG)
 
 <br><br>
