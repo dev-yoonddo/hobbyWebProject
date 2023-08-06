@@ -21,7 +21,7 @@
 <script defer src="option/jquery/jquery.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script src="https://kit.fontawesome.com/f95555e5d8.js" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 <script type="text/javascript" src="js/script.js"></script>
 </head>
 <style>
@@ -205,7 +205,7 @@ String bdcategory = request.getParameter("category");
 	<h3 style="font-weight: bold; color: #646464;"><%= userID %>님 안녕하세요</h3><br>
 		<div class="right-row">
 			<form method="post" action="writeAction.jsp" >
-				<div class="category-sel">
+				<div class="category-sel" style="display: flex;">
 				<select name="boardCategory">
 					<option value="0">CATEGORY</option>
 					<option value="SPORTS" >SPORTS</option>
@@ -213,6 +213,16 @@ String bdcategory = request.getParameter("category");
 					<option value="MUSIC" >MUSIC</option>
 					<option value="OTHER" >OTHER</option>
 				</select>
+				<!-- 관리자 계정으로 공지사항 체크박스 체크시 notice를 값으로 넘긴다. -->
+				<% if(userID.equals("manager")){%>
+				<div class="form-check" style="display: flex; height: 40px; align-items: center;">
+					<input type="checkbox" hidden="hidden" name="notice" value="NULL" checked="checked">
+					<input class="form-check-input" type="checkbox" name="notice" value="NOTICE" id="flexCheckDefault">
+					<label class="form-check-label" for="flexCheckDefault">
+					  공지사항
+					</label>
+				</div>
+				<%} %>
 				</div>
 				<table class="write-table" style="text-align: center; border: 1px solid #dddddd">
 					<thead>
@@ -230,11 +240,24 @@ String bdcategory = request.getParameter("category");
 					</tbody>
 				</table>
 				<button type="submit" class="btn-blue" value="글쓰기"><span>작성하기</span></button>
-			</form>
-			
+			</form>		
 		</div>
 	</div>
 </section>
+<script>
+//체크박스 한가지만 선택되도록 하기
+$(document).on('click', "input[type='checkbox']", function(){
+    if(this.checked) {
+        const checkboxes = $("input[type='checkbox']");
+        for(let i = 0; i < checkboxes.length; i++){
+            checkboxes[i].checked = false;
+        }
+        this.checked = true;
+    } else {
+        this.checked = false;
+    }
+});
+</script>
 
 <script>
 //글쓰기 버튼을 클릭했던 페이지의 카테고리가 글 작성시 선택되어있도록 한다.
@@ -249,8 +272,8 @@ for (let i = 0; i < selectBox.options.length; i++) {
   }
 }
 </script>
-		<!-- 부트스트랩 참조 영역 -->
-	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-	<script src="js/bootstrap.js"></script>
+	<!-- 부트스트랩 참조 영역 -->
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="js/bootstrap.js"></script>
 </body>
 </html>

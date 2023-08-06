@@ -20,10 +20,9 @@
 <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square.css" rel="stylesheet">
 <script defer src="option/jquery/jquery.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="js/script.js"></script>
 <script src="https://kit.fontawesome.com/f95555e5d8.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
-<script type="text/javascript" src="js/script.js"></script>
-<script type="text/javascript" src="js/pagenation.js"></script>
 </head>
 <style>
 body{
@@ -114,6 +113,45 @@ th span{
 	text-decoration: underline;
 	color: #606060;
 }
+/* 공지 */
+#notice-animated{
+	width: auto;
+	height: 30px;
+	padding: 10px;
+	border-color: #909090;
+	border-top: thin solid black;
+	border-bottom: thin solid black;
+	margin-bottom: 10px;
+	justify-content: center;
+	position: relative;
+	overflow-x: hidden;
+	overflow-y: hidden;
+}
+#notice{
+	width: auto;
+	height: auto;
+	position: absolute;
+	white-space: nowrap;
+	will-change: transform;
+	animation: marquee 13s linear infinite;
+	z-index: 5;
+}
+#notice-inner{
+	height: 30px;
+	display: flex;
+	font-size: 15pt;
+	align-items: center;
+	margin: 10px 5px;
+}
+#notice-option:hover{
+	font-weight: bold;
+	color:#606060;
+}
+/* 공지 애니메이션 */
+@keyframes marquee {
+  from { transform: translateY(20%); }
+  to { transform: translateY(-100%); }
+}
 
 @media screen and (max-width:900px) {
 	table{
@@ -197,6 +235,7 @@ th span{
 		boardID = Integer.parseInt(request.getParameter("boardID"));
 	}
 	BoardDTO board = new BoardDAO().getBoardVO(boardID);
+	BoardDAO boardDAO = new BoardDAO();
 %>
 <header>
 <div id="header" class="de-active">
@@ -244,12 +283,31 @@ th span{
 <section>
 	<div class="board-container">
 		<%
-				//카테고리를 검색했을 때 테이블 상단에 선택한 카테고리를 출력
+				//카테고리를 검색했을 때 테이블 상단에 선택한 카테고리 출력
 				String boardCategory = request.getParameter("searchField2");
 		%>
 		<div id="search-title">
-		<h2><%=boardCategory%></h2><h4>함께 할 사람들과 이야기 나눠보세요</h4>
+			<h2><%=boardCategory%></h2><h4>함께 할 사람들과 이야기 나눠보세요</h4>
 		</div><br>
+		
+		<div id="notice-animated">
+		<!-- 관리자 공지사항 리스트 -->
+		<div id="notice">
+		<% 
+			ArrayList<BoardDTO> noticelist = boardDAO.getNotice();
+			for(int i = 0; i < noticelist.size(); i++){
+		%>
+			<div id="notice-inner">
+				<div id="notice-option" onclick="location.href='view?boardID=<%= noticelist.get(i).getBoardID() %>'">
+				<i class="fa-regular fa-bell"></i>&nbsp;&nbsp;<%= noticelist.get(i).getBoardTitle()%>
+				</div>
+			</div>
+		<%
+		}
+		%>
+		</div>
+		</div>
+		<!-- 게시글 리스트 -->
 		<div class="row">
 			<table>
 				<thead>
@@ -264,7 +322,6 @@ th span{
 				</thead>
 				<tbody>
 					<%
-						BoardDAO boardDAO = new BoardDAO();
 						ArrayList<BoardDTO> list = boardDAO.getSearch(boardCategory);
 						if(boardCategory == ""){
 							PrintWriter script = response.getWriter();

@@ -68,10 +68,15 @@ if(userID == null){
 	script.println("window.open('loginPopUp', 'Login', 'width=500, height=550, top=50%, left=50%')");
 	script.println("</script>");
 }
+
 GroupDAO groupDAO = new GroupDAO();
 MessageDAO msgDAO = new MessageDAO();
 int msgID = 0;
 int groupID = 0;
+String qna = "";
+if(request.getParameter("qna") != null){
+	qna = request.getParameter("qna");
+}
 //groupView 페이지에서 받은 msgID와 groupID를 저장한다.
 if(request.getParameter("groupID") != null){
 	groupID = Integer.parseInt(request.getParameter("groupID"));
@@ -79,24 +84,36 @@ if(request.getParameter("groupID") != null){
 if(request.getParameter("msgID") != null){
 	msgID = Integer.parseInt(request.getParameter("msgID"));
 }
+
 %>
 <div id="sendMsg">
-	<!-- 메시지전송 버튼을 눌렀을때와 답장하기 버튼을 눌렀을때 가져온 값이 다르기때문에 따로 설정해준다. -->
-	<% if(msgID == 0){  //msgID = 0 이면 메시지전송을 클릭했다는 의미이다. %>
-    <h2>To. <%=groupDAO.getGroupVO(groupID).getUserID()%><h2>
-    <form method="post" action="sendMsgAction.jsp?groupID=<%= groupID %>" id="send-form">
+	<% if(qna != null && qna.equals("y")) { //파라미터로 qna값이 y가 넘어오면 관리자에게 문의하기 %>
+	<h2>To. 관리자</h2>
+    <form method="post" action="sendMsgAction.jsp?qna=y" id="send-form">
         <input type="text" placeholder="제목을 입력하세요" name="msgTitle" id="msgTitle" maxlength="20">
         <input type="text" placeholder="내용을 입력하세요" name="msgContent" id="msgContent" class="intro" maxlength="200">
         <button type="submit" class="btn-blue" id="sb"><span>메시지 전송</span></button>
     </form>
-    <%}else{ //메시지 답장은 msgID와 groupID를 모두 받는다.%>
-    <h2>To. <%=msgDAO.getMsgVO(msgID).getUserID()%><h2>
-    <form method="post" action="sendMsgAction.jsp?msgID=<%= msgID %>&groupID=<%=groupID%>" id="send-form">
-        <input type="text" placeholder="제목을 입력하세요" name="msgTitle" id="msgTitle" maxlength="20">
-        <input type="text" placeholder="내용을 입력하세요" name="msgContent" id="msgContent" class="intro" maxlength="200">
-        <button type="submit" class="btn-blue" id="sb"><span>답장 전송</span></button>
-    </form>
-    <%} %>
+	<% } else { %>
+		<!-- 메시지전송 버튼을 눌렀을때와 답장하기 버튼을 눌렀을때 가져온 값이 다르기때문에 따로 설정해준다. -->
+		<% if(msgID == 0){  //msgID = 0 이면 메시지전송을 클릭했다는 의미이다. %>
+	    <h2>To. <%=groupDAO.getGroupVO(groupID).getUserID()%></h2>
+	    <form method="post" action="sendMsgAction.jsp?groupID=<%= groupID %>" id="send-form">
+	        <input type="text" placeholder="제목을 입력하세요" name="msgTitle" id="msgTitle" maxlength="20">
+	        <input type="text" placeholder="내용을 입력하세요" name="msgContent" id="msgContent" class="intro" maxlength="200">
+	        <button type="submit" class="btn-blue" id="sb"><span>메시지 전송</span></button>
+	    </form>
+	   	<%}else{ //메시지 답장은 msgID와 groupID를 모두 받는다.%>
+	    <h2>To. <%=msgDAO.getMsgVO(msgID).getUserID()%></h2>
+	    <form method="post" action="sendMsgAction.jsp?msgID=<%= msgID %>&groupID=<%=groupID%>" id="send-form">
+	        <input type="text" placeholder="제목을 입력하세요" name="msgTitle" id="msgTitle" maxlength="20">
+	        <input type="text" placeholder="내용을 입력하세요" name="msgContent" id="msgContent" class="intro" maxlength="200">
+	        <button type="submit" class="btn-blue" id="sb"><span>답장 전송</span></button>
+	    </form>
+    <%
+    	}
+	}
+	%>
 </div>
 </body>
 </html>

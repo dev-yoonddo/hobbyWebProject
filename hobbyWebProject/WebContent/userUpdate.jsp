@@ -29,12 +29,13 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
 <link href="https://fonts.googleapis.com/css?family=Teko:300,400,500,600,700&display=swap" rel="stylesheet">
 <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square.css" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script defer src="option/jquery/jquery.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<script src="https://kit.fontawesome.com/f95555e5d8.js" crossorigin="anonymous"></script>
-<script defer type="text/javascript" src="js/userdata.js"></script>
-<script type="text/javascript" src="js/checkPW.js"></script>
 <script type="text/javascript" src="js/script.js"></script>
+<script type="text/javascript" src="js/userdata.js"></script>
+<script type="text/javascript" src="js/checkPW.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 </head>
 <style>
 header{
@@ -894,10 +895,6 @@ function onClickSelect2(e) {
 	}
 	
 	document.querySelector("#select-sec1 .select1").addEventListener("click", onClickSelect2);
-
-	
-
-
 
 </script>
 <script>

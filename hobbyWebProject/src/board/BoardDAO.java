@@ -308,6 +308,31 @@ public class BoardDAO {
 		}
 		return -1;//데이터베이스 오류
 	}
+	//관리자 공지사항 리스트 가져오기
+	public ArrayList<BoardDTO> getNotice(){
+	      ArrayList<BoardDTO> list = new ArrayList<BoardDTO>();
+	      String SQL ="SELECT * FROM board WHERE boardAvailable = 1 AND boardCategory LIKE '%NOTICE%' ORDER BY boardID DESC";
+	      try {
+	    	  	PreparedStatement pstmt=conn.prepareStatement(SQL);
+				rs=pstmt.executeQuery();//select
+				while(rs.next()) {
+	        	BoardDTO board = new BoardDTO();
+	        	board.setBoardID(rs.getInt(1));
+	        	board.setBoardTitle(rs.getString(2));
+	        	board.setUserID(rs.getString(3));
+	        	board.setBoardDate(rs.getString(4));
+	        	board.setBoardContent(rs.getString(5));
+	        	board.setBoardAvailable(rs.getInt(6));
+	        	board.setBoardCategory(rs.getString(7));
+	        	board.setViewCount(rs.getInt(8));
+	        	board.setHeartCount(rs.getInt(9));
+	            list.add(board);//list에 해당 인스턴스를 담는다.
+	         }         
+	      } catch(Exception e) {
+	         e.printStackTrace();
+	      }
+	      return list;//리스트 반환
+	   }
 	//검색하기
 	//boardAvailable = 1일때만 값 출력 : 게시글을 삭제했을때 & 회원탈퇴 했을때 게시글이 보이지 않는다.
 	public ArrayList<BoardDTO> getSearch(String searchField2){//특정한 리스트를 받아서 반환

@@ -40,12 +40,15 @@
 				script.println("<script>");
 				script.println("alert('정보를 모두 입력해주세요')");
 				script.println("history.back()");
-				script.println("</script>");
-				
-				}else{
-					
-					BoardDAO boardDAO = new BoardDAO();
-					int result = boardDAO.write(board.getBoardTitle(), userID, board.getBoardContent(), board.getBoardCategory(), board.getViewCount(), board.getHeartCount());
+				script.println("</script>");				
+			}else{
+				int result = 0;
+				String notice = null;
+				BoardDAO boardDAO = new BoardDAO();
+				//관리자 계정으로 공지사항 등록시
+				notice = request.getParameter("notice");
+				if(userID.equals("manager") && notice.equals("NOTICE")){
+					result = boardDAO.write(board.getBoardTitle(), userID, board.getBoardContent(), notice , board.getViewCount(), board.getHeartCount());
 					if(result == -1){
 						PrintWriter script = response.getWriter();
 						script.println("<script>");
@@ -60,18 +63,40 @@
 						script.println("history.back()");
 						script.println("</script>");
 					}
-					else {
+					else{
+						PrintWriter script = response.getWriter();
+						script.println("<script>");
+						script.println("alert('작성이 완료되었습니다')");
+						script.println("location.href='community'");
+						script.println("</script>");
+					}
+				//관리자가 아니거나 공지사항이 아닐시
+				}if(notice.equals("NULL") || notice == null){
+					result = boardDAO.write(board.getBoardTitle(), userID, board.getBoardContent(), board.getBoardCategory(), board.getViewCount(), board.getHeartCount());
+					//result > 0 이면 성공적으로 글쓰기 완료
+					if(result == -1){
+						PrintWriter script = response.getWriter();
+						script.println("<script>");
+						script.println("alert('글쓰기에 실패했습니다')");
+						script.println("history.back()");
+						script.println("</script>");
+					}
+					if((board.getBoardCategory()).equals("0")){
+						PrintWriter script = response.getWriter();
+						script.println("<script>");
+						script.println("alert('카테고리를 선택해주세요')");
+						script.println("history.back()");
+						script.println("</script>");
+					}
+					else{
 						PrintWriter script = response.getWriter();
 						script.println("<script>");
 						script.println("alert('작성이 완료되었습니다')");
 						script.println("location.href='searchPage?searchField2="+board.getBoardCategory()+"'");
 						script.println("</script>");
 					}
-					
-					
 				}
-			
-			
+			}
 		}
 		
 	%>

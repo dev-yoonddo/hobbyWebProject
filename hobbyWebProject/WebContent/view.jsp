@@ -230,6 +230,12 @@ if(boardID == 0){
 
 BoardDTO board = new BoardDAO().getBoardVO(boardID);
 HeartDTO heartvo = new HeartDAO().getHeartVO(boardID);
+
+//해당 글이 공지사항인지 구분한다.
+boolean notice = false;
+if((board.getBoardCategory()).equals("NOTICE")){
+	notice = true;
+}
 %>
 
 <!-- header -->
@@ -283,8 +289,12 @@ HeartDTO heartvo = new HeartDAO().getHeartVO(boardID);
 	<div class="board-container">
 		<div class="inquiry">
 			<div class="row"><br>
+				<!-- 공지사항은 카테고리가 아닌 제목을 출력한다. -->
+				<% if(notice == true){%>
+				<a id="view-title"><%=board.getBoardTitle()%></a><br><br>
+				<%}else{%>
 				<a id="view-title"><%=board.getBoardCategory()%></a><br><br>
-				
+				<%} %>
 				<div id="tb-top">
 					<div id="tb-top-1">
 						<div id="user-item">
@@ -336,6 +346,12 @@ HeartDTO heartvo = new HeartDAO().getHeartVO(boardID);
 					</div>
 				</div>
 				<table id="view-table">
+					<!-- 공지사항이면 내용만 출력한다. -->
+					<% if(notice == true){ %>
+					<tr class="tr" id="tr2" height="75%" valign="top">
+						<td style="padding: 30px;"><%=board.getBoardContent().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></td>
+					</tr>
+					<%}else{%>					
 					<tr class="tr" id="tr1" height="25%" style="border-bottom: 1px solid #C0C0C0;">
 						<td class="td" style="width:20%;"><span>제목</span></td>
 						<td><%=board.getBoardTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></td>
@@ -345,6 +361,7 @@ HeartDTO heartvo = new HeartDAO().getHeartVO(boardID);
 						<!-- 특수문자 처리 -->
 						<td style="padding-top: 50px;"><%=board.getBoardContent().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></td>
 					</tr>
+					<%} %>
 					<!-- <tr>
 						<td class="td"><span>조회수</span></td>
 						<td colspan="2"board.getViewCount()+1)+1 %></td>
@@ -356,21 +373,26 @@ HeartDTO heartvo = new HeartDAO().getHeartVO(boardID);
 				</table>
 				
 			</div><br>
-			
+			<%if(notice == true) { //공지사항은 카테고리가 NOTICE이기 때문에 경로를 community로 변경해준다. %>
+			<button type="button" id="list" class="btn-blue" onclick="location.href='community'"><span>목록</span></button>			
+			<%}else{ //모든 사용자에게 목록 버튼 노출%>
 			<button type="button" id="list" class="btn-blue" onclick="location.href= 'searchPage?searchField2=<%=board.getBoardCategory()%>'"><span>목록</span></button>
-			<%
+			<%}
+				//로그인된 모든 유저에게 댓글쓰기 버튼 노출
 				if(userID != null){
 			%>
 					<button type="button" class="btn-blue" id="cmt-write-btn" onclick="cmtAction()"><span>댓글쓰기</span></button>
-			<%	
-					if(userID.equals("manager")){
+			<%
+					//로그인되고 해당 글을 쓴 유저에게 수정,삭제 버튼 노출
+					if(userID.equals(board.getUserID())){
 			%>
+						<button type="button" class="btn-blue" id="update" onclick="location.href='update?boardID=<%=boardID%>'"><span>수정</span></button>
 						<button type="button" class="btn-blue" id="btn-del" onclick="if(confirm('정말로 삭제하시겠습니까?')){location.href='deleteAction.jsp?boardID=<%=boardID%>'}"><span>삭제</span></button>
 			<%
 					}
-					else if(userID.equals(board.getUserID())){
+					//해당 글을 작성하지 않았지만 관리자인 유저에게 삭제 버튼 노출
+					else if(userID.equals("manager")){
 			%>
-						<button type="button" class="btn-blue" id="update" onclick="location.href='update?boardID=<%=boardID%>'"><span>수정</span></button>
 						<button type="button" class="btn-blue" id="btn-del" onclick="if(confirm('정말로 삭제하시겠습니까?')){location.href='deleteAction.jsp?boardID=<%=boardID%>'}"><span>삭제</span></button>
 			<%
 					}

@@ -183,19 +183,22 @@ BoardDTO board = new BoardDAO().getBoardVO(boardID);
 </header>
 <!-- header -->
 <!-- section -->
-<section>
-	
+<section>	
 		<div class="board-container">
 		<h3 style="font-weight: bold; color: #646464;"><%= userID %>님 안녕하세요</h3><br>
 			<div class="right-row">
 				<form method="post" action="updateAction.jsp?boardID=<%= boardID %>">
 					<div class="category-sel">
 					<select name="boardCategory">
+						<% if(board.getBoardCategory().equals("NOTICE")){ //공지사항 수정시 카테고리 변경 불가 %>
+						<option value="NOTICE">NOTICE</option>
+						<%}else{ %>
 						<option value="0">CATEGORY</option>
 						<option value="SPORTS" >SPORTS</option>
 						<option value="LEISURE" >LEISURE</option>
 						<option value="MUSIC" >MUSIC</option>
 						<option value="OTHER" >OTHER</option>
+						<%} %>
 					</select>
 					</div>
 					<table class="write-table" style="text-align: center; border: 1px solid #dddddd">
