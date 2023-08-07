@@ -136,8 +136,10 @@ ArrayList<MessageDTO> msglist = msgDAO.getMsgList(userID, groupID);
 		<i class="fa-regular fa-envelope" style="font-size: 30pt;"></i>
 		<%if(groupID > 0){ //groupID = 0이면 문의하기, 0이상이면 유저간의 메시지 주고받기를 의미한다.%>
 			<%=grDAO.getGroupVO(groupID).getGroupName()%>
-		<%}else{ %>
-			문의목록
+		<%}else if(!userID.equals("manager")){ %>
+			문의 답변
+		<%}else{%>
+			문의 목록
 		<%} %>
 		</h2>
 		</div><br>

@@ -356,7 +356,7 @@ span{
 				<%
 					}else{
 				%>				
-				<li><a onclick="qna()"><i class="fa-solid fa-circle-question"></i></a></li>
+				<li><a onclick="qna()" style="font-size: 15pt; cursor: pointer;"><i class="fa-solid fa-circle-question" style=""></i></a></li>
 				<li><a href="logout">LOGOUT</a></li>
 				<%
 					}
@@ -947,7 +947,7 @@ function viewMsg(msgID){
 function viewEvent(){
 	window.open("eventRafflePopUp","EVENT","width=500, height=550, top=50%, left=50%")
 }
-//문의하기 버튼 클릭시 메시지 전송 팝업 생성
+//문의하기 버튼 클릭시 메시지 전송 팝업에 qna=y 전달
 function qna(){
 	window.open("sendMsgPopUp?qna=y","QNA","width=500, height=550, top=50%, left=50%")
 }

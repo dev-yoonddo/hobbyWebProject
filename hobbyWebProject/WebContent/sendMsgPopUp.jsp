@@ -73,7 +73,7 @@ GroupDAO groupDAO = new GroupDAO();
 MessageDAO msgDAO = new MessageDAO();
 int msgID = 0;
 int groupID = 0;
-String qna = "";
+String qna = null;
 
 //groupView 페이지에서 받은 msgID와 groupID를 저장한다.
 if(request.getParameter("groupID") != null){
@@ -86,15 +86,15 @@ if(request.getParameter("qna") != null){
 	qna = request.getParameter("qna");
 }
 //메시지 전송하기, 답장하기에 따라 toUserID를 저장한다.
-String sendMsgToUser = "";
-String rcvMsgToUser = "";
-
-if(msgID == 0){
-	sendMsgToUser = groupDAO.getGroupVO(groupID).getUserID();
-}else{
-	rcvMsgToUser = msgDAO.getMsgVO(msgID).getUserID();
+String sendMsgToUser = null;
+String rcvMsgToUser = null;
+if(qna == null){
+	if(msgID == 0){
+		sendMsgToUser = groupDAO.getGroupVO(groupID).getUserID();
+	}else{
+		rcvMsgToUser = msgDAO.getMsgVO(msgID).getUserID();
+	}
 }
-
 %>
 <div id="sendMsg">
 	<% if((qna != null && qna.equals("y")) || sendMsgToUser.equals("manager") || rcvMsgToUser.equals("manager")) { //파라미터로 qna = y 이거나 toUserId = manager 이면 관리자에게 문의하기 %>
