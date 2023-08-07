@@ -115,14 +115,7 @@ int groupID = 0;
 if(request.getParameter("groupID") != null){
 	groupID = Integer.parseInt(request.getParameter("groupID"));
 }
-//유효하지 않은 그룹일때
-if(groupID == 0){
-	PrintWriter script = response.getWriter();
-	script.println("<script>");
-	script.println("alert('해당 그룹이 존재하지 않습니다.')");
-	script.println("location.href = 'groupPage'");
-	script.println("</script>");
-}
+
 GroupDAO grDAO = new GroupDAO();
 MessageDAO msgDAO = new MessageDAO();
 
@@ -141,7 +134,11 @@ ArrayList<MessageDTO> msglist = msgDAO.getMsgList(userID, groupID);
 		<div style="height: 50px; display: flex; justify-content: center; align-items: center;">
 		<h2 style="font-size: 25pt;">
 		<i class="fa-regular fa-envelope" style="font-size: 30pt;"></i>
-		<%=grDAO.getGroupVO(groupID).getGroupName()%>
+		<%if(groupID > 0){ //groupID = 0이면 문의하기, 0이상이면 유저간의 메시지 주고받기를 의미한다.%>
+			<%=grDAO.getGroupVO(groupID).getGroupName()%>
+		<%}else{ %>
+			문의목록
+		<%} %>
 		</h2>
 		</div><br>
 		</td>

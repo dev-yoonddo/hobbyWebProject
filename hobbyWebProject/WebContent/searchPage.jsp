@@ -113,6 +113,9 @@ th span{
 	text-decoration: underline;
 	color: #606060;
 }
+#click-view:visited{
+	color: purple;
+}
 /* 공지 */
 #notice-animated{
 	width: auto;
@@ -146,6 +149,9 @@ th span{
 #notice-option:hover{
 	font-weight: bold;
 	color:#606060;
+}
+#notice-option:visited{
+	color: purple;
 }
 /* 공지 애니메이션 */
 @keyframes marquee {

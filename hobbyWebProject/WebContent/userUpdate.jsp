@@ -29,12 +29,12 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
 <link href="https://fonts.googleapis.com/css?family=Teko:300,400,500,600,700&display=swap" rel="stylesheet">
 <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square.css" rel="stylesheet">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script defer src="option/jquery/jquery.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script type="text/javascript" src="js/script.js"></script>
 <script type="text/javascript" src="js/userdata.js"></script>
 <script type="text/javascript" src="js/checkPW.js"></script>
+<script src="https://kit.fontawesome.com/f95555e5d8.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 </head>
 <style>
@@ -107,6 +107,12 @@ td{
 	height: 20px;
 	border-bottom: solid 1px #C0C0C0;
 	text-align: left;
+}
+#click-view{
+	overflow:hidden;
+	white-space:nowrap;
+	text-overflow:ellipsis;
+	max-width:100px;
 }
 #click-view:hover{
 	text-decoration: underline;
@@ -316,7 +322,7 @@ span{
 	}
 	
 	//int userAccess = Integer.parseInt(request.getParameter("userAccess"));
-	 //하나의 그룹 정보 가져오기
+	 //하나의 유저 정보 가져오기
 	UserDTO user=new UserDAO().getUserVO(userID);
 %>
 <header>
@@ -349,7 +355,8 @@ span{
 				<li><a href="join">JOIN</a></li>
 				<%
 					}else{
-				%>
+				%>				
+				<li><a onclick="qna()"><i class="fa-solid fa-circle-question"></i></a></li>
 				<li><a href="logout">LOGOUT</a></li>
 				<%
 					}
@@ -714,11 +721,16 @@ span{
 						<!-- 받은 메시지가 1개 이상이면 -->
 						<% }else{ %>
 						<tbody>
-							<%
+							<%	String groupName = null;
 								for (int i = 0; i < msglist.size(); i++) {
 									// MsgVO()에서 groupID를 구한 뒤 각 메시지를 보낸 그룹이름을 구한다.
 									int groupID = msgDAO.getMsgVO(msglist.get(i).getMsgID()).getGroupID();
-									String groupName = groupDAO.getGroupVO(groupID).getGroupName();
+									//groupID = 0이면 문의하기, 0 이상이면 메시지 보내기
+									if(groupID > 0){
+										groupName = groupDAO.getGroupVO(groupID).getGroupName();
+									}else{
+										groupName = "문의하기";
+									}
 							%>
 							<tr class="showRcvMsg" style="height: 20px;">
 								<td><%=groupName%></td>
@@ -779,10 +791,16 @@ span{
 						<% }else{ %>
 						<tbody>
 							<%
+								String groupName = null;
 								for (int i = 0; i < sendmsglist.size(); i++) {
 									// MsgVO()에서 groupID를 구한 뒤 각 메시지를 보낸 그룹이름을 구한다.
 									int groupID = msgDAO.getMsgVO(sendmsglist.get(i).getMsgID()).getGroupID();
-									String groupName = groupDAO.getGroupVO(groupID).getGroupName();
+									//groupID = 0이면 문의하기, 0 이상이면 메시지 보내기
+									if(groupID > 0){
+										groupName = groupDAO.getGroupVO(groupID).getGroupName();
+									}else{
+										groupName = "문의하기";
+									}
 							%>
 							<tr class="showSendMsg" style="height: 20px;">
 								<td><%=groupName%></td>
@@ -790,9 +808,9 @@ span{
 								<td><a id="click-view" onclick="viewMsg('<%= sendmsglist.get(i).getMsgID()%>')"><%= sendmsglist.get(i).getMsgTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></a></td>
 								<!-- msgCheck == 0이면 안읽음, 1이면 읽음 표시하기 -->
 								<% if(sendmsglist.get(i).getMsgCheck() == 0){ %>
-								<td>NO</td>						
+									<td>NO</td>						
 								<% }else{ %>
-								<td>YES</td>						
+									<td>YES</td>						
 								<% } %>
 								<td><%=sendmsglist.get(i).getMsgDate().substring(0 ,11) + sendmsglist.get(i).getMsgDate().substring(11, 13) + "시" + sendmsglist.get(i).getMsgDate().substring(14, 16) + "분"%></td>
 							</tr>
@@ -839,7 +857,7 @@ span{
 	</div>
 	<% if(userID.equals("manager")){ %>
 			<div id="event" onclick="viewEvent()"><div>이벤트 관리 CLICK</div></div>
-		<%} %>
+	<%}%>
 </section>
 <script>
 //select box 클릭하면 접고 펼치기
@@ -924,11 +942,14 @@ function showPasswordPrompt(grID, grPW, grAvl) {
 //메시지 리스트에서 제목을 클릭하면 해당 메시지 상세보기 팝업이 열린다.
 function viewMsg(msgID){
    	window.open("viewMsg?msgID=" + msgID , "VIEW MESSAGE", "width=550, height=600, top=50%, left=50%");
-   	self.close();
 }
 //이벤트 응모 현황 관리 (manager 권한)
 function viewEvent(){
 	window.open("eventRafflePopUp","EVENT","width=500, height=550, top=50%, left=50%")
+}
+//문의하기 버튼 클릭시 메시지 전송 팝업 생성
+function qna(){
+	window.open("sendMsgPopUp?qna=y","QNA","width=500, height=550, top=50%, left=50%")
 }
 </script>
 </body>

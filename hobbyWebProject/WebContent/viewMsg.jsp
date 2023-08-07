@@ -104,8 +104,13 @@ if(result == -1){
 				<table id="view-table">
 					<tbody>
 						<tr height="20%" style="border-bottom: 1px solid #C0C0C0;">
-							<td class="td" style="width:30%;"><span>보낸사람</span></td>
-							<td><%=msg.getUserID().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></td>
+							<%if((msg.getUserID()).equals(userID)){ //보낸 메시지이면 받는사람 출력%>
+								<td class="td" style="width:30%;"><span>받는사람</span></td>
+								<td><%=msg.getToUserID().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></td>
+							<%}else{ //받은 메시지이면 보낸사람 출력%>
+								<td class="td" style="width:30%;"><span>보낸사람</span></td>
+								<td><%=msg.getUserID().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></td>
+							<%} %>
 						</tr>
 						<tr height="20%" style="border-bottom: 1px solid #C0C0C0;">
 							<td class="td"><span>제목</span></td>

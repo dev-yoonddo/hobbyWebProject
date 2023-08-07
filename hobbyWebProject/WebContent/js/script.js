@@ -249,34 +249,15 @@ for (var i = 0; i < optionList.length; i++) {
   option.addEventListener("click", onClickOption);
  }
 
-//접속하기 버튼을 클릭하면 id,password,available value, member, leader를 받는다
-function showPasswordPrompt(grID, grPW, grAvl) {
-    var inputPassword = "";
-    //그룹 활동중이면
-    if(grAvl == 1){
-   		//비밀번호가 일치하지 않으면 입력창 무한반복
-	    while (inputPassword != grPW) {
-	        inputPassword = prompt("비밀번호를 입력하세요");
-	        if(inputPassword == null){ //null은 취소버튼을 눌렀을 때를 의미한다. 아무것도 입력하지 않고 확인을 누르면 ""이다.
-	        	break;
-	        }
-	    }
-   		//비밀번호가 일치하면 접속
-	    if (inputPassword == grPW) {
-	        location.href = "groupView?groupID=" + grID;
-	    }
-	//그룹 비활동중
-    }else{
-    	alert("비활동 중인 그룹입니다.");
-    }
-
-}
-
 //메시지 리스트에서 제목을 클릭하면 해당 메시지 상세보기 팝업이 열린다.
 function viewMsg(msgID){
    	window.open("viewMsg?msgID=" + msgID , "VIEW MESSAGE", "width=550, height=600, top=50%, left=50%");
-   	self.close();
 }
+//문의하기 버튼 클릭시 관리자에게 메시지전송
+function qna(){
+	window.open("sendMsgPopUp?qna=yes","QNA","width=500, height=550, top=50%, left=50%")
+}
+
 //url 뒤 파라미터 안보이게하기
 $(document).ready(function() {
 	history.replaceState({}, null, location.pathname);  

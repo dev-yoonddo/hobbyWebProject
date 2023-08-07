@@ -1,15 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=IBM+Plex+Sans+KR:wght@400&family=Jua&&family=Merriweather:wght@700&family=Nanum+Gothic:wght@700&family=Nanum+Gothic+Coding:wght@400&family=Noto+Sans+KR:wght@300,400,500&family=Noto+Serif+KR:wght@200&display=swap');
 @import url('https://webfontworld.github.io/TheJamsil/TheJamsil.css');
 :root {
-	--text-color: #303030;
-	--background-color: #fcfcfc;
-	--accent-color: #303030;
-  --line-color: #c1c1c1;
-  --font-family:'NanumSquare';
-  --colorOne: white;
-  --colorTwo: #A4C3FF;
-  --color-mousea: #1d1d1d;
-  --color-mouseb: #fff;
+--text-color: #303030;
+--background-color: #fcfcfc;
+--accent-color: #303030;
+--line-color: #c1c1c1;
+--font-family:'NanumSquare';
+--colorOne: white;
+--colorTwo: #A4C3FF;
+--color-mousea: #1d1d1d;
+--color-mouseb: #fff;
 }
 
 /* cursor css */
@@ -84,7 +84,7 @@ header{
 	width: 100%;
 	height: auto;
 	position: fixed;
-	z-index: 300;	
+	z-index: 600;	
 }
 nav{
 	display: flex;
@@ -96,7 +96,10 @@ nav{
 a{	
 	text-decoration: none;
 	color: var(--text-color);
-	font-family: var(--font-family);	
+	font-family: var(--font-family);
+	width:100%;
+	line-height:50px;
+	display:inline-block;
 }
 
 section{
@@ -481,14 +484,6 @@ body {
   border-radius: 50px;
   cursor: pointer;
   padding: 5px;
-}
-
-a{
-  text-decoration:none;
-  color:inherit;
-  width:100%;
-  line-height:50px;
-  display:inline-block;
 }
 
 .arrowBtn {
