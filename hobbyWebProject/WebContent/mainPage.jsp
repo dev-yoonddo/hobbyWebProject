@@ -30,7 +30,6 @@
 }
 </style>
 <body>
-<header>
 <% 
 PrintWriter script = response.getWriter();
 String userID = null;
@@ -57,10 +56,9 @@ if(eventvo != null && eventvo.getEventWin() == 1 && eventvo.getEventAvailable() 
 	script.println("</script>");
 }
 %>
-<!-- header -->
-<jsp:include page="/header/header.jsp">
-	<!-- <jsp:param value="header" name="thisPage"/> 사용되는 페이지에 따라 파라미터에 header를 넘겨 다르게 사용할 수 있다. -->
-</jsp:include>
+<header>
+<!-- header : param 태그를 주석을 넣으면 오류가 생긴다.-->
+<jsp:include page="/header/header.jsp"></jsp:include>
 </header>
 <!-- header -->
 

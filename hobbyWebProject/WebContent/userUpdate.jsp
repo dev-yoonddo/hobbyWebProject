@@ -326,7 +326,7 @@ span{
 	UserDTO user=new UserDAO().getUserVO(userID);
 %>
 <header>
-<div id="header" class="de-active">
+<div id="header" class="de-active"> <!-- userUpdate페이지는 header의 구성이 다르기 때문에 따로 작성한다. -->
 	<nav class="navbar">
 		<nav class="navbar_left">
 			<div class="navbar_logo">
