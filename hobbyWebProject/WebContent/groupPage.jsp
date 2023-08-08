@@ -167,6 +167,9 @@ div > .info-a > a{
 	justify-content: center; 
 	align-items: center;
 }
+#disable > a{
+	color: white;
+}
 .info-b{
 	position: absolute;
 	bottom: 0;
@@ -301,7 +304,7 @@ if(userID == null){
 					<a>활동중</a>
 				</div>
 				<%}else{ %>
-				<div class="info-a" style="background-color: black; color: white;">
+				<div class="info-a" id="disable" style="background-color: black;">
 					<a>비활동중</a>
 				</div>
 				<%} %>

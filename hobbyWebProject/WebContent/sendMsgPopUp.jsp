@@ -86,8 +86,8 @@ if(request.getParameter("qna") != null){
 	qna = request.getParameter("qna");
 }
 //메시지 전송하기, 답장하기에 따라 toUserID를 저장한다.
-String sendMsgToUser = null;
-String rcvMsgToUser = null;
+String sendMsgToUser = "";
+String rcvMsgToUser = "";
 if(qna == null){
 	if(msgID == 0){
 		sendMsgToUser = groupDAO.getGroupVO(groupID).getUserID();
