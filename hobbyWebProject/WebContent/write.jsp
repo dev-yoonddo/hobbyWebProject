@@ -155,8 +155,7 @@ String bdcategory = request.getParameter("category");
 %>
 <!-- header start-->
 <header id="header">
-<jsp:include page="/header/header.jsp">
-</jsp:include>
+<jsp:include page="/header/header.jsp"/>
 </header>
 	<!-- header end-->
 	

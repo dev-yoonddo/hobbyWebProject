@@ -139,7 +139,7 @@ if(result == -1){
 			%>
 				<button type="button" class="btn-blue" onclick="viewMsgList('<%=msg.getGroupID()%>')"><span>목록</span></button>
 				<% 
-					if(!userID.equals(msg.getUserID())){
+					if(!userID.equals(msg.getUserID()) && (!msg.getUserID().equals("manager"))){ //관리자에게 온 메시지엔 답장 불가
 				%>
 					<button type="button" class="btn-blue" id="cmt-write-btn" onclick="writeReply('<%=msg.getMsgID()%>',<%=msg.getGroupID()%>)"><span>답장하기</span></button>
 				<%

@@ -58,7 +58,7 @@ if(eventvo != null && eventvo.getEventWin() == 1 && eventvo.getEventAvailable() 
 %>
 <header>
 <!-- header : param 태그를 주석을 넣으면 오류가 생긴다.-->
-<jsp:include page="/header/header.jsp"></jsp:include>
+<jsp:include page="/header/header.jsp"/>
 </header>
 <!-- header -->
 

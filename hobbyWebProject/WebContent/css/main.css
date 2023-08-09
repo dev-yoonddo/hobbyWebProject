@@ -133,7 +133,7 @@ section{
 
 }
 .navbar_logo{
-	font-size: 20px;
+	font-size: 23px;
 	color: var(--text-color);
 	padding-right: 10px;
 	
@@ -154,13 +154,13 @@ section{
 }
 
 .menu{
-	font-size: 15px;
+	font-size: 18px;
 }
 .navbar_login{
 	list-style: none;
 	display: flex;
 	float: right;
-	size: 15px;
+	font-size: 18px;
 	padding-left: 0;
 	background: none;
 }

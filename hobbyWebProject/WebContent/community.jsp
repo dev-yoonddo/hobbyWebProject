@@ -123,7 +123,7 @@ button{
 	UserDTO user=new UserDAO().getUserVO(userID);
 %>
 <header>
-<jsp:include page="/header/header.jsp"></jsp:include>
+<jsp:include page="/header/header.jsp"/>
 </header>
 <section>
 <!-- 기본적인 select box

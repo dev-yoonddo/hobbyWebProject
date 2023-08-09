@@ -116,7 +116,11 @@ if(qna == null){
 	   	<%}else{ //메시지 답장은 msgID와 groupID를 모두 받는다.%>
 	    <h2>To. <%=rcvMsgToUser%></h2>
 	    <form method="post" action="sendMsgAction.jsp?msgID=<%= msgID %>&groupID=<%=groupID%>" id="send-form">
-	        <input type="text" placeholder="제목을 입력하세요" name="msgTitle" id="msgTitle" maxlength="20">
+	    	<%if(userID.equals("manager")){ //manager가 유저에게 답장할 땐 제목에 기존 문의 제목을 넣는다.%>
+	        	<input type="text" placeholder="제목을 입력하세요" value="<%= msgDAO.getMsgVO(msgID).getMsgTitle() %> [답변]" name="msgTitle" id="msgTitle" maxlength="20">
+	        <%}else{%>
+	        	<input type="text" placeholder="제목을 입력하세요" name="msgTitle" id="msgTitle" maxlength="20">
+	        <%} %>
 	        <input type="text" placeholder="내용을 입력하세요" name="msgContent" id="msgContent" class="intro" maxlength="200">
 	        <button type="submit" class="btn-blue" id="sb"><span>답장 전송</span></button>
 	    </form>

@@ -139,8 +139,7 @@ BoardDTO board = new BoardDAO().getBoardVO(boardID);
 %>
 <!-- header -->
 <header id="header">
-<jsp:include page="/header/header.jsp">
-</jsp:include>
+<jsp:include page="/header/header.jsp"/>
 </header>
 <!-- header -->
 <!-- section -->

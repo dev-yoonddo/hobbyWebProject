@@ -195,8 +195,7 @@ ArrayList<MemberDTO> mblist = mbDAO.getList(groupID); //해당 그룹의 멤버�
 
 <!-- header -->
 <header id="header">
-<jsp:include page="/header/header.jsp">
-</jsp:include>
+<jsp:include page="/header/header.jsp"/>
 </header>
 <!-- header -->
 <section>

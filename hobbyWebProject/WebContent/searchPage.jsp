@@ -244,8 +244,7 @@ th span{
 	BoardDAO boardDAO = new BoardDAO();
 %>
 <header id="header">
-<jsp:include page="/header/header.jsp">
-</jsp:include>
+<jsp:include page="/header/header.jsp"/>
 </header>
 <section>
 	<div class="board-container">

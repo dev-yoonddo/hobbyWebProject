@@ -33,8 +33,7 @@ if(session.getAttribute("userID") != null){
 }
 %>
 <header id="header">
-<jsp:include page="/header/header.jsp">
-</jsp:include>
+<jsp:include page="/header/header.jsp"/>
 </header>
 <section>
  <div class="join-wrapper">
