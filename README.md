@@ -69,6 +69,8 @@
 
 ⚫ [회원정보](#--회원-정보-관리-)
 
+⚫ [문의하기](#--문의하기-)
+
 ⚫ [커뮤니티](#--커뮤니티-)
 
 ⚫ [그룹](#--그룹-)
@@ -450,6 +452,8 @@
 
 <img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/123e49c4-4b95-4432-b67f-5d32aef220cc.PNG">
 
+<br>
+
 <div style="display: flex;">
 <img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/d74efadb-09e4-4fa8-9072-a8aa27f56c7d.PNG" width="45%">
 <img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/de340b9d-2f56-4be9-81f1-3eeb2954f112.PNG" width="47%">
@@ -463,6 +467,80 @@
 <br>
 
 ![update9](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/d9f7aa12-d95f-4d4c-a24a-58fe9b10993c)
+
+<br><br>
+
+---
+
+<br><br>
+
+# - 문의하기 📍
+
+<br><br>
+
+## 🔘 1 ) 관리자에게 문의하기
+
+<br>
+
+![qna1](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/567cb5ef-a2bf-415b-a132-375be5e0b478)
+
+<br>
+
+### ⚙ 이모티콘 클릭시 관리자에게 전송되는 메시지 팝업 생성
+
+<div style="display: flex;">
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/a7a1cb0d-7375-43b4-a1ad-36177dcaa4a9" width="45%">
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/b2b50320-b7ef-46b1-a579-a54572e4170b" width="45%">
+</div>
+
+<br>
+
+### ⚙ 빈칸 유무 검사 후 메시지 전송
+
+<div style="display: flex;">
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/6789e36a-2cbb-45b0-98e6-0fd3e5c1ca95" width="45%">
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/f23ab7d2-5a3d-4fdc-af35-dd19da90b578" width="45%">
+</div>
+
+<br>
+
+### ⚙ 관리자 계정에서 확인 및 답변 가능
+
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/3f6c93d2-4276-42c2-8745-06e3796a1ac6" width="50%">
+
+<br>
+
+### ⚙ 메시지 관리와 같이 제목 클릭시 상세보기, 답장하기 클릭시 답장 가능
+
+<div style="display: flex;">
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/f747a8e8-e184-4ff5-9f36-111f966df236" width="45%">
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/e8316591-d619-406f-9444-4a6a169939bf" width="45%">
+</div>
+
+<br>
+
+### ⚙ 빈칸 유무 검사 후 메시지 전송
+
+<div style="display: flex;">
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/6789e36a-2cbb-45b0-98e6-0fd3e5c1ca95" width="45%">
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/6324c5a7-4e4f-4728-b2c9-7a2bba796532" width="45%">
+</div>
+
+<br>
+
+### ⚙ 관리자에게 온 답변에는 답장 불가
+
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/7a3f6e40-5e3f-4856-877e-c624716b5ecc" width="50%">
+
+<br>
+
+### ⚙ 문의하기 , 답변 완료시 DB
+
+![qna7](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/3d8f4ebd-0764-4897-bd36-f5bdbe7eea0f)
+
+<br><br>
+
+---
 
 <br><br>
 
