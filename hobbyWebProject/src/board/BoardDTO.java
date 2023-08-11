@@ -10,6 +10,9 @@ public class BoardDTO {
 	private String boardCategory;
 	private int viewCount;
 	private int heartCount;
+	private String filename;
+	private String fileRealname;
+	private int fileDownCount;
 	
 	public int getBoardID() {
 		return boardID;
@@ -64,6 +67,24 @@ public class BoardDTO {
 	}
 	public void setHeartCount(int heartCount) {
 		this.heartCount = heartCount;
+	}
+	public String getFilename() {
+		return filename;
+	}
+	public void setFilename(String filename) {
+		this.filename = filename;
+	}
+	public String getFileRealname() {
+		return fileRealname;
+	}
+	public void setFileRealname(String fileRealname) {
+		this.fileRealname = fileRealname;
+	}
+	public int getFileDownCount() {
+		return fileDownCount;
+	}
+	public void setFileDownCount(int fileDownCount) {
+		this.fileDownCount = fileDownCount;
 	}
 	
 

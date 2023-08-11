@@ -1,3 +1,4 @@
+<%@page import="java.net.URLEncoder"%>
 <%@page import="java.util.List"%>
 <%@page import="heart.HeartDTO"%>
 <%@page import="heart.HeartDAO"%>
@@ -154,7 +155,28 @@ table caption{
 	color: #323232;
 	background-color: #ffffff
 }
-
+#row2{
+	display: flex;
+}
+#fileList{
+	width: 45%;
+	height: 30px;
+	display: flex; 
+	justify-content: center; 
+	align-items: center; 
+	padding: 10px;
+	margin: 20px;
+	border-radius: 50px;
+	background-color: #CCE5FF;
+}
+#btnList{
+	width: 55%;
+	float: right;
+}
+#filename:hover{
+	font-weight: bold;
+	color: #606060;
+}
 @media screen and (max-width:650px) {
 	.board-container{
 		max-width:  400px;
@@ -184,7 +206,10 @@ table caption{
 		max-width: 400px;
 	}
 	#count{
-		padding: 8px 30px;
+		padding: 8px 20px;
+	}
+	#count span{
+		font-size:15pt;
 	}
 	.btn-blue{
 		margin: 7px;
@@ -200,6 +225,19 @@ table caption{
 	}
 	#list , #update, #btn-del, #cmt-cpl{
 		width: 60px;
+	}
+	#row2{
+		display: inline;
+	}
+	#fileList{
+		width: 380px;
+		padding: 10px;
+		margin: 0;
+		float:inherit;
+	}
+	#btnList{
+		width: 400px;
+		float:inherit;
 	}
 }
 </style>
@@ -228,6 +266,7 @@ if(boardID == 0){
 	script.println("</script>");
 }
 
+BoardDAO boardDAO = new BoardDAO();
 BoardDTO board = new BoardDAO().getBoardVO(boardID);
 HeartDTO heartvo = new HeartDAO().getHeartVO(boardID);
 
@@ -331,35 +370,55 @@ if((board.getBoardCategory()).equals("NOTICE")){
 						<td colspan="2"board.getHeartCount()t() %></td>
 					</tr> -->
 				</table>
-				
 			</div><br>
-			<%if(notice == true) { //공지사항은 카테고리가 NOTICE이기 때문에 경로를 community로 변경해준다. %>
-			<button type="button" id="list" class="btn-blue" onclick="location.href='community'"><span>목록</span></button>			
-			<%}else{ //모든 사용자에게 목록 버튼 노출%>
-			<button type="button" id="list" class="btn-blue" onclick="location.href= 'searchPage?searchField2=<%=board.getBoardCategory()%>'"><span>목록</span></button>
-			<%}
-				//로그인된 모든 유저에게 댓글쓰기 버튼 노출
-				if(userID != null){
-			%>
-					<button type="button" class="btn-blue" id="cmt-write-btn" onclick="cmtAction()"><span>댓글쓰기</span></button>
-			<%
-					//로그인되고 해당 글을 쓴 유저에게 수정,삭제 버튼 노출
-					if(userID.equals(board.getUserID())){
-			%>
-						<button type="button" class="btn-blue" id="update" onclick="location.href='update?boardID=<%=boardID%>'"><span>수정</span></button>
-						<button type="button" class="btn-blue" id="btn-del" onclick="if(confirm('정말로 삭제하시겠습니까?')){location.href='deleteAction.jsp?boardID=<%=boardID%>'}"><span>삭제</span></button>
-			<%
+			<div id="row2" >
+				<div id="fileList">
+					<span class="files">첨부 파일 :&nbsp;</span>
+					<%		
+					//	테이블에 저장된 업로드된 파일 정보를 얻어온다.
+					ArrayList<BoardDTO> files = boardDAO.getFileList(boardID);
+					if(files.size() > 0){
+						for (int i = 0; i < files.size(); i++) {
+							String filename = files.get(i).getFilename();
+							String fileRealname = files.get(i).getFileRealname();
+							int fileDownCount = files.get(i).getFileDownCount();
+					%>
+					<span class="files" id="filename" onclick="location.href='<%=request.getContextPath()%>/downloadAction?file=<%=URLEncoder.encode(filename, "UTF-8")%>&boardID=<%=boardID%>'" style="width: 300px; cursor: pointer;">
+						<%=filename%>(다운로드 <%=fileDownCount%>회)
+					</span>
+					<%
+						}
+					}else{
+					%>
+					<span class="files">첨부된 파일이 없습니다.</span>
+					<%
 					}
-					//해당 글을 작성하지 않았지만 관리자인 유저에게 삭제 버튼 노출
-					else if(userID.equals("manager")){
-			%>
-						<button type="button" class="btn-blue" id="btn-del" onclick="if(confirm('정말로 삭제하시겠습니까?')){location.href='deleteAction.jsp?boardID=<%=boardID%>'}"><span>삭제</span></button>
-			<%
+					%>
+				</div>
+				<div id="btnList">
+				<%if(notice == true) { //공지사항은 카테고리가 NOTICE이기 때문에 경로를 community로 변경해준다. %>
+					<button type="button" id="list" class="btn-blue" onclick="location.href='community'"><span>목록</span></button>			
+				<%}else{ //모든 사용자에게 목록 버튼 노출%>
+					<button type="button" id="list" class="btn-blue" onclick="location.href= 'searchPage?searchField2=<%=board.getBoardCategory()%>'"><span>목록</span></button>
+				<%} //로그인된 모든 유저에게 댓글쓰기 버튼 노출
+					if(userID != null){
+				%>
+						<button type="button" class="btn-blue" id="cmt-write-btn" onclick="cmtAction()"><span>댓글쓰기</span></button>
+				<% //로그인되고 해당 글을 쓴 유저에게 수정,삭제 버튼 노출
+						if(userID.equals(board.getUserID())){
+				%>
+							<button type="button" class="btn-blue" id="update" onclick="location.href='update?boardID=<%=boardID%>'"><span>수정</span></button>
+							<button type="button" class="btn-blue" id="btn-del" onclick="if(confirm('정말로 삭제하시겠습니까?')){location.href='deleteAction.jsp?boardID=<%=boardID%>'}"><span>삭제</span></button>
+				<%} //해당 글을 작성하지 않았지만 관리자인 유저에게 삭제 버튼 노출
+						else if(userID.equals("manager")){
+				%>
+							<button type="button" class="btn-blue" id="btn-del" onclick="if(confirm('정말로 삭제하시겠습니까?')){location.href='deleteAction.jsp?boardID=<%=boardID%>'}"><span>삭제</span></button>
+				<%		}
 					}
-				}
-			%>
+				%>
+				</div>
 			</div>
-			
+			</div>
 			<%
             	CommentDAO cmtDAO = new CommentDAO();
             	ArrayList<CommentDTO> cmtlist = cmtDAO.getList(boardID);

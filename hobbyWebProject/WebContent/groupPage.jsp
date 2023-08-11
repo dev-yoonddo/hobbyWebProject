@@ -221,7 +221,7 @@ if(userID == null){
 	PrintWriter script = response.getWriter();
 	script.println("<script>");
 	script.println("alert('로그인이 필요합니다.')");
-	script.println("window.open('loginPopUp', 'Login', 'width=500, height=550, top=50%, left=50%')");
+	script.println("window.open('loginPopUp', 'Login', 'width=450, height=500, top=50%, left=50%')");
 	script.println("</script>");
 }
 //if(userID==null) {
@@ -395,6 +395,8 @@ function joinGroup(groupID, groupAvailable, mbNum, grNum, member,memberDel) {
 //접속하기 버튼을 클릭하면 id,password,available value, member, leader를 받는다
 function showPasswordPrompt(grID, grPassword, grAvailable, member, leader) {
     var inputPassword = "";
+    var count = 0;
+    var searchPW = false;
  	 //그룹 활동중
     if(grAvailable == 1){
 		//그룹 생성자이면 비밀번호 입력 없이 접속
@@ -409,9 +411,18 @@ function showPasswordPrompt(grID, grPassword, grAvailable, member, leader) {
 	    	}else{
 	    		//비밀번호가 일치하지 않으면 입력창 무한반복
 			    while (inputPassword != grPassword) {
+			    	count++;
 			        inputPassword = prompt("비밀번호를 입력하세요");
 			        if(inputPassword == null){ //null은 취소버튼을 눌렀을 때를 의미한다. 아무것도 입력하지 않고 확인을 누르면 ""이다.
 			        	break;
+			        }
+			        if(count == 5){ //비밀번호가 5회 오류이면 비밀번호 찾기 창 띄우기
+		    			searchPW = confirm("비밀번호 5회 오류입니다. 비밀번호 찾기를 하시겠습니까?");
+		    			if(searchPW){ //확인 클릭시 비밀번호 찾기 팝업
+		    	          	window.open("findPwPopUp" , "findPassword", "width=450, height=500, top=50%, left=50%") ;
+		    			}else{ //취소
+		    				break;
+		    			}
 			        }
 			    }
 	    		//비밀번호가 일치하면 접속

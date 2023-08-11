@@ -12,6 +12,8 @@ import java.util.List;
 
 import comment.CommentDAO;
 import comment.CommentDTO;
+import file.FileDAO;
+import file.FileDTO;
 
 public class BoardDAO {
 	private Connection conn; //자바와 데이터베이스 연결
@@ -76,22 +78,36 @@ public class BoardDAO {
 	    return -1;
 	}
 	//글 작성하기
-	public int write(String boardTitle, String userID, String boardContent, String boardCategory, int viewCount, int heartCount) {
-		String SQL = "INSERT INTO board VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	public int write(String boardTitle, String userID, String boardContent, String boardCategory, String filename, String fileRealname) {
+		String SQL = "INSERT INTO board VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
-			pstmt.setInt(1, getNext());
+			int boardID;
+			pstmt.setInt(1, boardID = getNext()); //board테이블에 저장된 boardID를 file테이블에도 저장하기 위해 변수에 저장한다.
 			pstmt.setString(2, boardTitle);
 			pstmt.setString(3, userID);
 			pstmt.setString(4, getDate());
 			pstmt.setString(5, boardContent);
 			pstmt.setInt(6, 1);
 			pstmt.setString(7, boardCategory);
-			pstmt.setInt(8, viewCount);
-			pstmt.setInt(9, heartCount);
-
-			//성공적으로 수행했다면 0이상의 결과 반환
-			return pstmt.executeUpdate();
+			pstmt.setInt(8, 0);
+			pstmt.setInt(9, 0);
+			pstmt.setString(10, filename);
+			pstmt.setString(11, fileRealname);
+			pstmt.setInt(12, 0);
+			int result = pstmt.executeUpdate();
+			//성공적으로 수행되고 첨부파일이 존재하면 file테이블에도 데이터를 넣어준다.
+			if(result >= 0 & filename != null){
+				// BoardDTO bdDTO = new BoardDTO();
+				FileDAO fileDAO = new FileDAO();
+				int ok = fileDAO.upload2(boardID, filename, fileRealname);
+				if(ok > 0) {//fileDAO의 upload2()메서드가 정상적으로 실행되면
+					return result; //result값 반환
+				}
+			}else {
+				//성공적으로 수행했다면 0이상의 결과 반환
+				return result;
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -150,7 +166,35 @@ public class BoardDAO {
 		return list; 
 	}
 	
-	
+	//해당 글의 파일 전체 목록 출력 (삭제된 글, LIMIT 제외)
+	public ArrayList<BoardDTO> getFileList(int boardID){
+		String SQL = "SELECT * FROM board WHERE boardID = ? AND boardAvailable = 1 AND filename IS NOT NULL";
+		ArrayList<BoardDTO> list = new ArrayList<BoardDTO>();
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt.setInt(1, boardID);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				BoardDTO board = new BoardDTO();
+				board.setBoardID(rs.getInt(1));
+				board.setBoardTitle(rs.getString(2));
+				board.setUserID(rs.getString(3));
+				board.setBoardDate(rs.getString(4));
+				board.setBoardContent(rs.getString(5));
+				board.setBoardAvailable(rs.getInt(6));
+				board.setBoardCategory(rs.getString(7));
+				board.setViewCount(rs.getInt(8));
+				board.setHeartCount(rs.getInt(9));
+				board.setFilename(rs.getString(10));
+				board.setFileRealname(rs.getString(11));
+				board.setFileDownCount(rs.getInt(12));
+				list.add(board);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list; 
+	}
 	/*public int countBoardByCategory(String boardCategory) {
 	    int count = 0;
 	    try {
@@ -307,6 +351,19 @@ public class BoardDAO {
 			e.printStackTrace();
 		}
 		return -1;//데이터베이스 오류
+	}
+	//	파일 다운로드가 완료되면 다운로드 횟수를 1증가시키는 메소드
+	public int download(int boardID, String filename) {
+		try {
+			String SQL = "UPDATE board SET fileDownCount = fileDownCount + 1 WHERE boardID = ? AND filename = ?";
+			PreparedStatement pstmt = conn.prepareStatement(SQL);			
+			pstmt.setInt(1, boardID);
+			pstmt.setString(2, filename);
+			return pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return -1;
 	}
 	//관리자 공지사항 리스트 가져오기
 	public ArrayList<BoardDTO> getNotice(){

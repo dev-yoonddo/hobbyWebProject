@@ -164,7 +164,7 @@ String bdcategory = request.getParameter("category");
 	<div class="board-container">
 	<h3 style="font-weight: bold; color: #646464;"><%= userID %>님 안녕하세요</h3><br>
 		<div class="right-row">
-			<form method="post" action="writeAction.jsp" >
+			<form method="post" action="writeAction2.jsp" enctype="multipart/form-data">
 				<div class="category-sel" style="display: flex;">
 				<select name="boardCategory">
 					<option value="0">CATEGORY</option>
@@ -173,16 +173,16 @@ String bdcategory = request.getParameter("category");
 					<option value="MUSIC" >MUSIC</option>
 					<option value="OTHER" >OTHER</option>
 				</select>
-				<!-- 관리자 계정으로 공지사항 체크박스 체크시 notice를 값으로 넘긴다. -->
-				<% if(userID.equals("manager")){%>
 				<div class="form-check" style="display: flex; height: 40px; align-items: center;">
 					<input type="checkbox" hidden="hidden" name="notice" value="NULL" checked="checked">
+				<!-- 관리자 계정으로 공지사항 체크박스 체크시 value값을 NOTICE로 넘긴다. -->
+				<% if(userID.equals("manager")){%>
 					<input class="form-check-input" type="checkbox" name="notice" value="NOTICE" id="flexCheckDefault">
 					<label class="form-check-label" for="flexCheckDefault">
 					  공지사항
 					</label>
-				</div>
 				<%} %>
+				</div>
 				</div>
 				<table class="write-table" style="text-align: center; border: 1px solid #dddddd">
 					<thead>
@@ -199,6 +199,7 @@ String bdcategory = request.getParameter("category");
 						</tr>
 					</tbody>
 				</table>
+				파일첨부 : <input type="file" name="fileupload">
 				<button type="submit" class="btn-blue" value="글쓰기"><span>작성하기</span></button>
 			</form>		
 		</div>

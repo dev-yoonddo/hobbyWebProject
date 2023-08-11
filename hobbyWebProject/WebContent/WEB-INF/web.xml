@@ -203,4 +203,12 @@
     <servlet-name>logout.jsp</servlet-name>
     <url-pattern>/logout</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>findPwPopUp.jsp</servlet-name>
+    <jsp-file>/findPwPopUp.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>findPwPopUp.jsp</servlet-name>
+    <url-pattern>/findPwPopUp</url-pattern>
+  </servlet-mapping>
 </web-app>
