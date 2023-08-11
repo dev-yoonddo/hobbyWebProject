@@ -682,7 +682,32 @@
 
 <br><br>
 
-## 🔘 3 ) 댓글 작성
+## 🔘 3 ) 공지사항
+
+<br><br>
+
+### ⚙ 관리자 계정으로 공지사항 체크박스 체크 후 글 작성시 공지사항으로 등록
+
+<br>
+
+<div style="display: flex;">
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/d5ea109d-dd7d-4c0c-8ef7-7db1589e757e" width="45%">
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/325d8229-a3db-4205-bbde-a52c2786369a" width="45%">
+</div>
+
+<br>
+
+### ⚙ 공지사항은 모든 카테고리 검색 결과에 노출
+
+<br>
+
+![notice3](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/7cc07ddb-162d-4167-96c4-e486d3373148)
+
+---
+
+<br><br>
+
+## 🔘 4 ) 댓글 작성
 
 <br><br>
 
@@ -741,7 +766,7 @@
 
 <br><br>
 
-## 🔘 4 ) 커뮤니티 글 수정
+## 🔘 5 ) 커뮤니티 글 수정
 
 <br><br>
 
