@@ -78,11 +78,11 @@ font-size: 12pt;
 	position: relative;
 	display: inline-block;
 	width: 90px;
-	height: 70px;
+	height: 50px;
 	background-color: transparent;
 	border: none; 
 	cursor: pointer;
-	margin: 10px;
+	margin: 0;
 	float: right;
 }
 
@@ -110,7 +110,20 @@ font-size: 12pt;
   color: #7D95E5;
   background-color: #ffffff
 }
-
+#write-bottom{
+	display: flex;
+	height: 40px;
+	padding: 20px;
+}
+#file{
+	width: 60%;
+	border-radius: 50px;
+	background-color: #CCE5FF;
+	padding: 10px 25px;
+}
+#btn{
+	width: 40%;
+}
 @media screen and (max-width:900px) {
 	.board-container , .write-table , form, textarea, table, tbody, tr, th, td{
 		max-width: 650px;
@@ -133,6 +146,18 @@ font-size: 12pt;
 	}
 	.btn-blue{
 		width: 100px;
+	}
+	#write-bottom{
+		display: inline;
+		padding-top: 10px;
+	}
+	#file{
+		width: 330px;
+	}
+	#btn{
+		width: 350px;
+		float:right;
+		margin-top: 10px;
 	}
 }
 </style>
@@ -164,7 +189,7 @@ String bdcategory = request.getParameter("category");
 	<div class="board-container">
 	<h3 style="font-weight: bold; color: #646464;"><%= userID %>님 안녕하세요</h3><br>
 		<div class="right-row">
-			<form method="post" action="writeAction2.jsp" enctype="multipart/form-data">
+			<form method="post" action="writeAction.jsp" enctype="multipart/form-data">
 				<div class="category-sel" style="display: flex;">
 				<select name="boardCategory">
 					<option value="0">CATEGORY</option>
@@ -199,8 +224,10 @@ String bdcategory = request.getParameter("category");
 						</tr>
 					</tbody>
 				</table>
-				파일첨부 : <input type="file" name="fileupload">
-				<button type="submit" class="btn-blue" value="글쓰기"><span>작성하기</span></button>
+				<div id="write-bottom">
+				<div id="file">파일첨부 : <input type="file" name="fileupload" value=""></div>
+				<div id="btn"><button type="submit" class="btn-blue" value="글쓰기"><span>작성하기</span></button></div>
+				</div>
 			</form>		
 		</div>
 	</div>

@@ -89,6 +89,60 @@ textarea{
 	resize: none;
 	padding: 10px;
 }
+.btn-blue{
+	position: relative;
+	display: inline-block;
+	width: 90px;
+	height: 50px;
+	background-color: transparent;
+	border: none; 
+	cursor: pointer;
+	margin: 0;
+	float: right;
+}
+
+.btn-blue span {         
+  position: relative;
+  display: inline-block;
+  font-size: 12pt;
+  font-weight: bold;
+  letter-spacing: 2px;
+  border-radius: 20px;
+  width: 100%;
+  padding: 10px;
+  transition: 0.5s; 
+  color: #ffffff;
+  background-color: #7D95E5;
+  border: 1px solid #7D95E5;
+  font-family: 'Nanum Gothic Coding', monospace;
+}
+
+.btn-blue::before {
+  background-color: #7D95E5;
+}
+
+.btn-blue span:hover {
+  color: #7D95E5;
+  background-color: #ffffff
+}
+#write-bottom{
+	display: flex;
+	height: 40px;
+	padding: 20px;
+}
+#file{
+	width: 65%;
+	border-radius: 50px;
+	background-color: #CCE5FF;
+	padding: 10px 25px;
+}
+#btn{
+	width: 35%;
+}
+b{
+	font-weight: bold;
+	color: #606060;
+}
 @media screen and (max-width:900px) {
 	.board-container , .write-table , form, textarea, table, tbody, tr, th, td{
 		max-width: 650px;
@@ -111,6 +165,18 @@ textarea{
 	}
 	.btn-blue{
 		width: 100px;
+	}
+	#write-bottom{
+		display: inline;
+		padding-top: 10px;
+	}
+	#file{
+		width: 330px;
+	}
+	#btn{
+		width: 350px;
+		float:right;
+		margin-top: 10px;
 	}
 }
 </style>
@@ -147,8 +213,9 @@ BoardDTO board = new BoardDAO().getBoardVO(boardID);
 		<div class="board-container">
 		<h3 style="font-weight: bold; color: #646464;"><%= userID %>님 안녕하세요</h3><br>
 			<div class="right-row">
-				<form method="post" action="updateAction.jsp?boardID=<%= boardID %>">
+				<form method="post" action="updateAction.jsp" enctype="multipart/form-data">
 					<div class="category-sel">
+					<input type="text" name="boardID" value="<%=boardID%>" hidden="hidden"/>
 					<select name="boardCategory">
 						<% if(board.getBoardCategory().equals("NOTICE")){ //공지사항 수정시 카테고리 변경 불가 %>
 						<option value="NOTICE">NOTICE</option>
@@ -176,7 +243,15 @@ BoardDTO board = new BoardDAO().getBoardVO(boardID);
 							</tr>
 						</tbody>
 					</table>
-					<button type="submit" class="btn-blue" value="글쓰기"><span>수정하기</span></button>
+					<div id="write-bottom">
+					<%
+					if(board.getFilename() != null){ %>
+					<div id="file"><b>기존 첨부 파일</b> :&nbsp; <%=board.getFilename()%> ┃ <b>첨부 파일 변경</b> :&nbsp; <input type="file" name="fileupload" value=""></div>
+					<%}else{ %>
+					<div id="file">파일첨부 : <input type="file" name="fileupload" value=""></div>
+					<%} %>
+					<div id="btn"><button type="submit" class="btn-blue" value="글쓰기"><span>수정하기</span></button></div>
+					</div>
 				</form>
 			</div>
 		</div>

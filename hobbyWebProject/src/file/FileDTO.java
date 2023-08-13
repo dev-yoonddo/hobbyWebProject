@@ -17,8 +17,8 @@ public class FileDTO {
 	public int getFileidx() {
 		return fileidx;
 	}
-	public void setFileidx(int idx) {
-		this.fileidx = idx;
+	public void setFileidx(int fileidx) {
+		this.fileidx = fileidx;
 	}
 	public int getBoardID() {
 		return boardID;

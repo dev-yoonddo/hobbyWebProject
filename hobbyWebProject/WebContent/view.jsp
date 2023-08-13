@@ -383,9 +383,9 @@ if((board.getBoardCategory()).equals("NOTICE")){
 							String fileRealname = files.get(i).getFileRealname();
 							int fileDownCount = files.get(i).getFileDownCount();
 					%>
-					<span class="files" id="filename" onclick="location.href='<%=request.getContextPath()%>/downloadAction?file=<%=URLEncoder.encode(filename, "UTF-8")%>&boardID=<%=boardID%>'" style="width: 300px; cursor: pointer;">
+					<a class="files" id="filename" href="<%=request.getContextPath()%>/downloadAction?file=<%=URLEncoder.encode(filename, "UTF-8")%>&boardID=<%=boardID%>" style="width: 300px; cursor: pointer;">
 						<%=filename%>(다운로드 <%=fileDownCount%>회)
-					</span>
+					</a>
 					<%
 						}
 					}else{
