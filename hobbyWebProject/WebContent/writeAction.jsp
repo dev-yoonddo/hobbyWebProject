@@ -38,7 +38,9 @@
 			script.println("window.open('loginPopUp', 'Login', 'width=500, height=550, top=50%, left=50%')");
 			script.println("</script>");
 		}else{
-			String path = "C:/gookbiProject/JSP/workspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp2/wtpwebapps/hobbyWebProject/fileupload/";
+			//String path = "C:/gookbiProject/JSP/workspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp2/wtpwebapps/hobbyWebProject/fileupload/";
+			String path = application.getRealPath("/fileupload/");
+			//System.out.print(path); -> jsp에서 파일 업로드 했을 때와 배포 후 파일 업로드 했을때의 경로가 다름.
 			MultipartRequest multi = new MultipartRequest(
 				request,
 				path,
@@ -78,7 +80,7 @@
 					script.println("history.back()");
 					script.println("</script>");				
 				}
-				if (!filename.endsWith(".jar") && !filename.endsWith(".zip") && !filename.endsWith(".pdf") && !filename.endsWith(".jpg") && !filename.endsWith(".png")) {
+				if (!filename.endsWith(".jar") && !filename.endsWith(".JAR") && !filename.endsWith(".zip") && !filename.endsWith(".ZIP") && !filename.endsWith(".pdf") && !filename.endsWith(".PDF") && !filename.endsWith(".jpg") && !filename.endsWith(".JPG") && !filename.endsWith(".png") && !filename.endsWith(".PNG")) {
 					PrintWriter script = response.getWriter();
 					script.println("<script>");
 					script.println("alert('" + filename +  "은(는) 업로드 할 수 없는 형식의 파일입니다.\\njar, zip, pdf, jpg, png파일만 업로드가 가능합니다.')");

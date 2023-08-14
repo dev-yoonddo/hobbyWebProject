@@ -211,4 +211,12 @@
     <servlet-name>findPwPopUp.jsp</servlet-name>
     <url-pattern>/findPwPopUp</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>downloadAction</servlet-name>
+    <servlet-class>file.downloadAction</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>downloadAction</servlet-name>
+    <url-pattern>/downloadAction/</url-pattern>
+  </servlet-mapping>
 </web-app>

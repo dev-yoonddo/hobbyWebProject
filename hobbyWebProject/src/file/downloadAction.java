@@ -1,20 +1,19 @@
 package file;
 
 import java.io.File;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
-import javax.servlet.ServletRequest;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import board.BoardDAO;
-import sun.security.jca.GetInstance;
 
 @WebServlet("/downloadAction")
 public class downloadAction extends HttpServlet {
@@ -39,7 +38,11 @@ public class downloadAction extends HttpServlet {
 		int boardID = Integer.parseInt(request.getParameter("boardID"));
 		String filename = request.getParameter("file");
 //		다운로드 할 파일이 저장된 실제 물리적 디렉토리 경로를 다운로드 할 파일 이름과 연결한다.
-		String uploadDirectory = "C:/gookbiProject/JSP/workspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp2/wtpwebapps/hobbyWebProject/fileupload/" + filename;
+		//String uploadDirectory = "C:/gookbiProject/JSP/workspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp2/wtpwebapps/hobbyWebProject/fileupload/" + filename;
+		//String uploadDirectory = request.getContextPath() + "/fileupload/";
+		//String uploadDirectory = application.getRealPath("/fileupload/"); //ServletContext에도 있기때문에 deprecated된다.
+		String uploadDirectory =  request.getSession().getServletContext().getRealPath("/fileupload/" + filename);
+		//String uploadDirectory = request.getParameter("path");
 		File file = new File(uploadDirectory);
 
 		String mimeType = getServletContext().getMimeType(file.toString());

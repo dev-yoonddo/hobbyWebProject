@@ -13,8 +13,10 @@
 <%@ page import="board.BoardDAO" %>
 <%@ page import="java.io.File" %>
 <%@ page import="java.util.Enumeration" %>
-
-
+<%@ page import= "file.downloadAction" %>
+<%
+	request.setCharacterEncoding("UTF-8");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -382,10 +384,17 @@ if((board.getBoardCategory()).equals("NOTICE")){
 							String filename = files.get(i).getFilename();
 							String fileRealname = files.get(i).getFileRealname();
 							int fileDownCount = files.get(i).getFileDownCount();
+							//String path = application.getRealPath("/fileupload/");
 					%>
-					<a class="files" id="filename" href="<%=request.getContextPath()%>/downloadAction?file=<%=URLEncoder.encode(filename, "UTF-8")%>&boardID=<%=boardID%>" style="width: 300px; cursor: pointer;">
-						<%=filename%>(다운로드 <%=fileDownCount%>회)
-					</a>
+					<form id="download_form" action="<%=request.getContextPath()%>/downloadAction" method="get">
+					<!-- 텍스트 클릭시 다운로드를 하기 위해 onclick으로 submit기능을 대신한다. -->
+						<div class="files" id="filename" onclick="submit()" style="width: 300px; cursor: pointer;"> 
+							<%=filename%>(다운로드 <%=fileDownCount%>회)
+							<input hidden="hidden" name="file" value="<%=URLEncoder.encode(filename, "UTF-8")%>">
+							<input hidden="hidden" name="boardID" value="<%=boardID%>">
+							<input><%=application.getRealPath("/fileupload/")%>
+						</div>
+					</form>
 					<%
 						}
 					}else{
@@ -502,6 +511,12 @@ $(function(){
 function cmtAction(){
 	document.getElementById('cmt-write').style.display = 'block';
 	document.getElementById('cmt-write-btn').style.display = 'none';
+}
+
+//파일 다운로드 submit
+function submit(){
+	let form = document.getElementById("download_form"); //form sumbit을 위해 form id를 가져온다.
+    form.submit();
 }
 </script>
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
