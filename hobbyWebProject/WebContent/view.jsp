@@ -392,7 +392,6 @@ if((board.getBoardCategory()).equals("NOTICE")){
 							<%=filename%>(다운로드 <%=fileDownCount%>회)
 							<input hidden="hidden" name="file" value="<%=URLEncoder.encode(filename, "UTF-8")%>">
 							<input hidden="hidden" name="boardID" value="<%=boardID%>">
-							<input><%=application.getRealPath("/fileupload/")%>
 						</div>
 					</form>
 					<%

@@ -38,8 +38,19 @@
 			script.println("window.open('loginPopUp', 'Login', 'width=500, height=550, top=50%, left=50%')");
 			script.println("</script>");
 		}else{
+			//getRealPath를 사용해 각 경로에 저장해도 되지만 배포서버에서는 프로젝트 내부 파일에 저장하면 업데이트시 파일들이 삭제되기 때문에
+			//방지하기 위해 (.../hobbyWebProject/fileupload)경로를 삭제하고 FileZilla에서 외부에 경로를 따로 생성한다.
+			String path = null;
+			String jspPath = application.getRealPath("/fileupload/");
+			String awsPath = "/home/tomcat/apache-tomcat-8.5.88/webapps/fileupload/";
+			if(jspPath.startsWith("C")){ //경로가 C로 시작하면 JSP에서 파일 업로드를 의미하기 때문에
+				path = jspPath; //path에 JSP경로를 저장하고
+			}else{ //경로가 C로 시작하지 않으면 배포 프로젝트에서 파일 업로드를 의미하기 때문에
+				path = awsPath; //tomcat 경로를 저장한다.
+			}
 			//String path = "C:/gookbiProject/JSP/workspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp2/wtpwebapps/hobbyWebProject/fileupload/";
-			String path = application.getRealPath("/fileupload/");
+			//String path="/home/tomcat/apache-tomcat-8.5.88/webapps/fileupload/"; //프로젝트 외부에 폴더를 만들어 이곳에 저장한다.
+			//String path = application.getRealPath("/fileupload/"); ->fileupload폴더가 위치한 경로를 찾는다.
 			//System.out.print(path); -> jsp에서 파일 업로드 했을 때와 배포 후 파일 업로드 했을때의 경로가 다름.
 			MultipartRequest multi = new MultipartRequest(
 				request,
