@@ -116,10 +116,27 @@ font-size: 12pt;
 	padding: 20px;
 }
 #file{
+	display: flex;
 	width: 65%;
 	border-radius: 50px;
 	background-color: #CCE5FF;
-	padding: 15px 25px;
+	padding: 10px 25px;
+	align-items: center;
+}
+#file > input{
+	font-size: 11pt;
+}
+#fileupload{
+	visibility: hidden;
+}
+#click{
+	height: 25px;
+	background-color: #7D95E5;
+	color: white;
+	border-radius: 5px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 #btn{
 	width: 35%;
@@ -225,8 +242,16 @@ String bdcategory = request.getParameter("category");
 					</tbody>
 				</table>
 				<div id="write-bottom">
-				<div id="file">파일첨부 : <input type="file" name="fileupload"></div>
-				<div id="btn"><button type="submit" class="btn-blue" value="글쓰기"><span>작성하기</span></button></div>
+					<div id="file">파일첨부 :&nbsp;&nbsp;
+						<label for="fileupload" id="click" class="btn-blue">click !</label>&nbsp;&nbsp;
+						<div id="filename"></div>
+						<input type="file" id="fileupload" name="fileupload" accept="image/*" onchange="filename(this)" >
+					</div>
+					<div id="btn">
+						<button type="submit" class="btn-blue" value="글쓰기">
+						<span>작성하기</span>
+						</button>
+					</div>
 				</div>
 			</form>		
 		</div>
@@ -258,6 +283,14 @@ for (let i = 0; i < selectBox.options.length; i++) {
     selectBox.options[i].setAttribute('selected', 'selected');
     break;
   }
+}
+
+function filename(input){
+	var file = input.files[0];	//선택된 파일 가져오기
+
+    //미리 만들어 놓은 div에 text(파일 이름) 추가
+    var name = document.getElementById('filename');
+    name.textContent = file.name;
 }
 </script>
 	<!-- 부트스트랩 참조 영역 -->

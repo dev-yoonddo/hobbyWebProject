@@ -174,6 +174,15 @@ table caption{
 #btnList{
 	width: 55%;
 	float: right;
+}#file_form{
+	display: flex;
+}
+#filename{
+/*파일이름이 길면 ...으로 생략*/
+	overflow:hidden;
+	white-space:nowrap;
+	text-overflow:ellipsis;
+	max-width:180px;
 }
 #filename:hover{
 	font-weight: bold;
@@ -389,8 +398,8 @@ if((board.getBoardCategory()).equals("NOTICE")){
 					<!-- form태그로 전송하는 방법 -->
 					<form id="download_form" action="<%=request.getContextPath()%>/downloadAction" method="get">
 					<!-- 텍스트 클릭시 다운로드를 하기 위해 onclick으로 javascript를 이용해 submit기능을 대신한다. -->
-						<div class="files" id="filename" onclick="submit()" style="width: 300px; cursor: pointer;"> 
-							<%=filename%>(다운로드 <%=fileDownCount%>회)
+						<div class="files" id="file_form" onclick="submit()" style="width: 300px; cursor: pointer;"> 
+							<div id="filename"><%=filename%></div>(다운로드 <%=fileDownCount%>회)
 							<input hidden="hidden" name="file" value="<%=URLEncoder.encode(filename, "UTF-8")%>">
 							<input hidden="hidden" name="boardID" value="<%=boardID%>">
 						</div>

@@ -130,26 +130,55 @@ textarea{
 	height: 50px;
 	padding: 20px;
 }
-#file{
+#file , #file2{
 	display: flex;
 	width: 70%;
 	border-radius: 50px;
 	background-color: #CCE5FF;
 	padding: 15px 25px;
+	align-items: center;
 }
 #btn{
 	width: 30%;
 }
-#file > span{
-	font-weight: bold;
+#file, #file2 > span{
 	color: #606060;
 }
+#file, #file2 > input{
+	font-size: 11pt;
+}
 #beforeFile{
-	width: 30%;
+	width: 35%;
+	/*파일이름이 길면 ...으로 생략*/
+	overflow:hidden;
+	white-space:nowrap;
+	text-overflow:ellipsis;
+	max-width:220px;
 }
 #afterFile{
 	display: flex;
-	width: 70%;	
+	align-items: center;
+	width: 65%;
+}
+#fileupload{
+	width: 10px;
+	visibility: hidden;
+}
+#filename{
+	/*파일이름이 길면 ...으로 생략*/
+	overflow:hidden;
+	white-space:nowrap;
+	text-overflow:ellipsis;
+	max-width:200px;
+}
+#click{
+	height: 25px;
+	background-color: #7D95E5;
+	color: white;
+	border-radius: 5px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 @media screen and (max-width:900px) {
 	.board-container , .write-table , form, textarea, table, tbody, tr, th, td{
@@ -168,6 +197,9 @@ textarea{
 	#afterFile{
 		display: flex;
 		width: 65%;	
+	}
+	#filename{
+		max-width:100px;
 	}
 	#btn{
 		width: 17%;
@@ -198,6 +230,10 @@ textarea{
 		display: block;
 		width: 330px;
 	}
+	#file2{
+		display: flex;
+		width: 330px;
+	}
 	#beforeFile{
 		width: 330px;
 	}
@@ -206,8 +242,11 @@ textarea{
 		margin: 0;
 		margin-top: 5px;
 	}
-	#afterFile > input{
-		width: 220px;
+	#file2 > #filename{
+		max-width: 200px;
+	}
+	#click{
+		width: 70px;
 	}
 	#btn{
 		width: 350px;
@@ -282,11 +321,21 @@ BoardDTO board = new BoardDAO().getBoardVO(boardID);
 					<div id="write-bottom">
 					<%
 					if(board.getFilename() != null){ %>
-					<div id="file"><span id="beforeFile">기존 파일 : <%=board.getFilename()%></span><span id="afterFile">┃ 파일 변경 : &nbsp;<input type="file" name="fileupload"></span></div>
+						<div id="file">
+							<span id="beforeFile">기존 파일 : <%=board.getFilename()%></span>
+							<span id="afterFile">┃ 파일첨부 :&nbsp;&nbsp;
+							<label for="fileupload" id="click" class="btn-blue">click !</label>&nbsp;&nbsp;
+							<div id="filename"></div>
+							<input type="file" id="fileupload" name="fileupload" accept="image/*" onchange="filename(this)" ></span>
+						</div>
 					<%}else{ %>
-					<div id="file">파일첨부 : <input type="file" name="fileupload"></div>
+						<div id="file2">파일첨부 :&nbsp;&nbsp;
+							<label for="fileupload" id="click" class="btn-blue">click !</label>&nbsp;&nbsp;
+							<div id="filename"></div>
+							<input type="file" id="fileupload" name="fileupload" accept="image/*" onchange="filename(this)" >
+						</div>
 					<%} %>
-					<div id="btn"><button type="submit" class="btn-blue" value="글쓰기"><span>수정하기</span></button></div>
+						<div id="btn"><button type="submit" class="btn-blue" value="글쓰기"><span>수정하기</span></button></div>
 					</div>
 				</form>
 			</div>
@@ -315,6 +364,14 @@ for (let i = 0; i < selectBox.options.length; i++) {
     selectBox.options[i].setAttribute('selected', 'selected');
     break;
   }
+}
+
+function filename(input){
+	var file = input.files[0];	//선택된 파일 가져오기
+
+    //미리 만들어 놓은 div에 text(파일 이름) 추가
+    var name = document.getElementById('filename');
+    name.textContent = file.name;
 }
 </script>
 </body>
