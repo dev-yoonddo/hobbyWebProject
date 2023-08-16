@@ -1,4 +1,3 @@
-
 # 취미는 갖고 싶은데 혼자는 싫을 때 TOGETHER 🏊‍♂️🏋️‍♀️🚴‍♀️
 
 프론트엔드, 백엔드를 혼자 맡아 제작한 개인 프로젝트입니다. <br>
@@ -41,7 +40,7 @@
 
 ### Database ERD
 
-![ERD](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/38d85948-ef43-406a-ae44-230e7ff31928)
+![ERD](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/6d141aed-f2e5-4f1f-a7bc-2451c4f2136e)
 
 <br><br>
 
@@ -609,15 +608,15 @@
 
 <br>
 
-![write1](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/018f0c0b-e1ee-414e-8104-c846f4be9f07)
+![write1](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/83a4a89b-4984-4e8f-bd66-ec1c3e5dca44)
 
 <br>
 
-### ⚙ 카테고리 선택, 제목과 내용 작성
+### ⚙ 카테고리 선택, 제목과 내용 작성, 첨부파일 선택
 
 <br>
 
-![write2](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/d051d399-80aa-4b96-8860-9393bca0717c)
+![write2](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/452f5cd8-0bf0-4504-b442-e8ce37cdd80f)
 
 <br>
 
@@ -635,7 +634,7 @@
 
 <br>
 
-![write4](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/886d5339-c08e-4472-8553-82fde14aebd8)
+![write4](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/a1873a26-f139-4676-aa29-3782ef15be62)
 
 <br>
 
@@ -643,8 +642,20 @@
 
 <br>
 
-![view1](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/657929af-e409-4a6d-87e3-88a6f5ceed13)
+![view1](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/31a7b1fd-a0a3-4ee6-800c-b62df65f44dd)
 ![view2](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/a30bd825-76f2-487f-80b4-18ef28e0c1fc)
+
+<br>
+
+### ⚙ 업로드 된 파일 클릭시 다운로드
+
+<br>
+
+![download](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/2bbbbabb-840e-49fb-8999-280b60382495)
+
+<br>
+
+### ⚙ 게시글 하단 버튼
 
 <br>
 
