@@ -127,25 +127,50 @@ textarea{
 }
 #write-bottom{
 	display: flex;
-	height: 40px;
+	height: 50px;
 	padding: 20px;
 }
 #file{
-	width: 65%;
+	display: flex;
+	width: 70%;
 	border-radius: 50px;
 	background-color: #CCE5FF;
-	padding: 10px 25px;
+	padding: 15px 25px;
 }
 #btn{
-	width: 35%;
+	width: 30%;
 }
-b{
+#file > span{
 	font-weight: bold;
 	color: #606060;
 }
+#beforeFile{
+	width: 30%;
+}
+#afterFile{
+	display: flex;
+	width: 70%;	
+}
 @media screen and (max-width:900px) {
 	.board-container , .write-table , form, textarea, table, tbody, tr, th, td{
-		max-width: 650px;
+		max-width: 700px;
+	}
+	#write-bottom{
+		padding: 15px;
+	}
+	#file{
+		width: 83%;
+		padding: 15px;
+	}
+	#beforeFile{
+		width: 35%;
+	}
+	#afterFile{
+		display: flex;
+		width: 65%;	
+	}
+	#btn{
+		width: 17%;
 	}
 }
 
@@ -168,10 +193,21 @@ b{
 	}
 	#write-bottom{
 		display: inline;
-		padding-top: 10px;
 	}
 	#file{
+		display: block;
 		width: 330px;
+	}
+	#beforeFile{
+		width: 330px;
+	}
+	#afterFile{
+		width: 330px;
+		margin: 0;
+		margin-top: 5px;
+	}
+	#afterFile > input{
+		width: 220px;
 	}
 	#btn{
 		width: 350px;
@@ -246,9 +282,9 @@ BoardDTO board = new BoardDAO().getBoardVO(boardID);
 					<div id="write-bottom">
 					<%
 					if(board.getFilename() != null){ %>
-					<div id="file"><b>기존 첨부 파일</b> :&nbsp; <%=board.getFilename()%> ┃ <b>첨부 파일 변경</b> :&nbsp; <input type="file" name="fileupload" value=""></div>
+					<div id="file"><span id="beforeFile">기존 파일 : <%=board.getFilename()%></span><span id="afterFile">┃ 파일 변경 : &nbsp;<input type="file" name="fileupload"></span></div>
 					<%}else{ %>
-					<div id="file">파일첨부 : <input type="file" name="fileupload" value=""></div>
+					<div id="file">파일첨부 : <input type="file" name="fileupload"></div>
 					<%} %>
 					<div id="btn"><button type="submit" class="btn-blue" value="글쓰기"><span>수정하기</span></button></div>
 					</div>

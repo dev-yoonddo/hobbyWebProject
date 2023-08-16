@@ -385,9 +385,10 @@ if((board.getBoardCategory()).equals("NOTICE")){
 							String fileRealname = files.get(i).getFileRealname();
 							int fileDownCount = files.get(i).getFileDownCount();
 							//String path = application.getRealPath("/fileupload/");
-					%>
+					%>					
+					<!-- form태그로 전송하는 방법 -->
 					<form id="download_form" action="<%=request.getContextPath()%>/downloadAction" method="get">
-					<!-- 텍스트 클릭시 다운로드를 하기 위해 onclick으로 submit기능을 대신한다. -->
+					<!-- 텍스트 클릭시 다운로드를 하기 위해 onclick으로 javascript를 이용해 submit기능을 대신한다. -->
 						<div class="files" id="filename" onclick="submit()" style="width: 300px; cursor: pointer;"> 
 							<%=filename%>(다운로드 <%=fileDownCount%>회)
 							<input hidden="hidden" name="file" value="<%=URLEncoder.encode(filename, "UTF-8")%>">

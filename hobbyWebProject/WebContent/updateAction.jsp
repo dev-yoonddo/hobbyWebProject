@@ -33,7 +33,16 @@
 			script.println("window.open('loginPopUp', 'Login', 'width=500, height=550, top=50%, left=50%')");
 			script.println("</script>");
 		}else{
-			String path = "C:/gookbiProject/JSP/workspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp2/wtpwebapps/hobbyWebProject/fileupload/";
+			//writeAction과 같이 경로를 각각 지정해준다.
+			String path = null;
+			String jspPath = application.getRealPath("/fileupload/");
+			String awsPath = "/home/tomcat/apache-tomcat-8.5.88/webapps/fileupload/";
+			if(jspPath.startsWith("C")){ //경로가 C로 시작하면 JSP에서 파일 업로드를 의미하기 때문에
+				path = jspPath; //path에 JSP경로를 저장하고
+			}else{ //경로가 C로 시작하지 않으면 배포 프로젝트에서 파일 업로드를 의미하기 때문에
+				path = awsPath; //tomcat 경로를 저장한다.
+			}
+			
 			MultipartRequest multi = new MultipartRequest(
 				request,
 				path,
@@ -46,68 +55,57 @@
 			String title = multi.getParameter("boardTitle");
 			String content = multi.getParameter("boardContent");
 			String category = multi.getParameter("boardCategory");
-			//오리지널 파일명 = 유저가 업로드한 파일명
+			String notice = multi.getParameter("notice");
 			String filename = multi.getOriginalFileName("fileupload");
-			//실제 서버에 저장된 파일명
 			String fileRealname = multi.getFilesystemName("fileupload");
-			//File file = new File(path + filename);
-			if(title == null) {
+			
+			//빈칸이 있으면 알림창을 띄운다.
+			if(title.length() == 0){
 				PrintWriter script = response.getWriter();
 				script.println("<script>");
 				script.println("alert('제목을 입력해주세요')");
 				script.println("history.back()");
 				script.println("</script>");				
-			}
-			if(content == null) {
+			}else if(content.length() == 0){
 				PrintWriter script = response.getWriter();
 				script.println("<script>");
 				script.println("alert('내용을 입력해주세요')");
 				script.println("history.back()");
 				script.println("</script>");				
-			}
-			if(category == null) {
+			}else if(category.length() == 0 || category.equals("0")){
 				PrintWriter script = response.getWriter();
 				script.println("<script>");
 				script.println("alert('카테고리를 선택해주세요')");
 				script.println("history.back()");
 				script.println("</script>");				
-			}if(filename != null){
-				if (!filename.endsWith(".jar") && !filename.endsWith(".zip") && !filename.endsWith(".pdf") && !filename.endsWith(".jpg") && !filename.endsWith(".png")) {
-					PrintWriter script = response.getWriter();
-					script.println("<script>");
-					script.println("alert('" + filename +  "은(는) 업로드 할 수 없는 형식의 파일입니다.\\njar, zip, pdf, jpg, png파일만 업로드가 가능합니다.')");
-					script.println("history.back()");
-					script.println("</script>");
-					//file.delete();
-				}else{
-					int result = 0;
-					BoardDAO boardDAO = new BoardDAO();
-						result = boardDAO.update(boardID, title, content, category , filename, fileRealname);
-						if((category).equals("0")){
-							PrintWriter script = response.getWriter();
-							script.println("<script>");
-							script.println("alert('카테고리를 선택해주세요')");
-							script.println("history.back()");
-							script.println("</script>");
-						}
-						else if(result == -1){
-							PrintWriter script = response.getWriter();
-							script.println("<script>");
-							script.println("alert('글쓰기에 실패했습니다')");
-							script.println("history.back()");
-							script.println("</script>");
-						}
-						else{
-							PrintWriter script = response.getWriter();
-							script.println("<script>");
-							script.println("alert('작성이 완료되었습니다')");
-							script.println("location.href='community'");
-							script.println("</script>");
-						}
-				//관리자가 아니거나 공지사항이 아닐시
+			}//전달받은 파일이 있으면
+			else if (filename != null && !filename.endsWith(".jar") && !filename.endsWith(".JAR") && !filename.endsWith(".zip") && !filename.endsWith(".ZIP") && !filename.endsWith(".pdf") && !filename.endsWith(".PDF") && !filename.endsWith(".jpg") && !filename.endsWith(".JPG") && !filename.endsWith(".jpeg") && !filename.endsWith(".JPEG") && !filename.endsWith(".png") && !filename.endsWith(".PNG")) {
+				PrintWriter script = response.getWriter();
+				script.println("<script>");
+				script.println("alert('" + filename +  "은(는) 업로드 할 수 없는 형식의 파일입니다.\\njar, zip, pdf, jpg, png파일만 업로드가 가능합니다.')");
+				script.println("history.back()");
+				script.println("</script>");
+			//file.delete();
+			}else{
+				int result = 0;
+				BoardDAO boardDAO = new BoardDAO();
+					result = boardDAO.update(boardID, title, content, category , filename, fileRealname);
+					if(result == -1 || result == -2){
+						PrintWriter script = response.getWriter();
+						script.println("<script>");
+						script.println("alert('글쓰기에 실패했습니다')");
+						script.println("history.back()");
+						script.println("</script>");
 					}
+					else{
+						PrintWriter script = response.getWriter();
+						script.println("<script>");
+						script.println("alert('수정이 완료되었습니다')");
+						script.println("location.href='view?boardID="+boardID+"'");
+						script.println("</script>");
+					}
+				}
 			}
-		}
 				
 		
 	%>

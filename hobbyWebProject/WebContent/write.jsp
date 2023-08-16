@@ -112,17 +112,17 @@ font-size: 12pt;
 }
 #write-bottom{
 	display: flex;
-	height: 40px;
+	height: 50px;
 	padding: 20px;
 }
 #file{
-	width: 60%;
+	width: 65%;
 	border-radius: 50px;
 	background-color: #CCE5FF;
-	padding: 10px 25px;
+	padding: 15px 25px;
 }
 #btn{
-	width: 40%;
+	width: 35%;
 }
 @media screen and (max-width:900px) {
 	.board-container , .write-table , form, textarea, table, tbody, tr, th, td{
@@ -225,7 +225,7 @@ String bdcategory = request.getParameter("category");
 					</tbody>
 				</table>
 				<div id="write-bottom">
-				<div id="file">파일첨부 : <input type="file" name="fileupload" value=""></div>
+				<div id="file">파일첨부 : <input type="file" name="fileupload"></div>
 				<div id="btn"><button type="submit" class="btn-blue" value="글쓰기"><span>작성하기</span></button></div>
 				</div>
 			</form>		

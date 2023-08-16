@@ -64,96 +64,80 @@
 			String content = multi.getParameter("boardContent");
 			String category = multi.getParameter("boardCategory");
 			String notice = multi.getParameter("notice");
-
-			//오리지널 파일명 = 유저가 업로드한 파일명
 			String filename = multi.getOriginalFileName("fileupload");
-			//실제 서버에 저장된 파일명
 			String fileRealname = multi.getFilesystemName("fileupload");
-//			File file = new File(path + filename);
-				if(title == null) {
-					PrintWriter script = response.getWriter();
-					script.println("<script>");
-					script.println("alert('제목을 입력해주세요')");
-					script.println("history.back()");
-					script.println("</script>");				
-				}
-				if(content == null) {
-					PrintWriter script = response.getWriter();
-					script.println("<script>");
-					script.println("alert('내용을 입력해주세요')");
-					script.println("history.back()");
-					script.println("</script>");				
-				}
-				if(category == null) {
-					PrintWriter script = response.getWriter();
-					script.println("<script>");
-					script.println("alert('카테고리를 선택해주세요')");
-					script.println("history.back()");
-					script.println("</script>");				
-				}
-				if (!filename.endsWith(".jar") && !filename.endsWith(".JAR") && !filename.endsWith(".zip") && !filename.endsWith(".ZIP") && !filename.endsWith(".pdf") && !filename.endsWith(".PDF") && !filename.endsWith(".jpg") && !filename.endsWith(".JPG") && !filename.endsWith(".png") && !filename.endsWith(".PNG")) {
+			
+			//빈칸이 있으면 알림창을 띄운다.
+			if(title.length() == 0){
+				PrintWriter script = response.getWriter();
+				script.println("<script>");
+				script.println("alert('제목을 입력해주세요')");
+				script.println("history.back()");
+				script.println("</script>");				
+			}else if(content.length() == 0){
+				PrintWriter script = response.getWriter();
+				script.println("<script>");
+				script.println("alert('내용을 입력해주세요')");
+				script.println("history.back()");
+				script.println("</script>");				
+			}else if(category.length() == 0 || category.equals("0")){
+				PrintWriter script = response.getWriter();
+				script.println("<script>");
+				script.println("alert('카테고리를 선택해주세요')");
+				script.println("history.back()");
+				script.println("</script>");				
+			}//전달받은 파일이 있으면
+			else if(filename != null){			
+				if (!filename.endsWith(".jar") && !filename.endsWith(".JAR") && !filename.endsWith(".zip") && !filename.endsWith(".ZIP") && !filename.endsWith(".pdf") && !filename.endsWith(".PDF") && !filename.endsWith(".jpg") && !filename.endsWith(".JPG") && !filename.endsWith(".jpeg") && !filename.endsWith(".JPEG") && !filename.endsWith(".png") && !filename.endsWith(".PNG")) {
 					PrintWriter script = response.getWriter();
 					script.println("<script>");
 					script.println("alert('" + filename +  "은(는) 업로드 할 수 없는 형식의 파일입니다.\\njar, zip, pdf, jpg, png파일만 업로드가 가능합니다.')");
 					script.println("history.back()");
 					script.println("</script>");
-//					file.delete();
-				}else{
-					int result = 0;
-					BoardDAO boardDAO = new BoardDAO();
-					//관리자 계정으로 공지사항 등록시
-//					notice = request.getParameter("notice");
-					if(userID.equals("manager") && notice.equals("NOTICE")){
-						result = boardDAO.write(title, userID, content, notice , filename, fileRealname);
-						if((category).equals("0")){
-							PrintWriter script = response.getWriter();
-							script.println("<script>");
-							script.println("alert('카테고리를 선택해주세요')");
-							script.println("history.back()");
-							script.println("</script>");
-						}
-						else if(result == -1){
-							PrintWriter script = response.getWriter();
-							script.println("<script>");
-							script.println("alert('글쓰기에 실패했습니다')");
-							script.println("history.back()");
-							script.println("</script>");
-						}
-						else{
-							PrintWriter script = response.getWriter();
-							script.println("<script>");
-							script.println("alert('작성이 완료되었습니다')");
-							script.println("location.href='community'");
-							script.println("</script>");
-						}
-					//관리자가 아니거나 공지사항이 아닐시
-					}if(notice.equals("NULL")){
-						result = boardDAO.write(title, userID, content, category , filename, fileRealname);
-						//result > 0 이면 성공적으로 글쓰기 완료
-						if((category).equals("0")){
-							PrintWriter script = response.getWriter();
-							script.println("<script>");
-							script.println("alert('카테고리를 선택해주세요')");
-							script.println("history.back()");
-							script.println("</script>");
-						}
-						else if(result == -1){
-							PrintWriter script = response.getWriter();
-							script.println("<script>");
-							script.println("alert('글쓰기에 실패했습니다')");
-							script.println("history.back()");
-							script.println("</script>");
-						}
-						else{
-							PrintWriter script = response.getWriter();
-							script.println("<script>");
-							script.println("alert('작성이 완료되었습니다')");
-							script.println("location.href='searchPage?searchField2="+category+"'");
-							script.println("</script>");
-						}
+				//file.delete();
+				}
+			}else{
+				int result = 0;
+				BoardDAO boardDAO = new BoardDAO();
+				//관리자 계정으로 공지사항 등록시
+				//notice = request.getParameter("notice");
+				if(userID.equals("manager") && notice.equals("NOTICE")){
+					result = boardDAO.write(title, userID, content, notice , filename, fileRealname);
+					if(result == -1 || result == -2){
+						PrintWriter script = response.getWriter();
+						script.println("<script>");
+						script.println("alert('글쓰기에 실패했습니다')");
+						script.println("history.back()");
+						script.println("</script>");
+					}
+					else{
+						PrintWriter script = response.getWriter();
+						script.println("<script>");
+						script.println("alert('작성이 완료되었습니다')");
+						script.println("location.href='community'");
+						script.println("</script>");
+					}
+				//관리자가 아니거나 공지사항이 아닐시
+				}if(notice.equals("NULL")){
+					result = boardDAO.write(title, userID, content, category , filename, fileRealname);
+					//result > 0 이면 성공적으로 글쓰기 완료
+					if(result == -1 || result == -2){
+						PrintWriter script = response.getWriter();
+						script.println("<script>");
+						script.println("alert('글쓰기에 실패했습니다')");
+						script.println("history.back()");
+						script.println("</script>");
+					}
+					else{
+						PrintWriter script = response.getWriter();
+						script.println("<script>");
+						script.println("alert('작성이 완료되었습니다')");
+						script.println("location.href='searchPage?searchField2="+category+"'");
+						script.println("</script>");
 					}
 				}
-			
+			}
+		
 		}
 		
 	%>

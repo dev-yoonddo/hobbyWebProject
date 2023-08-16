@@ -97,16 +97,21 @@ public class BoardDAO {
 			pstmt.setInt(12, 0);
 			int result = pstmt.executeUpdate();
 			//성공적으로 수행되고 첨부파일이 존재하면 file테이블에도 데이터를 넣어준다.
-			if(result >= 0 & filename != null){
-				// BoardDTO bdDTO = new BoardDTO();
-				FileDAO fileDAO = new FileDAO();
-				int ok = fileDAO.upload2(boardID, filename, fileRealname);
-				if(ok > 0) {//fileDAO의 upload2()메서드가 정상적으로 실행되면
-					return result; //result값 반환
+			if(result >= 0) {
+				if(filename != null){
+					// BoardDTO bdDTO = new BoardDTO();
+					FileDAO fileDAO = new FileDAO();
+					int ok = fileDAO.upload2(boardID, filename, fileRealname);
+					if(ok >= 0) {//fileDAO의 upload2()메서드가 정상적으로 실행되면
+						return 1; //board,file 테이블 모두 업로드 성공
+					}else {
+						return -2; //파일 테이블에 업로드 오류
+					}
 				}
-			}else {
-				//성공적으로 수행했다면 0이상의 결과 반환
 				return result;
+			}else {
+				//실행 실패시 -1반환
+				return -1;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -271,17 +276,44 @@ public class BoardDAO {
 	}
 	//업데이트
 	public int update(int boardID, String boardTitle, String boardContent, String boardCategory, String filename, String fileRealname) {
-		String SQL = "UPDATE board SET boardTitle = ?, boardContent = ?, boardCategory = ?, filename = ?, fileRealname = ? WHERE boardID = ?";
+		String SQL = "UPDATE board SET boardTitle = ?, boardContent = ?, boardCategory = ?, filename = ?, fileRealname = ?, fileDownCount = ? WHERE boardID = ?";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, boardTitle);
 			pstmt.setString(2, boardContent);
 			pstmt.setString(3, boardCategory);
-			pstmt.setString(4, filename);
-			pstmt.setString(5, fileRealname);
-			pstmt.setInt(6, boardID);
+			if(filename != null) {
+				//파일이 새로 업로드되면 파일명을 변경하고 다운로드 횟수를 0으로 초기화한다.
+				pstmt.setString(4, filename);
+				pstmt.setString(5, fileRealname);
+				pstmt.setInt(6, 0);
+			}else {
+				BoardDTO board = new BoardDAO().getBoardVO(boardID);
+				//파일을 수정하지 않으면 기존의 다운로드 횟수와 파일명을 그대로 넣어준다.
+				pstmt.setString(4, board.getFilename());
+				pstmt.setString(5, board.getFileRealname());
+				pstmt.setInt(6, board.getFileDownCount());
+			}
+			pstmt.setInt(7, boardID);
 			//성공적으로 수행했다면 0이상의 결과 반환
-			return pstmt.executeUpdate();
+			int result = pstmt.executeUpdate();
+			//성공적으로 수행되고 첨부파일이 존재하면 file테이블에도 데이터를 넣어준다.
+			if(result >= 0) {
+				if(filename != null){
+					// BoardDTO bdDTO = new BoardDTO();
+					FileDAO fileDAO = new FileDAO();
+					int ok = fileDAO.upload2(boardID, filename, fileRealname);
+					if(ok >= 0) {//fileDAO의 upload2()메서드가 정상적으로 실행되면
+						return 1; //board,file 테이블 모두 업로드 성공
+					}else {
+						return -2; //파일 테이블에 업로드 오류
+					}
+				}
+				return result;
+			}else {
+				//실행 실패시 -1반환
+				return -1;
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
