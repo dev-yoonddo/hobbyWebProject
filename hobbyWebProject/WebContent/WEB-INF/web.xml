@@ -11,6 +11,20 @@
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
   
+  <servlet-mapping>
+    <servlet-name>default</servlet-name>
+    <url-pattern>/</url-pattern>
+    <url-pattern>*.js</url-pattern>
+    <url-pattern>*.css</url-pattern>
+    <url-pattern>*.jpg</url-pattern>
+    <url-pattern>*.JPG</url-pattern>
+    <url-pattern>*.png</url-pattern>
+    <url-pattern>*.PNG</url-pattern>
+    <url-pattern>*.ico</url-pattern>
+    <url-pattern>*.swf</url-pattern>
+    <url-pattern>*.gif</url-pattern>
+  </servlet-mapping>
+  
   <servlet>
     <servlet-name>startPage.jsp</servlet-name>
     <jsp-file>/startPage.jsp</jsp-file>

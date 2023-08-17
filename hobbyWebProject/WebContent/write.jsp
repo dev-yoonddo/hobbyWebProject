@@ -126,7 +126,18 @@ font-size: 12pt;
 #file > input{
 	font-size: 11pt;
 }
+#file > #txt{
+	width: 70px;
+}
+#filename{
+/*파일이름이 길면 ...으로 생략*/
+	overflow:hidden;
+	white-space:nowrap;
+	text-overflow:ellipsis;
+	max-width:300px;
+}
 #fileupload{
+	width: 10px;
 	visibility: hidden;
 }
 #click{
@@ -144,6 +155,10 @@ font-size: 12pt;
 @media screen and (max-width:900px) {
 	.board-container , .write-table , form, textarea, table, tbody, tr, th, td{
 		max-width: 650px;
+	}
+	#filename{
+		max-width:200px;
+		
 	}
 }
 
@@ -170,6 +185,12 @@ font-size: 12pt;
 	}
 	#file{
 		width: 330px;
+	}
+	#filename{
+		max-width:150px;
+	}
+	#click{
+		width: 80px;
 	}
 	#btn{
 		width: 350px;
@@ -242,10 +263,11 @@ String bdcategory = request.getParameter("category");
 					</tbody>
 				</table>
 				<div id="write-bottom">
-					<div id="file">파일첨부 :&nbsp;&nbsp;
+					<div id="file">
+						<span id="txt">파일첨부 :</span>&nbsp;&nbsp;
 						<label for="fileupload" id="click" class="btn-blue">click !</label>&nbsp;&nbsp;
 						<div id="filename"></div>
-						<input type="file" id="fileupload" name="fileupload" accept="image/*" onchange="filename(this)" >
+						<input type="file" id="fileupload" name="fileupload" onchange="filename(this)" >
 					</div>
 					<div id="btn">
 						<button type="submit" class="btn-blue" value="글쓰기">

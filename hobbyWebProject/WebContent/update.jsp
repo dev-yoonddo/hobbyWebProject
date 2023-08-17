@@ -169,7 +169,7 @@ textarea{
 	overflow:hidden;
 	white-space:nowrap;
 	text-overflow:ellipsis;
-	max-width:200px;
+	max-width:300px;
 }
 #click{
 	height: 25px;
@@ -198,8 +198,11 @@ textarea{
 		display: flex;
 		width: 65%;	
 	}
-	#filename{
-		max-width:100px;
+	#afterFile > #filename{
+		max-width: 150px;
+	}
+	#click{
+		width: 80px;
 	}
 	#btn{
 		width: 17%;
@@ -242,8 +245,8 @@ textarea{
 		margin: 0;
 		margin-top: 5px;
 	}
-	#file2 > #filename{
-		max-width: 200px;
+	#filename{
+		max-width: 150px;
 	}
 	#click{
 		width: 70px;
@@ -324,9 +327,10 @@ BoardDTO board = new BoardDAO().getBoardVO(boardID);
 						<div id="file">
 							<span id="beforeFile">기존 파일 : <%=board.getFilename()%></span>
 							<span id="afterFile">┃ 파일첨부 :&nbsp;&nbsp;
-							<label for="fileupload" id="click" class="btn-blue">click !</label>&nbsp;&nbsp;
-							<div id="filename"></div>
-							<input type="file" id="fileupload" name="fileupload" accept="image/*" onchange="filename(this)" ></span>
+								<label for="fileupload" id="click" class="btn-blue">click !</label>&nbsp;&nbsp;
+								<div id="filename"></div>
+								<input type="file" id="fileupload" name="fileupload" accept="image/*" onchange="filename(this)" >
+							</span>
 						</div>
 					<%}else{ %>
 						<div id="file2">파일첨부 :&nbsp;&nbsp;

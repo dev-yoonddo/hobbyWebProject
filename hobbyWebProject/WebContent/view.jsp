@@ -1,3 +1,7 @@
+<%@page import="file.FileDAO"%>
+<%@page import="file.FileDTO"%>
+<%@page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy"%>
+<%@page import="com.oreilly.servlet.MultipartRequest"%>
 <%@page import="java.net.URLEncoder"%>
 <%@page import="java.util.List"%>
 <%@page import="heart.HeartDTO"%>
@@ -54,7 +58,7 @@ section{
 }
 #view-table{
 	width: 1000px;
-	height: 500px;
+	height: 600px;
 	border-collapse: collapse;
 	border: 1px solid #C0C0C0;
 	font-size: 12pt;
@@ -63,10 +67,13 @@ table caption{
 	font-size:0;
 	text-indent:-9999px;
 }
-
+#tr2 >td , #tr3 > td{
+	padding-top: 50px;
+}
 .td{
 	text-align: center;
 	font-size: 13pt;
+	margin-left: 10px;
 }
 .td span{	
 	padding: 10px 20px;
@@ -188,6 +195,31 @@ table caption{
 	font-weight: bold;
 	color: #606060;
 }
+#view-file-1 , #view-file-2{
+	position: relative;
+}
+#view-file-2{
+	display: none;
+}
+#close-file{
+	position: absolute;
+    right: 10%;
+    background-color: #646464;
+    color: white;
+    font-weight: bold;
+    font-size: 12pt;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    border-width: 0;
+    display: block;
+    cursor: pointer;
+    outline-style: none;
+}
+#close-file:hover{
+	background-color: white;
+    color: #646464;
+}
 @media screen and (max-width:650px) {
 	.board-container{
 		max-width:  400px;
@@ -250,6 +282,23 @@ table caption{
 		width: 400px;
 		float:inherit;
 	}
+	.td{
+		width: 35%;
+	}
+	#tr2{
+		height: 250px;
+	}
+	#close-file{
+		top: 0;
+	}
+	#view-file-1{
+		display: none;
+	}
+	#view-file-2{
+		width: 400px;
+		display: block;
+		padding: 15px;
+	}
 }
 </style>
 <body>
@@ -280,12 +329,16 @@ if(boardID == 0){
 BoardDAO boardDAO = new BoardDAO();
 BoardDTO board = new BoardDAO().getBoardVO(boardID);
 HeartDTO heartvo = new HeartDAO().getHeartVO(boardID);
+FileDTO filevo = new FileDAO().getFileVO(boardID);
 
 //해당 글이 공지사항인지 구분한다.
 boolean notice = false;
 if((board.getBoardCategory()).equals("NOTICE")){
 	notice = true;
 }
+
+//이미지 이름 가져오기
+String filename = board.getFilename();
 %>
 
 <!-- header -->
@@ -358,19 +411,41 @@ if((board.getBoardCategory()).equals("NOTICE")){
 				<table id="view-table">
 					<!-- 공지사항이면 내용만 출력한다. -->
 					<% if(notice == true){ %>
-					<tr class="tr" id="tr2" height="75%" valign="top">
+					<tr class="tr" id="tr3" height="75%" valign="top">
 						<td style="padding: 30px;"><%=board.getBoardContent().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></td>
+						<%if(filename != null){%>
+						<!-- 서버에 업로드 된 이미지 가져오기 -->
+						<td><img src="/resources/fileupload/<%=filename%>" width="300px"></td>
+						<%} %>
 					</tr>
 					<%}else{%>					
-					<tr class="tr" id="tr1" height="25%" style="border-bottom: 1px solid #C0C0C0;">
+					<tr class="tr" id="tr1" height="150px" style="border-bottom: 1px solid #C0C0C0;">
 						<td class="td" style="width:20%;"><span>제목</span></td>
 						<td><%=board.getBoardTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></td>
 					</tr>
-					<tr class="tr" id="tr2" height="75%" valign="top">
-						<td class="td" style="padding-top: 50px;"><span>내용</span></td>
+					<tr class="tr" id="tr2" height="450px" valign="top">
+						<td class="td"><span>내용</span></td>
 						<!-- 특수문자 처리 -->
-						<td style="padding-top: 50px;"><%=board.getBoardContent().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></td>
+						<td><%=board.getBoardContent().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></td>
+						<%if(filename != null){%>
+						<td class="view-file" id="view-file-1" width="40%">
+							<button id="close-file" onclick="closeFile()">X</button>
+							<!-- 서버에 업로드 된 이미지 가져오기 -->
+							<img src="/resources/fileupload/<%=filename%>" width="300px">
+						</td>
+						<%} %>
 					</tr>
+					<!-- 화면이 작아지면 보일 이미지 -->
+					<%if(filename != null){%>
+					<tr class="tr" id="view-file-2" height="200px">
+						<td width="300px">
+							<img src="/resources/fileupload/<%=filename%>" >
+						</td>
+						<td width="50px;">
+							<button id="close-file" onclick="closeFile()">X</button>
+						</td>
+					</tr>
+					<%} %>
 					<%} %>
 					<!-- <tr>
 						<td class="td"><span>조회수</span></td>
@@ -385,8 +460,11 @@ if((board.getBoardCategory()).equals("NOTICE")){
 			<div id="row2" >
 				<div id="fileList">
 					<span class="files">첨부 파일 :&nbsp;</span>
-					<%		
-					//	테이블에 저장된 업로드된 파일 정보를 얻어온다.
+					<%
+					//	테이블에 저장된 파일 정보가 있으면 가져온다.
+					if(filename != null){
+						int downCount = board.getFileDownCount();
+					/* 파일이 여러개일때
 					ArrayList<BoardDTO> files = boardDAO.getFileList(boardID);
 					if(files.size() > 0){
 						for (int i = 0; i < files.size(); i++) {
@@ -394,19 +472,21 @@ if((board.getBoardCategory()).equals("NOTICE")){
 							String fileRealname = files.get(i).getFileRealname();
 							int fileDownCount = files.get(i).getFileDownCount();
 							//String path = application.getRealPath("/fileupload/");
+					*/
 					%>					
 					<!-- form태그로 전송하는 방법 -->
 					<form id="download_form" action="<%=request.getContextPath()%>/downloadAction" method="get">
 					<!-- 텍스트 클릭시 다운로드를 하기 위해 onclick으로 javascript를 이용해 submit기능을 대신한다. -->
 						<div class="files" id="file_form" onclick="submit()" style="width: 300px; cursor: pointer;"> 
-							<div id="filename"><%=filename%></div>(다운로드 <%=fileDownCount%>회)
+							<div id="filename"><%=filename%></div>(다운로드 <%=downCount%>회)
 							<input hidden="hidden" name="file" value="<%=URLEncoder.encode(filename, "UTF-8")%>">
 							<input hidden="hidden" name="boardID" value="<%=boardID%>">
 						</div>
 					</form>
 					<%
-						}
-					}else{
+					}
+					//} }
+					else{
 					%>
 					<span class="files">첨부된 파일이 없습니다.</span>
 					<%
@@ -526,6 +606,11 @@ function cmtAction(){
 function submit(){
 	let form = document.getElementById("download_form"); //form sumbit을 위해 form id를 가져온다.
     form.submit();
+}
+//파일 숨기기
+function closeFile(){
+	document.getElementById('view-file-1').style.display = 'none';
+	document.getElementById('view-file-2').style.display = 'none';
 }
 </script>
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>

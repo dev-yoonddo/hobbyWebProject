@@ -57,7 +57,7 @@ public class downloadAction extends HttpServlet {
 		
 		if(new File(jspPath).exists()){ //jsp경로가 존재하면 jsp에서 프로젝트를 실행했음을 의미하고
 			filePath = jspPath;
-		}else { //존재하지 않으면 서버 프로젝트를 실행했음을 의미하므로 해당하는 경로를 변수에 저장한다.
+		}else { //존재하지 않으면 서버에서 프로젝트를 실행했음을 의미하므로 해당하는 경로를 변수에 저장한다.
 			filePath = awsPath;
 		}
 		File file = new File(filePath); //각 결과에서 저장된 경로로 객체를 생성한다.
