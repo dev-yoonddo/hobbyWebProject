@@ -429,7 +429,7 @@
 
 ---
 
-<br>
+<br><br>
 
 ## 🔘 4 ) 메시지 관리
 
@@ -443,7 +443,7 @@
 ![update4](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/b76196dc-a5ab-461d-af67-077f56ccbce0)
 ![update5](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/38d99019-81c6-45aa-bcac-ae7e7b07a601)
 
-<br>
+<br><br>
 
 ### ⚙ 메시지 보기
 
@@ -459,7 +459,7 @@
 </div>
 
 
-<br>
+<br><br>
 
 ### ⚙ 메시지 삭제
 
@@ -483,55 +483,67 @@
 
 ![qna1](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/567cb5ef-a2bf-415b-a132-375be5e0b478)
 
-<br>
+<br><br>
 
 ### ⚙ 이모티콘 클릭시 관리자에게 전송되는 메시지 팝업 생성
+
+<br>
 
 <div style="display: flex;">
 <img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/a7a1cb0d-7375-43b4-a1ad-36177dcaa4a9" width="45%">
 <img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/b2b50320-b7ef-46b1-a579-a54572e4170b" width="45%">
 </div>
 
-<br>
+<br><br>
 
 ### ⚙ 빈칸 유무 검사 후 메시지 전송
+
+<br>
 
 <div style="display: flex;">
 <img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/6789e36a-2cbb-45b0-98e6-0fd3e5c1ca95" width="45%">
 <img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/f23ab7d2-5a3d-4fdc-af35-dd19da90b578" width="45%">
 </div>
 
-<br>
+<br><br>
 
 ### ⚙ 관리자 계정에서 확인 및 답변 가능
 
-<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/3f6c93d2-4276-42c2-8745-06e3796a1ac6" width="50%">
-
 <br>
 
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/3f6c93d2-4276-42c2-8745-06e3796a1ac6" width="50%">
+
+<br><br>
+
 ### ⚙ 메시지 관리와 같이 제목 클릭시 상세보기, 답장하기 클릭시 답장 가능
+
+<br>
 
 <div style="display: flex;">
 <img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/f747a8e8-e184-4ff5-9f36-111f966df236" width="45%">
 <img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/e8316591-d619-406f-9444-4a6a169939bf" width="45%">
 </div>
 
-<br>
+<br><br>
 
 ### ⚙ 빈칸 유무 검사 후 메시지 전송
+
+<br>
 
 <div style="display: flex;">
 <img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/6789e36a-2cbb-45b0-98e6-0fd3e5c1ca95" width="45%">
 <img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/6324c5a7-4e4f-4728-b2c9-7a2bba796532" width="45%">
 </div>
 
-<br>
+<br><br>
 
 ### ⚙ 관리자에게 온 답변에는 답장 불가
 
+<br>
+
 <img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/7a3f6e40-5e3f-4856-877e-c624716b5ecc" width="50%">
 
-<br>
+<br><br>
 
 ### ⚙ 문의하기 , 답변 완료시 DB
 
@@ -553,6 +565,8 @@
 
 ![community1](https://user-images.githubusercontent.com/84071666/235914393-655f3530-5b45-4532-b10c-a36d2730d8bd.PNG)
 
+<br><br>
+
 ### ⚙ 참여하고싶은 카테고리 선택
 
 <br>
@@ -562,7 +576,7 @@
 <img src="https://user-images.githubusercontent.com/84071666/235914401-a34a3fa2-b2e7-4880-808e-1789ea48de19.PNG" width="50%">
 </div>
 
-<br>
+<br><br>
 
 ### ⚙ SPORTS 카테고리 게시판으로 이동
 
@@ -572,7 +586,7 @@
 ![search1-1](https://user-images.githubusercontent.com/84071666/235914406-adf293cf-4c69-4f10-add8-645977cb98e8.PNG)
 ![search1-2](https://user-images.githubusercontent.com/84071666/235914409-2766c22d-aa72-48c7-b232-bcb5db844319.PNG)
 
-<br>
+<br><br>
 
 ### ⚙ MORE버튼을 클릭하면 게시글을 10개씩 보여주고 더이상 보여줄 글이 없으면 알림창 띄우기
 
@@ -580,7 +594,7 @@
 
 ![search1-3](https://user-images.githubusercontent.com/84071666/235914412-55f08796-8f4d-48fc-9376-8de75e7b9f37.PNG)
 
-<br>
+<br><br>
 
 ### ⚙ LEISURE 카테고리 게시판으로 이동
 
@@ -588,7 +602,7 @@
 
 ![search2](https://user-images.githubusercontent.com/84071666/235914415-b46de4fd-964b-4460-8226-bd483dd8f59d.PNG)
 
-<br>
+<br><br>
 
 ### ⚙ 선택한 카테고리에 글이 없으면 알림창 
 
@@ -596,13 +610,15 @@
 
 ![search3](https://user-images.githubusercontent.com/84071666/235973504-c5d55d96-381e-4b35-93ce-b4dad970dcd5.PNG)
 
+<br><br>
+
 ---
 
 <br><br>
 
 ## 🔘 2 ) 커뮤니티 글 작성
 
-<br>
+<br><br>
 
 ### ⚙ 접속한 카테고리가 이미 선택되어 있고 변경 가능
 
@@ -610,7 +626,7 @@
 
 ![write1](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/83a4a89b-4984-4e8f-bd66-ec1c3e5dca44)
 
-<br>
+<br><br>
 
 ### ⚙ 카테고리 선택, 제목과 내용 작성, 첨부파일 선택
 
@@ -618,7 +634,7 @@
 
 ![write2](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/452f5cd8-0bf0-4504-b442-e8ce37cdd80f)
 
-<br>
+<br><br>
 
 ### ⚙ 카테고리 미선택, 내용 미작성, 첨부파일 확장자 확인, 작성완료시 알림창 띄우기
 
@@ -629,7 +645,7 @@
 ![write3-3](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/183a1526-fb04-418d-8035-ac3dfc8ae531)
 ![write3](https://user-images.githubusercontent.com/84071666/235973488-e14e53ba-8bbd-4048-9db7-4749485cb123.PNG)
 
-<br>
+<br><br>
 
 ### ⚙ 작성 완료
 
@@ -637,7 +653,7 @@
 
 ![write4](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/a1873a26-f139-4676-aa29-3782ef15be62)
 
-<br>
+<br><br>
 
 ### ⚙ 작성한 글 보기
 
@@ -646,7 +662,7 @@
 ![view1](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/50578393-6ca5-490c-9fac-f00c43453b85)
 ![view2](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/a30bd825-76f2-487f-80b4-18ef28e0c1fc)
 
-<br>
+<br><br>
 
 ### ⚙ 업로드 된 파일 클릭시 다운로드
 
@@ -654,11 +670,11 @@
 
 ![download](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/2bbbbabb-840e-49fb-8999-280b60382495)
 
-<br>
+<br><br>
 
 ### ⚙ 게시글 하단 버튼
 
-<br>
+<br><br>
 
 #### 1. 로그인 하지 않은 유저에게 보이는 버튼
 
@@ -666,7 +682,7 @@
 
 ![btn1](https://user-images.githubusercontent.com/84071666/235973859-08b5a8c4-3291-4a0d-a82a-e1239c14a151.PNG)
 
-<br>
+<br><br>
 
 #### 2. 로그인은 했지만 글 작성자가 아닌 회원에게 보이는 버튼
 
@@ -674,7 +690,7 @@
 
 ![btn3](https://user-images.githubusercontent.com/84071666/235973866-7a1011cc-cd13-42df-9583-a55261e7e2f0.PNG)
 
-<br>
+<br><br>
 
 #### 2. 로그인 한 글 작성자에게 보이는 버튼
 
@@ -682,7 +698,7 @@
 
 ![btn-2](https://user-images.githubusercontent.com/84071666/235973863-84254a30-acd4-4789-b0f6-5f00fa2b9644.PNG)
 
-<br>
+<br><br>
 
 #### 3. 관리자(admin)에게 보이는 버튼 : 모든 사용자 글 삭제 가능
 
@@ -707,13 +723,15 @@
 <img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/325d8229-a3db-4205-bbde-a52c2786369a" width="45%">
 </div>
 
-<br>
+<br><br>
 
 ### ⚙ 공지사항은 모든 카테고리 검색 결과에 노출
 
 <br>
 
 ![notice3](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/7cc07ddb-162d-4167-96c4-e486d3373148)
+
+<br><br>
 
 ---
 
@@ -751,7 +769,7 @@
 
 <img src="https://user-images.githubusercontent.com/84071666/235973851-c951aa05-d887-4f3a-ad6f-e9a2075ffed6.PNG" width="60%">
 
-<br>
+<br><br>
 
 ### ⚙ 글 상단에 작성자, 좋아요, 조회수 표시
 
@@ -774,6 +792,8 @@
 <img src="https://user-images.githubusercontent.com/84071666/235973474-936dc53d-c9f9-496b-bc00-c5ff493eb4ec.PNG" width="35%">
 </div>
 
+<br><br>
+
 ---
 
 <br><br>
@@ -782,15 +802,27 @@
 
 <br><br>
 
-![boardupdate1](https://user-images.githubusercontent.com/84071666/235974307-9a9dcfc5-33c1-4b58-934c-6cd4946a63fe.PNG)
-![boardupdate2](https://user-images.githubusercontent.com/84071666/235974312-2bb5193c-b889-401d-82e0-318aa33785bf.PNG)
+![boardupdate1](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/a24179db-19ee-4ed0-8a0d-67bc603b9954)
+![boardupdate2](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/ed7149ef-e25f-438b-9be5-2c88610b9518)
+
+<br><br>
+
+### ⚙ 카테고리,첨부파일 변경 가능 
 
 <br>
 
-### ⚙ 다른 카테고리로 변경 가능 
-![boardupdate3](https://user-images.githubusercontent.com/84071666/235974314-df888c99-3984-4909-a505-efda4273481f.PNG)
+![boardupdate3](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/686192f1-5898-436b-ad6c-fc86d0ff1293)
 ![boardupdate4](https://user-images.githubusercontent.com/84071666/235974318-fc3bfe3b-1f77-4a7a-ab09-f1887c8e249d.PNG)
-![boardupdate5](https://user-images.githubusercontent.com/84071666/235974300-cfeb5959-c208-4cec-998c-161bd275cc5f.PNG)
+
+<br><br>
+
+### ⚙ 수정 결과
+
+<br>
+
+![boardupdate5](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/f6d2d6a9-cc35-4ae3-9801-2b266f68c71a)
+
+<br><br>
 
 ---
 
