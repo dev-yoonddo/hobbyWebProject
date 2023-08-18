@@ -620,12 +620,13 @@
 
 <br>
 
-### ⚙ 카테고리 미선택, 내용 미작성, 작성완료시 알림창 띄우기
+### ⚙ 카테고리 미선택, 내용 미작성, 첨부파일 확장자 확인, 작성완료시 알림창 띄우기
 
 <br>
 
 ![write3-1](https://user-images.githubusercontent.com/84071666/235973490-34370293-899d-4bd0-b3ac-894694b8c0cc.PNG)
 ![write3-2](https://user-images.githubusercontent.com/84071666/235973495-a54f6d3a-73c3-4ad4-9a5b-aeb6ec4dc5b9.PNG)
+![write3-3](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/183a1526-fb04-418d-8035-ac3dfc8ae531)
 ![write3](https://user-images.githubusercontent.com/84071666/235973488-e14e53ba-8bbd-4048-9db7-4749485cb123.PNG)
 
 <br>
@@ -642,7 +643,7 @@
 
 <br>
 
-![view1](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/31a7b1fd-a0a3-4ee6-800c-b62df65f44dd)
+![view1](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/50578393-6ca5-490c-9fac-f00c43453b85)
 ![view2](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/a30bd825-76f2-487f-80b4-18ef28e0c1fc)
 
 <br>
