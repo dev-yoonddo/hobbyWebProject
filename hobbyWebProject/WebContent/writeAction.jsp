@@ -87,10 +87,10 @@
 				script.println("history.back()");
 				script.println("</script>");				
 			}//전달받은 파일이 있으면
-			else if(filename != null && !filename.endsWith(".jar") && !filename.endsWith(".JAR") && !filename.endsWith(".zip") && !filename.endsWith(".ZIP") && !filename.endsWith(".pdf") && !filename.endsWith(".PDF") && !filename.endsWith(".jpg") && !filename.endsWith(".JPG") && !filename.endsWith(".jpeg") && !filename.endsWith(".JPEG") && !filename.endsWith(".png") && !filename.endsWith(".PNG")) {
+			else if(filename != null && !filename.endsWith(".zip") && !filename.endsWith(".ZIP") && !filename.endsWith(".pdf") && !filename.endsWith(".PDF") && !filename.endsWith(".jpg") && !filename.endsWith(".JPG") && !filename.endsWith(".jpeg") && !filename.endsWith(".JPEG") && !filename.endsWith(".png") && !filename.endsWith(".PNG")) {
 				PrintWriter script = response.getWriter();
 				script.println("<script>");
-				script.println("alert('" + filename +  "은(는) 업로드 할 수 없는 형식의 파일입니다.\\njar, zip, pdf, jpg, png파일만 업로드가 가능합니다.')");
+				script.println("alert('" + filename +  "은(는) 업로드 할 수 없는 형식의 파일입니다.\\nzip, pdf, jpg, png파일만 업로드가 가능합니다.')");
 				script.println("history.back()");
 				script.println("</script>");
 			//file.delete();

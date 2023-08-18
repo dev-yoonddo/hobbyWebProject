@@ -67,6 +67,9 @@ table caption{
 	font-size:0;
 	text-indent:-9999px;
 }
+#tr2{
+	height: 450px;
+}
 #tr2 >td , #tr3 > td{
 	padding-top: 50px;
 }
@@ -285,8 +288,11 @@ table caption{
 	.td{
 		width: 35%;
 	}
+	#tr1{
+		height: 100px;
+	}
 	#tr2{
-		height: 250px;
+		height: 200px;
 	}
 	#close-file{
 		top: 0;
@@ -295,9 +301,17 @@ table caption{
 		display: none;
 	}
 	#view-file-2{
-		width: 400px;
+		width: 380px;
+		height: 300px;
 		display: block;
 		padding: 15px;
+	}
+	img{
+		width: auto;
+		height: auto;
+		max-width: 350px;
+		max-height: 300px;
+		float: right;
 	}
 }
 </style>
@@ -423,20 +437,20 @@ String filename = board.getFilename();
 						<td class="td" style="width:20%;"><span>제목</span></td>
 						<td><%=board.getBoardTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></td>
 					</tr>
-					<tr class="tr" id="tr2" height="450px" valign="top">
+					<tr class="tr" id="tr2" valign="top">
 						<td class="td"><span>내용</span></td>
 						<!-- 특수문자 처리 -->
 						<td><%=board.getBoardContent().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></td>
-						<%if(filename != null){%>
+						<!-- 파일이 이미지일때만 서버에 업로드 된 파일 노출하기 -->
+						<%if(filename != null && (filename.endsWith(".jpg") || filename.endsWith(".JPG") || filename.endsWith(".jpeg") || filename.endsWith(".JPEG") || filename.endsWith(".png") || filename.endsWith(".PNG"))){%>
 						<td class="view-file" id="view-file-1" width="40%">
 							<button id="close-file" onclick="closeFile()">X</button>
-							<!-- 서버에 업로드 된 이미지 가져오기 -->
 							<img src="/resources/fileupload/<%=filename%>" width="300px">
 						</td>
 						<%} %>
 					</tr>
 					<!-- 화면이 작아지면 보일 이미지 -->
-					<%if(filename != null){%>
+					<%if(filename != null && (filename.endsWith(".jpg") || filename.endsWith(".JPG") || filename.endsWith(".jpeg") || filename.endsWith(".JPEG") || filename.endsWith(".png") || filename.endsWith(".PNG"))){%>
 					<tr class="tr" id="view-file-2" height="200px">
 						<td width="300px">
 							<img src="/resources/fileupload/<%=filename%>" >

@@ -329,14 +329,14 @@ BoardDTO board = new BoardDAO().getBoardVO(boardID);
 							<span id="afterFile">┃ 파일첨부 :&nbsp;&nbsp;
 								<label for="fileupload" id="click" class="btn-blue">click !</label>&nbsp;&nbsp;
 								<div id="filename"></div>
-								<input type="file" id="fileupload" name="fileupload" accept="image/*" onchange="filename(this)" >
+								<input type="file" id="fileupload" name="fileupload" onchange="filename(this)" >
 							</span>
 						</div>
 					<%}else{ %>
 						<div id="file2">파일첨부 :&nbsp;&nbsp;
 							<label for="fileupload" id="click" class="btn-blue">click !</label>&nbsp;&nbsp;
 							<div id="filename"></div>
-							<input type="file" id="fileupload" name="fileupload" accept="image/*" onchange="filename(this)" >
+							<input type="file" id="fileupload" name="fileupload" onchange="filename(this)" >
 						</div>
 					<%} %>
 						<div id="btn"><button type="submit" class="btn-blue" value="글쓰기"><span>수정하기</span></button></div>
