@@ -40,7 +40,7 @@
 
 ### Database ERD
 
-![ERD](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/6d141aed-f2e5-4f1f-a7bc-2451c4f2136e)
+![ERD](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/6c794c91-01f1-4f7e-b002-03fc628b316d)
 
 <br><br>
 
