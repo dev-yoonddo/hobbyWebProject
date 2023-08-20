@@ -423,52 +423,50 @@ String filename = board.getFilename();
 					</div>
 				</div>
 				<table id="view-table">
-					<!-- 공지사항이면 내용만 출력한다. -->
+					<!-- 공지사항이면 내용만 출력 -->
 					<% if(notice == true){ %>
-					<tr class="tr" id="tr3" height="75%" valign="top">
-						<td style="padding: 30px;"><%=board.getBoardContent().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></td>
-						<%if(filename != null){%>
-						<!-- 서버에 업로드 된 이미지 가져오기 -->
-						<td><img src="/resources/fileupload/<%=filename%>" width="300px"></td>
-						<%} %>
-					</tr>
+						<tr class="tr" id="tr3" height="75%" valign="top">
+							<td style="padding: 30px;"><%=board.getBoardContent().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></td>
+							<!-- 파일이 이미지일때만 서버에 업로드 된 파일 노출하기 -->
+							<%if(filename != null && (filename.endsWith(".jpg") || filename.endsWith(".JPG") || filename.endsWith(".jpeg") || filename.endsWith(".JPEG") || filename.endsWith(".png") || filename.endsWith(".PNG"))){%>
+							<td class="view-file" id="view-file-1" width="40%">
+								<button id="close-file" onclick="closeFile()">X</button>
+								<img src="/resources/fileupload/<%=filename%>" width="300px">
+							</td>
+							<%} %>
+						</tr>
+					<!-- 기본 게시글 -->
 					<%}else{%>					
-					<tr class="tr" id="tr1" height="150px" style="border-bottom: 1px solid #C0C0C0;">
-						<td class="td" style="width:20%;"><span>제목</span></td>
-						<td><%=board.getBoardTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></td>
-					</tr>
-					<tr class="tr" id="tr2" valign="top">
-						<td class="td"><span>내용</span></td>
-						<!-- 특수문자 처리 -->
-						<td><%=board.getBoardContent().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></td>
-						<!-- 파일이 이미지일때만 서버에 업로드 된 파일 노출하기 -->
-						<%if(filename != null && (filename.endsWith(".jpg") || filename.endsWith(".JPG") || filename.endsWith(".jpeg") || filename.endsWith(".JPEG") || filename.endsWith(".png") || filename.endsWith(".PNG"))){%>
-						<td class="view-file" id="view-file-1" width="40%">
-							<button id="close-file" onclick="closeFile()">X</button>
-							<img src="/resources/fileupload/<%=filename%>" width="300px">
-						</td>
-						<%} %>
-					</tr>
-					<!-- 화면이 작아지면 보일 이미지 -->
-					<%if(filename != null && (filename.endsWith(".jpg") || filename.endsWith(".JPG") || filename.endsWith(".jpeg") || filename.endsWith(".JPEG") || filename.endsWith(".png") || filename.endsWith(".PNG"))){%>
-					<tr class="tr" id="view-file-2" height="200px">
-						<td width="300px">
-							<img src="/resources/fileupload/<%=filename%>" >
-						</td>
-						<td width="50px;">
-							<button id="close-file" onclick="closeFile()">X</button>
-						</td>
-					</tr>
-					<%} %>
-					<%} %>
-					<!-- <tr>
-						<td class="td"><span>조회수</span></td>
-						<td colspan="2"board.getViewCount()+1)+1 %></td>
-					</tr>
-					<tr>
-						<td class="td"><span>하트</span></td>
-						<td colspan="2"board.getHeartCount()t() %></td>
-					</tr> -->
+						<tr class="tr" id="tr1" height="150px" style="border-bottom: 1px solid #C0C0C0;">
+							<td class="td" style="width:20%;"><span>제목</span></td>
+							<td><%=board.getBoardTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></td>
+						</tr>
+						<tr class="tr" id="tr2" valign="top">
+							<td class="td"><span>내용</span></td>
+							<!-- 특수문자 처리 -->
+							<td><%=board.getBoardContent().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></td>
+							<!-- 파일이 이미지일때만 서버에 업로드 된 파일 노출하기 -->
+							<%if(filename != null && (filename.endsWith(".jpg") || filename.endsWith(".JPG") || filename.endsWith(".jpeg") || filename.endsWith(".JPEG") || filename.endsWith(".png") || filename.endsWith(".PNG"))){%>
+							<td class="view-file" id="view-file-1" width="40%">
+								<button id="close-file" onclick="closeFile()">X</button>
+								<img src="/resources/fileupload/<%=filename%>" width="300px">
+							</td>
+							<%} %>
+						</tr>
+						<!-- 공지사항을 포함한 모든 게시글의 화면이 작아지면 -->
+						<%if(notice == true || notice == false){
+							if(filename != null && (filename.endsWith(".jpg") || filename.endsWith(".JPG") || filename.endsWith(".jpeg") || filename.endsWith(".JPEG") || filename.endsWith(".png") || filename.endsWith(".PNG"))){%>
+							<tr class="tr" id="view-file-2" height="200px">
+								<td width="300px">
+									<img src="/resources/fileupload/<%=filename%>" >
+								</td>
+								<td width="50px;">
+									<button id="close-file" onclick="closeFile()">X</button>
+								</td>
+							</tr>
+							<%}
+						 }
+					}%>
 				</table>
 			</div><br>
 			<div id="row2" >
