@@ -23,8 +23,7 @@
  	String userID = null;
  	if(session.getAttribute("userID") != null){
  		userID = (String) session.getAttribute("userID");
- 	}
-	
+ 	}	
  	if(userID == null){
  		PrintWriter script = response.getWriter();
  		script.println("<script>");
@@ -37,7 +36,6 @@
 	 	if (request.getParameter("boardID") != null){
 	 		boardID = Integer.parseInt(request.getParameter("boardID"));
 	 	}
-	 	
 	 	if (boardID == 0){
 	 		PrintWriter script = response.getWriter();
 	 		script.println("<script>");

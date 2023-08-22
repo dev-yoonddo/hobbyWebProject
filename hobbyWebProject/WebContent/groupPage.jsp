@@ -419,10 +419,12 @@ function showPasswordPrompt(grID, grPassword, grAvailable, member, leader) {
 			        if(count == 5){ //비밀번호가 5회 오류이면 비밀번호 찾기 창 띄우기
 		    			searchPW = confirm("비밀번호 5회 오류입니다. 비밀번호 찾기를 하시겠습니까?");
 		    			if(searchPW){ //확인 클릭시 비밀번호 찾기 팝업
-		    	          	window.open("findPwPopUp" , "findPassword", "width=450, height=500, top=50%, left=50%") ;
+		    	          	window.open("findPwPopUp?groupID=" + grID , "findPassword", "width=450, height=450, top=50%, left=50%") ;
+		    				break;
 		    			}else{ //취소
 		    				break;
 		    			}
+		    			searchPW = 0; //초기화
 			        }
 			    }
 	    		//비밀번호가 일치하면 접속

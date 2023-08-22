@@ -44,7 +44,7 @@ public class GroupDAO {
 	}
 	//그룹 생성하기
 	public int createGroup(String groupName, String groupPassword, String userID, int groupNoP) {
-		String SQL ="INSERT INTO `group` VALUES(?, ?, ?, ?, ?, ?)";
+		String SQL ="INSERT INTO `group` VALUES(?, ?, ?, ?, ?, ?, ?)";
 		try {
 			PreparedStatement pstmt=conn.prepareStatement(SQL);
 			pstmt.setInt(1, getNext());
@@ -53,6 +53,7 @@ public class GroupDAO {
 			pstmt.setString(4, userID);
 			pstmt.setInt(5, 1);
 			pstmt.setInt(6, groupNoP);
+			pstmt.setString(7, null);
 			return pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -75,6 +76,7 @@ public class GroupDAO {
 				grp.setUserID(rs.getString(4));
 				grp.setGroupAvailable(rs.getInt(5));
 				grp.setGroupNoP(rs.getInt(6));
+				grp.setGroupNotice(rs.getString(7));
 				list.add(grp);
 			}
 		}catch(Exception e) {
@@ -99,6 +101,7 @@ public class GroupDAO {
 				grp.setUserID(rs.getString(4));
 				grp.setGroupAvailable(rs.getInt(5));
 				grp.setGroupNoP(rs.getInt(6));
+				grp.setGroupNotice(rs.getString(7));
 				list.add(grp);
 			}
 		}catch(Exception e) {
@@ -122,6 +125,7 @@ public class GroupDAO {
 				grp.setUserID(rs.getString(4));
 				grp.setGroupAvailable(rs.getInt(5));
 				grp.setGroupNoP(rs.getInt(6));
+				grp.setGroupNotice(rs.getString(7));
 				list.add(grp);
 			}
 		}catch(Exception e) {
@@ -145,6 +149,7 @@ public class GroupDAO {
 				grp.setUserID(rs.getString(4));
 				grp.setGroupAvailable(rs.getInt(5));
 				grp.setGroupNoP(rs.getInt(6));
+				grp.setGroupNotice(rs.getString(7));
 				return grp;
 			}
 		}catch(Exception e) {
@@ -168,6 +173,24 @@ public class GroupDAO {
 		return false;
 	}*/
 	
+	//공지사항 등록하기
+	public int notice(String groupNotice, int groupID , String userID) {
+		String SQL = "UPDATE `group` SET groupNotice = ? WHERE groupID = ? AND userID = ? ";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, groupNotice);
+			pstmt.setInt(2, groupID);
+			pstmt.setString(3, userID);
+			//성공적으로 수행했다면 0이상의 결과 반환
+			int result = pstmt.executeUpdate();
+			//System.out.println(result);
+			return result;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return -1; //데이터베이스 오류
+	}
+		
 	//삭제하기
 	public int delete(int groupID) {
 		String SQL = "UPDATE `group` SET groupAvailable = 0 WHERE groupID = ? ";

@@ -8,6 +8,7 @@ public class GroupDTO {
 	private String userID;
 	private int groupAvailable;
 	private int groupNoP;
+	private String groupNotice;
 	
 	
 	public int getGroupID() {
@@ -45,6 +46,12 @@ public class GroupDTO {
 	}
 	public void setGroupNoP(int groupNoP) {
 		this.groupNoP = groupNoP;
+	}
+	public String getGroupNotice() {
+		return groupNotice;
+	}
+	public void setGroupNotice(String groupNotice) {
+		this.groupNotice = groupNotice;
 	}
 	
 	

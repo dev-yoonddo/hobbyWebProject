@@ -258,7 +258,7 @@ String bdcategory = request.getParameter("category");
 							<td><textarea placeholder="제목을 입력하세요" name="boardTitle" maxlength="50"></textarea></td>
 						</tr>
 						<tr>
-							<td><textarea placeholder="내용을 입력하세요" name="boardContent" maxlength="2048" style="height: 350px;"></textarea></td>
+							<td><textarea placeholder="내용을 입력하세요" name="boardContent" maxlength="2048" style="height: 350px; "></textarea></td>
 						</tr>
 					</tbody>
 				</table>

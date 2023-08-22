@@ -70,9 +70,35 @@ h2{
 	display: flex;
 	float: right;
 }
+#write-notice{
+	display: none;
+	width: 500px;
+	height: 150px;
+}
+#text-notice{
+	width: 500px;
+	height: 100px;
+	font-size: 12pt;
+}
+#member{
+	background-color: white;
+	color: #2E2F49;
+	padding: 10px;
+	position: relative;
+}
 #member-list{
 	width: 500px;
 	height: auto;
+}
+#large{
+	position: absolute;
+	right:20px;
+}
+#small{
+	position: absolute;
+	right:20px;
+	padding: 5px;
+	display: none;
 }
 @media screen and (max-width:850px) {
 
@@ -119,12 +145,29 @@ h2{
 	#btn-msg > span{
 		width: 70px;
 	}
-	#member-list{
+	#write-notice{
 		width: 350px;
+	}
+	#text-notice{
+		width: 330px;
+		font-size: 10pt;
+	}
+	#member-list{
+		width: 330px;
 		height: auto;
+	}
+	#ntc-cpl{
+		margin-right: 30px;
 	}
 	#member{
 		font-size: 10pt;
+	}
+	#large{
+		display: none;
+	}
+	#small{
+		display: inline-block;
+		padding-bottom: 20px;
 	}
 }
 </style>
@@ -169,8 +212,9 @@ if(group.getGroupAvailable() == 0){
 	script.println("history.back()");
 	script.println("</script>");
 }
+boolean leader = userID.equals(group.getUserID());
 //그룹을 만든 userID가 아닐때 (그룹을 만든 userID는 접속가능)
-	if(!userID.equals(group.getUserID())){
+	if(!leader){
 		//접속하는 userID의 데이터가 member에 없으면
 		if( member == null){
 		PrintWriter script = response.getWriter();
@@ -209,7 +253,7 @@ ArrayList<MemberDTO> mblist = mbDAO.getList(groupID); //해당 그룹의 멤버�
 				
 				<div id="title-btn">
 					<!-- 그룹을 만든 userID일때는 메세지확인, 그룹삭제 버튼 생성 -->
-					<% if(userID.equals(group.getUserID())){ %>
+					<% if(leader){ %>
 						<button type="button" class="btn-blue" id="btn-msg" onclick="viewMsgList('<%= group.getGroupID()%>')"><span>메세지확인</span></button>
 						<button type="button" class="btn-blue" id="btn-del" onclick="if(confirm('정말로 삭제하시겠습니까?')){location.href='groupDeleteAction.jsp?groupID=<%=groupID%>'}"><span>그룹삭제</span></button>
 					
@@ -223,16 +267,33 @@ ArrayList<MemberDTO> mblist = mbDAO.getList(groupID); //해당 그룹의 멤버�
 			<hr style="width: 100%; height: 2px; background-color: black;"><br>
 			Member : <%= mblist.size() %>명&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Leader : <%= group.getUserID() %>
 		</div>
-	
+		<!-- 리더는 공지사항 입력 가능 -->
+		<%if(leader){%>
+		<div id="insert-notice" onclick="ntcAction()">공지사항 등록하기</div>
+		<div id="write-notice"> 
+	          <form method="post" action="noticeAction.jsp?groupID=<%=groupID%>">
+		          <table style="height: 100px; border-style: none;">
+		             <tbody>
+		                <tr>
+		                   <td><input type="text" placeholder="내용 입력하세요" name="groupNotice" maxlength="100" id="text-notice"></td>
+		                </tr>
+		             </tbody>
+		          </table>
+		      <button type="submit" class="btn-blue" id="ntc-cpl"><span>완료</span></button>
+		      </form>
+		   </div><br><br>
+		<%} %>
 		<div id="member-list">
 		<%
 			for(int i=0; i<mblist.size(); i++){
 		%>
-		<div id="member" style=" background-color: white; color: #2E2F49; padding: 10px; position: relative;">
+		<div id="member">
 			<div id="user-name">
-				<div style="border-radius: 20px; color: black; border-bottom-left-radius:0; border-bottom-right-radius: 0; background-color: #D6E0FC; padding: 11px;">
+				<div style="border-radius: 20px; color: black; border-bottom-left-radius:0; border-bottom-right-radius: 0; background-color: #D6E0FC; padding: 15px;">
 				<span><%= mblist.get(i).getMemberID() %>님이 가입했습니다</span>
-				<span style="position: absolute; right:20px;"><%= mblist.get(i).getMbDate().substring(0,11)+mblist.get(i).getMbDate().substring(11,13)+"시"+mblist.get(i).getMbDate().substring(14,16)+"분" %></span>
+				<span id="large" ><%= mblist.get(i).getMbDate().substring(0,11)+mblist.get(i).getMbDate().substring(11,13)+"시"+mblist.get(i).getMbDate().substring(14,16)+"분" %></span>
+				<!-- 화면이 작아지면 시간은 뺀다 -->
+				<span id="small" ><%= mblist.get(i).getMbDate().substring(0,11)%></span>
 				</div>
 				<div id="user-content" style="height: auto; border-width: 1px; border-color: #D6E0FC; border-radius: 20px; border-style: solid; border-top-left-radius: 0; border-top-right-radius: 0; background-color: white; padding: 10px; margin-top: 10px;">
 				<%= mblist.get(i).getMbContent() %>
@@ -254,6 +315,12 @@ function viewMsgList(groupID){
 function sendMSG(groupID) {
    	//팝업창을 열때 groupID값을 넘겨준다.
    	window.open("sendMsgPopUp?groupID=" + groupID , "MESSAGE", "width=500, height=500, top=50%, left=50%") ;
+}
+//공지사항 등록하기를 클릭하면 텍스트박스 노출
+function ntcAction(){
+	document.getElementById('write-notice').style.display = 'block';
+	document.getElementById('text-notice').style.display = 'block';
+	document.getElementById('insert-notice').style.display = 'none';
 }
 </script>
 <script>
