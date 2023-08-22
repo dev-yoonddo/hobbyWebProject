@@ -36,11 +36,11 @@
 - Backend : Java, Spring
 - Infra : AWS (EC2, RDS, Route53, ELB, ALB, ACM)
 
-<br>
+<br><br>
 
 ### Database ERD
 
-![ERD](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/6c794c91-01f1-4f7e-b002-03fc628b316d)
+![ERD](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/0c64a69b-c09a-4e93-9886-9ca130fcb229)
 
 <br><br>
 
@@ -880,6 +880,29 @@
 
 ![create4](https://user-images.githubusercontent.com/84071666/236118953-7b07b4e8-5a80-4924-adb3-5e1cece091d1.PNG)
 
+<br><br>
+
+### ⚙ 그룹 리더에게만 보이는 공지사항 작성 버튼클릭시 텍스트 박스 생성
+
+<br>
+
+![groupnotice1](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/e96c82a8-291f-4c3f-b94b-7e75451eb007)
+
+![groupnotice2](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/d801cf33-2fe5-4c88-800f-d1dba7797c66)
+
+![groupnotice3](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/a0bb74c3-ac5a-4bf9-befe-69e822b6ca23)
+
+![groupnotice4](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/1b5d6d25-767f-48a7-8d70-6bdb7986ad87)
+
+<br>
+
+### ⚙ 작성완료 후 그룹페이지에 출력
+
+<br>
+
+![groupnotice5](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/50e46fa7-abfd-4ffc-a6c4-fe97d085d26a)
+
+
 ---
 
 <br><br>
@@ -960,12 +983,12 @@
 
 ![access1](https://user-images.githubusercontent.com/84071666/236120122-b697ac25-6e63-4fd1-a26b-cdc4beae9103.PNG)
 
-<br>
+<br><br>
 
 ### ⚙ 그룹에 가입하지 않은 사람은 접속 불가
 ![그룹수정1](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/91febf94-f767-4ac5-9152-1a63cbada4bb)
 
-<br>
+<br><br>
 
 ### ⚙ 가입한 유저에게 입력창을 띄우고 비밀번호가 일치할 때 까지 반복
 
@@ -975,7 +998,34 @@
 <img src="https://user-images.githubusercontent.com/84071666/236120124-b565985e-d3ca-44fa-9aa0-69ba34558d30.PNG">
 </div>
 
+<br><br>
+
+### ⚙ 비밀번호 5회 이상 입력 오류시 비밀번호 찾기
+
 <br>
+
+![findpw](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/ed436548-592c-4965-9582-23383776e059)
+
+<div style="display: flex;">
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/8ef13db8-9c65-4c8b-9282-deeacb3c504c.PNG" width="48%">
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/819c875e-1206-47da-91d6-0a51b056a0b9.PNG" width="48%">
+</div>
+
+<br><br>
+
+### ⚙ 빈칸 유무, 정보 일치 검사 후 비밀번호 알림
+
+<br>
+
+<div style="display: flex;">
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/632853f3-67c3-455c-86c8-beccc920eb98.PNG" width="48%">
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/8e056288-93aa-4544-b3cf-92c2a84668ef.PNG" width="48%">
+</div>
+
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/344d7050-579d-47b0-aeb9-8bbf53f5b29f.PNG" width="48%">
+
+
+<br><br>
 
 ### ⚙ 접속한 유저가 그룹생성자면 메시지확인&그룹삭제 버튼, 그룹가입자면 메시지전송&그룹탈퇴 버튼 생성
 
@@ -986,7 +1036,7 @@
 <img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/8adb6285-13a4-412d-99b7-be155f1cd674.PNG" width="32%">
 </div>
 
-<br>
+<br><br>
 
 ---
 
@@ -1022,6 +1072,8 @@
 <img src="https://user-images.githubusercontent.com/84071666/236124028-ce02b9ea-a5e7-4857-8e8b-394aeacb6fc9.PNG" width="48%">
 <img src="https://user-images.githubusercontent.com/84071666/236124022-610fb714-736b-4e7a-941c-ccf1c60bd954.PNG" width="48%">
 </div>
+
+<br><br>
 
 ---
 
@@ -1091,7 +1143,7 @@
 
 ![btn-member3](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/b8ebaddd-51e7-41b0-9590-8204cc25344a)
 
-<br>
+<br><br>
 
 ### ⚙ 해당 그룹이 비활동중이면 메시지 주고받기 불가
 
