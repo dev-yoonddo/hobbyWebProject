@@ -107,24 +107,26 @@ section{
 	padding: 0;
 	z-index: 1;
 }
+/*화면 넓을 때 스크롤시 header 색상 변경*/
 .active{
 	background-color: white;
-	transition-duration: 0.5s;
-	transition-timing-function: ease;
+	transition-duration: 1s;
+	transition-timing-function: linear;
 	
-	-webkit-transition-duration:0.4s;
-	-webkit-transition-timing-function:ease;
-}
-.navbar{
-	height: auto;
+	-webkit-transition-duration:1s;
+	-webkit-transition-timing-function: linear;
 }
 .de-active{
 	background-color: none;
 	transition-duration: 0.5s;
-	transition-timing-function: ease;
+	transition-timing-function: linear;
 	
-	-webkit-transition-duration:0.4s;
-	-webkit-transition-timing-function:ease;
+	-webkit-transition-duration:0.5s;
+	-webkit-transition-timing-function: linear;
+}
+/*-----------------------------------------*/
+.navbar{
+	height: auto;
 }
 .navbar_left{
 	justify-content: flex-start;
@@ -177,7 +179,6 @@ section{
 	font-size: 20px;
 	color: #000000;
 	cursor: pointer;
-	transition: .3s ease-in-out;
 }
 .container{
 	z-index: 1;
@@ -192,6 +193,7 @@ section{
 	    background-color: white;
 	}
 	.navbar_left{
+		width: 100%;
 		flex-direction: column;
 		padding-left: 30px;
 	}
@@ -204,8 +206,6 @@ section{
 	.navbar_menu li{
 		width: 100%;
 		text-align: center;
-		padding-top: 10px;
-		padding-bottom: 10px;
 	}
 	.navbar_login{
 		display: none;
@@ -215,9 +215,33 @@ section{
 	.navbar_toggleBtn{
 		display: block;
 	}
+	/*display:flex로 화면에 표시되도록 한다.*/
 	.navbar_menu.active,
 	.navbar_login.active {
 		display: flex;
+     	animation: toggleMenu 1s ease forwards;
+	}
+	.navbar_menu.deactive,
+	.navbar_login.deactive {
+     	animation: toggleMenuOut 1s ease forwards;
+	}
+	@keyframes toggleMenu {
+	  from {
+	    margin-left: -100%;
+	  }
+	
+	  to {
+	    margin-left: 0%;
+	  }
+	}
+	@keyframes toggleMenuOut {
+	  from {
+	    margin-left: 0%;
+	  }
+	
+	  to {
+	    margin-left: -130%;
+	  }
 	}
 	section{
 		justify-content: center;

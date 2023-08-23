@@ -33,6 +33,7 @@ String thisPage = request.getParameter("thisPage");
 				<%
 					}
 				%>
+				<li><a href="shop" class ="menu">SHOP</a></li>
 			</ul>
 		</nav>
 			<ul class="navbar_login" >
@@ -50,9 +51,10 @@ String thisPage = request.getParameter("thisPage");
 					}
 				%>
 			</ul>
-			<a onclick="toggleAct()" class="navbar_toggleBtn" id="toggleicon">
+			<a class="navbar_toggleBtn" id="toggleicon">
 				<i class="fa-solid fa-bars"></i>
 			</a>
+			<input type="checkbox" id="toggleDeActive" hidden="hidden">
 	</nav>
 </div>
 

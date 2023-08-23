@@ -1,6 +1,8 @@
 <%@page import="group.GroupDAO"%>
 <%@page import="group.GroupDTO"%>
 <%@page import="java.io.PrintWriter"%>
+<%@page import="org.apache.tomcat.jni.Directory"%>
+
 <%
 	request.setCharacterEncoding("UTF-8");
 %>
@@ -19,6 +21,7 @@
 </head>
 <body>
  <%
+ 
 	PrintWriter script = response.getWriter();
  	String userID = null;
  	if(session.getAttribute("userID") != null){
@@ -35,33 +38,35 @@
 	 	if (request.getParameter("groupID") != null){
 	 		groupID = Integer.parseInt(request.getParameter("groupID"));
 	 	}
-		if (groupID == 0){
+	 	if (groupID == 0){
 	 		script.println("<script>");
 	 		script.println("alert('유효하지 않은 그룹입니다.')");
 	 		script.println("history.back()");
 	 		script.println("</script>");
 	 	}
-	 	if(group.getGroupNotice() == null) {
+	 	else{
+	 		if(group.getGroupNotice() == null) {
 			script.println("<script>");
 			script.println("alert('공지 내용을 입력해주세요')");
 			script.println("history.back()");
 			script.println("</script>");
-		}else{
-			GroupDAO groupDAO = new GroupDAO();
-			int result = groupDAO.notice(group.getGroupNotice(), groupID ,userID);
-			//System.out.print(result);
-			if(result == -1){
-				script.println("<script>");
-				script.println("alert('작성 실패')");
-				script.println("history.back()");
-				script.println("</script>");
 			}else{
-				script.println("<script>");
-				script.println("alert('작성이 완료되었습니다.')");
-				script.println("location.href='groupView?groupID='"+ groupID + "'");
-				script.println("</script>");
+	 			int result = 0;
+				GroupDAO groupDAO = new GroupDAO();
+				result = groupDAO.noticeUpdate(groupID, group.getGroupNotice());
+				System.out.print(result);
+				if(result > 0){
+					script.println("<script>");
+					script.println("alert('작성이 완료되었습니다.')");
+					script.println("location.href='groupView?groupID="+ groupID + "'");
+					script.println("</script>");
+				}else{
+					script.println("<script>");
+					script.println("alert('작성 실패')");
+					script.println("history.back()");
+					script.println("</script>");
+				}
 			}
-			
 	 	}
  	}
  %>

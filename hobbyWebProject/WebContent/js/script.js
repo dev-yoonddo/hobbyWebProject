@@ -82,7 +82,7 @@ mouseCursor.style.top = e.pageY - scrollY + "px";
 // });
 
   
-
+/*
 //navbar togglebuttton 눌렀을 때 메뉴 펼치고 접기
 const toggleBtn = document.querySelector('.navbar_toggleBtn');
 const menu = document.querySelector('.navbar_menu');
@@ -93,9 +93,42 @@ toggleBtn.addEventListener('click', () =>{
 	icons.classList.toggle('active');
 
 });
+*/
 
+//화면 축소 header animation 
+$(function(){
+	var click = 0;
+	//토글버튼을 클릭했을 때
+	$('.navbar_toggleBtn').on('click', function(){
+		//click == 0이면 접혀있는상태
+    	if(click == 0){
+    		//deactive class 지우고 active class 추가하기 (css에서 active에 애니메이션 효과 주기)
+    		$('.navbar_toggleBtn').removeClass("deactive");
+     		$('.navbar_menu').removeClass("deactive");
+ 	        $('.navbar_login').removeClass("deactive");      
+    		//$('#toggleDeActive').prop('checked',false); --> 체크박스로 시도해봄
+    		$('.navbar_toggleBtn').addClass("active");
+	        $('.navbar_menu').addClass("active");
+	        $('.navbar_login').addClass("active");
+	        click ++; //click = 1이면 펼쳐있는 상태
+    	}else{
+    		//click != 0이면 토글버튼을 클릭했을 때 deactive class를 추가하고 active class 지우기 (css에서 deactive에 애니메이션 효과 주기)
+    		//$('#toggleDeActive').prop('checked',true);
+    		$('.navbar_toggleBtn').addClass("deactive");
+	        $('.navbar_menu').addClass("deactive");
+	        $('.navbar_login').addClass("deactive");
+	        //deactive의 애니메이션 효과가 끝나고 난 후 메뉴 창을 닫기 위해 시간차 두기
+    		setTimeout(function(){
+				$('.navbar_toggleBtn').removeClass("active");
+	    		$('.navbar_menu').removeClass("active");
+		        $('.navbar_login').removeClass("active");
+		        click --; //다시 click - 1 해서 접어있는 상태를 알려주기
+    		}, 800);
+    	}
+    })
+});
 
-//스크롤 시 header color change
+//큰 화면 스크롤 시 header color change
 $(function(){
     // 스크롤 시 header fade-in
     $(document).on('scroll', function(){

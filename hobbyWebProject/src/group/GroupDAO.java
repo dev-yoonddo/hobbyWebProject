@@ -174,13 +174,12 @@ public class GroupDAO {
 	}*/
 	
 	//공지사항 등록하기
-	public int notice(String groupNotice, int groupID , String userID) {
-		String SQL = "UPDATE `group` SET groupNotice = ? WHERE groupID = ? AND userID = ? ";
+	public int noticeUpdate(int groupID , String groupNotice) {
+		String SQL = "UPDATE `group` SET groupNotice = ? WHERE groupID = ?";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, groupNotice);
 			pstmt.setInt(2, groupID);
-			pstmt.setString(3, userID);
 			//성공적으로 수행했다면 0이상의 결과 반환
 			int result = pstmt.executeUpdate();
 			//System.out.println(result);

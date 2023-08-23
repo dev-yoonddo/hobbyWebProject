@@ -226,6 +226,22 @@
     <url-pattern>/findPwPopUp</url-pattern>
   </servlet-mapping>
   <servlet>
+    <servlet-name>noticeAction.jsp</servlet-name>
+    <jsp-file>/noticeAction.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>noticeAction.jsp</servlet-name>
+    <url-pattern>/noticeAction</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>shop.jsp</servlet-name>
+    <jsp-file>/shop.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>shop.jsp</servlet-name>
+    <url-pattern>/shop</url-pattern>
+  </servlet-mapping>
+  <servlet>
     <servlet-name>downloadAction</servlet-name>
     <servlet-class>file.downloadAction</servlet-class>
   </servlet>
@@ -233,4 +249,5 @@
     <servlet-name>downloadAction</servlet-name>
     <url-pattern>/downloadAction/</url-pattern>
   </servlet-mapping>
+  
 </web-app>

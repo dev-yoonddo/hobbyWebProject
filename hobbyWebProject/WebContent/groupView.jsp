@@ -28,8 +28,11 @@
 
 </head>
 <style>
+body{
+	height: auto;
+}
 section{
-	height: 800px;
+	height: auto;
 	padding-top: 150px;
 	padding-left: 100px;
 	padding-right: 100px;
@@ -57,7 +60,9 @@ h2{
 	height: auto;
 }
 #group-info{
-	height: 300px;
+	height: auto;
+	max-height: 250px;
+	margin-bottom: 50px;
 }
 .btn-blue{
 	width: 100px;
@@ -81,6 +86,7 @@ h2{
 	font-size: 12pt;
 }
 #member{
+	height: auto;
 	background-color: white;
 	color: #2E2F49;
 	padding: 10px;
@@ -97,8 +103,35 @@ h2{
 #small{
 	position: absolute;
 	right:20px;
-	padding: 5px;
 	display: none;
+}
+#group-info{
+	height: auto;
+	margin-bottom: 0;
+}
+#info{
+	display: flex; 
+	width: 100%; 
+	height: auto; 
+	max-height: 200px;
+}
+#notice-btn{
+	width: 20%; 
+	text-align: right;
+}
+#notice{
+	height: auto;
+	font-size: 25pt; 
+	font-weight: bold;
+	display: flex;
+	margin: 0 auto;
+	padding: 10px;
+	padding-bottom: 50px; 
+}
+#detail{
+	height: auto;
+	margin-top: 50px;
+	display: inline-table;
 }
 @media screen and (max-width:850px) {
 
@@ -168,6 +201,19 @@ h2{
 	#small{
 		display: inline-block;
 		padding-bottom: 20px;
+	}
+	#info{
+		display: inline;
+		margin-bottom: 0;
+	}
+	#insert-notice{
+		width: 100%; text-align: left; padding-top: 10px;
+	}
+	#detail{
+		margin-top: 10px;
+	}
+	#notice{
+		display: inline-table;
 	}
 }
 </style>
@@ -265,44 +311,68 @@ ArrayList<MemberDTO> mblist = mbDAO.getList(groupID); //해당 그룹의 멤버�
 				</div>
 			</div>
 			<hr style="width: 100%; height: 2px; background-color: black;"><br>
-			Member : <%= mblist.size() %>명&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Leader : <%= group.getUserID() %>
-		</div>
-		<!-- 리더는 공지사항 입력 가능 -->
-		<%if(leader){%>
-		<div id="insert-notice" onclick="ntcAction()">공지사항 등록하기</div>
-		<div id="write-notice"> 
-	          <form method="post" action="noticeAction.jsp?groupID=<%=groupID%>">
-		          <table style="height: 100px; border-style: none;">
-		             <tbody>
-		                <tr>
-		                   <td><input type="text" placeholder="내용 입력하세요" name="groupNotice" maxlength="100" id="text-notice"></td>
-		                </tr>
-		             </tbody>
-		          </table>
-		      <button type="submit" class="btn-blue" id="ntc-cpl"><span>완료</span></button>
-		      </form>
-		   </div><br><br>
-		<%} %>
-		<div id="member-list">
-		<%
-			for(int i=0; i<mblist.size(); i++){
-		%>
-		<div id="member">
-			<div id="user-name">
-				<div style="border-radius: 20px; color: black; border-bottom-left-radius:0; border-bottom-right-radius: 0; background-color: #D6E0FC; padding: 15px;">
-				<span><%= mblist.get(i).getMemberID() %>님이 가입했습니다</span>
-				<span id="large" ><%= mblist.get(i).getMbDate().substring(0,11)+mblist.get(i).getMbDate().substring(11,13)+"시"+mblist.get(i).getMbDate().substring(14,16)+"분" %></span>
-				<!-- 화면이 작아지면 시간은 뺀다 -->
-				<span id="small" ><%= mblist.get(i).getMbDate().substring(0,11)%></span>
-				</div>
-				<div id="user-content" style="height: auto; border-width: 1px; border-color: #D6E0FC; border-radius: 20px; border-style: solid; border-top-left-radius: 0; border-top-right-radius: 0; background-color: white; padding: 10px; margin-top: 10px;">
-				<%= mblist.get(i).getMbContent() %>
-				</div>
+			<div id="info">
+				<span style="width: 80%">
+				Member : <%= mblist.size() %>명&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Leader : <%= group.getUserID() %>
+				</span>
+				<span id="notice-btn" >
+				<%
+					if(leader){
+						//등록된 공지사항이 없으면 등록하기, 있으면 변경하기로 출력
+						if(group.getGroupNotice() == null){
+				%>
+				<div id="insert-notice" onclick="ntcAction()">공지사항 등록하기</div>
+				<% 		}else{ %>
+				<div id="insert-notice" onclick="ntcAction()">공지사항 변경하기</div>
+				<%		}
+					}
+				%>
+				</span>
+				<!-- 리더는 공지사항 입력/변경 가능 -->	
+				<div id="write-notice" style="float: right;"> 
+		          <form method="post" action="noticeAction?groupID=<%=groupID%>">
+			          <table style="height: 100px; border-style: none;">
+			             <tbody>
+			                <tr>
+			                   <td><input type="text" placeholder="내용 입력하세요" name="groupNotice" maxlength="100" id="text-notice"/></td>
+			                </tr>
+			             </tbody>
+			          </table>
+			      <button type="submit" class="btn-blue" id="ntc-cpl"><span>완료</span></button>
+			      </form>
+			   </div><br><br>
 			</div>
-		</div><br>
-		<%
-			}
-		%>
+		</div>
+		<div id="detail">
+			<div id="notice">
+				<i class="fa-regular fa-bell"></i>&nbsp;그룹 공지&nbsp;&nbsp;&nbsp;
+				<%if(group.getGroupNotice() != null){ %>
+				<div style="border-radius: 20px; padding: 10px; background-color: #DCDCDC; max-width: 750px;">
+				<span style="font-size: 18pt;"><%=group.getGroupNotice()%></span>
+				</div>
+				<%} %>
+			</div>
+			<div id="member-list">
+			<%
+				for(int i=0; i<mblist.size(); i++){
+			%>
+				<div id="member">
+					<div id="user-name">
+						<div style="border-radius: 20px; color: black; border-bottom-left-radius:0; border-bottom-right-radius: 0; background-color: #D6E0FC; padding: 15px;">
+						<span><%= mblist.get(i).getMemberID() %>님이 가입했습니다</span>
+						<span id="large" ><%= mblist.get(i).getMbDate().substring(0,11)+mblist.get(i).getMbDate().substring(11,13)+"시"+mblist.get(i).getMbDate().substring(14,16)+"분" %></span>
+						<!-- 화면이 작아지면 시간은 뺀다 -->
+						<span id="small" ><%= mblist.get(i).getMbDate().substring(0,11)%></span>
+						</div>
+						<div id="user-content" style="height: auto; border-width: 1px; border-color: #D6E0FC; border-radius: 20px; border-style: solid; border-top-left-radius: 0; border-top-right-radius: 0; background-color: white; padding: 10px; margin-top: 10px;">
+						<%= mblist.get(i).getMbContent() %>
+						</div>
+					</div>
+				</div><br>
+			<%
+				}
+			%>
+			</div>
 		</div>
 	</div>
 </section>
