@@ -190,7 +190,10 @@ section{
 	.navbar{
 		flex-direction: column;
 	    padding: 15px;
-	    background-color: white;
+	    background-color: none;
+	}
+	.navbar.active{
+		background-color: white;
 	}
 	.navbar_left{
 		width: 100%;
@@ -228,10 +231,12 @@ section{
 	@keyframes toggleMenu {
 	  from {
 	    margin-left: -100%;
+	    top: -100%;
 	  }
 	
 	  to {
 	    margin-left: 0%;
+	    top: 50%;
 	  }
 	}
 	@keyframes toggleMenuOut {

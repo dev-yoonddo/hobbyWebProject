@@ -103,10 +103,12 @@ $(function(){
 		//click == 0이면 접혀있는상태
     	if(click == 0){
     		//deactive class 지우고 active class 추가하기 (css에서 active에 애니메이션 효과 주기)
+    		$('.navbar').removeClass("deactive");
     		$('.navbar_toggleBtn').removeClass("deactive");
      		$('.navbar_menu').removeClass("deactive");
  	        $('.navbar_login').removeClass("deactive");      
     		//$('#toggleDeActive').prop('checked',false); --> 체크박스로 시도해봄
+ 	        $('.navbar').addClass("active");
     		$('.navbar_toggleBtn').addClass("active");
 	        $('.navbar_menu').addClass("active");
 	        $('.navbar_login').addClass("active");
@@ -114,11 +116,13 @@ $(function(){
     	}else{
     		//click != 0이면 토글버튼을 클릭했을 때 deactive class를 추가하고 active class 지우기 (css에서 deactive에 애니메이션 효과 주기)
     		//$('#toggleDeActive').prop('checked',true);
+    		$('.navbar').addClass("deactive");
     		$('.navbar_toggleBtn').addClass("deactive");
 	        $('.navbar_menu').addClass("deactive");
 	        $('.navbar_login').addClass("deactive");
 	        //deactive의 애니메이션 효과가 끝나고 난 후 메뉴 창을 닫기 위해 시간차 두기
     		setTimeout(function(){
+    			$('.navbar').removeClass("active");
 				$('.navbar_toggleBtn').removeClass("active");
 	    		$('.navbar_menu').removeClass("active");
 		        $('.navbar_login').removeClass("active");
