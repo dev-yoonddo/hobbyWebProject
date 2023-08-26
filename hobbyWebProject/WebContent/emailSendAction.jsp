@@ -58,7 +58,7 @@
 				
 			Properties p = new Properties();
 			p.put("mail.smtp.user", from);
-			p.put("mail.smtp.host", "smtp.googlemail.com");
+			p.put("mail.smtp.host", "smtp.gmail.com");
 			p.put("mail.smtp.port", "465");
 			p.put("mail.smtp.startstl.enable", "true");
 			p.put("mail.smtp.ssl.enable", "true");
@@ -87,13 +87,21 @@
 				script.println("alert('오류가 발생했습니다.')");
 				script.println("history.back()");
 				script.println("</script>");
+				session.invalidate();
 				script.close();
 				return;
 			}
 		}
 	%>
-	
+<%if(userID != null){ %>
+<header id="header">
+	<jsp:include page="/header/header.jsp"/>
+</header>
+<section>
 	<div>이메일 주소 인증 메일이 발송되었습니다.<br>해당 이메일에 접속해 인증해주세요.</div>
+</section>
+<%}%>
+
 </body>
 <script>
 

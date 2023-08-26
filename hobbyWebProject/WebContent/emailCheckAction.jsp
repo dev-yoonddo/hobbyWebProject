@@ -1,3 +1,4 @@
+<%@page import="sun.security.jca.GetInstance.Instance"%>
 <%@page import="java.io.PrintWriter"%>
 <%@page import="user.UserDAO"%>
 <%@page import="user.UserDTO"%>
@@ -17,7 +18,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>JSP 게시판 웹 사이트</title>
+<title>Email 인증</title>
 <script src="option/jquery/jquery.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script type="text/javascript" src="js/script.js"></script>
@@ -37,10 +38,24 @@
 			script.println("location.href = 'login'");
 			script.println("</script>");
 		}
+		//userEmail 파라미터값 가져오기
+		if(request.getParameter("code") != null){
+			code = request.getParameter("code");
+		}
+		//이미 인증을 했으면 알림창띄우기
+		if(userDAO.getUserEmailChecked(userID) == true){
+			PrintWriter script = response.getWriter();
+			script.println("<script>");
+			script.println("alert('이미 인증이 된 계정입니다.')");
+			script.println("self.close()");
+			script.println("</script>");
+		}
+		//암호화 된 회원이메일과 코드를 비교해 일치하면 인증완료하기
 		String userEmail = userDAO.getUserEmail(userID);
-		boolean isRight = (new PwEncrypt().encoding(userEmail).equals(code)) ? true : false;
+		String userEmailHash = userDAO.getUserVO(userID).getUserEmailHash();
+		boolean isRight = (userEmailHash.equals(code)) ? true : false;
 		if(isRight == true){
-			userDAO.getUserEmailChecked(userID);
+			userDAO.setUserEmailChecked(userID);
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
 			script.println("alert('인증에 성공했습니다.')");

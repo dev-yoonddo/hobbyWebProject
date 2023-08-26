@@ -168,16 +168,16 @@ public class UserDAO {
 		return null;
 	}
 // 회원 정보 수정	
-public int update(String userID, String userName, String userBirth, String userPhone, String userPassword , String userEmail, String userEmailHash) {
-	String SQL="UPDATE user SET userName = ?, userBirth = ?, userPhone = ?, userPassword = ?, userEmail = ?, userEmailHash = ?, userEmailChecked = ? WHERE userID = ?";//특정한 아이디에 해당하는 제목과 내용을 바꿔준다. 
+public int update(String userID, String userName,String userEmail, String userBirth, String userPhone , String userPassword) {
+	String SQL="UPDATE user SET userName = ?,userEmail = ?, userBirth = ?, userPhone = ?, userPassword = ?, userEmailHash = ?, userEmailChecked = ? WHERE userID = ?";//특정한 아이디에 해당하는 제목과 내용을 바꿔준다. 
 	try {
 		PreparedStatement pstmt=conn.prepareStatement(SQL);
 		pstmt.setString(1, userName);
-		pstmt.setString(2, userBirth);
-		pstmt.setString(3, userPhone);
-		pstmt.setString(4, userPassword);
-		pstmt.setString(5, userEmail);
-		pstmt.setString(6, userEmailHash);
+		pstmt.setString(2, userEmail);
+		pstmt.setString(3, userBirth);
+		pstmt.setString(4, userPhone);
+		pstmt.setString(5, userPassword);
+		pstmt.setString(6, PwEncrypt.encoding(userEmail));
 		pstmt.setBoolean(7, false);
 		pstmt.setString(8, userID);
 

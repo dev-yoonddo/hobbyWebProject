@@ -345,6 +345,7 @@ span{
 				<%
 					}
 				%>
+				<li><a href="shop" class ="menu">SHOP</a></li>
 			</ul>
 		</nav>
 			<ul class="navbar_login" >
@@ -394,10 +395,11 @@ span{
 	<div id="userInfo">
 	 	<div>
 	        <h2>정보 수정하기<h2>
-	        <form method="post" action="userUpdateAction.jsp" id="user-update" onsubmit="return passwordCheck(this)">
+	        <form method="post" action="userUpdateAction.jsp" id="user-update" onsubmit="return userDataCheck(this)">
 			<input type="text" value=<%=user.getUserID()%> name="userID" id="userID" maxlength="20">
 			<input type="text" value=<%=user.getUserName()%> name="userName" id="userName"maxlength="20">
-			<input type="text" value=<%=user.getUserBirth()%> name="userBirth" id="userBirth" maxlength="20">
+			<input type="text" value=<%=user.getUserEmail()%> name="userEmail" id="userEmail"maxlength="20">
+			<input type="text" value=<%=user.getUserBirth()%> name="userBirth" id="userBirth" maxlength="20" >
 			<input type="text" value=<%=user.getUserPhone()%> name="userPhone" id="userPhone" maxlength="20">
 			<input type="password" name="userPassword" id="userPassword" maxlength="20" placeholder="비밀번호 입력" onkeyup="passwordCheck2()">
 	        <input type="password" name="userPassword1" id="userPassword1" placeholder="비밀번호 확인" onkeyup="passwordCheck2()">
