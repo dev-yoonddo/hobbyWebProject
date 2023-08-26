@@ -77,20 +77,70 @@ public class UserDAO {
 //	회원 가입
 	public int join(UserDTO user) {
 		try {
-			String SQL ="INSERT INTO user VALUES (?, ?, ?, ?, ?, ?)";
+			String SQL ="INSERT INTO user VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			PreparedStatement pstmt=conn.prepareStatement(SQL);
 			//pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, user.getUserID());
 			pstmt.setString(2, user.getUserName());
 			pstmt.setString(3, user.getUserBirth());
 			pstmt.setString(4, user.getUserPhone());
-			pstmt.setString(5, pwEncrypt.encoding(user.getUserPassword()));
+			pstmt.setString(5, PwEncrypt.encoding(user.getUserPassword()));
 			pstmt.setInt(6, 1);
+			pstmt.setString(7, user.getUserEmail());
+			pstmt.setString(8, PwEncrypt.encoding(user.getUserEmail()));
+			pstmt.setBoolean(9, false);
 			return pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return -1;
+	}
+//이메일 인증
+	public boolean setUserEmailChecked (String userID) {
+		try {
+			String SQL ="UPDATE user SET userEmailChecked = true WHERE userID = ?";
+			PreparedStatement pstmt=conn.prepareStatement(SQL);
+			//pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, userID);
+			pstmt.executeUpdate();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false; //데이터베이스 오류
+	}
+//이메일 인증 여부
+	public boolean getUserEmailChecked (String userID) {
+		try {
+			String SQL ="SELECT userEmailChecked FROM user WHERE userID = ?";
+			PreparedStatement pstmt=conn.prepareStatement(SQL);
+			//pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, userID);
+			rs =  pstmt.executeQuery();
+			if(rs.next()) {
+				return rs.getBoolean(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false; //데이터베이스 오류
+	}
+	
+//이메일 가져오기
+	public String getUserEmail(String userID) {
+		try {
+			String SQL ="SELECT userEmail FROM user WHERE userID = ?";
+			PreparedStatement pstmt=conn.prepareStatement(SQL);
+			//pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, userID);
+			rs =  pstmt.executeQuery();
+			if(rs.next()) {
+				return rs.getString(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 //	회원 정보 보기	
 	public UserDTO getUserVO(String userID) {
@@ -107,6 +157,9 @@ public class UserDAO {
 				user.setUserPhone(rs.getString(4));
 				user.setUserPassword(rs.getString(5));
 				user.setUserAvailable(rs.getInt(6));
+				user.setUserEmail(rs.getString(7));
+				user.setUserEmailHash(rs.getString(8));
+				user.setUserEmailChecked(rs.getBoolean(9));
 				return user;//6개의 항목을 user인스턴스에 넣어 반환한다.
 			}			
 		} catch(Exception e) {
@@ -115,15 +168,18 @@ public class UserDAO {
 		return null;
 	}
 // 회원 정보 수정	
-public int update(String userID, String userName, String userBirth, String userPhone, String userPassword ) {
-	String SQL="UPDATE user SET userName = ?, userBirth = ?, userPhone = ?, userPassword = ? WHERE userID = ?";//특정한 아이디에 해당하는 제목과 내용을 바꿔준다. 
+public int update(String userID, String userName, String userBirth, String userPhone, String userPassword , String userEmail, String userEmailHash) {
+	String SQL="UPDATE user SET userName = ?, userBirth = ?, userPhone = ?, userPassword = ?, userEmail = ?, userEmailHash = ?, userEmailChecked = ? WHERE userID = ?";//특정한 아이디에 해당하는 제목과 내용을 바꿔준다. 
 	try {
 		PreparedStatement pstmt=conn.prepareStatement(SQL);
 		pstmt.setString(1, userName);
 		pstmt.setString(2, userBirth);
 		pstmt.setString(3, userPhone);
 		pstmt.setString(4, userPassword);
-		pstmt.setString(5, userID);
+		pstmt.setString(5, userEmail);
+		pstmt.setString(6, userEmailHash);
+		pstmt.setBoolean(7, false);
+		pstmt.setString(8, userID);
 
 		return pstmt.executeUpdate();		
 	} catch(Exception e) {

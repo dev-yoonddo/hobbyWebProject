@@ -2,7 +2,7 @@ package user;
 
 import java.security.MessageDigest;
 
-public class pwEncrypt {
+public class PwEncrypt {
 	public static String encoding(String str) {
 		String encodeString ="";
 		try {
