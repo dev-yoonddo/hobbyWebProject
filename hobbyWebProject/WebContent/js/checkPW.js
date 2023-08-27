@@ -4,9 +4,10 @@ function userDataCheck(obj) {
 	const ckKor = /[ㄱ-ㅎㅏ-ㅣ가-힣]/g; 
 	const ckEng = /[a-zA-Z]/g; // 영어 체크
 	const ckSpc = /[!?@#$%^&*():;+-=~{}<>\_\[\]\|\\\"\'\,\.\/\`\₩]/g;//특수문자 체크
-	const ckNum = /[0-9]/g; 
+	const ckNum = /[^0-9]/g; //숫자가 아닌 문자 체크
 	const ckEngNum = /[a-zA-Z0-9]/g; //영어+숫자 체크
 	const ckSpace = /[\s]/g;//공백 체크
+	
 	//id check
 	var id = obj.userID;
 		if(id.value.search(ckSpace) !== -1){
@@ -14,8 +15,8 @@ function userDataCheck(obj) {
 			error(id);
 			return false;
 		}
-		if(ckNum.test(id.value) || ckKor.test(id.value) || ckSpc.test(id.value)){
-			alert("아이디는 영어만 입력해주세요.");
+		if(ckKor.test(id.value) || ckSpc.test(id.value)){
+			alert("아이디는 영어와 숫자만 입력해주세요.");
 			error(id);
 			return false;
 		}
@@ -39,15 +40,16 @@ function userDataCheck(obj) {
     }
     
 	//email check
-	var mail = (obj.userEmail.value).split('@',2);
-	if((obj.userEmail.value).search(ckSpace) !== -1){
+    var mailSplit = (obj.userEmail.value).split('@',2);
+	var mail = obj.userEmail;
+	if(mail.value.search(ckSpace) !== -1){
 		alert("공백이 포함되어 있습니다.");
 		error(mail);
 		return false;
 	}
-	if(mail.length == 1){
+	if(mailSplit.length == 1){
 		alert("이메일 주소가 바르지 않습니다");
-		error(obj.userEmail);
+		error(mail);
 		return false;
 	}
 	
@@ -58,16 +60,18 @@ function userDataCheck(obj) {
 		error(birth);
 		return false;
 	}
-	if(ckKor.test(birth.value) || ckKor.test(birth.value)){
-		alert("숫자만 입력해주세요.");
-		error(birth);
-		return false;
-	}
 	if(birth.value.length !== 6){
 		alert("6자로 입력해주세요.");
 		error(birth);
 		return false;
 	}
+	if(ckNum.test(birth.value)){
+		alert("숫자만 입력해주세요.");
+		error(birth);
+		console.log(ckNum.test(birth.value));
+		return false;
+	}
+	
 	//phone check
 	var phone = obj.userPhone;
 	var startP = phone.value.slice(0,3);
@@ -77,7 +81,7 @@ function userDataCheck(obj) {
 		error(phone);
 		return false;
 	}
-	if(phone.value.length > 11 || startP !== 010){
+	if(phone.value.length !== 11 || startP !== '010'){
 		alert("핸드폰 번호를 다시 입력해주세요.");
 		error(phone);
 		return false;

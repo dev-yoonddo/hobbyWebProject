@@ -82,11 +82,11 @@ public class UserDAO {
 			//pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, user.getUserID());
 			pstmt.setString(2, user.getUserName());
-			pstmt.setString(3, user.getUserBirth());
-			pstmt.setString(4, user.getUserPhone());
-			pstmt.setString(5, PwEncrypt.encoding(user.getUserPassword()));
-			pstmt.setInt(6, 1);
-			pstmt.setString(7, user.getUserEmail());
+			pstmt.setString(3, user.getUserEmail());
+			pstmt.setString(4, user.getUserBirth());
+			pstmt.setString(5, user.getUserPhone());
+			pstmt.setString(6, PwEncrypt.encoding(user.getUserPassword()));
+			pstmt.setInt(7, 1);
 			pstmt.setString(8, PwEncrypt.encoding(user.getUserEmail()));
 			pstmt.setBoolean(9, false);
 			return pstmt.executeUpdate();
@@ -153,11 +153,11 @@ public class UserDAO {
 				UserDTO user = new UserDTO();
 				user.setUserID(rs.getString(1));//첫 번째 결과 값
 				user.setUserName(rs.getString(2));
-				user.setUserBirth(rs.getString(3));
-				user.setUserPhone(rs.getString(4));
-				user.setUserPassword(rs.getString(5));
-				user.setUserAvailable(rs.getInt(6));
-				user.setUserEmail(rs.getString(7));
+				user.setUserEmail(rs.getString(3));
+				user.setUserBirth(rs.getString(4));
+				user.setUserPhone(rs.getString(5));
+				user.setUserPassword(rs.getString(6));
+				user.setUserAvailable(rs.getInt(7));
 				user.setUserEmailHash(rs.getString(8));
 				user.setUserEmailChecked(rs.getBoolean(9));
 				return user;//6개의 항목을 user인스턴스에 넣어 반환한다.
