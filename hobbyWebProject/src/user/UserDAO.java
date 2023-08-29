@@ -187,7 +187,19 @@ public int update(String userID, String userName,String userEmail, String userBi
 	}
 	return -1;//데이터베이스 오류
 }
-	
+public int emailSuccess() {
+	int count = 0;
+	if(emailSuccessEnd() > 0) {
+	 return count++;
+	}else {
+	return 0;	
+	}
+}
+public int emailSuccessEnd() {
+	int end = 0;
+	end++;
+	return end;
+}
 //	회원 탈퇴
 //	1. 데이터 베이스 삭제
 	/*

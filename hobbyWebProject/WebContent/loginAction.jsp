@@ -40,6 +40,8 @@
 		}
 		else if(result == 1){
 	session.setAttribute("userID", user.getUserID());
+	session.setAttribute("emailSC", true);
+	System.out.println(session.getAttribute("emailSC"));
 	PrintWriter script = response.getWriter();
 	script.println("<script>");
 	script.println("alert('로그인 되었습니다.')");

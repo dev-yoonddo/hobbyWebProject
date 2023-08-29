@@ -424,7 +424,7 @@ function showPasswordPrompt(grID, grPassword, grAvailable, member, leader) {
 		    			}else{ //취소
 		    				break;
 		    			}
-		    			searchPW = 0; //초기화
+		    			count = 0; //초기화
 			        }
 			    }
 	    		//비밀번호가 일치하면 접속

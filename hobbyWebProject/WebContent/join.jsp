@@ -43,10 +43,10 @@ if(session.getAttribute("userID") != null){
 	<input type="hidden" id="rsaPublicKeyExponent" value="${publicKeyExponent}" />
 	 -->
         <h2>회원가입<h2>
-        <form method="post" action="joinAction.jsp" id="join-form" onsubmit="return passwordCheck(this)">
+        <form method="post" action="joinAction.jsp" id="join-form" onsubmit="return userDataCheck(this)">
             <input type="text" name="userID" id="userID" placeholder="아이디 입력">
-            <input type="text" name="userEmail" id="userEmail" placeholder="이메일 입력">
             <input type="text" name="userName" id="userName" placeholder="이름 입력">
+            <input type="text" name="userEmail" id="userEmail" placeholder="이메일 입력">
             <input type="text" name="userBirth" id="userBirth" placeholder="생년월일 입력">
             <input type="text" name="userPhone" id="userPhone" placeholder="핸드폰번호 입력">
             <input type="password" name="userPassword" id="userPassword" placeholder="비밀번호 입력" onkeyup="passwordCheck2()">

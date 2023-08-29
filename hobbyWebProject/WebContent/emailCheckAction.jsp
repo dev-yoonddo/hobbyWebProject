@@ -55,11 +55,12 @@
 		String userEmailHash = userDAO.getUserVO(userID).getUserEmailHash();
 		boolean isRight = (userEmailHash.equals(code)) ? true : false;
 		if(isRight == true){
+			//인증이 되면 userEmailChecked == true로 변경하기
 			userDAO.setUserEmailChecked(userID);
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
-			script.println("alert('인증에 성공했습니다.')");
-			script.println("location.href = 'mainPage'");
+			script.println("alert('인증에 성공했습니다. \n홈페이지에서 인증 완료를 해주세요')");
+			script.println("self.close()");
 			script.println("</script>");	
 		}else{
 			PrintWriter script = response.getWriter();

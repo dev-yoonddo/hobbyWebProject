@@ -10,7 +10,6 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
-  
   <servlet-mapping>
     <servlet-name>default</servlet-name>
     <url-pattern>/</url-pattern>
@@ -24,7 +23,6 @@
     <url-pattern>*.swf</url-pattern>
     <url-pattern>*.gif</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <servlet-name>startPage.jsp</servlet-name>
     <jsp-file>/startPage.jsp</jsp-file>
@@ -249,5 +247,4 @@
     <servlet-name>downloadAction</servlet-name>
     <url-pattern>/downloadAction/</url-pattern>
   </servlet-mapping>
-  
 </web-app>

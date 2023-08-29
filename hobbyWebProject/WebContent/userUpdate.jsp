@@ -1,3 +1,4 @@
+<%@page import="javax.security.auth.callback.ConfirmationCallback"%>
 <%@page import="message.MessageDTO"%>
 <%@page import="message.MessageDAO"%>
 <%@page import="java.util.ArrayList"%>
@@ -320,11 +321,21 @@ span{
 		script.println("window.open('loginPopUp', 'Login', 'width=500, height=550, top=50%, left=50%')");
 		script.println("</script>");
 	}
-	
 	//int userAccess = Integer.parseInt(request.getParameter("userAccess"));
 	 //하나의 유저 정보 가져오기
 	UserDTO user=new UserDAO().getUserVO(userID);
+	if(user.isUserEmailChecked() == false){
+		session.setAttribute("emailSC", false);
+		PrintWriter script = response.getWriter();
+		script.println("<script>");
+		script.println("alert('이메일 인증이 필요합니다.')");
+		script.println("location.href='emailSendAction.jsp'");
+		script.println("</script>");
+	}
 %>
+<script>
+
+</script>
 <header>
 <div id="header" class="de-active"> <!-- userUpdate페이지는 header의 구성이 다르기 때문에 따로 작성한다. -->
 	<nav class="navbar">
@@ -862,6 +873,19 @@ span{
 	<%}%>
 </section>
 <script>
+//check email
+
+window.addEventListener('DOMContentLoaded', function emailChecked(result){
+	if(result == false){
+		var emailck = confirm('이메일 인증이 필요합니다. 인증 메일을 발송 하시겠습니까?');
+		if(emailck == true){
+			location.href = "emailSendAction.jsp";
+		}else{
+			break;
+		}
+	}
+});
+
 //select box 클릭하면 접고 펼치기
 function onClickSelect(e) {
 	  const isActive = e.currentTarget.className.indexOf("active") !== -1;

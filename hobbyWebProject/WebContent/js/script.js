@@ -295,6 +295,7 @@ function qna(){
 	window.open("sendMsgPopUp?qna=yes","QNA","width=500, height=550, top=50%, left=50%")
 }
 
+
 //url 뒤 파라미터 안보이게하기
 $(document).ready(function() {
 	history.replaceState({}, null, location.pathname);  
