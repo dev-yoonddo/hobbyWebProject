@@ -97,7 +97,7 @@ section{
 					Properties p = new Properties();
 					p.put("mail.smtp.user", from);
 					p.put("mail.smtp.host", "smtp.gmail.com");
-					p.put("mail.smtp.port", "587");
+					p.put("mail.smtp.port", "465");
 					p.put("mail.smtp.starttls.enable", "true");
 					p.put("mail.smtp.starttls.required", "true");
 					p.put("mail.transport.protocol", "smtp");
@@ -106,12 +106,17 @@ section{
 					p.put("mail.smtp.auth", "true");
 					p.put("mail.smtp.debug", "true");
 					p.put("mail.debug", "true");
-					p.put("mail.smtp.socketFactory.port", "587");
-					//p.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+					p.put("mail.smtp.socketFactory.port", "465");
+					p.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
 					p.put("mail.smtp.socketFactory.fallback", "false");
 
-						Authenticator auth = new Gmail();
-						Session ses = Session.getInstance(p, auth);
+						//Authenticator auth = new Gmail();
+						Session ses = Session.getInstance(p, new Authenticator(){
+							protected PasswordAuthentication getPasswordAuthentication(){
+								//계속 메일 전송시 오류가 발생했지만 계정을 새로 생성한 뒤에 정상적으로 실행됨
+								return new PasswordAuthentication("we.are.together.2023.03@gmail.com","lnwkwnvvxwhippqh");
+							}
+						});
 						ses.setDebug(true);
 						MimeMessage msg = new MimeMessage(ses);
 						msg.setSubject(subject);
