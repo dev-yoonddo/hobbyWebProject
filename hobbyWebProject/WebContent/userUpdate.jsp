@@ -329,7 +329,7 @@ span{
 		PrintWriter script = response.getWriter();
 		script.println("<script>");
 		script.println("alert('이메일 인증이 필요합니다.')");
-		script.println("location.href='emailSendAction.jsp'");
+		script.println("location.href='emailSendAction'");
 		script.println("</script>");
 	}
 %>

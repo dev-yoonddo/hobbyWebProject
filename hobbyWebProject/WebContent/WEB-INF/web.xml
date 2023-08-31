@@ -240,6 +240,23 @@
     <url-pattern>/shop</url-pattern>
   </servlet-mapping>
   <servlet>
+    <servlet-name>emailSendAction.jsp</servlet-name>
+    <jsp-file>/emailSendAction.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>emailSendAction.jsp</servlet-name>
+    <url-pattern>/emailSendAction</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>emailCheckAction.jsp</servlet-name>
+    <jsp-file>/emailCheckAction.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>emailCheckAction.jsp</servlet-name>
+    <url-pattern>/emailCheckAction</url-pattern>
+  </servlet-mapping>
+  <servlet>
     <servlet-name>downloadAction</servlet-name>
     <servlet-class>file.downloadAction</servlet-class>
   </servlet>

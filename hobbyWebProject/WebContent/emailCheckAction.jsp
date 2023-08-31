@@ -31,13 +31,7 @@
 		if(session.getAttribute("userID") != null){
 			userID = (String) session.getAttribute("userID");
 		}
-		if(userID == null){
-			PrintWriter script = response.getWriter();
-			script.println("<script>");
-			script.println("alert('로그인을 해주세요.')");
-			script.println("location.href = 'login'");
-			script.println("</script>");
-		}
+
 		//userEmail 파라미터값 가져오기
 		if(request.getParameter("code") != null){
 			code = request.getParameter("code");
@@ -49,30 +43,34 @@
 			script.println("alert('이미 인증이 된 계정입니다.')");
 			script.println("self.close()");
 			script.println("</script>");
-		}
-		//암호화 된 회원이메일과 코드를 비교해 일치하면 인증완료하기
-		String userEmail = userDAO.getUserEmail(userID);
-		String userEmailHash = userDAO.getUserVO(userID).getUserEmailHash();
-		boolean isRight = (userEmailHash.equals(code)) ? true : false;
-		if(isRight == true){
-			//인증이 되면 userEmailChecked == true로 변경하기
-			userDAO.setUserEmailChecked(userID);
-			PrintWriter script = response.getWriter();
-			script.println("<script>");
-			script.println("alert('인증에 성공했습니다. \n홈페이지에서 인증 완료를 해주세요')");
-			script.println("self.close()");
-			script.println("</script>");	
 		}else{
-			PrintWriter script = response.getWriter();
-			script.println("<script>");
-			script.println("alert('유효하지 않은 코드입니다.')");
-			script.println("history.back()");
-			script.println("</script>");	
+			//암호화 된 회원이메일과 코드를 비교해 일치하면 인증완료하기
+			String userEmail = userDAO.getUserEmail(userID);
+			String userEmailHash = userDAO.getUserVO(userID).getUserEmailHash();
+			boolean isRight = (userEmailHash.equals(code)) ? true : false;
+			if(isRight == false){
+				PrintWriter script = response.getWriter();
+				script.println("<script>");
+				script.println("alert('유효하지 않은 코드입니다.')");
+				script.println("history.back()");
+				script.println("</script>");	
+			}else{
+				//인증이 되면 userEmailChecked == true로 변경하기
+				if(userDAO.setUserEmailChecked(userID) == false){
+					PrintWriter script = response.getWriter();
+					script.println("<script>");
+					script.println("alert('데이터베이스 오류')");
+					script.println("self.close()");
+					script.println("</script>");
+				}else{
+					PrintWriter script = response.getWriter();
+					script.println("<script>");
+					script.println("alert('인증에 성공했습니다. 홈페이지에서 인증 완료를 해주세요')");
+					script.println("self.close()");
+					script.println("</script>");
+				}
+			}
 		}
-
 	%>
 </body>
-<script>
-
-</script>
 </html>
