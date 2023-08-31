@@ -62,13 +62,13 @@
 		if(user.getUserPhone() == null) {
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
-			script.println("alert('회원 번호를 입력해주세요')");
+			script.println("alert('핸드폰 번호를 입력해주세요')");
 			script.println("history.back()");
 			script.println("</script>");
 		}else if(!userPhone.equals(user.getUserPhone())){ //회원 전화번호가 일치하는지 검사
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
-			script.println("alert('번호가 일치하지 않습니다.')");
+			script.println("alert('핸드폰 번호가 일치하지 않습니다.')");
 			script.println("history.back()");
 			script.println("</script>");
 		}else if(user.getUserPassword() == null) {

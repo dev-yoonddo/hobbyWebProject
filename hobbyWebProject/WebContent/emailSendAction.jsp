@@ -55,30 +55,31 @@ section{
 	<%
 		UserDAO userDAO = new UserDAO();
 		String userID = null;
+		//이메일 인증 여부 확인
 		if(session.getAttribute("userID") != null){
 			userID = (String) session.getAttribute("userID");
 		}
-		boolean emailSent = false;
-		Object emailSentFlag = session.getAttribute("emailSentFlag");
-
-		//처음 창을 열었을 때 emailSentFlag == null이기 때문에 emailSentFlag = true가 저장되고
-		//emailSent는 그대로 false이기 때문에 메일이 전송된다.
-		//하지만 새로고침시 emailSendFlag != null 이기 때문에 emailSent = true로 변경돼 메일이 전송되지 않는다.
-		if (emailSentFlag != null && (boolean) emailSentFlag) {
-		    emailSent = true;
-		} else {
-		    // Set the flag in the session to prevent resending on refresh
-		    session.setAttribute("emailSentFlag", true);
-		}
 		boolean emailChecked = userDAO.getUserEmailChecked(userID);
-		if(!emailSent){
-			if(userID == null){
-				PrintWriter script = response.getWriter();
-				script.println("<script>");
-				script.println("alert('로그인이 필요합니다')");
-				script.println("window.open('loginPopUp', 'Login', 'width=450, height=500, top=50%, left=50%')");
-				script.println("</script>");
-			}else{
+		if(userID == null){
+			PrintWriter script = response.getWriter();
+			script.println("<script>");
+			script.println("alert('로그인이 필요합니다')");
+			script.println("window.open('loginPopUp', 'Login', 'width=450, height=500, top=50%, left=50%')");
+			script.println("</script>");
+		}else{
+			boolean emailSent = false;
+			Object emailSentFlag = session.getAttribute("emailSentFlag");
+	
+			//처음 창을 열었을 때 emailSentFlag == null이기 때문에 emailSentFlag = true가 저장되고
+			//emailSent는 그대로 false이기 때문에 메일이 전송된다.
+			//하지만 새로고침시 emailSendFlag != null 이기 때문에 emailSent = true로 변경돼 메일이 전송되지 않는다.
+			if (emailSentFlag != null && (boolean) emailSentFlag) {
+			    emailSent = true;
+			} else {
+			    // Set the flag in the session to prevent resending on refresh
+			    session.setAttribute("emailSentFlag", true);
+			}
+			if(!emailSent){
 				if(emailChecked == true){
 					PrintWriter script = response.getWriter();
 					script.println("<script>");
@@ -90,9 +91,9 @@ section{
 					String host = "https://toogether.me/";
 					String from = "o0o7o2o0@gmail.com";
 					String to = userDAO.getUserEmail(userID);
-					String subject = "회원가입을 위한 이메일 인증입니다.";
-					String content = "다음 링크에 접속해 이메일 인증을 하세요" +
-					"<a href='" + host + "emailCheckAction?code=" + PwEncrypt.encoding(to) + "'>이메일 인증하기</a>";
+					String subject = "TOGETHER 회원가입을 위한 이메일 인증입니다.";
+					String content = "다음 링크에 접속해 이메일 인증을 하세요 &nbsp;&nbsp;[" +
+					"<a href='" + host + "emailCheckAction?code=" + PwEncrypt.encoding(to) + "'>이메일 인증하기</a>]";
 						
 					Properties p = new Properties();
 					p.put("mail.smtp.user", from);
@@ -109,7 +110,7 @@ section{
 					p.put("mail.smtp.socketFactory.port", "465");
 					p.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
 					p.put("mail.smtp.socketFactory.fallback", "false");
-
+					try{
 						//Authenticator auth = new Gmail();
 						Session ses = Session.getInstance(p, new Authenticator(){
 							protected PasswordAuthentication getPasswordAuthentication(){
@@ -126,12 +127,22 @@ section{
 						msg.addRecipient(Message.RecipientType.TO, toAddr);
 						msg.setContent(content, "text/html;charset=UTF8");
 						Transport.send(msg);
-					
+					}catch(Exception e){
+						e.printStackTrace();
+						PrintWriter script = response.getWriter();
+						script.println("<script>");
+						script.println("alert('오류가 발생했습니다.')");
+						script.println("history.back()");
+						script.println("</script>");
+						//session.invalidate();
+						script.close();
+						return;
+					}
 				}
 			}
 			
 		//userDAO.emailSuccessEnd(); //이메일이 한번 전송되면 count + 1을 해서 새로고침해도 이메일이 전송되지 않도록 한다.
-		}
+		
 		
 	%>
 
@@ -145,14 +156,12 @@ section{
 	<button type="button" id="success" class="btn-blue" value="인증 완료" onclick="successEmail('<%=emailChecked%>')">
 		<span>인증 완료</span>
 	</button>
-
+<%} %>
 </section>
 <script>
-function reload(){
-	window.location.reload();
-}
 //emailSendAction 버튼 클릭
 function successEmail(sc){
+	console.log(sc);
 	if(sc == "true"){
 		location.href="userUpdate";
 	}else{
@@ -160,9 +169,14 @@ function successEmail(sc){
 		return false;
 	}
 }
+function reload(){
+	window.location.reload();
+}
+<%if(userID != null){%>
+	//로그인되면 10초에 한번씩 페이지 새로고침
+	setInterval(reload, 10000);
+<%}%>
 
-//30초에 한번씩 페이지 새로고침
-setInterval(reload, 30000);
 </script>
 
 </body>
