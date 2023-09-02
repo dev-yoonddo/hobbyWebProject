@@ -7,6 +7,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import board.BoardDAO;
@@ -142,6 +143,38 @@ public class UserDAO {
 		}
 		return null;
 	}
+//기존 회원 이메일 정보 업데이트
+	public int userEmailUpdate(String userID, String userEmail) {
+		String SQL ="UPDATE user SET userEmail = ? , userEmailHash = ? WHERE userID = ?";
+		try {
+			PreparedStatement pstmt=conn.prepareStatement(SQL);
+			//pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, userEmail);
+			pstmt.setString(2, PwEncrypt.encoding(userEmail));
+			pstmt.setString(3, userID);
+			return pstmt.executeUpdate();		
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return -1;//데이터베이스 오류
+	}
+//모든 사용자의 이메일 리스트 가져오기
+	public ArrayList<UserDTO> getEmailList(){
+		String SQL = "SELECT userEmail FROM user WHERE userEmail IS NOT NULL AND userEmail != '' "; 
+		ArrayList<UserDTO> list = new ArrayList<UserDTO>();
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				UserDTO usr = new UserDTO();
+				usr.setUserEmail(rs.getString("userEmail"));
+				list.add(usr);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return list; 
+	}
 //	회원 정보 보기	
 	public UserDTO getUserVO(String userID) {
 		String SQL="SELECT * FROM user WHERE userID = ?";
@@ -187,19 +220,7 @@ public int update(String userID, String userName,String userEmail, String userBi
 	}
 	return -1;//데이터베이스 오류
 }
-public int emailSuccess() {
-	int count = 0;
-	if(emailSuccessEnd() > 0) {
-	 return count++;
-	}else {
-	return 0;	
-	}
-}
-public int emailSuccessEnd() {
-	int end = 0;
-	end++;
-	return end;
-}
+
 //	회원 탈퇴
 //	1. 데이터 베이스 삭제
 	/*

@@ -325,7 +325,6 @@ span{
 	 //하나의 유저 정보 가져오기
 	UserDTO user=new UserDAO().getUserVO(userID);
 	if(user.isUserEmailChecked() == false){
-		session.setAttribute("emailSC", false);
 		PrintWriter script = response.getWriter();
 		script.println("<script>");
 		script.println("alert('이메일 인증이 필요합니다.')");
@@ -333,9 +332,7 @@ span{
 		script.println("</script>");
 	}
 %>
-<script>
 
-</script>
 <header>
 <div id="header" class="de-active"> <!-- userUpdate페이지는 header의 구성이 다르기 때문에 따로 작성한다. -->
 	<nav class="navbar">

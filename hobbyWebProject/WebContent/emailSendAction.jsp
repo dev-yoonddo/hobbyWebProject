@@ -11,13 +11,7 @@
 <%
 	request.setCharacterEncoding("UTF-8");
 %>
-<jsp:useBean id="user" class="user.UserDTO" scope="page" />
-<jsp:setProperty name="user" property="userID" />
-<jsp:setProperty name="user" property="userPassword" />
-<jsp:setProperty name="user" property="userName" />
-<jsp:setProperty name="user" property="userBirth" />
-<jsp:setProperty name="user" property="userPhone" />
-<jsp:setProperty name="user" property="userEmail" />
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -59,12 +53,22 @@ section{
 		if(session.getAttribute("userID") != null){
 			userID = (String) session.getAttribute("userID");
 		}
-		boolean emailChecked = userDAO.getUserEmailChecked(userID);
+		UserDTO user=new UserDAO().getUserVO(userID);
+		boolean emailChecked = user.isUserEmailChecked();
+
+		//System.out.println("----");
+		//System.out.println(userDAO.getUserEmail(userID));
+		//System.out.println("----");
 		if(userID == null){
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
 			script.println("alert('로그인이 필요합니다')");
 			script.println("window.open('loginPopUp', 'Login', 'width=450, height=500, top=50%, left=50%')");
+			script.println("</script>");
+		}else if(userDAO.getUserEmail(userID).equals("")){
+			PrintWriter script = response.getWriter();
+			script.println("<script>");
+			script.println("window.open('emailAdUpdatePopUp', 'Email', 'width=450, height=450, top=50%, left=50%')");
 			script.println("</script>");
 		}else{
 			boolean emailSent = false;
@@ -88,7 +92,8 @@ section{
 					script.println("</script>");
 				}else{
 					String id = "check";
-					String host = "https://toogether.me/";
+					String host = "http://localhost:8080/hobbyWebProject/";
+					//String host = "https://toogether.me/";
 					String from = "o0o7o2o0@gmail.com";
 					String to = userDAO.getUserEmail(userID);
 					String subject = "TOGETHER 회원가입을 위한 이메일 인증입니다.";
@@ -161,7 +166,6 @@ section{
 <script>
 //emailSendAction 버튼 클릭
 function successEmail(sc){
-	console.log(sc);
 	if(sc == "true"){
 		location.href="userUpdate";
 	}else{
@@ -172,7 +176,7 @@ function successEmail(sc){
 function reload(){
 	window.location.reload();
 }
-<%if(userID != null){%>
+<%if(userID != null && !userDAO.getUserEmail(userID).equals("")){%>
 	//로그인되면 10초에 한번씩 페이지 새로고침
 	setInterval(reload, 10000);
 <%}%>

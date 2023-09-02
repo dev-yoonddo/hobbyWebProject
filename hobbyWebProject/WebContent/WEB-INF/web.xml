@@ -257,6 +257,22 @@
     <url-pattern>/emailCheckAction</url-pattern>
   </servlet-mapping>
   <servlet>
+    <servlet-name>emailAdUpdatePopUp.jsp</servlet-name>
+    <jsp-file>/emailAdUpdatePopUp.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>emailAdUpdatePopUp.jsp</servlet-name>
+    <url-pattern>/emailAdUpdatePopUp</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>emailAdUpdateAction.jsp</servlet-name>
+    <jsp-file>/emailAdUpdateAction.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>emailAdUpdateAction.jsp</servlet-name>
+    <url-pattern>/emailAdUpdateAction</url-pattern>
+  </servlet-mapping>
+  <servlet>
     <servlet-name>downloadAction</servlet-name>
     <servlet-class>file.downloadAction</servlet-class>
   </servlet>
