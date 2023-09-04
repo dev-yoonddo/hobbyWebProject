@@ -47,18 +47,31 @@ if(user.getUserEmail() == null){
 	script.println("history.back()");
 	script.println("</script>");
 }else{
-	int result = userDAO.userEmailUpdate(userID, user.getUserEmail());
-	if(result == -1){
-		script.println("<script>");
-		script.println("alert('오류가 발생했습니다.')");
-		script.println("self.close()");
-		script.println("</script>");
-	}else{
-		script.println("<script>");
-		script.println("self.close()");
-		//부모창 페이지 새로고침
-		script.println("opener.location.reload()");
-		script.println("</script>");
+	//이미 사용중인 이메일인지 검사
+	ArrayList<UserDTO> list = userDAO.getEmailList();
+	for (int i = 0; i < list.size(); i++) {
+		String email = list.get(i).getUserEmail();
+		if(email.equals(user.getUserEmail())){
+			script.println("<script>");
+			script.println("alert('이미 사용중인 이메일입니다.')");
+			script.println("history.back()");
+			script.println("</script>");
+			break;
+		}else{
+			int result = userDAO.userEmailUpdate(userID, user.getUserEmail());
+			if(result == -1){
+				script.println("<script>");
+				script.println("alert('오류가 발생했습니다.')");
+				script.println("history.back()");
+				script.println("</script>");
+			}else{
+				script.println("<script>");
+				script.println("self.close()");
+				//부모창 페이지 새로고침
+				script.println("opener.location.reload()");
+				script.println("</script>");
+			}
+		}
 	}
 }
 %>

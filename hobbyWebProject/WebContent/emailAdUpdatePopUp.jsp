@@ -89,7 +89,7 @@ String userID = null;
 
 UserDAO userDAO = new UserDAO();
 UserDTO userVO=new UserDAO().getUserVO(userID); //유저 정보 가져오기
-ArrayList<UserDTO> lists = userDAO.getEmailList(); //모든 유저 이메일 리스트 가져오기
+ArrayList<UserDTO> list = userDAO.getEmailList(); //모든 유저 이메일 리스트 가져오기
 //for (UserDTO list : lists) {
 //    System.out.println("User Email: " + list);
 //}
@@ -108,8 +108,8 @@ if(userID == null){
 	<div>
 		<h2>이메일 주소를 입력하세요</h2>
 		<br><br>
-		<form method="post" action="emailAdUpdateAction" role="form" id="login-form" onsubmit="return userDataCheck(this)">
-		    <input type="text" name="userEmail" id="userEmail" maxlength="30" placeholder="이메일 주소를 입력하세요" onkeyup="emailCheck('<%=lists%>')">
+		<form method="post" action="emailAdUpdateAction" role="form" id="login-form">
+		    <input type="text" name="userEmail" id="userEmail" maxlength="30" placeholder="이메일 주소를 입력하세요" onkeyup="emailCheck('<%=list%>')">
 			<div id="check">
 				<h5 id="emailCheckMessage"></h5>
 			</div>
@@ -118,27 +118,58 @@ if(userID == null){
 	</div>
 </div>
 <script>
+
 function emailCheck(list) {
-	console.log(list);
-	var emailList = list.split(','); // Split the comma-separated string into an array
+	//console.log(list); //받아온 리스트 출력
+	const ckSpace = /[\s]/g; //공백체크
+	const maillast = ['com','kr','net'];
+	var emailList = list.split(',');
+	var first = emailList[0].replace('[','');
+	var last = emailList[emailList.length - 1].replace(']','');
+	//받아온 리스트의 첫번째,마지막 결과에 []기호가 포함되어있기 때문에 삭제하고 다시 배열에 넣어준다.
+	emailList[0] = first;
+	emailList[emailList.length - 1] = last;
+	
+    var useremail = $('#userEmail').val().trim().toLowerCase();
+    var emailExists = false;
 
-    var useremail = $('#userEmail').val().trim().toLowerCase(); // Convert, trim, and lowercase entered email
-    var emailExists = false; // Initialize a flag to check if the exact email exists in the list
-
-    // Iterate through the emailList
     for (var i = 0; i < emailList.length; i++) {
-        var listItem = emailList[i].trim().toLowerCase(); // Convert, trim, and lowercase list item
-
-        // Check if the entered email exactly matches an email in the list
+        var listItem = emailList[i].trim().toLowerCase();
+		//console.log(emailList[0]);
         if (useremail === listItem) {
             emailExists = true;
-            break; // Exit the loop if an exact match is found
+            break;
         }
     }
 	if (emailExists) {
         $('#emailCheckMessage').html('이미 사용중인 이메일입니다.');
     } else {
-        $('#emailCheckMessage').html('사용가능한 이메일입니다.');
+    	//입력받은 이메일을 @로 나눈다.
+    	const input = $('#userEmail').val().split('@',2);
+    	//console.log(input[1]);
+   		//@로 나눈 문자열을 .을 기준으로 나눈다.
+    	const inputlast = input[1].split('.');
+    	//console.log(inputlast);
+    	//입력한 이메일을 @로 나눴을 때 2개이고 공백을 체크했을 때 공백이 없으면
+    	if(input.length == 2 && $('#userEmail').val().search(ckSpace) == -1){
+    		//이메일 뒷자리 last를 반복한다
+    		for(var i = 0; i < maillast.length; i++){
+    			var lastItem = maillast[i];
+    			//console.log(lastItem);
+    			//.뒤의 문자가 last중 하나와 일치하면 사용가능한 이메일이라는 텍스트 띄우기
+	    		if(inputlast[inputlast.length - 1] === lastItem){
+	        		$('#emailCheckMessage').html('사용가능한 이메일입니다.');
+	        		break;
+	    		}
+	    		else{
+	    			//조건에 일치하지 않으면 텍스트 지우기
+	        		$('#emailCheckMessage').html('');
+	        	}
+    		}
+    	}else{
+    		//조건에 일치하지 않으면 텍스트 지우기
+    		$('#emailCheckMessage').html('');
+    	}
     }
 }
 </script>

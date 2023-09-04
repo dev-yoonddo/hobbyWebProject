@@ -56,7 +56,8 @@
 				script.println("</script>");	
 			}else{
 				//인증이 되면 userEmailChecked == true로 변경하기
-				if(userDAO.setUserEmailChecked(userID) == false){
+				boolean result = userDAO.setUserEmailChecked(userID);
+				if(result == false){
 					PrintWriter script = response.getWriter();
 					script.println("<script>");
 					script.println("alert('데이터베이스 오류')");

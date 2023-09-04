@@ -151,9 +151,49 @@ section{
 		
 	%>
 
-<header id="header">
-	<jsp:include page="/header/header.jsp"/>
-</header>
+<div id="header" class="de-active">
+	<nav class="navbar">
+		<nav class="navbar_left">
+			<div class="navbar_logo">
+				<a href="mainPage" id="mainlogo" >TOGETHER</a>
+			</div>
+			<ul class="navbar_menu" style="float: left;">
+				<li><a href="community" class ="menu">COMMUNITY</a></li>
+				<% 
+					if(userID == null){
+				%>
+				<li><a id="go-group-1" class="menu">GROUP</a></li>
+				<%
+					} else { 
+				%>
+				<li><a id="go-group-2" class="menu" onclick="location.href='groupPage'">GROUP</a></li>
+				<%
+					}
+				%>
+				<li><a href="shop" class ="menu">SHOP</a></li>
+			</ul>
+		</nav>
+			<ul class="navbar_login" >
+				<%
+					if(userID == null){
+				%>	
+				<li><a href="login">LOGIN</a></li>
+				<li><a href="join">JOIN</a></li>
+				<%
+					}else{
+				%>
+				<li></li>
+				<li><a href="logout.jsp">LOGOUT</a></li>
+				<%
+					}
+				%>
+			</ul>
+			<a class="navbar_toggleBtn" id="toggleicon">
+				<i class="fa-solid fa-bars"></i>
+			</a>
+			<input type="checkbox" id="toggleDeActive" hidden="hidden">
+	</nav>
+</div>
 <section>
 	<div id="sendEmail">
 		이메일 주소 인증 메일이 발송되었습니다.<br>해당 이메일에 접속해 인증해주세요.
@@ -166,17 +206,20 @@ section{
 <script>
 //emailSendAction 버튼 클릭
 function successEmail(sc){
-	if(sc == "true"){
-		location.href="userUpdate";
+	console.log(sc);
+	if(sc == 'true'){
+		location.href='userUpdate';
 	}else{
 		alert("이메일 인증이 되지 않았습니다.");
 		return false;
 	}
 }
+</script>
+<script>
 function reload(){
 	window.location.reload();
 }
-<%if(userID != null && !userDAO.getUserEmail(userID).equals("")){%>
+<%if(userID != null && !userDAO.getUserEmail(userID).equals("") && emailChecked == false){%>
 	//로그인되면 10초에 한번씩 페이지 새로고침
 	setInterval(reload, 10000);
 <%}%>
