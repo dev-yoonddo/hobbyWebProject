@@ -1,3 +1,6 @@
+<%@page import="user.UserDTO"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="user.UserDAO"%>
 <%@page import="java.math.BigInteger"%>
 <%@page import="java.net.URLEncoder"%>
 <%@page import="java.security.SecureRandom"%>
@@ -18,12 +21,18 @@
 <script src="option/jquery/jquery.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script type="text/javascript" src="js/script.js"></script>
-<script type="text/javascript" src="js/checkPW.js"></script>
 <script src="https://kit.fontawesome.com/f95555e5d8.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 
 </head>
-
+<style>
+#check{
+	height: 20px;
+}
+#checkMessage{
+	color: black;
+}
+</style>
 
 <body>
 <% 
@@ -31,6 +40,8 @@ String userID = null;
 if(session.getAttribute("userID") != null){
 	userID = (String) session.getAttribute("userID");
 }
+UserDAO userDAO = new UserDAO();
+ArrayList<UserDTO> list = userDAO.getEmailList(); //모든 유저 이메일 리스트 가져오기
 %>
 <header id="header">
 <jsp:include page="/header/header.jsp"/>
@@ -42,17 +53,17 @@ if(session.getAttribute("userID") != null){
 	<input type="hidden" id="rsaPublicKeyModulus" value="${publicKeyModulus}" />
 	<input type="hidden" id="rsaPublicKeyExponent" value="${publicKeyExponent}" />
 	 -->
-        <h2>회원가입<h2>
+        <h2>회원가입</h2>
         <form method="post" action="joinAction.jsp" id="join-form" onsubmit="return userDataCheck(this)">
             <input type="text" name="userID" id="userID" placeholder="아이디 입력">
             <input type="text" name="userName" id="userName" placeholder="이름 입력">
-            <input type="text" name="userEmail" id="userEmail" placeholder="이메일 입력">
+            <input type="text" name="userEmail" id="userEmail" placeholder="이메일 입력" onkeyup="emailCheck('<%=list%>')">
             <input type="text" name="userBirth" id="userBirth" placeholder="생년월일 입력">
             <input type="text" name="userPhone" id="userPhone" placeholder="핸드폰번호 입력">
             <input type="password" name="userPassword" id="userPassword" placeholder="비밀번호 입력" onkeyup="passwordCheck2()">
             <input type="password" name="userPassword1" id="userPassword1" placeholder="비밀번호 확인" onkeyup="passwordCheck2()">
             <div id="check">
-				<h5 id="passwordCheckMessage"></h5>
+				<h5 id="checkMessage"></h5>
 			</div>
             <input type="submit" value="join">
         </form>
@@ -66,6 +77,6 @@ if(session.getAttribute("userID") != null){
 
 </div>
 </section>
-
+<script type="text/javascript" src="js/checkPW.js"></script>
 </body>
 </html>

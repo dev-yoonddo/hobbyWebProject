@@ -16,7 +16,7 @@ function userDataCheck(obj) {
 			return false;
 		}
 		if(ckKor.test(id.value) || ckSpc.test(id.value)){
-			alert("아이디는 영어와 숫자만 입력해주세요.");
+			alert("아이디는 영어로만 입력해주세요.");
 			error(id);
 			return false;
 		}
@@ -48,7 +48,7 @@ function userDataCheck(obj) {
 		return false;
 	}
 	if(mailSplit.length == 1){
-		alert("이메일 주소가 바르지 않습니다");
+		alert("이메일 주소가 바르지 않습니다.");
 		error(mail);
 		return false;
 	}
@@ -68,7 +68,7 @@ function userDataCheck(obj) {
 	if(ckNum.test(birth.value)){
 		alert("숫자만 입력해주세요.");
 		error(birth);
-		console.log(ckNum.test(birth.value));
+		//console.log(ckNum.test(birth.value));
 		return false;
 	}
 	
@@ -137,14 +137,71 @@ function error(result){
 	result.value = '';
 	result.focus();
 }
+//이메일 체크하기
+function emailCheck(list) {
+	//console.log(list); //받아온 리스트 출력
+	const ckSpace = /[\s]/g; //공백체크
+	const maillast = ['com','kr','net'];
+	var emailList = list.split(',');
+	
+	//받아온 리스트의 첫번째,마지막 결과에 []기호가 포함되어있기 때문에 삭제하고 다시 배열에 넣어준다.
+	var first = emailList[0].replace('[','');
+	var last = emailList[emailList.length - 1].replace(']','');
+	emailList[0] = first;
+	emailList[emailList.length - 1] = last;
+	
+	//사용자가 입력한 이메일 가져오기
+    var useremail = $('#userEmail').val().trim().toLowerCase();
+    var emailExists = false;
 
+    for (var i = 0; i < emailList.length; i++) {
+        var listItem = emailList[i].trim().toLowerCase();
+		//console.log(emailList[0]);
+		//사용자가 입력한 이메일이 리스트에 존재하면 true
+        if (useremail == listItem) {
+            emailExists = true;
+            break;
+        }
+    }
+    //true이면 이미 사용중인 이메일 텍스트 출력
+	if (emailExists) {
+        $('#checkMessage').html('이미 사용중인 이메일입니다.');
+    } else {
+    	//입력받은 이메일을 @로 나눈다.
+    	const input = $('#userEmail').val().split('@',2);
+    	//console.log(input[1]);
+   		//@로 나눈 문자열을 .을 기준으로 나눈다.
+    	const inputlast = input[1].split('.');
+    	//console.log(inputlast);
+    	//입력한 이메일을 @로 나눴을 때 2개이고 공백을 체크했을 때 공백이 없으면
+    	if(input.length == 2 && $('#userEmail').val().search(ckSpace) == -1){
+    		//이메일 뒷자리 last를 반복한다
+    		for(var i = 0; i < maillast.length; i++){
+    			var lastItem = maillast[i];
+    			//console.log(lastItem);
+    			//.뒤의 문자가 last중 하나와 일치하면 사용가능한 이메일이라는 텍스트 띄우기
+	    		if(inputlast[inputlast.length - 1] === lastItem){
+	        		$('#checkMessage').html('사용가능한 이메일입니다.');
+	        		break;
+	    		}
+	    		else{
+	    			//조건에 일치하지 않으면 텍스트 지우기
+	        		$('#checkMessage').html('');
+	        	}
+    		}
+    	}else{
+    		//조건에 일치하지 않으면 텍스트 지우기
+    		$('#checkMessage').html('');
+    	}
+    }
+}
 function passwordCheck2() {
 	var userPassword = $('#userPassword').val();
 	var userPassword1 = $('#userPassword1').val();
 	if (userPassword != userPassword1) {
-		$('#passwordCheckMessage').html('비밀번호가 서로 일치하지 않습니다.');
+		$('#checkMessage').html('비밀번호가 서로 일치하지 않습니다.');
 	} else {
-		$('#passwordCheckMessage').html('');
+		$('#checkMessage').html('');
 	}
 }
 

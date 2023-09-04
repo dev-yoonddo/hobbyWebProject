@@ -153,11 +153,11 @@ section{
     display: none;
 }
 
-#passwordCheckMessage{
+#checkMessage{
 	color: black;
 	font-size: 13px; 
 	padding: 0; 
-	margin:  0;
+	margin: 0;
 }
 
 #user-delete{

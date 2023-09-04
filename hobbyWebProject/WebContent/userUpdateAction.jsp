@@ -1,3 +1,4 @@
+<%@page import="java.util.ArrayList"%>
 <%@page import="user.PwEncrypt"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" errorPage="/error/errorPage.jsp"%>
@@ -59,18 +60,34 @@
 					script.println("history.back()");
 					script.println("</script>");
 				}else{
-					int result=userDAO.update(userID , user.getUserName(),user.getUserEmail() ,user.getUserBirth(), user.getUserPhone() ,encryptPW);
-					if(result == -1){//데이터 베이스 오류가 날 때
-						script.println("<script>");
-						script.println("alert('회원정보 수정에 실패했습니다.')");
-						script.println("history.back()");
-						script.println("</script>");
+					//이미 사용중인 이메일인지 검사
+					int emailOK = 0;
+					ArrayList<UserDTO> list = userDAO.getEmailList();
+					for (int i = 0; i < list.size(); i++) {
+						String email = list.get(i).getUserEmail();
+						if(email.equals(user.getUserEmail())){
+							script.println("<script>");
+							script.println("alert('이미 사용중인 이메일입니다.')");
+							script.println("history.back()");
+							script.println("</script>");
+							emailOK = 1;
+							break;
+						}
 					}
-					else{
-						script.println("<script>");
-						script.println("alert('회원정보 수정이 완료되었습니다.')");
-						script.println("location.href='userUpdate'");
-						script.println("</script>");
+					if(emailOK == 0){
+						int result=userDAO.update(userID , user.getUserName(),user.getUserEmail() ,user.getUserBirth(), user.getUserPhone() ,encryptPW);
+						if(result == -1){//데이터 베이스 오류가 날 때
+							script.println("<script>");
+							script.println("alert('회원정보 수정에 실패했습니다.')");
+							script.println("history.back()");
+							script.println("</script>");
+						}
+						else{
+							script.println("<script>");
+							script.println("alert('회원정보 수정이 완료되었습니다.')");
+							script.println("location.href='userUpdate'");
+							script.println("</script>");
+						}
 					}
 				}
 			}

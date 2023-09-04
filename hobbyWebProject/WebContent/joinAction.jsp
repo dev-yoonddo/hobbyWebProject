@@ -1,3 +1,4 @@
+<%@page import="java.util.ArrayList"%>
 <%@page import="java.io.PrintWriter"%>
 <%@page import="user.UserDAO"%>
 <%@page import="user.UserDTO"%>
@@ -23,12 +24,12 @@
 </head>
 <body>
 	<%
+		PrintWriter script = response.getWriter();
 		String userID = null;
 		if(session.getAttribute("userID") != null){
 			userID = (String) session.getAttribute("userID");
 		}
 		if(userID != null){
-			PrintWriter script = response.getWriter();
 			script.println("<script>");
 			script.println("alert('이미 로그인이 되어있습니다.')");
 			script.println("location.href = 'mainPage'");
@@ -36,7 +37,6 @@
 		}
 		if(user.getUserID() == null || user.getUserPassword() == null || user.getUserName() == null
 		|| user.getUserBirth() == null || user.getUserPhone() == null || user.getUserEmail() == null) {
-			PrintWriter script = response.getWriter();
 			script.println("<script>");
 			script.println("alert('정보를 모두 입력해주세요')");
 			script.println("history.back()");
@@ -44,22 +44,34 @@
 			
 		}else{
 			UserDAO userDAO = new UserDAO();
-			int result = userDAO.join(user);
-			if(result == -1){
-				PrintWriter script = response.getWriter();
-				script.println("<script>");
-				script.println("alert('이미 존재하는 아이디입니다.')");
-				script.println("history.back()");
-				script.println("</script>");
+			//이미 사용중인 이메일인지 검사
+			int emailOK = 0;
+			ArrayList<UserDTO> list = userDAO.getEmailList();
+			for (int i = 0; i < list.size(); i++) {
+				String email = list.get(i).getUserEmail();
+				if(email.equals(user.getUserEmail())){
+					script.println("<script>");
+					script.println("alert('이미 사용중인 이메일입니다.')");
+					script.println("history.back()");
+					script.println("</script>");
+					emailOK = 1;
+					break;
+				}
 			}
-			else {
-				PrintWriter script = response.getWriter();
-				script.println("<script>");
-				script.println("alert('회원가입이 완료되었습니다.')");	
-				script.println("location.href = 'emailSendAction'");
-				script.println("</script>");
+			if(emailOK == 0){
+				int result = userDAO.join(user);
+				if(result == -1){
+					script.println("<script>");
+					script.println("alert('이미 존재하는 아이디입니다.')");
+					script.println("history.back()");
+					script.println("</script>");
+				}else{
+					script.println("<script>");
+					script.println("alert('회원가입이 완료되었습니다.')");	
+					script.println("location.href = 'emailSendAction'");
+					script.println("</script>");
+				}
 			}
-			
 		}
 	%>
 </body>

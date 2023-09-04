@@ -92,8 +92,8 @@ section{
 					script.println("</script>");
 				}else{
 					String id = "check";
-					String host = "http://localhost:8080/hobbyWebProject/";
-					//String host = "https://toogether.me/";
+					//String host = "http://localhost:8080/hobbyWebProject/";
+					String host = "https://toogether.me/";
 					String from = "o0o7o2o0@gmail.com";
 					String to = userDAO.getUserEmail(userID);
 					String subject = "TOGETHER 회원가입을 위한 이메일 인증입니다.";

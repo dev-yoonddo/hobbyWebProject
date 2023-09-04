@@ -34,7 +34,6 @@
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script type="text/javascript" src="js/script.js"></script>
 <script type="text/javascript" src="js/userdata.js"></script>
-<script type="text/javascript" src="js/checkPW.js"></script>
 <script src="https://kit.fontawesome.com/f95555e5d8.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 </head>
@@ -275,6 +274,7 @@ span{
 	background-color: #4646CD;
 	color: white;
 }
+
 /*화면 축소 시*/
 @media screen and (max-width:650px) {
 	#userInfo{
@@ -321,7 +321,8 @@ span{
 		script.println("window.open('loginPopUp', 'Login', 'width=500, height=550, top=50%, left=50%')");
 		script.println("</script>");
 	}
-	//int userAccess = Integer.parseInt(request.getParameter("userAccess"));
+	UserDAO userDAO = new UserDAO();
+	ArrayList<UserDTO>mailList = userDAO.getEmailList(); //모든 유저 이메일 리스트 가져오기
 	 //하나의 유저 정보 가져오기
 	UserDTO user=new UserDAO().getUserVO(userID);
 	if(user.isUserEmailChecked() == false){
@@ -402,17 +403,17 @@ span{
 	<!-- 정보 수정하기 -->
 	<div id="userInfo">
 	 	<div>
-	        <h2>정보 수정하기<h2>
+	        <h2>정보 수정하기</h2>
 	        <form method="post" action="userUpdateAction.jsp" id="user-update" onsubmit="return userDataCheck(this)">
 			<input type="text" value=<%=user.getUserID()%> name="userID" id="userID" maxlength="20">
 			<input type="text" value=<%=user.getUserName()%> name="userName" id="userName"maxlength="20">
-			<input type="text" value=<%=user.getUserEmail()%> name="userEmail" id="userEmail"maxlength="20">
+			<input type="text" value=<%=user.getUserEmail()%> name="userEmail" id="userEmail"maxlength="20" onkeyup="emailCheck('<%=mailList%>')">
 			<input type="text" value=<%=user.getUserBirth()%> name="userBirth" id="userBirth" maxlength="20" >
 			<input type="text" value=<%=user.getUserPhone()%> name="userPhone" id="userPhone" maxlength="20">
 			<input type="password" name="userPassword" id="userPassword" maxlength="20" placeholder="비밀번호 입력" onkeyup="passwordCheck2()">
 	        <input type="password" name="userPassword1" id="userPassword1" placeholder="비밀번호 확인" onkeyup="passwordCheck2()">
 	            <div id="check">
-					<h5 id="passwordCheckMessage"></h5>
+					<h5 id="checkMessage"></h5>
 				</div>
 	        <input type="submit" value="update">
 	        </form>
@@ -975,5 +976,6 @@ function qna(){
 	window.open("sendMsgPopUp?qna=y","QNA","width=500, height=550, top=50%, left=50%")
 }
 </script>
+<script type="text/javascript" src="js/checkPW.js"></script>
 </body>
 </html>
