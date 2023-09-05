@@ -211,7 +211,14 @@ public int update(String userID, String userName,String userEmail, String userBi
 		pstmt.setString(4, userPhone);
 		pstmt.setString(5, userPassword);
 		pstmt.setString(6, PwEncrypt.encoding(userEmail));
-		pstmt.setBoolean(7, false);
+		UserDTO user = new UserDAO().getUserVO(userID);
+		//입력받은 userEmail이 이미 사용자 DB에 입력된 이메일과 같으면 이메일 인증여부를 그대로 가져온다.
+		if(userEmail.equals(user.getUserEmail())) {
+			pstmt.setBoolean(7, user.isUserEmailChecked());
+		//다르면 재인증이 필요하기 때문에 false를 넣어준다.
+		}else {
+			pstmt.setBoolean(7, false);
+		}
 		pstmt.setString(8, userID);
 
 		return pstmt.executeUpdate();		

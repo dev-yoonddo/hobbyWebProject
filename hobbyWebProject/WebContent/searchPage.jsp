@@ -108,13 +108,14 @@ th span{
 #more-btn:hover{
 	color: #E0E0E0;
 }
+#click-view{
+	justify-content: center;
+	align-items: center;
+}
 #click-view:hover{
 	font-weight: 400;
 	text-decoration: underline;
 	color: #606060;
-}
-#click-view:visited{
-	color: purple;
 }
 /* 공지 */
 #notice-animated{
@@ -308,7 +309,11 @@ th span{
 				
 					<tr class="board-row">
 						<td><%=list.get(i).getViewCount()%></td>
+						<%if(list.get(i).getFilename() == null){%>
 						<td><a id="click-view" href="view?boardID=<%= list.get(i).getBoardID() %>"><%= list.get(i).getBoardTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></a></td>
+						<%}else{ %>
+						<td><a id="click-view" href="view?boardID=<%= list.get(i).getBoardID() %>"><%= list.get(i).getBoardTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%>&nbsp;&nbsp;<i class="fa-solid fa-paperclip"></i></a></td>
+						<%} %>
 						<td><%= list.get(i).getUserID() %></td>
 						<td><%=list.get(i).getHeartCount()%></td>
 						<%

@@ -40,6 +40,13 @@ if(userID == null){
 	script.println("window.open('loginPopUp', 'Login', 'width=450, height=500, top=50%, left=50%')");
 	script.println("</script>");
 }
+if(!userID.equals("manager")){
+	PrintWriter script = response.getWriter();
+	script.println("<script>");
+	script.println("alert('준비중입니다.')");
+	script.println("history.back()");
+	script.println("</script>");
+}
 %>
 <!-- header -->
 <header id="header">

@@ -9,7 +9,6 @@
 	request.setCharacterEncoding("UTF-8");
 %>
 <jsp:useBean id="user" class="user.UserDTO" scope="page" />
-<jsp:setProperty name="user" property="userID" />
 <jsp:setProperty name="user" property="userPassword" />
 <jsp:setProperty name="user" property="userName" />
 <jsp:setProperty name="user" property="userBirth" />
@@ -45,8 +44,8 @@
 				script.println("</script>");
 			}else{
 				//test 계정이 아니면 정보 수정 가능
-				if(user.getUserID() == null || user.getUserName() == null || user.getUserEmail() == null 
-				|| user.getUserBirth() == null || user.getUserPhone() == null || user.getUserPassword() == null){
+				if(user.getUserName() == null || user.getUserEmail() == null || user.getUserBirth() == null 
+				|| user.getUserPhone() == null || user.getUserPassword() == null){
 				script.println("<script>");
 				script.println("alert('입력이 안 된 사항이 있습니다.')");
 				script.println("history.back()");
@@ -61,20 +60,20 @@
 					script.println("</script>");
 				}else{
 					//이미 사용중인 이메일인지 검사
-					int emailOK = 0;
 					ArrayList<UserDTO> list = userDAO.getEmailList();
-					for (int i = 0; i < list.size(); i++) {
-						String email = list.get(i).getUserEmail();
-						if(email.equals(user.getUserEmail())){
-							script.println("<script>");
-							script.println("alert('이미 사용중인 이메일입니다.')");
-							script.println("history.back()");
-							script.println("</script>");
-							emailOK = 1;
-							break;
+					//내 기존 이메일과 동일하지 않으면 검사하고 동일하면 업데이트 가능
+					if(!(userDAO.getUserVO(userID).getUserEmail()).equals(user.getUserEmail())){
+						for (int i = 0; i < list.size(); i++) {
+							String email = list.get(i).getUserEmail();
+							if(email.equals(user.getUserEmail())){
+								script.println("<script>");
+								script.println("alert('이미 사용중인 이메일입니다.')");
+								script.println("history.back()");
+								script.println("</script>");
+								break;
+							}
 						}
-					}
-					if(emailOK == 0){
+					}else{
 						int result=userDAO.update(userID , user.getUserName(),user.getUserEmail() ,user.getUserBirth(), user.getUserPhone() ,encryptPW);
 						if(result == -1){//데이터 베이스 오류가 날 때
 							script.println("<script>");

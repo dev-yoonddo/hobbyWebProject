@@ -405,7 +405,7 @@ span{
 	 	<div>
 	        <h2>정보 수정하기</h2>
 	        <form method="post" action="userUpdateAction.jsp" id="user-update" onsubmit="return userDataCheck(this)">
-			<input type="text" value=<%=user.getUserID()%> name="userID" id="userID" maxlength="20">
+			<input type="text" value=<%=user.getUserID()%> name="userID" id="userID" maxlength="20" disabled="disabled">
 			<input type="text" value=<%=user.getUserName()%> name="userName" id="userName"maxlength="20">
 			<input type="text" value=<%=user.getUserEmail()%> name="userEmail" id="userEmail"maxlength="20" onkeyup="emailCheck('<%=mailList%>')">
 			<input type="text" value=<%=user.getUserBirth()%> name="userBirth" id="userBirth" maxlength="20" >
