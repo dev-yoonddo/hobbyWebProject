@@ -40,7 +40,7 @@
 
 ### Database ERD
 
-![ERD](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/0c64a69b-c09a-4e93-9886-9ca130fcb229)
+![ERD](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/6c20bcb7-1fbe-4bfa-8128-1f557d68ba87)
 
 <br><br>
 
@@ -65,6 +65,8 @@
 ⚫ [회원가입](#--회원가입-)
 
 ⚫ [로그인/로그아웃](#--로그인-및-로그아웃-)
+
+⚫ [이메일인증](#--이메일-인증-)
 
 ⚫ [회원정보](#--회원-정보-관리-)
 
@@ -140,12 +142,15 @@
 
 <br><br>
 
-### ⚙ 1 ) 회원가입 기능, 비밀번호 불일치시 텍스트를 출력하고 일치하면 숨기기
+### ⚙ 1 ) 이메일이 이미 사용되었거나 비밀번호 불일치시 텍스트를 출력하고 조건에 충족하면 삭제
 
 <br>
 
-![join1](https://user-images.githubusercontent.com/84071666/235858722-147e69b6-5b4a-4987-988b-d8cda6c7f251.PNG)
-![join2](https://user-images.githubusercontent.com/84071666/235858725-d24d695c-589b-4cf4-8b2c-eac6f21afdd1.PNG)
+<div style="display: flex;">
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/43fe21fd-662d-4499-92f6-d72331072ddd.PNG" width="32%">
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/ced74ac9-630d-4e92-b202-1fb4bce7d844.PNG" width="32%">
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/66f5e48c-6aa1-40ba-9317-a028cd7c62b6.PNG" width="32%">
+</div>
 
 <br><br>
 
@@ -153,6 +158,26 @@
 
 <br>
 
+<div style="display: flex;">
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/442ac320-94b2-4389-8aa5-cdcf880e5715.PNG" width="49%">
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/321c1d6b-9af2-4596-8002-d88a05fa84cd.PNG" width="49%">
+</div>
+
+<div style="display: flex;">
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/4474e2e0-0514-4310-bc1d-05fb386d6df3.PNG" width="49%">
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/ebc96329-f036-488d-8f23-1cb110322282.PNG" width="49%">
+</div>
+
+<div style="display: flex;">
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/e9537376-6a77-4ff3-a486-e5d65a2c17e8.PNG" width="49%">
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/c402b096-33fb-4019-bf85-a81fa3a9dc7b.PNG" width="49%">
+</div>
+
+<div style="display: flex;">
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/5bc3bae9-64a0-444d-a001-07e3c5ae1a43.PNG" width="49%">
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/ce0a2c9c-124b-42c4-83e9-6fd952d2249e.PNG" width="49%">
+</div>
+  
 <div style="display: flex;">
 <img src="https://user-images.githubusercontent.com/84071666/235858732-6da01566-2379-4fe6-a104-a3483c506b0b.PNG" width="49%">
 <img src="https://user-images.githubusercontent.com/84071666/235858716-d086b410-df2b-43dc-bf38-756438c4616e.PNG" width="49%">
@@ -165,11 +190,12 @@
 
 <br><br>
 
-### ⚙ 3 ) 비밀번호 SHA-256 암호화
+### ⚙ 3 ) 이메일 주소, 비밀 번호 SHA-256 암호화
 
 <br>
 
-![pwEncrypt](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/136579d2-ae9e-41de-8edd-e983c155b6e3)
+![pwemailHash](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/7545f065-2a75-4443-b560-6ebe112902c6)
+
 ---
 
 <br><br>
@@ -186,27 +212,27 @@
 
 <div style="display: flex;">
 <img src="https://user-images.githubusercontent.com/84071666/235856997-7642fd3b-6c5b-4672-b806-08d205f5a4de.PNG" width="48%">
-<img src="https://user-images.githubusercontent.com/84071666/235856998-920a1440-5738-4bf8-b40d-90c24d145dcd.PNG" width="48%" align="right">
+<img src="https://user-images.githubusercontent.com/84071666/235856998-920a1440-5738-4bf8-b40d-90c24d145dcd.PNG" width="48%">
 </div>
 
 <div style="display: flex;">
 <img src="https://user-images.githubusercontent.com/84071666/235857000-64eaa871-c3b7-4a13-83c3-473ffe19c13b.PNG" width="48%">
-<img src="https://user-images.githubusercontent.com/84071666/235857004-48a40e5d-c729-410b-b159-a4c36204f838.PNG" width="48%" align="right">
+<img src="https://user-images.githubusercontent.com/84071666/235857004-48a40e5d-c729-410b-b159-a4c36204f838.PNG" width="48%">
 </div>
 
 <div style="display: flex;">
 <img src="https://user-images.githubusercontent.com/84071666/235857005-6a1448d8-aad3-441e-acaf-42dca90413cd.PNG" width="48%">
-<img src="https://user-images.githubusercontent.com/84071666/235857007-87c978de-f9de-431a-815d-571870d542be.PNG" width="48%" align="right">
+<img src="https://user-images.githubusercontent.com/84071666/235857007-87c978de-f9de-431a-815d-571870d542be.PNG" width="48%">
 </div> <br><br>
 
 <div style="display: flex;">
-<img src="https://user-images.githubusercontent.com/84071666/235857008-547bcad1-d68b-40c9-85dc-afe04d879634.PNG" width="59%">
-<img src="https://user-images.githubusercontent.com/84071666/235857012-af99212f-752d-4d7e-bfe0-f40986e8ce44.PNG" width="39%" height="180px" align="right">
+<img src="https://user-images.githubusercontent.com/84071666/235857008-547bcad1-d68b-40c9-85dc-afe04d879634.PNG" width="60%">
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/b18b43d0-d7ec-4910-90c4-b64e9bc565b9.PNG" width="35%">
 </div> 
 
 <div style="display: flex;">
-<img src="https://user-images.githubusercontent.com/84071666/235856984-26cf668a-4f84-41b1-86d4-7d3d12ad8610.PNG" width="59%">
-<img src="https://user-images.githubusercontent.com/84071666/235856986-3ec5b33b-8783-48c9-a9da-911c6488c789.PNG" width="39%" height="180px" align="right">
+<img src="https://user-images.githubusercontent.com/84071666/235856984-26cf668a-4f84-41b1-86d4-7d3d12ad8610.PNG" width="60%">
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/9c01114c-6ec4-4796-9c66-83c5e4bd0de2.PNG" width="35%">
 </div>
 
 <br><br>
@@ -215,6 +241,65 @@
 
 <br><br>
 
+
+# - 이메일 인증 📍
+
+<br><br>
+
+## 🔘 1 ) 회원가입 후 정보관리 페이지 접속을 위해 이메일 인증
+
+<br>
+
+![mail1](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/1c9e1490-d0bf-4d9f-8232-3123a80866a3)
+
+<br><br>
+
+### ⚙ 이메일 정보가 없는 회원 접속시 이메일 입력 팝업 생성 후 기존에 사용된 이메일인지 확인
+
+<br>
+
+![mail8](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/7a53f8b9-6169-4f03-9497-c68f2e52720e)
+![mail9](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/bdecd3ca-687e-4533-b124-2fb7830d1fb4)
+
+<br><br>
+
+### ⚙ 이메일 정보가 존재하면 인증 메일 전송
+
+<br>
+
+![mail2](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/099549ab-d30e-4a1f-8a98-076c36d594dc)
+
+<br><br>
+
+### ⚙ 이메일 계정 접속 후 수신 메일의 인증하기 클릭
+
+<br>
+
+![mail3](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/cada3bf5-1bf1-4409-8d4d-d2215b4a9d0d)
+![mail4](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/f549791e-1f39-4560-8ddb-c44592bfb819)
+
+<br><br>
+
+### ⚙ 정상적으로 인증 완료시 알림창 띄운 후 창 닫기
+
+<br>
+
+![mail5](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/81c60e62-145b-4eef-b05a-1d51bcfdc2d0)
+
+<br><br>
+
+### ⚙ 기존 이메일 인증 페이지로 돌아가 인증완료 버튼을 클릭(10초에 한번 새로고침으로 DB정보 업데이트)하면 정보 관리 페이지 접속 가능
+
+<br>
+
+![mail6](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/f8b8bb31-77b2-4791-a5b7-d26dc484b7e8)
+![update1](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/7316a0c1-4712-491b-b22e-11899d651574)
+
+<br><br>
+
+---
+
+<br><br>
 
 # - 회원 정보 관리 📍
 
@@ -225,12 +310,18 @@
 <br>
 
 <div style="display: flex-start;">
-<img src="https://user-images.githubusercontent.com/84071666/235875451-a4c6e412-bfc7-4a1d-be78-2e919a4da178.PNG" width="30%" height="150px" align="left">
+<img src="https://user-images.githubusercontent.com/84071666/235875451-a4c6e412-bfc7-4a1d-be78-2e919a4da178.PNG" width="30%" height="130px" align="left">
 <img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/ae5608a8-cd14-4950-9fdf-0a889a38d75b.PNG" width="40%">
-</div> <br><br>
+</div>
 
-![update1](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/ba4b16aa-5566-4872-8e97-3dd12945362a)
-![userupdate2](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/4d711143-8127-4b7a-b8c5-5b32ca8e2f7c)
+<br><br>
+
+### ⚙ 아이디는 수정 불가하도록 disabled
+
+<br>
+
+![update1](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/7316a0c1-4712-491b-b22e-11899d651574)
+![update2](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/17ffea4e-238f-408c-8ee2-215f6370d96d)
 
 <br><br>
 
@@ -242,7 +333,8 @@
 
 <br>
 
-### ⚙ 회원가입과 동일하게 비밀번호 일치 확인 후 수정 완료
+### ⚙ 회원가입과 동일하게 입력 조건, 비밀번호 일치 확인 후 수정 완료
+#### *기존 이메일을 변경하지 않을때는 이메일 주소와 인증 정보가 그대로 저장되고 이메일 변경시 다른 아이디에서 사용중인 이메일이면 사용불가
 
 <br>
 
@@ -253,7 +345,7 @@
 
 <br><br>
 
-<img src="https://user-images.githubusercontent.com/84071666/235870969-7c856888-bc11-4b1a-be33-0b7f2876275f.PNG">
+![update3](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/5e351af1-f737-4dfc-8b68-fd4d376f0539)
 
 <br><br>
 
