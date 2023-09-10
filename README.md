@@ -48,7 +48,7 @@
 ### 배포 과정
 
 1. AWS EC2 인스턴스 생성 후 퍼블릭ip를 발급받아 인스턴스와 연결
-2. FileZilla로 AWS EC2 인스턴스에 업로드
+2. FileZilla를 사용해 AWS EC2 인스턴스에 업로드
 3. AWS RDS로 DB인스턴스 생성 후 Dbeaver로 MySQL과 연결
 4. 주소 뒤 8080을 생략하기 위해 80 to 8080 포트포워딩
 5. 가비아에서 구매한 도메인을 AWS Route53에서 호스팅영역을 생성한 뒤 연결
