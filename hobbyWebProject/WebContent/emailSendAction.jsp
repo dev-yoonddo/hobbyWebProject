@@ -94,7 +94,7 @@ section{
 					String id = "check";
 					//String host = "http://localhost:8080/hobbyWebProject/";
 					String host = "https://toogether.me/";
-					String from = "o0o7o2o0@gmail.com";
+					String from = "we.are.together.2023.03@gmail.com";
 					String to = userDAO.getUserEmail(userID);
 					String subject = "TOGETHER 회원가입을 위한 이메일 인증입니다.";
 					String content = "다음 링크에 접속해 이메일 인증을 하세요 &nbsp;&nbsp;[" +
