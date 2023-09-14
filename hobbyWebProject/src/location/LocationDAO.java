@@ -1,5 +1,60 @@
 package location;
 
-public class LocationDAO {
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
+public class LocationDAO {
+	
+		private Connection conn;
+		private ResultSet rs;	
+		public LocationDAO() {
+			try {
+			 	String dbURL = "jdbc:mysql://database-1.cxujakzvpvip.ap-southeast-2.rds.amazonaws.com:3306/hobbyWebProject?useUnicode=true&characterEncoding=UTF-8";
+			 	String dbID = "root";
+			 	String dbPassword = "qlalf9228?";
+			 	Class.forName("com.mysql.jdbc.Driver");
+			 	conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+//	위치 정보 저장
+	public int input(LocationDTO location) {
+		try {
+			String SQL ="INSERT INTO location VALUES (?, ?, ?, ?)";
+			PreparedStatement pstmt=conn.prepareStatement(SQL);
+			//pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, location.getUserID());
+			pstmt.setString(2, location.getDoroName());
+			pstmt.setDouble(3, location.getLatitude());
+			pstmt.setDouble(4, location.getLongitude());
+			return pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return -1;
+	}
+//	회원 위치 정보 보기	
+	public LocationDTO getUserLocationVO(String userID) {
+		String SQL="SELECT * FROM location WHERE userID = ?";
+		try {
+			PreparedStatement pstmt=conn.prepareStatement(SQL);
+			pstmt.setString(1, userID);//물음표
+			rs=pstmt.executeQuery();//select
+			if(rs.next()) {//결과가 있다면
+				LocationDTO loc = new LocationDTO();
+				loc.setUserID(rs.getString(1));//첫 번째 결과 값
+				loc.setDoroName(rs.getString(2));
+				loc.setLatitude(rs.getDouble(3));
+				loc.setLongitude(rs.getDouble(4));
+				return loc;//6개의 항목을 user인스턴스에 넣어 반환한다.
+			}			
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

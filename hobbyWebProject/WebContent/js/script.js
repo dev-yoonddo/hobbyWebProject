@@ -136,7 +136,7 @@ $(function(){
 $(function(){
     // 스크롤 시 header fade-in
     $(document).on('scroll', function(){
-        if($(window).scrollTop() > 200){
+        if($(window).scrollTop() > 150){
             $("#header").removeClass("de-active");
             $("#header").addClass("active");
         }else{

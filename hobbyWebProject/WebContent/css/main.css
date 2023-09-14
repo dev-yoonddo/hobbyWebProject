@@ -110,10 +110,10 @@ section{
 /*화면 넓을 때 스크롤시 header 색상 변경*/
 .active{
 	background-color: white;
-	transition-duration: 1s;
+	transition-duration: 0.5s;
 	transition-timing-function: linear;
 	
-	-webkit-transition-duration:1s;
+	-webkit-transition-duration:0.5s;
 	-webkit-transition-timing-function: linear;
 }
 .de-active{
