@@ -188,9 +188,10 @@ if(!userID.equals("manager")){
 	<table id="mapList"></table>
 </section>
 <script>
+var row = 0;
 	function view(){
 		//navigator.geolocation.getCurrentPosition(success, error, options);
-		navigator.geolocation.getCurrentPosition(success);
+		navigator.geolocation.getCurrentPosition(success, error);
 		//$('#search').hide();
 	}
 	function question(){
@@ -215,22 +216,57 @@ if(!userID.equals("manager")){
 		var map , marker, infoWindow;
 		//사용자의 현재위치를 받아 마커로 표시한다.
 		function success(pos) {
+			var ad;
 			$('#no-map').hide();
 			//console.log(pos);
 		  	var crd = pos.coords;
-		 	 map = new naver.maps.Map('map', {
-			    center: new naver.maps.LatLng(crd.latitude , crd.longitude),
-			    zoom: 16
-			});
-			marker = new naver.maps.Marker({
-			    position: new naver.maps.LatLng(crd.latitude , crd.longitude),
-			    map: map
-			});
+		    var latlng = new naver.maps.LatLng(crd.latitude, crd.longitude);
+		    
+		    var map = new naver.maps.Map('map', {
+		        center: latlng,
+		        zoom: 16
+		    });
+
+		    var marker = new naver.maps.Marker({
+		        position: latlng,
+		        map: map
+		    });
+		    
+		  	naver.maps.Service.reverseGeocode({
+		        location: latlng
+		    }, function (status, response) {
+		    	if (status === naver.maps.Service.Status.OK) {
+		            if (response.v2 && response.v2.addresses && response.v2.addresses.length > 0) {
+		                var address = response.v2.addresses[0];
+		                var roadAddress = address.roadAddress || 'N/A';
+		                var jibunAddress = address.jibunAddress || 'N/A';
+		                var englishAddress = address.englishAddress || 'N/A';
+
+		                // Now you have the road name address, jibun address, and English address
+		                console.log('Road Name Address: ' + roadAddress);
+		                console.log('Jibun Address: ' + jibunAddress);
+		                console.log('English Address: ' + englishAddress);
+
+		                // Call the newMapList method to display the location on the map
+		                newMapList(roadAddress, crd.latitude, crd.longitude, jibunAddress, englishAddress);
+		            } else {
+		                // Handle the case where there are no addresses in the response
+		                alert('No address information found.');
+		            }
+		        } else {
+		            // Handle the error if reverse geocoding fails
+		            alert('Reverse geocoding failed.');
+		        }
+		    });
+		}
+		function error(err) {
+		    // Handle errors when getting the user's location
+		    alert('Error getting location: ' + err.message);
+		}
 			  //console.log('Your current position is:');
 			  //console.log('Latitude : ' + crd.latitude);
 			  //console.log('Longitude: ' + crd.longitude);
 			  //console.log('More or less ' + crd.accuracy + ' meters.');
-		}
 		
 		/*//지도 이동을 위한 메서드
 		function moveMap(len, lat) {
@@ -246,6 +282,7 @@ if(!userID.equals("manager")){
 				});
 				
 		}*/
+		
 		$('#address').on('keydown', function(e) {
 	        var keyCode = e.which;
 	        if (keyCode === 13) { // Enter Key
@@ -267,7 +304,6 @@ if(!userID.equals("manager")){
 
 	   
 	    function searchAddressToCoordinate(address) {
-			
 	        naver.maps.Service.geocode({
 	        query: address
 	        }, function(status, response) {
@@ -275,73 +311,75 @@ if(!userID.equals("manager")){
 	    			$('#no-map').show();
 	    			$('#map').hide();
 	    			//address의 값을 지운다.
-	    			$('#address').each(function () { $(this).val(''); });
-	                return alert('Something Wrong!');
+	    			$('#address').val('');
+	                alert('Something Wrong!');
 	            }
-	            if (response.v2.meta.totalCount === 0) {
+	            else if (response.v2.meta.totalCount === 0) {
+	            	console.log(response.v2.meta.totalCount);
 	    			$('#no-map').show();
 	    			$('#map').hide();
 	    			//address의 값을 지운다.
-	    			$('#address').each(function () { $(this).val(''); });
-	                return alert('올바른 주소를 입력해주세요.');
+	    			$('#address').val('');
+	                alert('올바른 주소를 입력해주세요.');
+	            }else{
+	            	//console.log(response.v2.meta.totalCount);
+	    			$('#map').show();
+	            	$('#no-map').hide();
+		            var htmlAddresses = [],
+		                item = response.v2.addresses[0],
+		                point = new naver.maps.Point(item.x, item.y);
+		            if (item.roadAddress) {
+		                htmlAddresses.push('[도로명 주소] ' + item.roadAddress);
+		            }
+		            if (item.jibunAddress) {
+		                htmlAddresses.push('[지번 주소] ' + item.jibunAddress);
+		            }
+		            if (item.englishAddress) {
+		                htmlAddresses.push('[영문명 주소] ' + item.englishAddress);
+		            }
+		            /*infoWindow.setContent([
+		                '<div style="padding:10px;min-width:200px;line-height:150%;">',
+		                '<h4 style="margin-top:5px;">검색 주소 : '+ address +'</h4><br />',
+		                htmlAddresses.join('<br />'),
+		                '</div>'
+		            ].join('\n'));*/
+		            newMapList(item.roadAddress, item.x, item.y, item.jibunAddress, item.englishAddress);
+		            //infoWindow.open(map, point);
+		            $('#address').val('');
 	            }
-	            var htmlAddresses = [],
-	                item = response.v2.addresses[0],
-	                point = new naver.maps.Point(item.x, item.y);
-	            if (item.roadAddress) {
-	                htmlAddresses.push('[도로명 주소] ' + item.roadAddress);
-	            }
-	            if (item.jibunAddress) {
-	                htmlAddresses.push('[지번 주소] ' + item.jibunAddress);
-	            }
-	            if (item.englishAddress) {
-	                htmlAddresses.push('[영문명 주소] ' + item.englishAddress);
-	            }
-	            /*infoWindow.setContent([
-	                '<div style="padding:10px;min-width:200px;line-height:150%;">',
-	                '<h4 style="margin-top:5px;">검색 주소 : '+ address +'</h4><br />',
-	                htmlAddresses.join('<br />'),
-	                '</div>'
-	            ].join('\n'));*/
-	            insertAddress(item.roadAddress, item.x, item.y, item.jibunAddress, item.englishAddress);
-	            //infoWindow.open(map, point);
 	        });
 	    }
-		    
-	    function insertAddress(address, latitude, longitude , jibun, engAd) {
-			$('#no-map').hide();
-	    	var row = 0;
-	    	/*var row = rowCount();
-	    	if(row > 0){
-	    		const table = document.getElementById('mapList');
-	    		table.remove();
-	    		*/
-	    		if(row == 0){
-		    	var mapList = "";
-		    	mapList += "<tr>" 
-		    	mapList += "	<td>" + address + "</td>"
-		    	mapList += "	<td>" + latitude + "</td>"
-		    	mapList += "	<td>" + longitude + "</td>"
-		    	mapList += "	<td>" + jibun + "</td>"
-		    	mapList += "	<td>" + engAd + "</td>"
-		    	mapList += "</tr>"
-		    	$('#mapList').append(mapList);	
-		    	row++;
-				console.log(latitude + ", " + longitude);
-	    		}else{
+			//위 메서드가 처음 실행되면 row = 0으로 바로 insertAddress 메서드가 실행되지만
+			//두번째 검색부터는 row = 1이기 때문에 이전 행을 삭제하고 insertAddress 메서드를 실행한다.
+			function newMapList(address, latitude, longitude , jibun, engAd) {
+	   		    console.log(address);
+	    		if(row === 1){
 	    			const table = document.getElementById('mapList');
-		    		table.remove;
+	    			table.deleteRow(0); //이전 행 삭제
+	    			row--; //row값을 -1 해줘야 row값이 0 또는 1로만 반복된다.
+					//console.log(latitude + ", " + longitude); 위도 경도 출력
 	    		}
-			//검색한 장소로 지도와 마커의 위치를 변경한다.
-	    	var map = new naver.maps.Map('map', {
-	    	    center: new naver.maps.LatLng(longitude, latitude),
-	    	    zoom: 16
-	    	});
-	        var marker = new naver.maps.Marker({
-	            map: map,
-	            position: new naver.maps.LatLng(longitude, latitude),
-	        });
-	    }
+	    		insertAddress(address, latitude, longitude , jibun, engAd);
+	   		 }
+	    	function insertAddress(address, latitude, longitude , jibun, engAd){
+	    		var mapList = "";
+		    	mapList += "<tr>" 
+		    	mapList += "	<td>" + address +"<br>"+ latitude +"<br>"+ longitude +"<br>"+ jibun +"<br>"+ engAd +"</td>"
+		    	mapList += "</tr>"
+		    	$('#mapList').append(mapList);
+		    	
+		    	//검색한 장소로 지도와 마커의 위치를 변경한다.
+		    	var map = new naver.maps.Map('map', {
+		    	    center: new naver.maps.LatLng(longitude, latitude),
+		    	    zoom: 16
+		    	});
+		        var marker = new naver.maps.Marker({
+		            map: map,
+		            position: new naver.maps.LatLng(longitude, latitude),
+		        });
+		    	row++; //모두 실행되면 row + 1 해준다.
+	    	}
+	    	 
 		/*
  	var map = new naver.maps.Map('map', {
 	    center: new naver.maps.LatLng(37.5112, 127.0981), // 잠실 롯데월드를 중심으로 하는 지도
@@ -366,14 +404,6 @@ const point = getCurrentPosition();
 createMap(point);
 */
 </script>
-<script>
-/*function rowCount(){
-const table = document.getElementById('mapList');
-const rowCount = table.rows.length;
- console.log(rowCount);
- 
- return rowCount;
-}*/
-</script>
+
 </body>
 </html>
