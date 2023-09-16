@@ -164,7 +164,7 @@ if(!userID.equals("manager")){
 	        <textarea id="address" placeholder="검색할 주소를 입력하세요 &#13;&#10;예) 불암로 55" maxlength="20"></textarea>
 	        <button type="button" class="btn-blue" id="submit"><span>주소검색</span></button>
 	    </div>
-		<button type="button" class="btn-blue" id="myLoc" onclick="view()"><span>현재위치</span></button>
+		<button type="button" class="btn-blue" id="myLoc"><span>현재위치</span></button>
     </div>
 	<div id="map-qna">
 		<div id="question" onmouseover="question()" onmouseout="questionOut()">
@@ -233,36 +233,36 @@ var row = 0;
 		    });
 		    
 		  	naver.maps.Service.reverseGeocode({
-		        location: latlng
+		        coords: latlng ,
+		        orders: [
+		            naver.maps.Service.OrderType.ADDR,
+		            naver.maps.Service.OrderType.ROAD_ADDR
+		        ].join(',')
 		    }, function (status, response) {
-		    	if (status === naver.maps.Service.Status.OK) {
-		            if (response.v2 && response.v2.addresses && response.v2.addresses.length > 0) {
-		                var address = response.v2.addresses[0];
-		                var roadAddress = address.roadAddress || 'N/A';
-		                var jibunAddress = address.jibunAddress || 'N/A';
-		                var englishAddress = address.englishAddress || 'N/A';
-
-		                // Now you have the road name address, jibun address, and English address
-		                console.log('Road Name Address: ' + roadAddress);
-		                console.log('Jibun Address: ' + jibunAddress);
-		                console.log('English Address: ' + englishAddress);
-
-		                // Call the newMapList method to display the location on the map
-		                newMapList(roadAddress, crd.latitude, crd.longitude, jibunAddress, englishAddress);
-		            } else {
-		                // Handle the case where there are no addresses in the response
-		                alert('No address information found.');
-		            }
-		        } else {
-		            // Handle the error if reverse geocoding fails
-		            alert('Reverse geocoding failed.');
+		    	if (status === naver.maps.Service.Status.ERROR) {
+		            return alert('Something Wrong!');
 		        }
+		    	 var items = response.v2.results,
+		            address = '',
+		            htmlAddresses = [];
+
+		        for (var i=0, ii=items.length, item, addrType; i<ii; i++) {
+		            item = items[i];
+		            address = makeAddress(item) || '';
+		            addrType = item.name === 'roadaddr' ? '[도로명 주소]' : '[지번 주소]';
+
+		        }
+		        	console.log(address);
+		            searchAddressToCoordinate(address);
+
 		    });
 		}
 		function error(err) {
 		    // Handle errors when getting the user's location
 		    alert('Error getting location: ' + err.message);
 		}
+		$('#myLoc').on('click', view);
+
 			  //console.log('Your current position is:');
 			  //console.log('Latitude : ' + crd.latitude);
 			  //console.log('Longitude: ' + crd.longitude);
