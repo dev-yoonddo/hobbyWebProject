@@ -22,15 +22,16 @@ public class LocationDAO {
 		
 	}
 //	위치 정보 저장
-	public int input(LocationDTO location) {
+	public int regist(String userID, String spotName, String address, Double latitude, Double longitude) {
 		try {
-			String SQL ="INSERT INTO location VALUES (?, ?, ?, ?)";
+			String SQL ="INSERT INTO location VALUES (?, ?, ?, ?, ?)";
 			PreparedStatement pstmt=conn.prepareStatement(SQL);
 			//pstmt = conn.prepareStatement(SQL);
-			pstmt.setString(1, location.getUserID());
-			pstmt.setString(2, location.getDoroName());
-			pstmt.setDouble(3, location.getLatitude());
-			pstmt.setDouble(4, location.getLongitude());
+			pstmt.setString(1, userID);
+			pstmt.setString(2, spotName);
+			pstmt.setString(3, address);
+			pstmt.setDouble(4, latitude);
+			pstmt.setDouble(5, longitude);
 			return pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -46,10 +47,11 @@ public class LocationDAO {
 			rs=pstmt.executeQuery();//select
 			if(rs.next()) {//결과가 있다면
 				LocationDTO loc = new LocationDTO();
-				loc.setUserID(rs.getString(1));//첫 번째 결과 값
-				loc.setDoroName(rs.getString(2));
-				loc.setLatitude(rs.getDouble(3));
-				loc.setLongitude(rs.getDouble(4));
+				loc.setUserID(rs.getString(1));
+				loc.setSpotName(rs.getString(2));
+				loc.setAddress(rs.getString(3));
+				loc.setLatitude(rs.getDouble(4));
+				loc.setLongitude(rs.getDouble(5));
 				return loc;//6개의 항목을 user인스턴스에 넣어 반환한다.
 			}			
 		} catch(Exception e) {

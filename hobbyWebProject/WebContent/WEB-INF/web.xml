@@ -273,6 +273,14 @@
     <url-pattern>/emailAdUpdateAction</url-pattern>
   </servlet-mapping>
   <servlet>
+    <servlet-name>spotRegistAction.jsp</servlet-name>
+    <jsp-file>/spotRegistAction.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>spotRegistAction.jsp</servlet-name>
+    <url-pattern>/spotRegistAction</url-pattern>
+  </servlet-mapping>
+  <servlet>
     <servlet-name>downloadAction</servlet-name>
     <servlet-class>file.downloadAction</servlet-class>
   </servlet>

@@ -2,7 +2,8 @@ package location;
 
 public class LocationDTO {
 	private String userID;
-	private String doroName;
+	private String spotName;
+	private String address;
 	private double latitude;
 	private double longitude;
 	
@@ -13,11 +14,18 @@ public class LocationDTO {
 	public void setUserID(String userID) {
 		this.userID = userID;
 	}
-	public String getDoroName() {
-		return doroName;
+	
+	public String getSpotName() {
+		return spotName;
 	}
-	public void setDoroName(String doroName) {
-		this.doroName = doroName;
+	public void setSpotName(String spotName) {
+		this.spotName = spotName;
+	}
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
 	}
 	public double getLatitude() {
 		return latitude;
