@@ -4,6 +4,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+
+import group.GroupDTO;
 
 public class LocationDAO {
 	
@@ -21,7 +24,7 @@ public class LocationDAO {
 		}
 		
 	}
-//	위치 정보 저장
+	//위치 정보 저장
 	public int regist(String userID, String spotName, String address, Double latitude, Double longitude) {
 		try {
 			String SQL ="INSERT INTO location VALUES (?, ?, ?, ?, ?)";
@@ -38,7 +41,7 @@ public class LocationDAO {
 		}
 		return -1;
 	}
-//	회원 위치 정보 보기	
+	//회원 위치 정보 보기	
 	public LocationDTO getUserLocationVO(String userID) {
 		String SQL="SELECT * FROM location WHERE userID = ?";
 		try {
@@ -58,5 +61,43 @@ public class LocationDAO {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	//스팟 네임 리스트 출력하기
+	public ArrayList<LocationDTO> getSpotList(){
+		String SQL = "SELECT spotName FROM location"; 
+		ArrayList<LocationDTO> list = new ArrayList<LocationDTO>();
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {//결과가 있다면
+				LocationDTO loc = new LocationDTO();
+				loc.setSpotName(rs.getString(1));
+				list.add(loc);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return list; 
+	}
+	//저장된 스팟 정보 리스트 출력하기
+	public ArrayList<LocationDTO> getSpotInfoList(){
+		String SQL = "SELECT * FROM location"; 
+		ArrayList<LocationDTO> list = new ArrayList<LocationDTO>();
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {//결과가 있다면
+				LocationDTO loc = new LocationDTO();
+				loc.setUserID(rs.getString(1));
+				loc.setSpotName(rs.getString(2));
+				loc.setAddress(rs.getString(3));
+				loc.setLatitude(rs.getDouble(4));
+				loc.setLongitude(rs.getDouble(5));
+				list.add(loc);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return list; 
 	}
 }

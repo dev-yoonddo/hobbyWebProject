@@ -1,3 +1,6 @@
+<%@page import="location.LocationDTO"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="location.LocationDAO"%>
 <%@page import="java.io.PrintWriter"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -163,6 +166,10 @@ if(!userID.equals("manager")){
 	script.println("history.back()");
 	script.println("</script>");
 }
+String addr,latt,lonn;
+LocationDAO locDAO = new LocationDAO();
+//지도 위에 표시할 저장된 스팟 리스트 가져오기
+ArrayList<LocationDTO> locationList = locDAO.getSpotInfoList();
 %>
 <!-- header -->
 <header id="header">
@@ -202,7 +209,7 @@ if(!userID.equals("manager")){
 	<div id="mapInfo">
 		<div>
 			<div id="mapInfo-head">
-			<h3>주소 정보</h3><button type="button" class="btn-blue" id="regist"><span>TOGETHER SPOT 등록</span></button>
+			<h3>주소 정보</h3><button type="button" class="btn-blue" id="regist" onclick="registSpot()"><span>TOGETHER SPOT 등록</span></button>
 			</div>
 			<table id="mapList"></table>
 		</div>
@@ -210,9 +217,18 @@ if(!userID.equals("manager")){
 </section>
 <script>
 	var row = 0;
-	var addr;
-	var latt = 0;
-	var lonn = 0;
+	var addr, latt, lonn, map;
+	var locationData = [
+	    <% for (LocationDTO location : locationList) { %>
+	        {
+	            name: "<%= location.getSpotName() %>",
+	            address: "<%= location.getAddress() %>",
+	            latitude: <%= location.getLatitude() %>,
+	            longitude: <%= location.getLongitude() %>
+	        },
+	    <% } %>
+	];
+	console.log(locationData);
 	function question(){
 		$('#answer').show();
 	}
@@ -227,13 +243,12 @@ if(!userID.equals("manager")){
         }
     });
     $('#submit').on('click', function(e) {
-    	
         e.preventDefault();
         searchAddressToCoordinate($('#address').val());
     });
     
 	$('#myLoc').on('click', view);
-	$('#regist').on('click', registSpot);
+	$('#myLoc').on('load', view);
 	
 	function view(){
 		//navigator.geolocation.getCurrentPosition(success, error, options);
@@ -243,11 +258,10 @@ if(!userID.equals("manager")){
 
 	//사용자의 현재위치를 받아 마커로 표시한다.
 	function success(pos) {
-		$('#no-map').hide();
 		//console.log(pos);
 	  	var crd = pos.coords;
 	    var latlng = new naver.maps.LatLng(crd.latitude, crd.longitude);
-
+		$('#no-map').hide();
 	    rePlaceMap(crd.latitude, crd.longitude);
 	    
 	  	naver.maps.Service.reverseGeocode({
@@ -422,7 +436,7 @@ if(!userID.equals("manager")){
 	function newMapList(address, latitude, longitude , jibun, engAd) {
 		//console.log(address);
 		//console.log(row);
-   		if(row === 1){
+   		if(row === 1){ // 검색이 두번 실행되면
    			const table = document.getElementById('mapList');
    			table.deleteRow(0); //이전 행 삭제
    			row--; //row값을 -1 해줘야 row값이 0 또는 1로만 반복된다.
@@ -441,59 +455,83 @@ if(!userID.equals("manager")){
     	
     	rePlaceMap(longitude, latitude);
     	row++; //모두 실행되면 row + 1 해준다.
-    	addr == address;
-    	latt == latitude;
-    	lonn == longitude;
+    	addr = address;
+    	latt = latitude;
+    	lonn = longitude;
    	}
 		
    	//검색한 장소로 지도와 마커의 위치를 변경한다.
     function rePlaceMap(longitude, latitude){
-    	var map = new naver.maps.Map('map', {
-    	    center: new naver.maps.LatLng(longitude, latitude),
+   		var latlon = new naver.maps.LatLng(longitude, latitude);
+    	map = new naver.maps.Map('map', {
+    	    center: latlon,
     	    zoom: 16
     	});
         var marker = new naver.maps.Marker({
             map: map,
-            position: new naver.maps.LatLng(longitude, latitude),
+            position: latlon,
         });
+        
+        displayAllLocationsAsInfoWindows(latlon, locationData);
     } 
 
    	
-    function registSpot(addr, latt, lonn) {
-        // Get the name from the user (you can replace this with your own method)
-        var name = prompt('Enter a name for the spot:');
+    function registSpot() {
+    	var name;
+        while (true) {
+            name = prompt('스팟 이름을 입력해주세요');
 
-        // Check if the name is null or empty
-        if (!name) {
-            alert('Name cannot be empty.');
-            return; // Exit the function if the name is null or empty
+            if (name === null) {
+                return;
+            } else if (name.trim() === '') {
+                alert('이름을 다시 입력해주세요');
+            } else {
+                break;
+            }
         }
-
-        // Create a data object with the information to send to the server
         var data = {
             name: name,
             address: addr,
             latitude: latt,
             longitude: lonn
         };
-
-        // Make an AJAX request to send the data to the server
         $.ajax({
-            type: 'POST', // You can change this to 'GET' if needed
-            url: 'spotRegistAction', // Replace with your actual URL
+            type: 'POST',
+            url: 'spotRegistAction',
             data: data,
             success: function (response) {
-                // Handle the response from the server (if needed)
-                console.log('Spot registration successful:', response);
-                console.log(data);
+            	if (response.includes("Spot saved successfully")) {
+                //console.log('Spot registration successful:', response);
+                alert('스팟 등록 완료');
+               	location.reload(true);
+                //console.log(data);
+            	}else{
+            		 //console.error('Spot registration error:', response);
+                     alert('이미 존재하는 이름입니다.');
+            	}
             },
             error: function (xhr, status, error) {
-                // Handle errors (if any)
-                console.error('Spot registration error:', error);
-                alert('Spot registration failed.');
+                //console.error('Spot registration error:', error);
+                alert('스팟 등록 오류');
             }
         });
     }
+    
+    var userMarker = null; // Marker for user's location
+
+    function displayAllLocationsAsInfoWindows(latlon, locationData) {
+        for (var i = 0; i < locationData.length; i++) {
+            var location = locationData[i];
+            var latlng = new naver.maps.LatLng(location.latitude, location.longitude);
+
+            var infoWindow = new naver.maps.InfoWindow({
+                content: '<div><strong>' + location.name + '</strong><br>' + location.address + '</div>'
+            });
+
+            infoWindow.open(latlon, latlng);
+        }
+    }
+
 /* 기본 지도 생성하기
 var map = new naver.maps.Map('map', {
     center: new naver.maps.LatLng(37.5112, 127.0981), // 잠실 롯데월드를 중심으로 하는 지도
