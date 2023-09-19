@@ -33,7 +33,7 @@ String thisPage = request.getParameter("thisPage");
 				<%
 					}
 				%>
-				<li><a href="shop" class ="menu">SHOP</a></li>
+				<li><a href="shop" class ="menu">SPOT</a></li>
 			</ul>
 		</nav>
 			<ul class="navbar_login" >
