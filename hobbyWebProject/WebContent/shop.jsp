@@ -139,6 +139,20 @@ width: 100%;
 #regist span{
 	width: 180px;
 }
+/* 지도 위 infoWindow */
+#info-window{
+padding: 5px;
+text-align: center;
+font-size: 11pt;
+border-style: solid;
+border-width: 0.1px;
+border-radius: 10px;
+}
+#info-name{
+font-size: 13pt;
+font-weight: bold;
+margin : 0;
+}
 </style>
 <body>
 <%
@@ -167,10 +181,9 @@ if(!userID.equals("manager")){
 	script.println("history.back()");
 	script.println("</script>");
 }
-String addr,latt,lonn;
 LocationDAO locDAO = new LocationDAO();
 //지도 위에 표시할 저장된 스팟 리스트 가져오기
-ArrayList<LocationDTO> locationData = locDAO.getSpotInfoList();
+ArrayList<LocationDTO> locationList = locDAO.getSpotInfoList();
 %>
 <!-- header -->
 <header id="header">
@@ -218,9 +231,9 @@ ArrayList<LocationDTO> locationData = locDAO.getSpotInfoList();
 </section>
 <script>
 	var row = 0;
-	var addr, latt, lonn;
+	var addr, latt, lonn = null;
 	var locationData = [
-	    <% for (LocationDTO location : locationData) { %>
+	    <% for (LocationDTO location : locationList) { %>
 	        {
 	            name: "<%= location.getSpotName() %>",
 	            address: "<%= location.getAddress() %>",
@@ -235,18 +248,6 @@ ArrayList<LocationDTO> locationData = locDAO.getSpotInfoList();
 	function questionOut(){
 		$('#answer').hide();
 	}
-	
-	//주소를 입력하고 엔터키를 클릭하거나 주소검색 버튼을 클릭하면 searchAddressToCoordinate 메서드 실행
-	$('#address').on('keydown', function(e) {
-        var keyCode = e.which;
-        if (keyCode === 13) { // Enter Key
-            searchAddressToCoordinate($('#address').val());
-        }
-    });
-    $('#submit').on('click', function(e) {
-        e.preventDefault();
-        searchAddressToCoordinate($('#address').val());
-    });
     
     //현재위치 버튼을 클릭하면 view 메서드 실행
 	$('#myLoc').on('click', view);
@@ -260,14 +261,15 @@ ArrayList<LocationDTO> locationData = locDAO.getSpotInfoList();
 
 	//사용자의 현재위치를 받아 마커로 표시한다.
 	function success(pos) {
-		//console.log(pos);
 	  	var crd = pos.coords;
-	    var latlng = new naver.maps.LatLng(crd.latitude, crd.longitude);
-	    
-	    //현재 위치의 위도와 경도값을 rePlaceMap 메서드로 넘겨주기
-	    rePlaceMap(crd.latitude, crd.longitude);
-	    
-	    //위도와 경도값으로 reverseGeoCode를 사용해 주소값 가져오기
+	    //var latlng = new naver.maps.LatLng(crd.latitude, crd.longitude);
+	    //현재위치의 위도,경도 정보를 reverse 메서드로 념긴다.
+	    reverse(crd.latitude, crd.longitude);
+	}
+	
+	//위도와 경도값으로 reverseGeoCode를 사용해 주소값 가져온 후 makeAddress 메서드로 주소를 만든다.
+	function reverse(lat, lng){
+	    var latlng = new naver.maps.LatLng(lat, lng);
 	  	naver.maps.Service.reverseGeocode({
 	        coords: latlng ,
 	        orders: [
@@ -284,10 +286,11 @@ ArrayList<LocationDTO> locationData = locDAO.getSpotInfoList();
 				console.log(items);
 	        for (var i=0, ii=items.length, item, addrType; i<ii; i++) {
 	            item = items[i];
+	            //reverseGeocode 데이터들은 온전한 주소의 형태가 아니기 때문에 조합해 주소를 만들어야 하기 때문에 makeAddress메서드로 값을 넘겨준다
 	            address = makeAddress(item) || '';
 	            //도로명 주소가 존재하면 도로명주소, 존재하지 않으면 지번주소를 주소타입으로 지정
 	            addrType = item.name === 'roadaddr' ? '[도로명 주소]' : '[지번 주소]';
-
+				//console.log(item);
 	        }
 	        	console.log(address, addrType);
 	        	//주소를 구했으면 serachAddressRoCoordinate 메서드에 넘겨주고 실행
@@ -373,15 +376,17 @@ ArrayList<LocationDTO> locationData = locDAO.getSpotInfoList();
 	    return !!(addition && addition.value);
 	}
 
-  //console.log('Your current position is:');
-  //console.log('Latitude : ' + crd.latitude);
-  //console.log('Longitude: ' + crd.longitude);
-  //console.log('More or less ' + crd.accuracy + ' meters.');
-
-   /* 지도 위에 정보들을 표시하는 코드
-   var infoWindow = new naver.maps.InfoWindow({
-	    anchorSkew: true
-	});*/
+	//주소를 입력하고 엔터키를 클릭하거나 주소검색 버튼을 클릭하면 searchAddressToCoordinate 메서드 실행
+	$('#address').on('keydown', function(e) {
+        var keyCode = e.which;
+        if (keyCode === 13) { // Enter Key
+            searchAddressToCoordinate($('#address').val());
+        }
+    });
+    $('#submit').on('click', function(e) {
+        e.preventDefault();
+        searchAddressToCoordinate($('#address').val());
+    });
 	
    //검색한 주소의 도로명,지번,영문명 주소를 각각 출력해 지도위에 표시하는 메서드
     function searchAddressToCoordinate(address) {
@@ -433,6 +438,8 @@ ArrayList<LocationDTO> locationData = locDAO.getSpotInfoList();
 	                htmlAddresses.join('<br />'),
 	                '</div>'
 	            ].join('\n'));*/
+	            
+	            //item.x == longitude , item.y == latitude
 	            newMapList(item.roadAddress, item.x, item.y, item.jibunAddress, item.englishAddress);
 	            //infoWindow.open(map, point);
 	            $('#address').val('');
@@ -441,7 +448,7 @@ ArrayList<LocationDTO> locationData = locDAO.getSpotInfoList();
     }
 	//위 메서드가 처음 실행되면 row = 0으로 바로 insertAddress 메서드가 실행되지만
 	//두번째 검색부터는 row = 1이기 때문에 이전 행을 삭제하고 insertAddress 메서드를 실행한다.
-	function newMapList(address, latitude, longitude , jibun, engAd) {
+	function newMapList(address, longitude , latitude, jibun, engAd) {
 		//console.log(address);
 		//console.log(row);
    		if(row === 1){ // 검색이 두번 실행되면
@@ -450,77 +457,142 @@ ArrayList<LocationDTO> locationData = locDAO.getSpotInfoList();
    			row--; //row값을 -1 해줘야 row값이 0 또는 1로만 반복된다.
 			//console.log(latitude + ", " + longitude); 위도 경도 출력
    		}
-   		insertAddress(address, latitude, longitude , jibun, engAd);
+   		insertAddress(address, longitude , latitude , jibun, engAd);
   	}
 	
 	//newMapList에서 가져온 정보들을 화면에 출력하고 지도의 위치를 변경한다.
-   	function insertAddress(address, latitude, longitude , jibun, engAd){
+   	function insertAddress(address, longitude , latitude , jibun, engAd){
    		var mapList = "";
     	mapList += "<tr>" 
     	mapList += "	<td>" + "[도로명주소] " + address +"<br>"+ "[지번주소] " + jibun +"<br>"+ "[영문주소] " + engAd +"</td>"
     	mapList += "</tr>"
     	$('#mapList').append(mapList);
-    	
-    	rePlaceMap(longitude, latitude);
     	row++; //모두 실행되면 row + 1 해준다.
-    	addr = address;
+    	
+    	//address 값이 없으면 지번주소를 address에 넣어준다.
+    	if(address === null || address === ''){
+    		addr = jibun;
+    	}else{
+    		addr = address;
+    	}
     	latt = latitude;
     	lonn = longitude;
+    	rePlaceMap(latitude, longitude);
    	}
+	var info = 0;
 		
-   	//검색한 장소로 지도와 마커의 위치를 변경한다.
-    function rePlaceMap(longitude, latitude){
+   	//검색한 주소 또는 클릭한 주소로 지도와 마커의 위치를 변경한다.
+    function rePlaceMap(latitude, longitude){
+
     	var map = new naver.maps.Map('map', {
-    	    center: new naver.maps.LatLng(longitude, latitude),
+    	    center: new naver.maps.LatLng(latitude, longitude),
     	    zoom: 16
     	});
         var marker = new naver.maps.Marker({
             map: map,
-            position: new naver.maps.LatLng(longitude, latitude),
+            position: new naver.maps.LatLng(latitude, longitude),
+            icon: {
+      	    	 url: './image/location-dot.png', //아이콘 경로
+      	    }
         });
-    } 
-
-   	
-    function registSpot() {
-    	var name;
-        while (true) {
-            name = prompt('스팟 이름을 입력해주세요');
-
-            if (name === null) {
-                return;
-            } else if (name.trim() === '') {
-                alert('이름을 다시 입력해주세요');
-            } else {
-                break;
+        //지도를 클릭했을 때의 위도,경도를 reverse 메서드로 넘겨주고 marker의 위치를 변경한다.
+        naver.maps.Event.addListener(map, 'click', function(e) {
+    	    marker.setPosition(e.latlng);
+    	    reverse(e.latlng.y, e.latlng.x); //e.latlng.x == longitude & e.latlng.y == latitude
+    	    //console.log(e.latlng.y);
+    	});
+        
+        //데이터베이스의 locationData 길이만큼 반복해 각 위치에 marker2를 생성하고 marker2를 클릭하면 해당하는 정보를 infoWindow에 표시한다.
+        for (var i = 0; i < locationData.length; i++) {
+            var location = locationData[i];
+            var latlng = new naver.maps.LatLng(location.latitude, location.longitude);
+            var infoContent = [
+            	'<div id="info-window">',
+            	'<div id="info-name">' + location.name + '</div><br>', 
+            	'<div id="info-address">'+ location.address + '</div>',
+            	'</div>'
+            ].join('');
+            var infoWindow = new naver.maps.InfoWindow({
+            	//content: infoContent
+                content: infoContent,
+                borderWidth: 0,
+                anchorSize: new naver.maps.Size(10, 10)
+            });
+            
+			//locationData의 marker들의 옵션
+            var markerOptions = {
+           	    position: latlng, //마커찍을 좌표
+           	    map: map,
+           	    icon: {
+           	    	 url: './image/map-pin-navy.png', //아이콘 경로
+           	    }
+           	};
+            //
+            var marker2 = new naver.maps.Marker(markerOptions);
+            
+            function handleMarkerClick(clickedMarker, clickedInfoWindow) {
+                return function () {
+                    clickedInfoWindow.open(map, clickedMarker);
+                };
             }
+            //
+            naver.maps.Event.addListener(marker2, 'click', handleMarkerClick(marker2, infoWindow));
         }
-        var data = {
-            name: name,
-            address: addr,
-            latitude: latt,
-            longitude: lonn
-        };
-        $.ajax({
-            type: 'POST',
-            url: 'spotRegistAction',
-            data: data,
-            success: function (response) {
-            	if (response.includes("Spot saved successfully")) {
-                //console.log('Spot registration successful:', response);
-                alert('스팟 등록 완료');
-               	location.reload(true);
-                //console.log(data);
-            	}else{
-            		 //console.error('Spot registration error:', response);
-                     alert('이미 존재하는 이름입니다.');
-            	}
-            },
-            error: function (xhr, status, error) {
-                //console.error('Spot registration error:', error);
-                alert('스팟 등록 오류');
-            }
-        });
+    } 
+   	
+   	//스팟 저장하기
+    function registSpot() {
+	   	var name;
+        if(addr == null || latt == null || lonn == null){
+        	alert('스팟 주소를 검색하세요');
+        	return;
+        }else{
+	        while (true) {
+	            name = prompt('스팟 이름을 입력해주세요');
+	
+	            if (name === null) {
+	                return;
+	            } else if (name.trim() === '') {
+	                alert('이름을 다시 입력해주세요');
+	            } else {
+	                break;
+	            }
+	        }
+	      	//저장된 데이터들을 가져온다.
+	        var data = {
+	            name: name, //name은 while문에서 가져오기 때문에 while문 뒤에 위치해야한다.
+	            address: addr,
+	            latitude: latt,
+	            longitude: lonn
+	        };
+	        $.ajax({
+	            type: 'POST',
+	            url: 'spotRegistAction',
+	            data: data,
+	            success: function (response) {
+	            	//spotRegistAction.jsp 페이지를 실행한 후 문자가 포함되어 있는지에 따라 알림창에 결과를 알려준다.
+	            	if (response.includes("Spot saved successfully")) {
+		                //console.log('Spot registration successful:', response);
+		                alert('스팟 등록 완료');
+		               	location.reload(true);
+		                //console.log(data);
+	            	}else if(response.includes("Information Error")){
+	            		alert('원하는 스팟 주소를 검색하세요');
+	            	}else if(response.includes("Spot name already exists")){
+	            		//console.error('Spot registration error:', response);
+	                    alert('이미 존재하는 이름입니다');
+	            	}else{
+	            		alert('이미 존재하는 주소입니다');
+	            	}
+	            },
+	            error: function (xhr, status, error) {
+	                //console.error('Spot registration error:', error);
+	                alert('스팟 등록 오류');
+	            }
+	        });
+        }
     }
+   	
 /* 기본 지도 생성하기
 var map = new naver.maps.Map('map', {
     center: new naver.maps.LatLng(37.5112, 127.0981), // 잠실 롯데월드를 중심으로 하는 지도
@@ -537,7 +609,7 @@ function createMap(location){
 	    map: map
 	}); 
 }
-내 현재위치 지도 생성하기
+//내 현재위치 지도 생성하기
 function getCurrentPosition(){
 	return navigator.geolocation.getCurrentPosition(resolve, reject);
 }

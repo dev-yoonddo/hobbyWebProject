@@ -62,9 +62,9 @@ public class LocationDAO {
 		}
 		return null;
 	}
-	//스팟 네임 리스트 출력하기
-	public ArrayList<LocationDTO> getSpotList(){
-		String SQL = "SELECT spotName FROM location"; 
+	//스팟 네임, 주소 리스트 출력하기
+	public ArrayList<LocationDTO> getNameAdList(){
+		String SQL = "SELECT spotName , address FROM location"; 
 		ArrayList<LocationDTO> list = new ArrayList<LocationDTO>();
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
@@ -72,12 +72,14 @@ public class LocationDAO {
 			while(rs.next()) {//결과가 있다면
 				LocationDTO loc = new LocationDTO();
 				loc.setSpotName(rs.getString(1));
+				loc.setAddress(rs.getString(2));
 				list.add(loc);
 			}
+			//System.out.println(list);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
-		return list; 
+		return list;
 	}
 	//저장된 스팟 정보 리스트 출력하기
 	public ArrayList<LocationDTO> getSpotInfoList(){
