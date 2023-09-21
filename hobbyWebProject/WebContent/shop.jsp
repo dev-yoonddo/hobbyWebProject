@@ -28,6 +28,7 @@
 section{
 	padding-top: 100px;
 	height: 1000px;
+	position: relative;
 }
 textarea {
     border: medium;
@@ -43,10 +44,19 @@ textarea {
 	 display: flex;
 	 margin: 20px;
 }
+#sec-left{
+	width: 60%; 
+	display: flex; 
+	align-items: center; 
+	margin-left: 50px;
+}
 #search{
 	display: flex;
 	justify-content: center;
 	align-items: center;
+}
+#search-btn{
+	display: flex;
 }
 #address{
 	width: 250px;
@@ -86,7 +96,7 @@ textarea {
 	width: 400px;
 	height: 150px;
 	font-size: 12pt;
-	z-index: 100;
+	z-index: 999;
 	position: relative;
 	margin: 0 auto;
 	top: 80px;
@@ -125,34 +135,93 @@ h3{
 	text-align: center;
 }
 #mapInfo{
-width: 100%;
+	width: auto;
 	height: 200px;
 	display: flex;
-	justify-content: center;
 	align-items: center;
+	position: absolute;
+	z-index: 888;
+	top: 20%;
+	left: 70px;
 }
+
 #mapInfo-head{
 	height: 70px;
 	display: flex;
 	align-items: center;
 }
+#mapList{
+	height: 80px;
+	max-height: 150px;
+}
 #regist span{
 	width: 180px;
+	color: #ffffff;
+	background-color: #2E2F49;
+	border: 1px solid #2E2F49;
+}
+#regist span:hover{
+	color: #2E2F49;
+	background-color: #ffffff;
 }
 /* 지도 위 infoWindow */
 #info-window{
-padding: 5px;
-text-align: center;
-font-size: 11pt;
-border-style: solid;
-border-width: 0.1px;
-border-radius: 10px;
+	padding: 10px;
+	text-align: center;
+	font-size: 11pt;
+	
+	border-style: solid;
+	border-width: 0.1px;
+	border-radius: 10px;
 }
 #info-name{
-font-size: 13pt;
-font-weight: bold;
-margin : 0;
+	font-size: 13pt;
+	font-weight: bold;
+	margin : 0;
 }
+#name-icon{
+	margin-right: 10px;
+}
+
+@media screen and (max-width:900px) {
+	#search{
+		display: inline-block;
+	}
+	#sec-left{
+		width: 40%;
+	}
+	#map-qna{
+		width: 60%;
+	}
+}
+@media screen and (max-width:650px) {
+	#sec-top{
+		height: 120px;
+		display: inline-block;
+	}
+	#sec-left{
+		width: auto;
+		margin-left: 80px;
+	}
+	#map-qna{
+		display: none;
+	}
+	#mapInfo{
+		top:22%;
+		width: 350px;
+	}
+	#mapList{
+		font-size: 11pt;
+	}
+	#info-window{
+	font-size: 10pt;
+	}
+	#info-name{
+	font-size: 11pt;
+	}
+	
+}
+
 </style>
 <body>
 <%
@@ -174,13 +243,7 @@ if(userID == null){
 	script.println("window.open('loginPopUp', 'Login', 'width=450, height=500, top=50%, left=50%')");
 	script.println("</script>");
 }
-if(!userID.equals("manager")){
-	PrintWriter script = response.getWriter();
-	script.println("<script>");
-	script.println("alert('준비중입니다.')");
-	script.println("history.back()");
-	script.println("</script>");
-}
+
 LocationDAO locDAO = new LocationDAO();
 //지도 위에 표시할 저장된 스팟 리스트 가져오기
 ArrayList<LocationDTO> locationList = locDAO.getSpotInfoList();
@@ -193,13 +256,15 @@ ArrayList<LocationDTO> locationList = locDAO.getSpotInfoList();
 
 <section>
 <div id="sec-top">
-	<div style="width: 60%; display: flex; align-items: center; margin-left: 50px;">
+	<div id="sec-left">
 		<!-- <button type="button" id="schLoc" class="btn-blue" onclick="search()">위치검색하기</button> -->
-		<div id="search" style="display: flex;">
+		<div id="search">
 	        <textarea id="address" placeholder="검색할 주소를 입력하세요 &#13;&#10;예) 불암로 55" maxlength="20"></textarea>
-	        <button type="button" class="btn-blue" id="submit"><span>주소검색</span></button>
+	        <div id="search-btn">
+		        <button type="button" class="btn-blue" id="submit"><span>주소검색</span></button>
+				<button type="button" class="btn-blue" id="myLoc"><span>현재위치</span></button>
+			</div>
 	    </div>
-		<button type="button" class="btn-blue" id="myLoc"><span>현재위치</span></button>
     </div>
 	<div id="map-qna">
 		<div id="question" onmouseover="question()" onmouseout="questionOut()">
@@ -221,7 +286,7 @@ ArrayList<LocationDTO> locationList = locDAO.getSpotInfoList();
 	</div>
 	<div id="map" hidden=""></div>
 	<div id="mapInfo">
-		<div style="width: 450px; max-width: 550px;" >
+		<div style="width: 450px; max-width: 500px;" >
 			<div id="mapInfo-head">
 			<h3>주소 정보</h3><button type="button" class="btn-blue" id="regist" onclick="registSpot()"><span>TOGETHER SPOT 등록</span></button>
 			</div>
@@ -401,6 +466,7 @@ ArrayList<LocationDTO> locationList = locDAO.getSpotInfoList();
                 alert('Something Wrong!');
             }
             else if (response.v2.meta.totalCount === 0) {
+            	alert('올바른 주소를 입력해주세요.');
             	//console.log(response.v2.meta.totalCount);
     			$('#no-map').show();
     			$('#map').hide();
@@ -413,7 +479,6 @@ ArrayList<LocationDTO> locationList = locDAO.getSpotInfoList();
     			adList.deleteRow(0);
     			row--;
     			//console.log(row);
-                alert('올바른 주소를 입력해주세요.');
             }else{
             	//console.log(response.v2.meta.totalCount);
     			$('#map').show();
@@ -508,7 +573,7 @@ ArrayList<LocationDTO> locationList = locDAO.getSpotInfoList();
             var latlng = new naver.maps.LatLng(location.latitude, location.longitude);
             var infoContent = [
             	'<div id="info-window">',
-            	'<div id="info-name">' + location.name + '</div><br>', 
+            	'<div id="info-name"><i id="name-icon" class="fa-solid fa-globe"></i>' + location.name + '</div><br>', 
             	'<div id="info-address">'+ location.address + '</div>',
             	'</div>'
             ].join('');
@@ -567,7 +632,7 @@ ArrayList<LocationDTO> locationList = locDAO.getSpotInfoList();
 	        };
 	        $.ajax({
 	            type: 'POST',
-	            url: 'spotRegistAction',
+	            url: 'https://toogether.me/spotRegistAction',
 	            data: data,
 	            success: function (response) {
 	            	//spotRegistAction.jsp 페이지를 실행한 후 문자가 포함되어 있는지에 따라 알림창에 결과를 알려준다.
