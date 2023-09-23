@@ -92,6 +92,8 @@ textarea {
 	font-weight: bolder;
 	color: black;
 }
+#qna-icon{
+}
 #answer{
 	width: 400px;
 	height: 150px;
@@ -146,6 +148,7 @@ h3{
 }
 
 #mapInfo-head{
+	width: 300px;
 	height: 70px;
 	display: flex;
 	align-items: center;
@@ -166,18 +169,45 @@ h3{
 }
 /* 지도 위 infoWindow */
 #info-window{
+	width: auto;
+	min-width: 250px;
 	padding: 10px;
-	text-align: center;
 	font-size: 11pt;
-	
+	text-align: center;
 	border-style: solid;
 	border-width: 0.1px;
 	border-radius: 10px;
 }
 #info-name{
+	height: 30px;
+	font-size: 13pt;
+	font-weight: 900;
+	margin : 0;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	
+}
+#info-spotName{
+	height: 30px;
+	cursor: pointer;
+	margin-right: 10px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+#info-join{
+	height: 30px;
 	font-size: 13pt;
 	font-weight: bold;
-	margin : 0;
+	color: #7D95E5;
+	display: none;
+}
+#info-spotName:hover ~ #info-join{
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 #name-icon{
 	margin-right: 10px;
@@ -197,29 +227,88 @@ h3{
 @media screen and (max-width:650px) {
 	#sec-top{
 		height: 120px;
-		display: inline-block;
+		display: flex;
 	}
 	#sec-left{
-		width: auto;
-		margin-left: 80px;
+		width: 60%;
+		margin-left: 10px;
+		font-size: 11pt;
+	}
+	#address{
+		width: 200px;
+		font-size: 12pt;
+	}
+	#search-btn{
+	}
+	#submit{
+		width: 85px;
+	}
+	#submit span{
+		font-size: 10pt;
+	
+	}
+	#myLoc{
+		width: 85px;
+	}
+	#myLoc span{
+		font-size: 10pt;
+	
 	}
 	#map-qna{
-		display: none;
+		width: 40%;
 	}
 	#mapInfo{
 		top:22%;
-		width: 350px;
+		left: 20px;
+		width: 360px;
+		position: absolute;
+		float: left;
+	}
+	#mapInfo-title{
+		font-size: 11pt;
+	}
+	#regist{
+	}
+	#regist span{
+		width: 180px;
+		font-size: 10pt;
 	}
 	#mapList{
 		font-size: 11pt;
 	}
 	#info-window{
-	font-size: 10pt;
+		font-size: 10pt;
 	}
 	#info-name{
-	font-size: 11pt;
+		font-size: 11pt;
 	}
-	
+	#no-map{
+		font-size: 11pt;
+	}
+	#question{
+		width: 20px;
+	}
+	#qna-icon{
+		display: block;
+	}
+	#qna-text{
+		display: none;
+	}
+	.triangle{
+		display: none;
+	}
+	#answer{
+		width: 250px;
+		height: 120px;
+		top: 100px;
+		right: 110px;
+		position: relative;
+	}
+	#answer-text{
+		width: 250px;
+		height: 120px;
+		font-size: 10pt;
+	}
 }
 
 </style>
@@ -268,12 +357,14 @@ ArrayList<LocationDTO> locationList = locDAO.getSpotInfoList();
     </div>
 	<div id="map-qna">
 		<div id="question" onmouseover="question()" onmouseout="questionOut()">
-			<h2><i class="fa-solid fa-circle-question" style="color: #bebebe;"></i> 현재 위치가 검색되지 않거나 정확하지 않은가요 ?</h2>
+			<i id="qna-icon" class="fa-solid fa-circle-question fa-2x" style="color: #bebebe;"></i>&nbsp;&nbsp;<h2 id="qna-text">현재 위치가 검색되지 않거나 정확하지 않은가요 ?</h2>
 		</div>
 		<div id="answer" hidden="">
 			<div class="triangle triangle-bottom"></div>
 			<div id="answer-text">
-				<h3 style="margin-bottom: 7px;">1) 위치 서비스 허용 후 이용해주세요</h3><h3>2) 공용 네트워크 사용시 위치가 정확하지 않을 수 있습니다.</h3>
+				<h3 style="margin-bottom: 7px;">위치가 정확하지 않거나 검색이 안되나요 ?</h3>
+				<h3 style="margin-bottom: 7px;">1) 위치 서비스 허용 후 이용해주세요.</h3>
+				<h3>2) 공용 네트워크 사용시 위치가 정확하지 않을 수 있습니다.</h3>
 			</div>
 		</div>
 	</div>
@@ -288,7 +379,10 @@ ArrayList<LocationDTO> locationList = locDAO.getSpotInfoList();
 	<div id="mapInfo">
 		<div style="width: 450px; max-width: 500px;" >
 			<div id="mapInfo-head">
-			<h3>주소 정보</h3><button type="button" class="btn-blue" id="regist" onclick="registSpot()"><span>TOGETHER SPOT 등록</span></button>
+				<h3 id="mapInfo-title">주소 정보</h3>
+				<button type="button" class="btn-blue" id="regist" onclick="registSpot()">
+					<span>TOGETHER SPOT 등록</span>
+				</button>
 			</div>
 			<table id="mapList"></table>
 		</div>
@@ -303,7 +397,9 @@ ArrayList<LocationDTO> locationList = locDAO.getSpotInfoList();
 	            name: "<%= location.getSpotName() %>",
 	            address: "<%= location.getAddress() %>",
 	            latitude: <%= location.getLatitude() %>,
-	            longitude: <%= location.getLongitude() %>
+	            longitude: <%= location.getLongitude() %>,
+	            member: <%=location.getMemberCount()%>,
+	            available: <%=location.getSpotAvailable()%>
 	        },
 	    <% } %>
 	];
@@ -545,7 +641,7 @@ ArrayList<LocationDTO> locationList = locDAO.getSpotInfoList();
     	rePlaceMap(latitude, longitude);
    	}
 	var info = 0;
-		
+	var clickedInfoAddress;
    	//검색한 주소 또는 클릭한 주소로 지도와 마커의 위치를 변경한다.
     function rePlaceMap(latitude, longitude){
 
@@ -573,8 +669,10 @@ ArrayList<LocationDTO> locationList = locDAO.getSpotInfoList();
             var latlng = new naver.maps.LatLng(location.latitude, location.longitude);
             var infoContent = [
             	'<div id="info-window">',
-            	'<div id="info-name"><i id="name-icon" class="fa-solid fa-globe"></i>' + location.name + '</div><br>', 
+            	'<div id="info-name" onclick="joinSpot()"><i id="name-icon" class="fa-solid fa-globe"></i>',
+            	'<div id="info-spotName">' + location.name + '</div><div id="info-join">참여</div></div>', 
             	'<div id="info-address">'+ location.address + '</div>',
+            	'<div id="info-member"> member : '+ location.member + '</div>',
             	'</div>'
             ].join('');
             var infoWindow = new naver.maps.InfoWindow({
@@ -592,16 +690,20 @@ ArrayList<LocationDTO> locationList = locDAO.getSpotInfoList();
            	    	 url: './image/map-pin-navy.png', //아이콘 경로
            	    }
            	};
-            //
-            var marker2 = new naver.maps.Marker(markerOptions);
-            
-            function handleMarkerClick(clickedMarker, clickedInfoWindow) {
-                return function () {
-                    clickedInfoWindow.open(map, clickedMarker);
-                };
+            //삭제되지 않은 스팟만 지도에 표시하고 클릭하면 infoWindow 표시하기
+            if(location.available == 1){
+	            var marker2 = new naver.maps.Marker(markerOptions);
+	            
+	            function handleMarkerClick(clickedMarker, clickedInfoWindow) {
+	                    
+	                return function () {
+	                    clickedInfoWindow.open(map, clickedMarker);
+	                };
+	            }
+	            //
+	            naver.maps.Event.addListener(marker2, 'click', handleMarkerClick(marker2, infoWindow));
+	            
             }
-            //
-            naver.maps.Event.addListener(marker2, 'click', handleMarkerClick(marker2, infoWindow));
         }
     } 
    	
@@ -656,6 +758,9 @@ ArrayList<LocationDTO> locationList = locDAO.getSpotInfoList();
 	            }
 	        });
         }
+    }
+    function joinSpot(){
+    	alert(clickedInfoAddress);
     }
    	
 /* 기본 지도 생성하기

@@ -872,7 +872,6 @@ span{
 </section>
 <script>
 //check email
-
 window.addEventListener('DOMContentLoaded', function emailChecked(result){
 	if(result == false){
 		var emailck = confirm('이메일 인증이 필요합니다. 인증 메일을 발송 하시겠습니까?');
@@ -883,8 +882,11 @@ window.addEventListener('DOMContentLoaded', function emailChecked(result){
 		}
 	}
 });
+</script>
 
-//select box 클릭하면 접고 펼치기
+<script>
+
+//데이터 삭제 select box
 function onClickSelect(e) {
 	  const isActive = e.currentTarget.className.indexOf("active") !== -1;
 	  if (isActive) {
@@ -909,24 +911,6 @@ for (var i = 0; i < optionList.length; i++) {
 //메시지 삭제 select box
 //메시지를 삭제할 목록을 클릭했을때 삭제할 데이터가 없으면 알림창을 띄운다.
 
-function getCount(count){
-	if(count >= 1){
-		var optionList2 = document.querySelectorAll("#select-sec1 .option1");
-		for (var i = 0; i < optionList2.length; i++) {
-			var option2 = optionList2[i];
-			option2.addEventListener("click", onClickOption2);
-		}
-		function onClickOption2(e) {
-			const selectedValue2 = e.currentTarget.innerHTML;
-			document.querySelector("#select-sec1 .text1").innerHTML = selectedValue2;
-		}
-	}
-	else{
-		alert("삭제할 메시지가 없습니다.");
-	}
-}
-
-
 function onClickSelect2(e) {
 	  const isActive2 = e.currentTarget.className.indexOf("active") !== -1;
 	  if (isActive2) {
@@ -937,7 +921,22 @@ function onClickSelect2(e) {
 	}
 	
 	document.querySelector("#select-sec1 .select1").addEventListener("click", onClickSelect2);
-
+function onClickOption2(e) {
+	const selectedValue2 = e.currentTarget.innerHTML;
+	document.querySelector("#select-sec1 .text1").innerHTML = selectedValue2;
+}
+function getCount(count){
+	if(count >= 1){
+		var optionList2 = document.querySelectorAll("#select-sec1 .option1");
+		for (var i = 0; i < optionList2.length; i++) {
+			var option2 = optionList2[i];
+			option2.addEventListener("click", onClickOption2);
+		}
+	}
+	else{
+		alert("삭제할 메시지가 없습니다.");
+	}
+}
 </script>
 <script>
 //접속하기 버튼을 클릭하면 id,password,available value, member, leader를 받는다
