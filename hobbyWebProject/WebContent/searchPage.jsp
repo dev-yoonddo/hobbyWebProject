@@ -243,16 +243,31 @@ th span{
 	}
 	BoardDTO board = new BoardDAO().getBoardVO(boardID);
 	BoardDAO boardDAO = new BoardDAO();
+	//선택한 카테고리 가져오기
+	String boardCategory = request.getParameter("searchField2");
+	//카테고리에 해당하는 글 리스트 가져오기
+	ArrayList<BoardDTO> list = boardDAO.getSearch(boardCategory);
+	if(boardCategory == ""){
+		PrintWriter script = response.getWriter();
+		script.println("<script>");
+		script.println("alert('옵션을 선택해주세요')");
+		script.println("history.back()");
+		script.println("</script>");
+	}
+	if(list.size() == 0){
+		PrintWriter script = response.getWriter();
+		script.println("<script>");
+		script.println("alert('검색 결과가 없습니다.')");
+		script.println("history.back()");
+		script.println("</script>");
+	}
+	
 %>
 <header id="header">
 <jsp:include page="/header/header.jsp"/>
 </header>
 <section>
 	<div class="board-container">
-		<%
-				//카테고리를 검색했을 때 테이블 상단에 선택한 카테고리 출력
-				String boardCategory = request.getParameter("searchField2");
-		%>
 		<div id="search-title">
 			<h2><%=boardCategory%></h2><h4>함께 할 사람들과 이야기 나눠보세요</h4>
 		</div><br>
@@ -289,21 +304,6 @@ th span{
 				</thead>
 				<tbody>
 					<%
-						ArrayList<BoardDTO> list = boardDAO.getSearch(boardCategory);
-						if(boardCategory == ""){
-							PrintWriter script = response.getWriter();
-							script.println("<script>");
-							script.println("alert('옵션을 선택해주세요')");
-							script.println("history.back()");
-							script.println("</script>");
-						}
-						if (list.size() == 0) {
-							PrintWriter script = response.getWriter();
-							script.println("<script>");
-							script.println("alert('검색결과가 없습니다.')");
-							script.println("history.back()");
-							script.println("</script>");
-						}
 						for (int i = 0; i < list.size(); i++) {
 					%>
 				

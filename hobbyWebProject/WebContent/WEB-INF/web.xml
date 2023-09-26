@@ -281,6 +281,14 @@
     <url-pattern>/spotRegistAction</url-pattern>
   </servlet-mapping>
   <servlet>
+    <servlet-name>spotJoinAction.jsp</servlet-name>
+    <jsp-file>/spotJoinAction.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>spotJoinAction.jsp</servlet-name>
+    <url-pattern>/spotJoinAction</url-pattern>
+  </servlet-mapping>
+  <servlet>
     <servlet-name>downloadAction</servlet-name>
     <servlet-class>file.downloadAction</servlet-class>
   </servlet>

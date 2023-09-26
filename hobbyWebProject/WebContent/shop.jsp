@@ -324,6 +324,9 @@ int groupID = 0;
 if(request.getParameter("groupID") != null){
 	groupID = Integer.parseInt(request.getParameter("groupID"));
 }
+LocationDAO locDAO = new LocationDAO();
+//지도 위에 표시할 저장된 스팟 리스트 가져오기
+ArrayList<LocationDTO> locationList = locDAO.getSpotInfoList();
 
 if(userID == null){
 	PrintWriter script = response.getWriter();
@@ -331,11 +334,7 @@ if(userID == null){
 	script.println("alert('로그인이 필요합니다.')");
 	script.println("window.open('loginPopUp', 'Login', 'width=450, height=500, top=50%, left=50%')");
 	script.println("</script>");
-}
-
-LocationDAO locDAO = new LocationDAO();
-//지도 위에 표시할 저장된 스팟 리스트 가져오기
-ArrayList<LocationDTO> locationList = locDAO.getSpotInfoList();
+}else{
 %>
 <!-- header -->
 <header id="header">
@@ -388,17 +387,19 @@ ArrayList<LocationDTO> locationList = locDAO.getSpotInfoList();
 		</div>
 	</div>
 </section>
+<%} %>
 <script>
 	var row = 0;
 	var addr, latt, lonn = null;
 	var locationData = [
 	    <% for (LocationDTO location : locationList) { %>
 	        {
+	            leader: "<%= location.getUserID() %>",
 	            name: "<%= location.getSpotName() %>",
 	            address: "<%= location.getAddress() %>",
 	            latitude: <%= location.getLatitude() %>,
 	            longitude: <%= location.getLongitude() %>,
-	            member: <%=location.getMemberCount()%>,
+	            crew: <%=location.getCrewCount()%>,
 	            available: <%=location.getSpotAvailable()%>
 	        },
 	    <% } %>
@@ -640,8 +641,12 @@ ArrayList<LocationDTO> locationList = locDAO.getSpotInfoList();
     	lonn = longitude;
     	rePlaceMap(latitude, longitude);
    	}
+	
 	var info = 0;
 	var clickedInfoAddress;
+	var clickleader = null;
+	var clickname = null;
+	var clickaddress = null;
    	//검색한 주소 또는 클릭한 주소로 지도와 마커의 위치를 변경한다.
     function rePlaceMap(latitude, longitude){
 
@@ -672,7 +677,7 @@ ArrayList<LocationDTO> locationList = locDAO.getSpotInfoList();
             	'<div id="info-name" onclick="joinSpot()"><i id="name-icon" class="fa-solid fa-globe"></i>',
             	'<div id="info-spotName">' + location.name + '</div><div id="info-join">참여</div></div>', 
             	'<div id="info-address">'+ location.address + '</div>',
-            	'<div id="info-member"> member : '+ location.member + '</div>',
+            	'<div id="info-member"> Crew : '+ location.crew + '명</div>',
             	'</div>'
             ].join('');
             var infoWindow = new naver.maps.InfoWindow({
@@ -690,18 +695,24 @@ ArrayList<LocationDTO> locationList = locDAO.getSpotInfoList();
            	    	 url: './image/map-pin-navy.png', //아이콘 경로
            	    }
            	};
+            var markerOptions2 = {
+            	position: latlng, //마커찍을 좌표
+            	map: map,
+         	};
             //삭제되지 않은 스팟만 지도에 표시하고 클릭하면 infoWindow 표시하기
             if(location.available == 1){
 	            var marker2 = new naver.maps.Marker(markerOptions);
 	            
-	            function handleMarkerClick(clickedMarker, clickedInfoWindow) {
-	                    
+	            function handleMarkerClick(clickedMarker, clickedInfoWindow, leader, name, address) {
 	                return function () {
 	                    clickedInfoWindow.open(map, clickedMarker);
+	                    clickleader = leader; //marker를 클릭하면 해당스팟 리더와 스팟이름, 주소를 따로 저장
+						clickname = name;
+						clickaddress = address;
 	                };
 	            }
 	            //
-	            naver.maps.Event.addListener(marker2, 'click', handleMarkerClick(marker2, infoWindow));
+	            naver.maps.Event.addListener(marker2, 'click', handleMarkerClick(marker2, infoWindow, location.leader, location.name, location.address));
 	            
             }
         }
@@ -735,6 +746,7 @@ ArrayList<LocationDTO> locationList = locDAO.getSpotInfoList();
 	        $.ajax({
 	            type: 'POST',
 	            url: 'https://toogether.me/spotRegistAction',
+	            //url: 'spotRegistAction',
 	            data: data,
 	            success: function (response) {
 	            	//spotRegistAction.jsp 페이지를 실행한 후 문자가 포함되어 있는지에 따라 알림창에 결과를 알려준다.
@@ -759,8 +771,46 @@ ArrayList<LocationDTO> locationList = locDAO.getSpotInfoList();
 	        });
         }
     }
+    
     function joinSpot(){
-    	alert(clickedInfoAddress);
+    	console.log("Clicked on location: " + clickname);
+        console.log("Address: " + clickaddress);
+        var joinResult = confirm('참여 하시겠습니까?');
+        if(joinResult){
+	        var data2 = {
+	        	leader: clickleader,//marker를 클릭했을 때 저장된 clickleader, clickname,clickaddress 가져오기
+	            name: clickname,
+	            address: clickaddress
+	        };
+	        $.ajax({
+	            type: 'POST',
+	            url: 'https://toogether.me/spotJoinAction',
+	            //url: 'spotJoinAction',
+	            data: data2,
+	            success: function (response) {
+	            	if (response.includes("Spot joined successfully")) {
+	            		alert('스팟 참여 완료');
+		               	location.reload(true);
+	            	}else if(response.includes("leaders cannot join")){
+	            		alert('스팟 생성 유저는 가입할 수 없습니다.')
+	            	}else if(response.includes("joined exist")){
+	            		alert('이미 참여한 스팟입니다.');
+	            	}else if(response.includes("Join Error")){
+	            		alert('참여 오류');
+	            	}else if(response.includes("Database Error")){
+	            		alert('데이터베이스 오류');
+	            	}else{
+	            		alert('정보 오류');	            		
+	            	}
+	            },
+		        error: function (xhr, status, error) {
+		            //console.error('Spot registration error:', error);
+		            alert('스팟 참여 오류');
+		        }
+	        });
+        }else{
+        	return;
+        }
     }
    	
 /* 기본 지도 생성하기

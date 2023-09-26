@@ -72,6 +72,8 @@ function getSavedValue(v){
 	}
 	return localStorage.getItem(v);
 }
+</script>
+<script>
 //아직 회원이 아니신가요? 를 클릭하면 팝업창을 닫고 회원가입 페이지로 이동한다.
 $(function(){
 	  $('#goJoin').on('click',function(){

@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
+import comment.CommentDAO;
+import comment.CommentDTO;
 import group.GroupDTO;
 
 public class LocationDAO {
@@ -43,12 +45,12 @@ public class LocationDAO {
 		}
 		return -1;
 	}
-	//회원 위치 정보 보기	
-	public LocationDTO getUserLocationVO(String userID) {
-		String SQL="SELECT * FROM location WHERE userID = ?";
+	//해당 이름의 위치 정보 보기	
+	public LocationDTO getLocationVO(String spotName) {
+		String SQL="SELECT * FROM location WHERE spotName = ?";
 		try {
 			PreparedStatement pstmt=conn.prepareStatement(SQL);
-			pstmt.setString(1, userID);//물음표
+			pstmt.setString(1, spotName);//물음표
 			rs=pstmt.executeQuery();//select
 			if(rs.next()) {//결과가 있다면
 				LocationDTO loc = new LocationDTO();
@@ -57,7 +59,7 @@ public class LocationDAO {
 				loc.setAddress(rs.getString(3));
 				loc.setLatitude(rs.getDouble(4));
 				loc.setLongitude(rs.getDouble(5));
-				loc.setMemberCount(rs.getInt(6));
+				loc.setCrewCount(rs.getInt(6));
 				loc.setSpotAvailable(rs.getInt(7));
 				return loc;//6개의 항목을 user인스턴스에 넣어 반환한다.
 			}			
@@ -99,7 +101,7 @@ public class LocationDAO {
 				loc.setAddress(rs.getString(3));
 				loc.setLatitude(rs.getDouble(4));
 				loc.setLongitude(rs.getDouble(5));
-				loc.setMemberCount(rs.getInt(6));
+				loc.setCrewCount(rs.getInt(6));
 				loc.setSpotAvailable(rs.getInt(7));
 				list.add(loc);
 			}
@@ -107,5 +109,18 @@ public class LocationDAO {
 			e.printStackTrace();
 		}
 		return list; 
+	}
+	//spot 참여하기를 클릭하면 memberCount + 1
+	public int spotJoin(String spotName) {
+		String SQL = "UPDATE location SET crewCount = crewCount + 1 WHERE spotName = ? ";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, spotName);
+			//성공적으로 수행했다면 0이상의 결과 반환
+			return pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return -1; //데이터베이스 오류
 	}
 }

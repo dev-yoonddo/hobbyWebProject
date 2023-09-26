@@ -54,14 +54,11 @@
 	}else{
 		int nameExist = 0;
 		int adExist = 0;
-		for(int i = 0; i < list.size(); i++){
-			spName = list.get(i).getSpotName();
-			spAd = list.get(i).getAddress();
-
-			if(spotName.equals(spName)){ //데이터베이스에 이미 같은 이름이 존재하면
+		for(int i = 0; i < list.size(); i++){			
+			if(spotName.equals(list.get(i).getSpotName())){ //데이터베이스에 이미 같은 이름이 존재하면
 				nameExist++; //exist + 1
 			}
-			if(address.equals(spAd)){ //데이터베이스에 이미 같은 주소가 존재하면
+			else if(address.equals(list.get(i).getAddress())){ //데이터베이스에 이미 같은 주소가 존재하면
 				adExist++; //exist + 1
 			}
 		}

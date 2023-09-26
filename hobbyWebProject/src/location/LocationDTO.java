@@ -6,7 +6,7 @@ public class LocationDTO {
 	private String address;
 	private double latitude;
 	private double longitude;
-	private int memberCount;
+	private int crewCount;
 	private int spotAvailable;
 	
 	public String getUserID() {
@@ -40,11 +40,11 @@ public class LocationDTO {
 	public void setLongitude(double longitude) {
 		this.longitude = longitude;
 	}
-	public int getMemberCount() {
-		return memberCount;
+	public int getCrewCount() {
+		return crewCount;
 	}
-	public void setMemberCount(int memberCount) {
-		this.memberCount = memberCount;
+	public void setCrewCount(int crewCount) {
+		this.crewCount = crewCount;
 	}
 	public int getSpotAvailable() {
 		return spotAvailable;

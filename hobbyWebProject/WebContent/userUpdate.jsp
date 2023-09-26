@@ -354,7 +354,7 @@ span{
 				<%
 					}
 				%>
-				<li><a href="shop" class ="menu">SPOT</a></li>
+				<li><a class ="menu" onclick="location.href='shop'">SPOT</a></li>
 			</ul>
 		</nav>
 			<ul class="navbar_login" >

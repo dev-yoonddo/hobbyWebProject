@@ -11,6 +11,14 @@ $(function(){
     else {
     }
     });
+  $('#go-spot-1').on('click',function(){
+    var login = confirm('로그인이 필요합니다');
+    if (login) {
+      window.open("loginPopUp", "Login", "width=500, height=550, top=50%, left=50%");
+    }
+    else {
+    }
+    });
 });
  
 //loginPopUp 페이지에서 회원가입을 클릭했을때

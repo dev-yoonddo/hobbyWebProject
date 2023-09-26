@@ -26,14 +26,15 @@ String thisPage = request.getParameter("thisPage");
 					if(userID == null){
 				%>
 				<li><a id="go-group-1" class="menu">GROUP</a></li>
+				<li><a id="go-spot-1" class ="menu">SPOT</a></li>
 				<%
 					} else { 
 				%>
 				<li><a id="go-group-2" class="menu" onclick="location.href='groupPage'">GROUP</a></li>
+				<li><a id="go-spot-2" class ="menu" onclick="location.href='shop'">SPOT</a></li>
 				<%
 					}
 				%>
-				<li><a href="shop" class ="menu">SPOT</a></li>
 			</ul>
 		</nav>
 			<ul class="navbar_login" >
