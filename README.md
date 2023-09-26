@@ -3,7 +3,6 @@
 프론트엔드, 백엔드를 혼자 맡아 제작한 개인 프로젝트입니다. <br>
 기획부터 배포까지 총 2달 소요되었고 현재도 새로운 기능을 구상해 추가하고 있으며 <br>
 아래의 링크로 웹페이지에 접속하실 수 있습니다.
-가입 과정이 번거로우시면 테스트 아이디로 로그인 하신 뒤 이용해주세요
 
 ## https://toogether.me <br><br> 테스트 아이디 : test / 비밀번호 : 1234
 
@@ -41,7 +40,7 @@
 
 ### Database ERD
 
-![ERD](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/6c20bcb7-1fbe-4bfa-8128-1f557d68ba87)
+![ERD](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/2dd7fd90-f48c-418f-a91d-68ba913cfd4b)
 
 <br><br>
 
@@ -81,6 +80,8 @@
 ⚫ [메시지](#--메시지-)
 
 ⚫ [이벤트](#--이벤트-)
+
+⚫ [스팟등록/가입](#--스팟등록-및-가입-)
 
 <br><br>
 
@@ -1335,6 +1336,103 @@
 
 <br><br>
 
+---
+
+<br><br>
+
+# - 스팟등록 및 가입 📍
+
+<br><br>
+
+## 🔘 1 ) 주소 검색 후 스팟 등록하기
+
+<br><br>
+
+### ⚙ SPOT 페이지 접속 화면
+
+<br>
+
+![map1](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/5163ac5d-5464-4a16-8e5a-e6426df415f7)
+
+<br><br>
+
+### ⚙ 위치서비스 허용시 현재위치 검색 가능
+
+<br>
+
+<div style="display: flex;">
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/8c07b115-1778-46c0-9039-88b540e87d35.PNG" width="47%">
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/81134ebd-ee4e-47a2-916b-a95aa3a09aff.PNG" width="47%">
+</div>
+
+<br><br>
+
+### ⚙ 주소 검색시 화면에 주소 정보 출력, 스팟 등록하기 버튼 클릭시 스팟 이름 입력창 생성
+
+<br>
+
+![map10](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/14ebbff9-2680-4d74-b07c-a394c1fd36eb)
+
+<br><br>
+
+### ⚙ 주소와 이름이 이미 데이터베이스에 존재하는지 검사 후 등록 완료
+
+<br>
+
+<div style="display: flex;">
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/06b88704-9709-4048-af9e-c6fab39214bf.PNG" width="47%">
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/f6df5e40-b398-4b62-989f-b51e7c008e78.PNG" width="47%">
+</div>
+
+<div style="display: flex;">
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/ebe499bc-d2a5-4773-8a76-bdb0489a19ba.PNG" width="47%">
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/c081e027-2539-4bea-ac77-5a07d6fe5aa8.PNG" width="47%">
+</div>
+
+<br><br>
+
+## 🔘 2 ) 스팟 크루 가입하기
+
+<br><br>
+
+### ⚙ 등록된 스팟들이 해당 위치에 표시되고 핀을 클릭하면 스팟이름, 주소, 크루인원이 표시된 윈도우 생성
+
+<br>
+
+![join1](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/ff319393-77d3-4b6e-a1b7-976cde1036de)
+
+<br><br>
+
+### ⚙ 스팟 이름을 클릭하면 스팟 가입
+
+<br>
+
+<div style="display: flex;">
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/e3f9c411-cd4d-41ff-846c-b1793cb20664.PNG" width="47%">
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/b7eebd6f-b560-4b54-839c-c126445e67c6.PNG" width="47%">
+</div>
+
+<br><br>
+
+### ⚙ 스팟 가입, 생성자 여부 검사 후 가입 완료
+
+<br>
+
+<div style="display: flex;">
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/de6eb8f0-36c5-4154-bf6a-a538bfef9ccf.PNG" width="47%">
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/9f7fb0a0-236b-4d7e-b66b-14f491c20f9b.PNG" width="47%">
+</div>
+
+<div style="display: flex;">
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/8da6b083-74f6-44a5-a0c7-e4d2c1f667b2.PNG" width="47%">
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/b1bc0b62-2217-4755-8ffb-544ea1be8ea3.PNG" width="47%">
+</div>
+
+<br><br>
+
+---
+
+<br><br>
 
 ## 예외처리
 
