@@ -26,8 +26,8 @@
 </head>
 <style>
 section{
-	padding-top: 100px;
-	height: 1000px;
+	padding-top: 70px;
+	height: 800px;
 	position: relative;
 }
 textarea {
@@ -138,12 +138,12 @@ h3{
 }
 #mapInfo{
 	width: auto;
-	height: 200px;
+	height: 220px;
 	display: flex;
 	align-items: center;
 	position: absolute;
 	z-index: 888;
-	top: 20%;
+	top: 22%;
 	left: 70px;
 }
 
@@ -355,7 +355,7 @@ if(userID == null){
 	    </div>
     </div>
 	<div id="map-qna">
-		<div id="question" onmouseover="question()" onmouseout="questionOut()">
+		<div id="question" onmouseover="question()">
 			<i id="qna-icon" class="fa-solid fa-circle-question fa-2x" style="color: #bebebe;"></i>&nbsp;&nbsp;<h2 id="qna-text">현재 위치가 검색되지 않거나 정확하지 않은가요 ?</h2>
 		</div>
 		<div id="answer" hidden="">
@@ -391,6 +391,8 @@ if(userID == null){
 <script>
 	var row = 0;
 	var addr, latt, lonn = null;
+	
+	//데이터베이스에 저장된 위치 정보를 가져온다.
 	var locationData = [
 	    <% for (LocationDTO location : locationList) { %>
 	        {
@@ -404,11 +406,10 @@ if(userID == null){
 	        },
 	    <% } %>
 	];
+	
+	$('#answer').hide();
 	function question(){
 		$('#answer').show();
-	}
-	function questionOut(){
-		$('#answer').hide();
 	}
     
     //현재위치 버튼을 클릭하면 view 메서드 실행

@@ -232,12 +232,12 @@
     <url-pattern>/noticeAction</url-pattern>
   </servlet-mapping>
   <servlet>
-    <servlet-name>shop.jsp</servlet-name>
-    <jsp-file>/shop.jsp</jsp-file>
+    <servlet-name>spot.jsp</servlet-name>
+    <jsp-file>/spot.jsp</jsp-file>
   </servlet>
   <servlet-mapping>
-    <servlet-name>shop.jsp</servlet-name>
-    <url-pattern>/shop</url-pattern>
+    <servlet-name>spot.jsp</servlet-name>
+    <url-pattern>/spot</url-pattern>
   </servlet-mapping>
   <servlet>
     <servlet-name>emailSendAction.jsp</servlet-name>
@@ -288,6 +288,23 @@
     <servlet-name>spotJoinAction.jsp</servlet-name>
     <url-pattern>/spotJoinAction</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>chatSendAction.jsp</servlet-name>
+    <jsp-file>/chatSendAction.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>chatSendAction.jsp</servlet-name>
+    <url-pattern>/chatSendAction</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>getLatestChatMessage.jsp</servlet-name>
+    <jsp-file>/getLatestChatMessage.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>getLatestChatMessage.jsp</servlet-name>
+    <url-pattern>/getLatestChatMessage</url-pattern>
+  </servlet-mapping>
+  
   <servlet>
     <servlet-name>downloadAction</servlet-name>
     <servlet-class>file.downloadAction</servlet-class>
