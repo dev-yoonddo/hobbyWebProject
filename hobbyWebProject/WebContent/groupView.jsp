@@ -87,13 +87,11 @@ h2{
 	height: 100px;
 	font-size: 12pt;
 }
-#chatView{
-	width: 800px;
-	height: auto;
-}
+
 #chat{
-	width: 500px;
-	height: 100px;
+	width: 400px;
+	height: auto;
+	min-height: 100px;
 	margin-bottom: 10px;
 }
 #chat-head{
@@ -117,7 +115,7 @@ h2{
 	padding: 10px; 
 	margin-top: 10px;
 }
-#chat-send{
+#chatSend{
 	width: 500px;
 	height: 40px;
 	background-color: white;
@@ -125,12 +123,18 @@ h2{
 	padding: 10px;
 	display: flex;
 }
-
-#chat-list{
-	width: 500px;
+#chatView{
+	width: 800px;
+	height: 500px;
+	overflow-y: auto;
+	display:flex;
+	flex-direction:column-reverse;
+}
+#chatList{
+	width: 700px;
 	height: auto;
 }
-#chat-text{
+#chatText{
 	width: 400px;
 	height: 40px;
 	display: flex;
@@ -179,6 +183,7 @@ h2{
 	height: auto;
 	margin-top: 50px;
 	display: inline-table;
+	align-items: center;
 }
 @media screen and (max-width:850px) {
 
@@ -190,7 +195,7 @@ h2{
 	}
 	#title-btn{
 	}
-	#chat-list{
+	#chatList{
 		width: 550px;
 		height: auto;
 	}
@@ -232,27 +237,24 @@ h2{
 		width: 330px;
 		font-size: 10pt;
 	}
-	#chat-list{
-		width: 330px;
-		height: auto;
-	}
 	#ntc-cpl{
 		margin-right: 30px;
 	}
 	#chatView{
 		width: 400px;
 	}
-	#chat-list{
+	#chatList{
 		width: 400px;
+		height: auto;
 	}
 	#chat{
 		font-size: 10pt;
 		float: left;
 	}
-	#chat-send{
+	#chatSend{
 		width: 400px;
 	}
-	#chat-text{
+	#chatText{
 		width: 250px;
 	}
 	#large{
@@ -276,6 +278,7 @@ h2{
 		display: inline-table;
 	}
 }
+
 </style>
 <body>
 <%
@@ -427,33 +430,39 @@ ArrayList<ChatDTO> chatlist = chatDAO.getChatList(groupID); //해당 그룹의 �
 				</div>
 			<%	} %>
 			</div>
+			
 			<div id="chatView">
-			<% for(int i = 0; i < chatlist.size(); i++){ %>
-					<%if(!chatlist.get(i).getUserID().equals(userID)){%>
-					<div id="chat" style="float: right; width: 500px; height: 100px;">
-					<%}else{ %>
-					<div id="chat" style="float: left; width: 500px; height: 100px;">
-					<%} %>
-						<div id="chat-head">
-							<span><%= chatlist.get(i).getUserID() %></span>
-							<span id="large" ><%= chatlist.get(i).getChatDate().substring(0,11)+chatlist.get(i).getChatDate().substring(11,13)+"시"+chatlist.get(i).getChatDate().substring(14,16)+"분" %></span>
-							<!-- 화면이 작아지면 시간은 뺀다 -->
-							<span id="small" ><%= chatlist.get(i).getChatDate().substring(0,11)%></span>
+				<% for(int i = 0; i < chatlist.size(); i++){ 
+					String mbID = mbDAO.getMemberVO(chatlist.get(i).getUserID(), chatlist.get(i).getGroupID()).getMemberID();
+				
+				%>
+						<div id="chatList">
+							<%if(!chatlist.get(i).getUserID().equals(userID)){%>
+							<div id="chat" style="float: right;">
+							<%}else{ %>
+							<div id="chat" style="float: left;">
+							<%} %>
+								<div id="chat-head">
+									<span><%= mbID %></span>
+									<span id="large" ><%= chatlist.get(i).getChatDate().substring(0,11)+chatlist.get(i).getChatDate().substring(11,13)+"시"+chatlist.get(i).getChatDate().substring(14,16)+"분" %></span>
+									<!-- 화면이 작아지면 시간은 뺀다 -->
+									<span id="small" ><%= chatlist.get(i).getChatDate().substring(0,11)%></span>
+								</div>
+								
+								<div id="chat-content">
+								<%= chatlist.get(i).getChatContent() %>
+								</div>
+							</div>
 						</div>
-						
-						<div id="chat-content">
-						<%= chatlist.get(i).getChatContent() %>
-						</div>
-					</div>
-			<%
-				}
-			%>
+				<%
+					}
+				%>
 			</div>
 			
 
 			<!-- 채팅 전송 -->
-			<div id="chat-send">
-		        <textarea id="chat-text" placeholder="채팅 내용을 입력하세요" maxlength="300"></textarea>
+			<div id="chatSend">
+		        <textarea id="chatText" placeholder="채팅 내용을 입력하세요" maxlength="300"></textarea>
 		        <div id="chat-btn">
 			        <button type="button" class="btn-blue" id="submit"><span>전송</span></button>
 				</div>
@@ -480,30 +489,20 @@ function ntcAction(){
 	document.getElementById('insert-notice').style.display = 'none';
 }
 </script>
+
 <script>
 var userID = "<%=userID%>";
 var groupID = "<%=groupID%>";
 
-$('#chat-text').on('keydown', function(e) {
+$('#chatText').on('keydown', function(e) {
     var keyCode = e.which;
-    if($('#chat-text').val() == null || $('#chat-text').val().trim().length == 0){
-		alert('채팅을 입력하세요');
-	}else{
-	    if (keyCode === 13) { // Enter Key
-	        registChat($('#chat-text').val(), userID, groupID);
-	    	console.log($('#chat-text').val());
-	    }
-	}
-    console.log($('#chat-text').val().trim().length);
+    if (keyCode === 13) { // Enter Key
+        registChat($('#chatText').val(), userID, groupID);
+    }
 });
 $('#submit').on('click', function(e) {
     e.preventDefault();
-    if($('#chat-text').val() == null || $('#chat-text').val().trim().length == 0){
-    	alert('채팅을 입력하세요');
-	}else{
-	    registChat($('#chat-text').val() , userID, groupID);
-    }
-    console.log($('#chat-text').val().trim().length);
+	registChat($('#chatText').val() , userID, groupID);
 });
 //채팅을 전송하면 chat-view 부분만 새로고침해 채팅을 불러온다.
 function reloadChat(){
@@ -513,11 +512,10 @@ function reloadChat(){
 /*setInterval(function () {
 	$('#chatView').load(location.href+' #chatView');
 }, 1000);*/
-var last;
 setInterval(function () {
-    // Make an AJAX request to fetch the latest message
    var data1 = {
-      groupID: groupID,
+	  userID: userID,
+      groupID: groupID
    };
     $.ajax({
         type: 'GET',
@@ -525,16 +523,19 @@ setInterval(function () {
         url: 'getLatestChatMessage',
         data: data1,
         success: function (latestMessage) {
-           	last = latestMessage.lastUserID;
             if(latestMessage.includes("no user")){
-            	alert('로그인이 필요합니다');
-            	window.open('loginPopUp', 'Login', 'width=450, height=500, top=50%, left=50%');
-            }else if(latestMessage.lastUserID !== userID) {
-	        	console.log(last);
-                reloadChat();
+            	console.log("데이터베이스 오류");
+            	//alert('로그인이 필요합니다');
+            	//window.open('loginPopUp', 'Login', 'width=450, height=500, top=50%, left=50%');
             }else if(latestMessage.includes("empty")){
             	console.log('채팅 데이터가 없습니다');
+            }else if(latestMessage.includes("mismatch")) {
+            	//console.log("불일치");
+            	//1초마다 채팅리스트 데이터에 마지막으로 채팅을 전송한 유저와 로그인 유저가 일치하는지
+            	//구해서 불일치하면 채팅창을 새로고침한다.
+                reloadChat();
             }else{
+            	//console.log("마지막 채팅전송 유저 일치");
             }
         },
         error: function (xhr, status, error) {
@@ -553,9 +554,9 @@ function registChat(value, userID, groupID){
 	}else{
 		
 	var data2 = {
-            userID: userID,
-            groupID: groupID,
             content: value,
+            userID: userID,
+            groupID: groupID
         };
         $.ajax({
             type: 'POST',
@@ -567,15 +568,16 @@ function registChat(value, userID, groupID){
             		alert('정보 오류');
             	}else if(response.includes("none")){
             		alert('채팅을 입력하세요');
-            	}else if(response.includes("Database Error"))
+            	}else if(response.includes("Database Error")){
             		alert('데이터베이스 오류');
            		}else{
 	                //console.log('Spot registration successful:', response);
 	                //alert('완료');
 	               	reloadChat();
 	              	//채팅 입력창을 비운다.
-	            	$('#chat-text').val('');
+	            	$('#chatText').val('');
 	                //console.log(data);
+           		}
             },
             error: function (xhr, status, error) {
                 //console.error('Spot registration error:', error);

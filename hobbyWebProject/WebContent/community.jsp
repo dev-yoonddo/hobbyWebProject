@@ -22,6 +22,9 @@
 
 </head>
 <style>
+::-webkit-scrollbar {
+  display: none;
+}
 section{
   width: 100%;
   height: 500px;

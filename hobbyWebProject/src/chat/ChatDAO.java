@@ -81,7 +81,7 @@ public class ChatDAO {
 	}
 	//해당 그룹의 채팅 리스트 가져오기
 	public ArrayList<ChatDTO> getChatList(int groupID){
-		String SQL = "SELECT * FROM chat WHERE groupID = ? AND chatAvailable = 1";
+		String SQL = "SELECT * FROM chat WHERE groupID = ? AND chatAvailable = 1 ORDER BY chatDate DESC";
 		ArrayList<ChatDTO> list = new ArrayList<ChatDTO>();
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);

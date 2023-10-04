@@ -12,7 +12,24 @@
 --color-mouseb: #fff;
 }
 
-/* cursor css */
+
+/* 스크롤 스타일 */
+::-webkit-scrollbar {
+    width: 15px;  /*스크롤바 폭 너비 */
+}
+::-webkit-scrollbar-thumb {
+    background: #aaaaaa; /* 스크롤바 막대 색상 */
+    /* border: 0.5px solid #9b6a2f;  스크롤바 막대 테두리 설정  */
+    border-radius: 12px 12px 12px 12px;
+    cursor: pointer;
+}
+::-webkit-scrollbar-thumb:hover {
+	background-color:#3c3c3c;
+}
+::-webkit-scrollbar-track {
+    border-radius: 12px 12px 12px 12px;
+	background: #dcdcdc; /* 스크롤바 뒷 배경 색상 */
+}
 
 /* 커서 스타일 정의 */
 .cursor {

@@ -355,7 +355,7 @@ if(userID == null){
 	    </div>
     </div>
 	<div id="map-qna">
-		<div id="question" onmouseover="question()">
+		<div id="question" onmouseover="question()" onmouseout="questionOut()">
 			<i id="qna-icon" class="fa-solid fa-circle-question fa-2x" style="color: #bebebe;"></i>&nbsp;&nbsp;<h2 id="qna-text">현재 위치가 검색되지 않거나 정확하지 않은가요 ?</h2>
 		</div>
 		<div id="answer" hidden="">
@@ -407,11 +407,12 @@ if(userID == null){
 	    <% } %>
 	];
 	
-	$('#answer').hide();
 	function question(){
 		$('#answer').show();
 	}
-    
+	function questionOut(){
+		$('#answer').hide();
+	}
     //현재위치 버튼을 클릭하면 view 메서드 실행
 	$('#myLoc').on('click', view);
 	
@@ -746,8 +747,8 @@ if(userID == null){
 	        };
 	        $.ajax({
 	            type: 'POST',
-	            url: 'https://toogether.me/spotRegistAction',
-	            //url: 'spotRegistAction',
+	            //url: 'https://toogether.me/spotRegistAction',
+	            url: 'spotRegistAction',
 	            data: data,
 	            success: function (response) {
 	            	//spotRegistAction.jsp 페이지를 실행한 후 문자가 포함되어 있는지에 따라 알림창에 결과를 알려준다.
@@ -774,8 +775,8 @@ if(userID == null){
     }
     
     function joinSpot(){
-    	console.log("Clicked on location: " + clickname);
-        console.log("Address: " + clickaddress);
+    	//console.log("Clicked on location: " + clickname);
+        //console.log("Address: " + clickaddress);
         var joinResult = confirm('참여 하시겠습니까?');
         if(joinResult){
 	        var data2 = {
@@ -785,8 +786,8 @@ if(userID == null){
 	        };
 	        $.ajax({
 	            type: 'POST',
-	            url: 'https://toogether.me/spotJoinAction',
-	            //url: 'spotJoinAction',
+	            //url: 'https://toogether.me/spotJoinAction',
+	            url: 'spotJoinAction',
 	            data: data2,
 	            success: function (response) {
 	            	if (response.includes("Spot joined successfully")) {
