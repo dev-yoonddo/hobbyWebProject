@@ -35,7 +35,7 @@ body{
 }
 section{
 	height: auto;
-	padding-top: 150px;
+	padding-top: 100px;
 	padding-left: 100px;
 	padding-right: 100px;
 	display: flex;
@@ -63,8 +63,33 @@ h2{
 }
 #group-info{
 	height: auto;
-	max-height: 250px;
+	max-height: 300px;
 	margin-bottom: 50px;
+}
+#join-list-animated{
+	width: 350px;
+	max-width: 450px;
+	height: 30px;
+	position: relative;
+	overflow-x: hidden;
+	overflow-y: hidden;
+}
+#join-list{
+	max-width: auto;
+	height: auto;
+	position: absolute;
+	white-space: nowrap;
+	will-change: transform;
+	animation: marquee 6s linear infinite;
+}
+.join-list-inner{
+	height: 20px;
+	padding: 3px;
+}
+/* 가입리스트 애니메이션 */
+@keyframes marquee {
+  from { transform: translateY(20%); }
+  to { transform: translateY(-100%); }
 }
 .btn-blue{
 	width: 100px;
@@ -79,15 +104,24 @@ h2{
 }
 #write-notice{
 	display: none;
-	width: 500px;
-	height: 150px;
+	width: 30%;
+	max-height: 200px;
+	float: right;
 }
 #text-notice{
-	width: 500px;
-	height: 100px;
+	width: 300px;
+	height: 80px;
 	font-size: 12pt;
 }
 
+.group-bottom{
+	width: 100%;
+	height: auto;
+	min-height: 100px;
+	display: flex;
+	justify-content: center;
+	margin-bottom: 50px;
+}
 #chat{
 	width: 400px;
 	height: auto;
@@ -125,7 +159,9 @@ h2{
 }
 #chatView{
 	width: 800px;
-	height: 500px;
+	min-height: 50px;
+	max-height: 500px;
+	align-items: center;
 	overflow-y: auto;
 	display:flex;
 	flex-direction:column-reverse;
@@ -163,25 +199,44 @@ h2{
 #info{
 	display: flex; 
 	width: 100%; 
-	height: auto; 
+	min-height: 30px;
 	max-height: 200px;
 }
+#info-list{
+	min-width: 70%; 
+	max-width: 100%;
+	height: 30px; 
+	display: flex; 
+	align-items: center;
+}
+.list-text{
+	margin-right: 20px;
+}
 #notice-btn{
-	width: 20%; 
+	width: 40%; 
 	text-align: right;
+	float: right;
+	align-items: center;
 }
 #notice{
 	height: auto;
-	font-size: 25pt; 
+	font-size: 20pt; 
 	font-weight: bold;
 	display: flex;
 	margin: 0 auto;
 	padding: 10px;
 	padding-bottom: 50px; 
 }
+#notice-box{
+	border-radius: 20px; 
+	padding: 10px; 
+	background-color: #DCDCDC; 
+	max-width: 650px;
+}
 #detail{
+	width: 100%;
 	height: auto;
-	margin-top: 50px;
+	margin-top: 20px;
 	display: inline-table;
 	align-items: center;
 }
@@ -189,6 +244,43 @@ h2{
 
 	#title-text{
 		font-size: 17pt;
+	}
+	#info-list{
+		min-width: 50%;
+		max-width: 100%;
+		max-height: 60px;
+	}
+	#info-list-1{
+		width: 130px;
+		margin-right: 20px;
+	}
+	.list-text{
+		margin-right: 0;
+	}
+	#join-list-animated{
+		margin-top: 5px;
+	}
+	#notice-btn{
+		width: 50%;
+	}
+	#write-notice{
+		width: 50%;
+	}
+	#text-notice{
+		width: 250px;
+		height: 70px;
+		font-size: 10pt;
+	}
+	.group-bottom{
+		width: 650px;
+	}
+	#notice{
+		font-size: 20pt;
+		padding-top: 20px;
+		padding-bottom: 20px;
+	}
+	#notice-box{
+		width: 450px;
 	}
 	#group-main{
 		width: 650px;
@@ -205,14 +297,17 @@ h2{
 		height: 120px;
 	}
 	#title-text{
-		width: 160px;
+		width: 200px;
 		font-size: 16pt;
 	}
 	#group-main{
-		width: 450px;
+		width: 400px;
 	}
 	#title-btn{
-		width: 180px;
+		width: 200px;
+	}
+	.group-bottom{
+		width: 400px;
 	}
 	.btn-blue{
 		width: 60px;
@@ -231,11 +326,20 @@ h2{
 		width: 70px;
 	}
 	#write-notice{
-		width: 350px;
+		width: 250px;
 	}
-	#text-notice{
-		width: 330px;
-		font-size: 10pt;
+	#info{
+		display: inline;
+	}
+	#notice{
+		width: 360px;
+		font-size: 15pt;
+		padding-top: 10px;
+		padding-bottom: 10px;
+	}
+	#notice-box{
+		font-size: 12pt;
+		width: 400px;
 	}
 	#ntc-cpl{
 		margin-right: 30px;
@@ -269,7 +373,7 @@ h2{
 		margin-bottom: 0;
 	}
 	#insert-notice{
-		width: 100%; text-align: left; padding-top: 10px;
+		width: 100%; text-align: right; padding-top: 10px;
 	}
 	#detail{
 		margin-top: 10px;
@@ -378,24 +482,41 @@ ArrayList<ChatDTO> chatlist = chatDAO.getChatList(groupID); //해당 그룹의 �
 			</div>
 			<hr style="width: 100%; height: 2px; background-color: black;"><br>
 			<div id="info">
-				<span style="width: 80%">
-				Member : <%= mblist.size() %>명&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Leader : <%= group.getUserID() %>
-				</span>
-				<span id="notice-btn" >
+				<div id="info-list">
+					<div id="info-list-1">
+						<span class="list-text">Member : <%= mblist.size() %>명</span><span class="list-text">Leader : <%= group.getUserID() %></span>
+					</div>
+					<div id="join-list-animated">
+						<div id="join-list">
+						<%
+							for(int i=0; i<mblist.size(); i++){
+						%>
+							<div class="join-list-inner">
+								<span><%= mblist.get(i).getMemberID() %>님이 가입했습니다</span>
+							</div>
+						<%	} %>
+						</div>
+					</div>
+				</div>
 				<%
 					if(leader){
+				%>
+						<div id="notice-btn" >
+				<%
 						//등록된 공지사항이 없으면 등록하기, 있으면 변경하기로 출력
 						if(group.getGroupNotice() == null){
 				%>
 				<div id="insert-notice" onclick="ntcAction()">공지사항 등록하기</div>
 				<% 		}else{ %>
 				<div id="insert-notice" onclick="ntcAction()">공지사항 변경하기</div>
-				<%		}
+				<%		}%>
+				
+						</div>
+				<%
 					}
 				%>
-				</span>
 				<!-- 리더는 공지사항 입력/변경 가능 -->	
-				<div id="write-notice" style="float: right;"> 
+				<div id="write-notice"> 
 		          <form method="post" action="noticeAction?groupID=<%=groupID%>">
 			          <table style="height: 100px; border-style: none;">
 			             <tbody>
@@ -413,59 +534,59 @@ ArrayList<ChatDTO> chatlist = chatDAO.getChatList(groupID); //해당 그룹의 �
 		
 		<!-- 그룹보기 페이지 하단 -->
 		<div id="detail">
-			<div id="notice">
-				<i class="fa-regular fa-bell"></i>&nbsp;그룹 공지&nbsp;&nbsp;&nbsp;
-				<%if(group.getGroupNotice() != null){ %>
-				<div style="border-radius: 20px; padding: 10px; background-color: #DCDCDC; max-width: 750px;">
-				<span style="font-size: 18pt;"><%=group.getGroupNotice()%></span>
+			<div class="group-bottom" style="margin: 0;">
+				<div id="notice">
+					<div style="display: flex;"><i class="fa-regular fa-bell"></i>&nbsp;그룹 공지&nbsp;&nbsp;&nbsp;</div>
+					<%if(group.getGroupNotice() != null){ %>
+					<div id="notice-box">
+					<span><%=group.getGroupNotice()%></span>
+					</div>
+					<%} %>
 				</div>
+			</div>
+			<div class="group-bottom">
+				<div id="chatView">
+				<% if(chatlist.size() == 0){ %>
+					<h3> 멤버와 대화를 시작해보세요 !</h3>
 				<%} %>
-			</div>
-			<div id="join-list">
-			<%
-				for(int i=0; i<mblist.size(); i++){
-			%>
-				<div>
-					<span><%= mblist.get(i).getMemberID() %>님이 가입했습니다</span>
-				</div>
-			<%	} %>
-			</div>
-			
-			<div id="chatView">
-				<% for(int i = 0; i < chatlist.size(); i++){ 
-					String mbID = mbDAO.getMemberVO(chatlist.get(i).getUserID(), chatlist.get(i).getGroupID()).getMemberID();
-				
-				%>
-						<div id="chatList">
-							<%if(!chatlist.get(i).getUserID().equals(userID)){%>
-							<div id="chat" style="float: right;">
-							<%}else{ %>
-							<div id="chat" style="float: left;">
-							<%} %>
-								<div id="chat-head">
-									<span><%= mbID %></span>
-									<span id="large" ><%= chatlist.get(i).getChatDate().substring(0,11)+chatlist.get(i).getChatDate().substring(11,13)+"시"+chatlist.get(i).getChatDate().substring(14,16)+"분" %></span>
-									<!-- 화면이 작아지면 시간은 뺀다 -->
-									<span id="small" ><%= chatlist.get(i).getChatDate().substring(0,11)%></span>
-								</div>
-								
-								<div id="chat-content">
-								<%= chatlist.get(i).getChatContent() %>
+					<% 
+						for(int i = 0; i < chatlist.size(); i++){
+					        MemberDTO mbID = mbDAO.getMemberVO(chatlist.get(i).getUserID(), chatlist.get(i).getGroupID());
+							if(mbID != null){
+					%>
+							<div id="chatList">
+								<%if(!chatlist.get(i).getUserID().equals(userID)){%>
+								<div id="chat" style="float: right;">
+								<%}else{ %>
+								<div id="chat" style="float: left;">
+								<%} %>
+									<div id="chat-head">
+										<span><%= mbID.getMemberID()%></span>
+										<span id="large" ><%= chatlist.get(i).getChatDate().substring(0,11)+chatlist.get(i).getChatDate().substring(11,13)+"시"+chatlist.get(i).getChatDate().substring(14,16)+"분" %></span>
+										<!-- 화면이 작아지면 시간은 뺀다 -->
+										<span id="small" ><%= chatlist.get(i).getChatDate().substring(0,11)%></span>
+									</div>
+									
+									<div id="chat-content">
+									<%= chatlist.get(i).getChatContent() %>
+									</div>
 								</div>
 							</div>
-						</div>
-				<%
-					}
-				%>
+					<%
+							}
+						}
+					%>
+				</div>
 			</div>
-			
 
 			<!-- 채팅 전송 -->
-			<div id="chatSend">
-		        <textarea id="chatText" placeholder="채팅 내용을 입력하세요" maxlength="300"></textarea>
-		        <div id="chat-btn">
-			        <button type="button" class="btn-blue" id="submit"><span>전송</span></button>
-				</div>
+			<div class="group-bottom">
+				<div id="chatSend">
+			        <textarea id="chatText" placeholder="채팅 내용을 입력하세요" maxlength="300"></textarea>
+			        <div id="chat-btn">
+				        <button type="button" class="btn-blue" id="submit"><span>전송</span></button>
+					</div>
+			    </div>
 		    </div>
 		</div>
 		<!-- 그룹보기 페이지 하단 끝 -->
@@ -487,6 +608,7 @@ function ntcAction(){
 	document.getElementById('write-notice').style.display = 'block';
 	document.getElementById('text-notice').style.display = 'block';
 	document.getElementById('insert-notice').style.display = 'none';
+	document.getElementById('notice-btn').style.display = 'none';
 }
 </script>
 
@@ -519,8 +641,8 @@ setInterval(function () {
    };
     $.ajax({
         type: 'GET',
-        //url: 'https://toogether.me/getLatestChatMessage',
-        url: 'getLatestChatMessage',
+        url: 'https://toogether.me/getLatestChatMessage',
+        //url: 'getLatestChatMessage',
         data: data1,
         success: function (latestMessage) {
             if(latestMessage.includes("no user")){
@@ -560,8 +682,8 @@ function registChat(value, userID, groupID){
         };
         $.ajax({
             type: 'POST',
-            //url: 'https://toogether.me/chatSendAction',
-            url: 'chatSendAction',
+            url: 'https://toogether.me/chatSendAction',
+            //url: 'chatSendAction',
             data: data2,
             success: function (response) {
             	if(response.includes("Information Error")){

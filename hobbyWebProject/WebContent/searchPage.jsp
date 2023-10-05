@@ -273,21 +273,21 @@ th span{
 		</div><br>
 		
 		<div id="notice-animated">
-		<!-- 관리자 공지사항 리스트 -->
-		<div id="notice">
-		<% 
-			ArrayList<BoardDTO> noticelist = boardDAO.getNotice();
-			for(int i = 0; i < noticelist.size(); i++){
-		%>
-			<div id="notice-inner">
-				<div id="notice-option" onclick="location.href='view?boardID=<%= noticelist.get(i).getBoardID() %>'">
-				<i class="fa-regular fa-bell"></i>&nbsp;&nbsp;<%= noticelist.get(i).getBoardTitle()%>
+			<!-- 관리자 공지사항 리스트 -->
+			<div id="notice">
+			<% 
+				ArrayList<BoardDTO> noticelist = boardDAO.getNotice();
+				for(int i = 0; i < noticelist.size(); i++){
+			%>
+				<div id="notice-inner">
+					<div id="notice-option" onclick="location.href='view?boardID=<%= noticelist.get(i).getBoardID() %>'">
+					<i class="fa-regular fa-bell"></i>&nbsp;&nbsp;<%= noticelist.get(i).getBoardTitle()%>
+					</div>
 				</div>
+			<%
+			}
+			%>
 			</div>
-		<%
-		}
-		%>
-		</div>
 		</div>
 		<!-- 게시글 리스트 -->
 		<div class="row">

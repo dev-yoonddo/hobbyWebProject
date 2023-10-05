@@ -132,7 +132,24 @@ public class MemberDAO {
 		}
 		return null;
 	}
-	
+	//userID와 groupID로 memberID 구하기
+	public MemberDTO getMemberIDS(String userID, int groupID) {
+		String SQL = "SELECT memberID FROM member WHERE userID = ? AND groupID = ?";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, userID);
+			pstmt.setInt(2, groupID);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				MemberDTO mb = new MemberDTO();
+				mb.setMemberID(rs.getString(1));
+				return mb;
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 	//해당 그룹에 유저가 탈퇴했는지 검사
 	public MemberDTO getMemberDelVO(String userID, int groupID) {
 		String SQL = "SELECT * FROM member WHERE userID = ? AND groupID = ? AND mbAvailable = 0";
