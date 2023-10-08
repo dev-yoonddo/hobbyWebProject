@@ -22,53 +22,40 @@
 <body>
  <%
  
-	PrintWriter script = response.getWriter();
- 	String userID = null;
- 	if(session.getAttribute("userID") != null){
- 		userID = (String) session.getAttribute("userID");
+ 	PrintWriter script = response.getWriter();
+	int groupID = 0;
+	String noticeContent = null;
+	GroupDAO groupDAO = new GroupDAO();
+	
+	if(request.getParameter("groupID") != null || request.getParameter("groupID") != "0"){
+		groupID = Integer.parseInt(request.getParameter("groupID"));
+	}
+	if(request.getParameter("content") != null){
+		noticeContent = request.getParameter("content");
+	}
+ 	if (groupID == 0){
+ 		script.print("group error");
+	        script.flush();
  	}
- 	if(userID == null){
- 		script.println("<script>");
-		script.println("alert('로그인을 하세요.')");
- 		script.println("location.href = 'loginPopUp'");
- 		script.println("</script>");
- 	}else{
-	 	//groupID 가져오기
-	 	int groupID = 0;
-	 	if (request.getParameter("groupID") != null){
-	 		groupID = Integer.parseInt(request.getParameter("groupID"));
-	 	}
-	 	if (groupID == 0){
-	 		script.println("<script>");
-	 		script.println("alert('유효하지 않은 그룹입니다.')");
-	 		script.println("history.back()");
-	 		script.println("</script>");
-	 	}
-	 	else{
-	 		if(group.getGroupNotice() == null) {
-			script.println("<script>");
-			script.println("alert('공지 내용을 입력해주세요')");
-			script.println("history.back()");
-			script.println("</script>");
+ 	else{
+ 		if(noticeContent == null || noticeContent.equals("")) {
+ 			script.print("none");
+ 	        script.flush();
+		}else{
+ 			int result = 0;
+			
+			result = groupDAO.noticeUpdate(groupID, noticeContent);
+			System.out.print(result);
+			if(result > 0){
+				script.print("success");
+	 	        script.flush();
 			}else{
-	 			int result = 0;
-				GroupDAO groupDAO = new GroupDAO();
-				result = groupDAO.noticeUpdate(groupID, group.getGroupNotice());
-				System.out.print(result);
-				if(result > 0){
-					script.println("<script>");
-					script.println("alert('작성이 완료되었습니다.')");
-					script.println("location.href='groupView?groupID="+ groupID + "'");
-					script.println("</script>");
-				}else{
-					script.println("<script>");
-					script.println("alert('작성 실패')");
-					script.println("history.back()");
-					script.println("</script>");
-				}
+				script.print("database error");
+	 	        script.flush();
 			}
-	 	}
+		}
  	}
+ 	
  %>
 </body>
 </html>

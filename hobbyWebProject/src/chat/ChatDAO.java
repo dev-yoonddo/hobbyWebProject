@@ -4,9 +4,12 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import board.BoardDTO;
+import crew.CrewDTO;
 import file.FileDAO;
 
 public class ChatDAO {
@@ -100,5 +103,78 @@ public class ChatDAO {
 			e.printStackTrace();
 		}
 		return list; 
+	}
+	
+	//UserDAO - delete에서 사용되는 메서드
+	//delete된 userID와 chat의 userID가 같은 값의 리스트를 가져온다.
+	public List<ChatDTO> getDelChatVOByUserID(String userID) {
+	    List<ChatDTO> chatDTOs = new ArrayList<>();
+	    String SQL = "SELECT chatAvailable , userID FROM chat WHERE userID = ?";//userID가 입력한 chat의 삭제여부 chatAvailable을 가져온다.
+	    try {
+	        PreparedStatement pstmt = conn.prepareStatement(SQL);
+	        pstmt.setString(1, userID);
+	        ResultSet rs = pstmt.executeQuery();
+	        while (rs.next()) { //user 한명이 여러개의 chat을 입력하면 데이터가 1개 이상 나오기때문에 while을 사용한다.
+	        	int chatAvailable = rs.getInt("chatAvailable");
+	        	String id = rs.getString("userID");
+	            //여기서 다른 속성도 가져올 수 있다.
+
+	        	ChatDTO chatDTO = new ChatDTO();
+	        	chatDTO.setChatAvailable(chatAvailable);
+	        	chatDTO.setUserID(id);
+	        	chatDTOs.add(chatDTO);
+	        }
+	        rs.close();
+	        pstmt.close();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return chatDTOs;
+	}
+	
+	//memberDAO - delete에서 사용되는 메서드
+	//delete된 memberID로 userID를 구한 후 chat의 userID가 같은 값의 리스트를 가져온다.
+	public List<ChatDTO> getDelChatVOByMbID(String userID, int groupID) {
+	    List<ChatDTO> chatDTOs = new ArrayList<>();
+	    String SQL = "SELECT chatAvailable FROM chat WHERE userID = ? AND groupID = ?";//userID가 입력한 chat의 삭제여부 chatAvailable을 가져온다.
+	    try {
+	        PreparedStatement pstmt = conn.prepareStatement(SQL);
+	        pstmt.setString(1, userID);
+	        pstmt.setInt(2, groupID);
+	        ResultSet rs = pstmt.executeQuery();
+	        while (rs.next()) { //user 한명이 여러개의 chat을 입력하면 데이터가 1개 이상 나오기때문에 while을 사용한다.
+	        	int chatAvailable = rs.getInt("chatAvailable");
+	        	//String id = rs.getString("userID");
+	        	//int gr = rs.getInt("groupID");
+	            //여기서 다른 속성도 가져올 수 있다.
+	        	
+	        	ChatDTO chatDTO = new ChatDTO();     	
+	        	chatDTO.setChatAvailable(chatAvailable);
+	        	chatDTO.setUserID(userID);
+        		chatDTO.setGroupID(groupID);
+	        	
+	        	chatDTOs.add(chatDTO);
+	        }
+	        rs.close();
+	        pstmt.close();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return chatDTOs;
+	}
+		
+	//UserDAO - delete에서 삭제된 user와 관련된 정보를 업데이트 한다.
+	public void updateChatVO(ChatDTO chatDTO){
+	    String SQL = "UPDATE chat SET chatAvailable = ? WHERE userID = ? AND groupID = ?";
+	    try {
+	        PreparedStatement pstmt = conn.prepareStatement(SQL);
+	        pstmt.setInt(1, chatDTO.getChatAvailable());
+	        pstmt.setString(2, chatDTO.getUserID());
+	        pstmt.setInt(3, chatDTO.getGroupID());
+	        pstmt.executeUpdate();
+	        pstmt.close();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
 	}
 }

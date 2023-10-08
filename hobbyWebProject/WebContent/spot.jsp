@@ -447,7 +447,7 @@ if(userID == null){
 	    	 var items = response.v2.results,
 	            address = '',
 	            htmlAddresses = [];
-				console.log(items);
+				//console.log(items);
 	        for (var i=0, ii=items.length, item, addrType; i<ii; i++) {
 	            item = items[i];
 	            //reverseGeocode 데이터들은 온전한 주소의 형태가 아니기 때문에 조합해 주소를 만들어야 하기 때문에 makeAddress메서드로 값을 넘겨준다
@@ -456,7 +456,7 @@ if(userID == null){
 	            addrType = item.name === 'roadaddr' ? '[도로명 주소]' : '[지번 주소]';
 				//console.log(item);
 	        }
-	        	console.log(address, addrType);
+	        	//console.log(address, addrType);
 	        	//주소를 구했으면 serachAddressRoCoordinate 메서드에 넘겨주고 실행
 	            searchAddressToCoordinate(address);
 
@@ -689,7 +689,7 @@ if(userID == null){
                 anchorSize: new naver.maps.Size(10, 10)
             });
             
-			//locationData의 marker들의 옵션
+			//locationData의 marker 옵션
             var markerOptions = {
            	    position: latlng, //마커찍을 좌표
            	    map: map,
@@ -697,10 +697,12 @@ if(userID == null){
            	    	 url: './image/map-pin-navy.png', //아이콘 경로
            	    }
            	};
+			
+			/*
             var markerOptions2 = {
             	position: latlng, //마커찍을 좌표
             	map: map,
-         	};
+         	};*/
             //삭제되지 않은 스팟만 지도에 표시하고 클릭하면 infoWindow 표시하기
             if(location.available == 1){
 	            var marker2 = new naver.maps.Marker(markerOptions);

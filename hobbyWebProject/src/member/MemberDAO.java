@@ -10,6 +10,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import board.BoardDAO;
+import board.BoardDTO;
+import chat.ChatDAO;
+import chat.ChatDTO;
+
 
 public class MemberDAO {
 
@@ -150,6 +155,26 @@ public class MemberDAO {
 		}
 		return null;
 	}
+	
+	//memberID로 userID, groupID 구하기
+	public MemberDTO getUserGroupIDS(String memberID) {
+		String SQL = "SELECT userID , groupID FROM member WHERE memberID = ?";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, memberID);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				MemberDTO mb = new MemberDTO();
+				mb.setUserID(rs.getString(1));
+				mb.setGroupID(rs.getInt(2));
+				return mb;
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+		
 	//해당 그룹에 유저가 탈퇴했는지 검사
 	public MemberDTO getMemberDelVO(String userID, int groupID) {
 		String SQL = "SELECT * FROM member WHERE userID = ? AND groupID = ? AND mbAvailable = 0";
@@ -188,13 +213,26 @@ public class MemberDAO {
 	}
 	
 	//그룹 탈퇴하기 (2. mbAvailable = 0 으로 업데이트)
-	public int delete(String memberID) {
+	public int delete(String memberID, String userID, int groupID) {
 		String SQL = "UPDATE member SET mbAvailable = 0 WHERE memberID = ? ";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, memberID);
 			//성공적으로 수행했다면 0이상의 결과 반환
-			return pstmt.executeUpdate();
+			int result = pstmt.executeUpdate(); //userAvailable = 0이 성공적으로 실행되면 0이상의 결과를 result에 저장
+			System.out.println(memberID);
+			System.out.println(userID);
+			System.out.println(groupID);
+			pstmt.close();
+	        if (result > 0) {
+	            ChatDAO chatDAO = new ChatDAO();
+	            List<ChatDTO> chatVOList = chatDAO.getDelChatVOByMbID(userID, groupID);
+	            for (ChatDTO chatDTO : chatVOList) {
+	            	chatDTO.setChatAvailable(0);
+	            	chatDAO.updateChatVO(chatDTO);
+	            }
+	        }
+			return result;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -274,5 +312,6 @@ public class MemberDAO {
 	        e.printStackTrace();
 	    }
 	}
+	
 	
 }

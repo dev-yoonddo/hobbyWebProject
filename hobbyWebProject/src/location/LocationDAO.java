@@ -4,10 +4,13 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import comment.CommentDAO;
 import comment.CommentDTO;
+import crew.CrewDTO;
 import group.GroupDTO;
 
 public class LocationDAO {
@@ -89,7 +92,7 @@ public class LocationDAO {
 	}
 	//저장된 스팟 정보 리스트 출력하기
 	public ArrayList<LocationDTO> getSpotInfoList(){
-		String SQL = "SELECT * FROM location"; 
+		String SQL = "SELECT * FROM location WHERE spotAvailable = 1"; 
 		ArrayList<LocationDTO> list = new ArrayList<LocationDTO>();
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
@@ -122,5 +125,46 @@ public class LocationDAO {
 			e.printStackTrace();
 		}
 		return -1; //데이터베이스 오류
+	}
+	
+	//UserDAO - delete에서 사용되는 메서드
+	//delete된 userID와 spot의 userID가 같은 값의 리스트를 가져온다.
+	public List<LocationDTO> getDelSpotVOByUserID(String userID) {
+	    List<LocationDTO> locationDTOs = new ArrayList<>();
+	    String SQL = "SELECT spotAvailable , userID FROM location WHERE userID = ?";//userID가 가입한 crew의 탈퇴여부 crewAvailable을 가져온다.
+	    try {
+	        PreparedStatement pstmt = conn.prepareStatement(SQL);
+	        pstmt.setString(1, userID);
+	        ResultSet rs = pstmt.executeQuery();
+	        while (rs.next()) { //user 한명이 여러개의 crew를 가입하면 데이터가 1개 이상 나오기때문에 while을 사용한다.
+	        	int spotAvailable = rs.getInt("spotAvailable");
+	        	String id = rs.getString("userID");
+	            //여기서 다른 속성도 가져올 수 있다.
+
+	        	LocationDTO locationDTO = new LocationDTO();
+	        	locationDTO.setSpotAvailable(spotAvailable);
+	        	locationDTO.setUserID(id);
+	        	locationDTOs.add(locationDTO);
+	        }
+	        rs.close();
+	        pstmt.close();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return locationDTOs;
+	}
+	
+	//UserDAO - delete에서 삭제된 user와 관련된 정보를 업데이트 한다.
+	public void updateSpotVO(LocationDTO locationDTO){
+	    String SQL = "UPDATE location SET spotAvailable = ? WHERE userID = ?";
+	    try {
+	        PreparedStatement pstmt = conn.prepareStatement(SQL);
+	        pstmt.setInt(1, locationDTO.getSpotAvailable());
+	        pstmt.setString(2, locationDTO.getUserID());
+	        pstmt.executeUpdate();
+	        pstmt.close();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
 	}
 }

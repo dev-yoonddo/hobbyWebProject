@@ -31,7 +31,7 @@
 			script.println("window.open('loginPopUp', 'Login', 'width=500, height=550, top=50%, left=50%')");
 			script.println("</script>");
 		}
-		int groupID=0;
+		int groupID = 0;
 		if(request.getParameter("groupID")!=null){
 			groupID=Integer.parseInt(request.getParameter("groupID"));
 		}
@@ -39,7 +39,7 @@
 		String memberID = request.getParameter("memberID");
 
 		MemberDAO memberDAO = new MemberDAO();
-		int result = memberDAO.delete(memberID);
+		int result = memberDAO.delete(memberID, userID, groupID);
 		if(result == -1){//데이터 베이스 오류
 			PrintWriter script=response.getWriter();
 			script.println("<script>");

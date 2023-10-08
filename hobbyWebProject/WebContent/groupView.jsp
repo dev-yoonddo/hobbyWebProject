@@ -109,9 +109,12 @@ h2{
 	float: right;
 }
 #text-notice{
-	width: 300px;
+	width: 290px;
 	height: 80px;
 	font-size: 12pt;
+	resize: none;
+	padding: 5px;
+	margin-top: 5px;
 }
 
 .group-bottom{
@@ -120,6 +123,7 @@ h2{
 	min-height: 100px;
 	display: flex;
 	justify-content: center;
+	align-items: center;
 	margin-bottom: 50px;
 }
 #chat{
@@ -228,10 +232,13 @@ h2{
 	padding-bottom: 50px; 
 }
 #notice-box{
+	font-size: 17pt; 
 	border-radius: 20px; 
 	padding: 10px; 
 	background-color: #DCDCDC; 
-	max-width: 650px;
+	width: 650px;
+	display: flex;
+	justify-content: center;
 }
 #detail{
 	width: 100%;
@@ -251,7 +258,7 @@ h2{
 		max-height: 60px;
 	}
 	#info-list-1{
-		width: 130px;
+		width: 150px;
 		margin-right: 20px;
 	}
 	.list-text{
@@ -308,6 +315,7 @@ h2{
 	}
 	.group-bottom{
 		width: 400px;
+		margin-bottom: 30px;
 	}
 	.btn-blue{
 		width: 60px;
@@ -327,6 +335,7 @@ h2{
 	}
 	#write-notice{
 		width: 250px;
+		margin-top: 10px;
 	}
 	#info{
 		display: inline;
@@ -335,11 +344,28 @@ h2{
 		width: 360px;
 		font-size: 15pt;
 		padding-top: 10px;
-		padding-bottom: 10px;
+		padding-bottom: 20px;
+		display: inline-table;
+		
 	}
 	#notice-box{
 		font-size: 12pt;
-		width: 400px;
+		width: 380px;
+	}
+	#text-notice{
+		width: 230px;
+		height: 50px;
+		font-size: 10pt;
+	}
+	#info-list-1{
+		width: 150px;
+	}
+	#join-list-animated{
+		width: 250px;
+	}
+	.join-list-inner{
+		text-align: right;
+		float: right;
 	}
 	#ntc-cpl{
 		margin-right: 30px;
@@ -348,18 +374,23 @@ h2{
 		width: 400px;
 	}
 	#chatList{
-		width: 400px;
+		width: 370px;
 		height: auto;
 	}
 	#chat{
+		width: 270px;
 		font-size: 10pt;
-		float: left;
 	}
 	#chatSend{
 		width: 400px;
+		justify-content: center;
 	}
 	#chatText{
-		width: 250px;
+		width: 200px;
+		font-size: 10pt;
+	}
+	#submit{
+		width: 90px;
 	}
 	#large{
 		display: none;
@@ -378,9 +409,7 @@ h2{
 	#detail{
 		margin-top: 10px;
 	}
-	#notice{
-		display: inline-table;
-	}
+
 }
 
 </style>
@@ -476,7 +505,7 @@ ArrayList<ChatDTO> chatlist = chatDAO.getChatList(groupID); //해당 그룹의 �
 					<!-- 그룹에 가입한 userID일때는 메세지전송, 그룹탈퇴 버튼 생성하고 정보 넘기기 -->
 					<%}else{ %>
 						<button type="button" class="btn-blue" id="btn-msg" onclick="sendMSG('<%= group.getGroupID()%>')"><span>메세지전송</span></button>							
-						<button type="button" class="btn-blue" id="btn-del" onclick="if(confirm('탈퇴 후 재가입이 불가합니다.\n정말로 탈퇴하시겠습니까?')){location.href='memberDeleteAction.jsp?groupID=<%=groupID%>&memberID=<%=member.getMemberID()%>'}"><span>그룹탈퇴</span></button>
+						<button type="button" class="btn-blue" id="btn-out" onclick="if(confirm('탈퇴 후 재가입이 불가합니다.\n정말로 탈퇴하시겠습니까?')){location.href='memberDeleteAction.jsp?groupID=<%=groupID%>&memberID=<%=member.getMemberID()%>'}"><span>그룹탈퇴</span></button>
 					<%} %>
 				</div>
 			</div>
@@ -506,9 +535,9 @@ ArrayList<ChatDTO> chatlist = chatDAO.getChatList(groupID); //해당 그룹의 �
 						//등록된 공지사항이 없으면 등록하기, 있으면 변경하기로 출력
 						if(group.getGroupNotice() == null){
 				%>
-				<div id="insert-notice" onclick="ntcAction()">공지사항 등록하기</div>
+							<div id="insert-notice" onclick="ntcAction()">공지사항 등록하기</div>
 				<% 		}else{ %>
-				<div id="insert-notice" onclick="ntcAction()">공지사항 변경하기</div>
+							<div id="insert-notice" onclick="ntcAction()">공지사항 변경하기</div>
 				<%		}%>
 				
 						</div>
@@ -516,17 +545,9 @@ ArrayList<ChatDTO> chatlist = chatDAO.getChatList(groupID); //해당 그룹의 �
 					}
 				%>
 				<!-- 리더는 공지사항 입력/변경 가능 -->	
-				<div id="write-notice"> 
-		          <form method="post" action="noticeAction?groupID=<%=groupID%>">
-			          <table style="height: 100px; border-style: none;">
-			             <tbody>
-			                <tr>
-			                   <td><input type="text" placeholder="내용 입력하세요" name="groupNotice" maxlength="100" id="text-notice"/></td>
-			                </tr>
-			             </tbody>
-			          </table>
-			      <button type="submit" class="btn-blue" id="ntc-cpl"><span>완료</span></button>
-			      </form>
+				<div id="write-notice">
+					<textarea id="text-notice" placeholder="공지 내용을 입력하세요" maxlength="100"></textarea>
+		       		<button type="button" class="btn-blue" id="ntc-cpl" onclick="noticeAction()"><span>완료</span></button>
 			   </div><br><br>
 			</div>
 		</div>
@@ -537,22 +558,37 @@ ArrayList<ChatDTO> chatlist = chatDAO.getChatList(groupID); //해당 그룹의 �
 			<div class="group-bottom" style="margin: 0;">
 				<div id="notice">
 					<div style="display: flex;"><i class="fa-regular fa-bell"></i>&nbsp;그룹 공지&nbsp;&nbsp;&nbsp;</div>
-					<%if(group.getGroupNotice() != null){ %>
 					<div id="notice-box">
-					<span><%=group.getGroupNotice()%></span>
+					<% //공지사항이 not null 인데 ""빈 문자열이면 공지없음, 아니면 공지를 출력한다.
+						if(group.getGroupNotice() != null){ 
+							if(group.getGroupNotice().equals("")){
+					%>
+								<span>등록된 공지가 없어요</span>
+					<%
+							}else{ 
+					%>
+								<span><%=group.getGroupNotice()%></span>
+					<%
+							}
+						}else{ //공지사항이  null이면 공지없음을 출력한다.
+					
+					%>
+							<span>등록된 공지가 없어요</span>
+					<%
+						}
+					%>
 					</div>
-					<%} %>
 				</div>
 			</div>
 			<div class="group-bottom">
 				<div id="chatView">
 				<% if(chatlist.size() == 0){ %>
-					<h3> 멤버와 대화를 시작해보세요 !</h3>
+					<h3> 멤버들과 대화를 시작해보세요 !</h3>
 				<%} %>
-					<% 
+					<% int chatsize = chatlist.size();
 						for(int i = 0; i < chatlist.size(); i++){
 					        MemberDTO mbID = mbDAO.getMemberVO(chatlist.get(i).getUserID(), chatlist.get(i).getGroupID());
-							if(mbID != null){
+							if(mbID != null || chatlist.size() != 0){
 					%>
 							<div id="chatList">
 								<%if(!chatlist.get(i).getUserID().equals(userID)){%>
@@ -561,14 +597,20 @@ ArrayList<ChatDTO> chatlist = chatDAO.getChatList(groupID); //해당 그룹의 �
 								<div id="chat" style="float: left;">
 								<%} %>
 									<div id="chat-head">
-										<span><%= mbID.getMemberID()%></span>
+										<% if(mbID.getMbAvailable() == 0 || chatlist.get(i).getChatAvailable() == 0){ //탈퇴한 회원이거나 그룹탈퇴한 회원이면%>
+											<span>탈퇴한 회원입니다.</span>										
+										<%}else if(group.getUserID().equals(chatlist.get(i).getUserID())){ //리더는 memberID 부분에 '리더'로 표시되도록 한다.%>
+											<span style="font-weight: bold;">리더</span>
+										<%}else{ %>
+											<span><%= mbID.getMemberID()%></span>
+										<%} %>
 										<span id="large" ><%= chatlist.get(i).getChatDate().substring(0,11)+chatlist.get(i).getChatDate().substring(11,13)+"시"+chatlist.get(i).getChatDate().substring(14,16)+"분" %></span>
 										<!-- 화면이 작아지면 시간은 뺀다 -->
 										<span id="small" ><%= chatlist.get(i).getChatDate().substring(0,11)%></span>
 									</div>
 									
 									<div id="chat-content">
-									<%= chatlist.get(i).getChatContent() %>
+										<%= chatlist.get(i).getChatContent() %>
 									</div>
 								</div>
 							</div>
@@ -594,6 +636,10 @@ ArrayList<ChatDTO> chatlist = chatDAO.getChatList(groupID); //해당 그룹의 �
 	
 </section>
 <script>
+var memberID = "<%=member.getMemberID()%>"
+var userID = "<%=userID%>";
+var groupID = "<%=groupID%>";
+
 //메시지확인을 클릭하면 메시지 리스트 팝업을 띄운다.
 function viewMsgList(groupID){
    	window.open("viewMsgListPopUp?groupID=" + groupID , "MESSAGE", "width=500, height=500, top=50%, left=50%") ;
@@ -603,6 +649,7 @@ function sendMSG(groupID) {
    	//팝업창을 열때 groupID값을 넘겨준다.
    	window.open("sendMsgPopUp?groupID=" + groupID , "MESSAGE", "width=500, height=500, top=50%, left=50%") ;
 }
+
 //공지사항 등록하기를 클릭하면 텍스트박스 노출
 function ntcAction(){
 	document.getElementById('write-notice').style.display = 'block';
@@ -613,52 +660,101 @@ function ntcAction(){
 </script>
 
 <script>
-var userID = "<%=userID%>";
-var groupID = "<%=groupID%>";
-
+//채팅입력 후 엔터키 클릭
 $('#chatText').on('keydown', function(e) {
     var keyCode = e.which;
     if (keyCode === 13) { // Enter Key
         registChat($('#chatText').val(), userID, groupID);
     }
 });
+//채팅입력 후 전송버튼 클릭
 $('#submit').on('click', function(e) {
     e.preventDefault();
 	registChat($('#chatText').val() , userID, groupID);
 });
-//채팅을 전송하면 chat-view 부분만 새로고침해 채팅을 불러온다.
+
+//채팅 전송이 완료되면 chat-view 부분만 새로고침해 채팅을 불러온다.
 function reloadChat(){
 	$('#chatView').load(location.href+' #chatView');
 }
 
+//공지사항 내용 입력 후 확인버튼 클릭 -> 한 번만 공지사항 등록이 되고 두 번째부터 실행되지 않는 오류 발생
+/*$('#ntc-cpl').on('click', function(e) {
+    e.preventDefault();
+	noticeAction($('#text-notice').val() , groupID);
+});*/
+
+//공지사항 등록이 완료되면 공지, 채팅 부분 새로고침
+function reloadNotice(){
+	$('#group-main').load(location.href+' #group-main');
+}
+
+//공지사항 입력 및 변경
+function noticeAction(){
+	var value = $('#text-notice').val(); //입력한 텍스트 가져오기
+	
+	if(groupID == null || groupID == 0){
+		alert('그룹 오류입니다.');
+	}
+	else if(userID == null){
+		alert('로그인이 필요합니다.');
+		window.open('loginPopUp', 'Login', 'width=450, height=500, top=50%, left=50%');
+	}else{
+		
+		var data = {
+	            content: value,
+	            groupID: groupID
+	    };
+	    $.ajax({
+	        type: 'POST',
+	        //url: 'https://toogether.me/chatSendAction',
+	        url: 'noticeAction',
+	        data: data,
+	        success: function (response) {
+	        	if(response.includes("group error")){
+	        		alert('그룹 오류');
+	        	}else if(response.includes("none")){
+	        		alert('내용을 입력하세요');
+	        	}else if(response.includes("database error")){
+	        		alert('데이터베이스 오류');
+	       		}else{
+	             //console.log('Spot registration successful:', response);
+	             //alert('완료');
+	            	reloadNotice();
+	       		}
+	        },
+	        error: function (xhr, status, error) {
+	            //console.error('Spot registration error:', error);
+	            alert('채팅 오류');
+	        }
+	    });
+	}
+}
 /*setInterval(function () {
 	$('#chatView').load(location.href+' #chatView');
 }, 1000);*/
-setInterval(function () {
-   var data1 = {
-	  userID: userID,
+var chatsize1 , chatsize2;
+chatsize2 = <%=chatsize%>; //초기 chatlist 크기를 가져온다.
+
+setInterval(function () { //1초마다 데이터베이스에서 해당그룹의 채팅 리스트 크기를 가져온다.
+	var data1 = {
       groupID: groupID
    };
     $.ajax({
         type: 'GET',
-        url: 'https://toogether.me/getLatestChatMessage',
-        //url: 'getLatestChatMessage',
+        //url: 'https://toogether.me/getLatestChatMessage',
+        url: 'getNewChatMessage',
         data: data1,
-        success: function (latestMessage) {
-            if(latestMessage.includes("no user")){
-            	console.log("데이터베이스 오류");
-            	//alert('로그인이 필요합니다');
-            	//window.open('loginPopUp', 'Login', 'width=450, height=500, top=50%, left=50%');
-            }else if(latestMessage.includes("empty")){
-            	console.log('채팅 데이터가 없습니다');
-            }else if(latestMessage.includes("mismatch")) {
-            	//console.log("불일치");
-            	//1초마다 채팅리스트 데이터에 마지막으로 채팅을 전송한 유저와 로그인 유저가 일치하는지
-            	//구해서 불일치하면 채팅창을 새로고침한다.
-                reloadChat();
-            }else{
-            	//console.log("마지막 채팅전송 유저 일치");
-            }
+        success: function (size) {
+           	chatsize1 = size; //get으로 가져온 해당 그룹의 chatlist 크기를 저장      	
+           	if(chatsize1 != chatsize2){ //처음 chatlist 크기와 가져온 크기가 다르면
+           		reloadChat(); //chatView 부분 새로고침 후
+           		chatsize2 = chatsize1; //리스트 사이즈를 동일하게 수정
+            	//console.log(chatsize1);
+            	//console.log(chatsize2);
+           	}else{ //리스트 사이즈가 같으면 새로고침 하지 않는다.
+            	//console.log(chatsize1==chatsize2);
+           	}
         },
         error: function (xhr, status, error) {
             console.error('Error fetching latest chat message:', error);
@@ -666,6 +762,41 @@ setInterval(function () {
     });
 }, 1000); 
 
+//마지막 유저 이름을 가져와서 본인이 아닌 사용자가 마지막으로 채팅을 입력했을때만
+//새로고침하는 이 방법은 채팅창의 윗부분을 볼 때 새로고침되는 오류가 생겨 사용하기 어렵다.
+/*setInterval(function () {
+	   var data1 = {
+		  userID: userID,
+	      groupID: groupID
+	   };
+	    $.ajax({
+	        type: 'GET',
+	        //url: 'https://toogether.me/getLatestChatMessage',
+	        url: 'getLatestChatMessage',
+	        data: data1,
+	        success: function (latestMessage) {
+	            if(latestMessage.includes("no user")){
+	            	console.log("데이터베이스 오류");
+	            	//alert('로그인이 필요합니다');
+	            	//window.open('loginPopUp', 'Login', 'width=450, height=500, top=50%, left=50%');
+	            }else if(latestMessage.includes("empty")){
+	            	console.log('채팅 데이터가 없습니다');
+	            }else if(latestMessage.includes("mismatch")) {
+	            	//console.log("불일치");
+	            	//1초마다 채팅리스트 데이터에 마지막으로 채팅을 전송한 유저와 로그인 유저가 일치하는지
+	            	//구해서 불일치하면 채팅창을 새로고침한다.
+	                reloadChat();
+	            }else{
+	            	//console.log("마지막 채팅전송 유저 일치");
+	            }
+	        },
+	        error: function (xhr, status, error) {
+	            console.error('Error fetching latest chat message:', error);
+	        }
+	    });
+	}, 1000);*/
+	
+	
 function registChat(value, userID, groupID){
 	if(groupID == null || groupID == 0){
 		alert('그룹 오류입니다.');
@@ -682,8 +813,8 @@ function registChat(value, userID, groupID){
         };
         $.ajax({
             type: 'POST',
-            url: 'https://toogether.me/chatSendAction',
-            //url: 'chatSendAction',
+            //url: 'https://toogether.me/chatSendAction',
+            url: 'chatSendAction',
             data: data2,
             success: function (response) {
             	if(response.includes("Information Error")){

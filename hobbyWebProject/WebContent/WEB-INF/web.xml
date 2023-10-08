@@ -304,6 +304,14 @@
     <servlet-name>getLatestChatMessage.jsp</servlet-name>
     <url-pattern>/getLatestChatMessage</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>getNewChatMessage.jsp</servlet-name>
+    <jsp-file>/getNewChatMessage.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>getNewChatMessage.jsp</servlet-name>
+    <url-pattern>/getNewChatMessage</url-pattern>
+  </servlet-mapping>
   
   <servlet>
     <servlet-name>downloadAction</servlet-name>

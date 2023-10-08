@@ -12,10 +12,16 @@ import java.util.List;
 
 import board.BoardDAO;
 import board.BoardDTO;
+import chat.ChatDAO;
+import chat.ChatDTO;
 import comment.CommentDAO;
 import comment.CommentDTO;
+import crew.CrewDAO;
+import crew.CrewDTO;
 import group.GroupDAO;
 import group.GroupDTO;
+import location.LocationDAO;
+import location.LocationDTO;
 import member.MemberDAO;
 import member.MemberDTO;
 import message.MessageDAO;
@@ -287,6 +293,27 @@ public int update(String userID, String userName,String userEmail, String userBi
 	            for (MessageDTO messageDTO : messageVOList) {
 	            	messageDTO.setMsgAvailable(0); //모든 mbAvailable 값을 0으로 변경한다.
 	            	messageDAO.updateMsgVO(messageDTO); //변경한 후 업데이트 한다.
+	            }
+	            
+	            LocationDAO locationDAO = new LocationDAO(); 
+	            List<LocationDTO> spotVOList = locationDAO.getDelSpotVOByUserID(userID);
+	            for (LocationDTO locationDTO : spotVOList) {
+	            	locationDTO.setSpotAvailable(0); //모든 spotAvailable 값을 0으로 변경한다.
+	            	locationDAO.updateSpotVO(locationDTO); //변경한 후 업데이트 한다.
+	            }
+	            
+	            CrewDAO crewDAO = new CrewDAO(); 
+	            List<CrewDTO> crewVOList = crewDAO.getDelCrewVOByUserID(userID);
+	            for (CrewDTO crewDTO : crewVOList) {
+	            	crewDTO.setCrewAvailable(0); //모든 crewAvailable 값을 0으로 변경한다.
+	            	crewDAO.updateCrewVO(crewDTO); //변경한 후 업데이트 한다.
+	            }
+	            
+	            ChatDAO chatDAO = new ChatDAO(); 
+	            List<ChatDTO> chatVOList = chatDAO.getDelChatVOByUserID(userID);
+	            for (ChatDTO chatDTO : chatVOList) {
+	            	chatDTO.setChatAvailable(0); //모든 chatAvailable 값을 0으로 변경한다.
+	            	chatDAO.updateChatVO(chatDTO); //변경한 후 업데이트 한다.
 	            }
 	        }
 	        return result;
