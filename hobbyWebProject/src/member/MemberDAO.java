@@ -229,7 +229,7 @@ public class MemberDAO {
 	            List<ChatDTO> chatVOList = chatDAO.getDelChatVOByMbID(userID, groupID);
 	            for (ChatDTO chatDTO : chatVOList) {
 	            	chatDTO.setChatAvailable(0);
-	            	chatDAO.updateChatVO(chatDTO);
+	            	chatDAO.updateMbChatVO(chatDTO);
 	            }
 	        }
 			return result;

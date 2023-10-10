@@ -1,3 +1,5 @@
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Date"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.io.PrintWriter"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -119,10 +121,10 @@ if(request.getParameter("groupID") != null){
 GroupDAO grDAO = new GroupDAO();
 MessageDAO msgDAO = new MessageDAO();
 
-//msgCheck = 0(안읽은 메시지)인 리스트 가져오기
+//msgCheck = 0(안읽은 메시지)인 리스트 가져오기 (30일 이전까지)
 ArrayList<MessageDTO> checklist = msgDAO.getMessageCheck(userID, groupID);
 
-//같은 그룹의 멤버가 나에게 보낸 메시지 리스트 가져오기
+//같은 그룹의 멤버가 나에게 보낸 메시지 리스트 가져오기 (30일 이전까지)
 ArrayList<MessageDTO> msglist = msgDAO.getMsgList(userID, groupID);
 %>
 
@@ -167,7 +169,7 @@ ArrayList<MessageDTO> msglist = msgDAO.getMsgList(userID, groupID);
 		<!-- 글이 1개 이상이면 -->
 		<% }else{ %>
 		<tbody>
-			<%
+			<% 
 				for (int i = 0; i < msglist.size(); i++) {
 			%>
 			<tr class="showRcvGrMsg" style="height: 20px;">
@@ -175,9 +177,9 @@ ArrayList<MessageDTO> msglist = msgDAO.getMsgList(userID, groupID);
 				<td><a id="click-view" onclick="viewMsg('<%= msglist.get(i).getMsgID()%>')"><%= msglist.get(i).getMsgTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></a></td>
 				<!-- msgCheck == 0이면 안읽음, 1이면 읽음 표시하기 -->
 				<% if(msglist.get(i).getMsgCheck() == 0){ %>
-				<td>NO</td>						
+					<td>NO</td>						
 				<% }else{ %>
-				<td>YES</td>						
+					<td>YES</td>						
 				<% } %>
 				<td><%=msglist.get(i).getMsgDate().substring(0 ,11) + msglist.get(i).getMsgDate().substring(11, 13) + "시" + msglist.get(i).getMsgDate().substring(14, 16) + "분" %></td>
 			</tr>

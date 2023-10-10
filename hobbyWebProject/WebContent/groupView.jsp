@@ -5,7 +5,7 @@
 <%@page import="member.MemberDAO"%>
 <%@page import="java.io.PrintWriter"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" errorPage="/error/errorPage.jsp"%>
+    pageEncoding="UTF-8" errorPage="/error/errorPage.jsp" %>
 <%@page import="user.UserDAO"%>
 <%@page import="user.UserDTO"%>
 <%@page import="group.GroupDTO"%>
@@ -315,7 +315,7 @@ h2{
 	}
 	.group-bottom{
 		width: 400px;
-		margin-bottom: 30px;
+		margin-bottom: 20px;
 	}
 	.btn-blue{
 		width: 60px;
@@ -480,6 +480,7 @@ boolean leader = userID.equals(group.getUserID());
 
 ArrayList<MemberDTO> mblist = mbDAO.getList(groupID); //해당 그룹의 멤버리스트 가져오기
 ArrayList<ChatDTO> chatlist = chatDAO.getChatList(groupID); //해당 그룹의 채팅리스트 가져오기
+int chatsize = chatlist.size();
 %>
 
 <!-- header -->
@@ -584,11 +585,10 @@ ArrayList<ChatDTO> chatlist = chatDAO.getChatList(groupID); //해당 그룹의 �
 				<div id="chatView">
 				<% if(chatlist.size() == 0){ %>
 					<h3> 멤버들과 대화를 시작해보세요 !</h3>
-				<%} %>
-					<% int chatsize = chatlist.size();
+				<%}else{ %>
+					<%
 						for(int i = 0; i < chatlist.size(); i++){
 					        MemberDTO mbID = mbDAO.getMemberVO(chatlist.get(i).getUserID(), chatlist.get(i).getGroupID());
-							if(mbID != null || chatlist.size() != 0){
 					%>
 							<div id="chatList">
 								<%if(!chatlist.get(i).getUserID().equals(userID)){%>
@@ -597,26 +597,33 @@ ArrayList<ChatDTO> chatlist = chatDAO.getChatList(groupID); //해당 그룹의 �
 								<div id="chat" style="float: left;">
 								<%} %>
 									<div id="chat-head">
+									<%if(group.getUserID().equals(chatlist.get(i).getUserID())){ %>
+										<span style="font-weight: bold;">리더</span>
+									<%}else{%>
 										<% if(mbID.getMbAvailable() == 0 || chatlist.get(i).getChatAvailable() == 0){ //탈퇴한 회원이거나 그룹탈퇴한 회원이면%>
-											<span>탈퇴한 회원입니다.</span>										
-										<%}else if(group.getUserID().equals(chatlist.get(i).getUserID())){ //리더는 memberID 부분에 '리더'로 표시되도록 한다.%>
-											<span style="font-weight: bold;">리더</span>
+											<span>탈퇴한 회원</span>										
+										
 										<%}else{ %>
 											<span><%= mbID.getMemberID()%></span>
-										<%} %>
+										<%}
+									}%>
 										<span id="large" ><%= chatlist.get(i).getChatDate().substring(0,11)+chatlist.get(i).getChatDate().substring(11,13)+"시"+chatlist.get(i).getChatDate().substring(14,16)+"분" %></span>
 										<!-- 화면이 작아지면 시간은 뺀다 -->
 										<span id="small" ><%= chatlist.get(i).getChatDate().substring(0,11)%></span>
 									</div>
 									
 									<div id="chat-content">
+									<%if(mbID != null && mbID.getMbAvailable() == 0 || chatlist.get(i).getChatAvailable() == 0){ //리더가 아니고 (mbID != null) 회원탈퇴 또는 그룹탈퇴했으면 삭제된 메시지로 출력%>
+										<span>삭제된 메시지입니다.</span>
+									<%}else{ //리더이거나 (mbID == null) 회원탈퇴, 그룹탈퇴 하지 않은 멤버의 메시지 출력%>
 										<%= chatlist.get(i).getChatContent() %>
+									<%} %>
 									</div>
 								</div>
 							</div>
 					<%
-							}
 						}
+				}
 					%>
 				</div>
 			</div>
@@ -636,7 +643,6 @@ ArrayList<ChatDTO> chatlist = chatDAO.getChatList(groupID); //해당 그룹의 �
 	
 </section>
 <script>
-var memberID = "<%=member.getMemberID()%>"
 var userID = "<%=userID%>";
 var groupID = "<%=groupID%>";
 
@@ -733,8 +739,8 @@ function noticeAction(){
 /*setInterval(function () {
 	$('#chatView').load(location.href+' #chatView');
 }, 1000);*/
-var chatsize1 , chatsize2;
-chatsize2 = <%=chatsize%>; //초기 chatlist 크기를 가져온다.
+var chatsize1;
+var chatsize2 = <%=chatsize%>; //초기 chatlist 크기를 가져온다.
 
 setInterval(function () { //1초마다 데이터베이스에서 해당그룹의 채팅 리스트 크기를 가져온다.
 	var data1 = {

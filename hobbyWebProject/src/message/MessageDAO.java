@@ -6,7 +6,9 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class MessageDAO {
@@ -89,7 +91,7 @@ public class MessageDAO {
 		}
 		return -1; //데이터베이스 오류
 	}
-	//해당 유저에게 온 메시지 전체 리스트
+	//해당 유저에게 온 메시지 전체 리스트 (30일 전)
 	public ArrayList<MessageDTO> getMessageList(String toUserID){
 		String SQL = "SELECT * FROM message WHERE toUserID = ? AND msgAvailable = 1 ORDER BY msgDate DESC"; 
 		ArrayList<MessageDTO> list = new ArrayList<MessageDTO>();
@@ -99,21 +101,48 @@ public class MessageDAO {
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				MessageDTO msg = new MessageDTO();
-				msg.setMsgID(rs.getInt(1));
-				msg.setUserID(rs.getString(2));
-				msg.setToUserID(rs.getString(3));
-				msg.setGroupID(rs.getInt(4));
-				msg.setMsgTitle(rs.getString(5));
-				msg.setMsgContent(rs.getString(6));
-				msg.setMsgCheck(rs.getInt(7));
-				msg.setMsgAvailable(rs.getInt(8));
-				msg.setMsgDate(rs.getString(9));
-				list.add(msg);
+				//메시지 수신 날짜 판별 메서드 사용
+				long result = msgListDateCheck(rs.getInt("msgID"), rs.getString("msgDate"));
+				if(result == 1) {
+					msg.setMsgID(rs.getInt(1));
+					msg.setUserID(rs.getString(2));
+					msg.setToUserID(rs.getString(3));
+					msg.setGroupID(rs.getInt(4));
+					msg.setMsgTitle(rs.getString(5));
+					msg.setMsgContent(rs.getString(6));
+					msg.setMsgCheck(rs.getInt(7));
+					msg.setMsgAvailable(rs.getInt(8));
+					msg.setMsgDate(rs.getString(9));
+					list.add(msg);
+				}
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
 		return list; 
+	}
+	//받은메시지가 며칠 전에 수신된 메시지인지 판별 후 30일 이상이면 삭제
+	public long msgListDateCheck(int msgID, String date) {
+		try {
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			Date data = dateFormat.parse(date); //메시지 리스트의 날짜 정보를 가져와서 데이터형식 포맷 후
+			long msgDate = data.getTime(); //getTime으로 밀리초단위의 시간을 가져온다.
+			Date date2 = new Date(); //현재시간을 가져온다.
+			long currDate = date2.getTime();
+			
+			//현재시간에서 메시지수신시간을 뺀 후 24*60*60*1000 (== 1일)로 나눈다.
+			long checkDate = (currDate - msgDate) / (24*60*60*1000);
+			//System.out.println(checkDate);
+			//1일로 나눴을때 30 이상이면 메시지가 수신된지 30일 지났음을 의미하므로 삭제한다.
+			if(checkDate > 30) {
+				delete(msgID);
+			}else {
+				return 1;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return -1; //데이터베이스 오류
 	}
 	//해당 유저가 보낸 메시지 전체 리스트 (userID가 내 아이디랑 일치하는 데이터)
 		public ArrayList<MessageDTO> getSendMessageList(String userID){
@@ -246,7 +275,9 @@ public class MessageDAO {
 			pstmt.setInt(2, groupID);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
+				long result = msgListDateCheck(rs.getInt("msgID"), rs.getString("msgDate"));
 				MessageDTO msg = new MessageDTO();
+				if(result == 1) {
 				msg.setMsgID(rs.getInt(1));
 				msg.setUserID(rs.getString(2));
 				msg.setToUserID(rs.getString(3));
@@ -257,6 +288,7 @@ public class MessageDAO {
 				msg.setMsgAvailable(rs.getInt(8));
 				msg.setMsgDate(rs.getString(9));
 				msglist.add(msg);
+				}
 			}
 		}catch(Exception e) {
 			e.printStackTrace();

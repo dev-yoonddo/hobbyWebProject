@@ -306,7 +306,7 @@ if(userID == null){
 					<span>가입하기</span>
 					</button>
 				<%} %>
-					<button type="button" class="btn-blue" id="in-group-btn" value="그룹참가" onclick="showPasswordPrompt('<%=list.get(i).getGroupID()%>', '<%=list.get(i).getGroupPassword()%>','<%= list.get(i).getGroupAvailable()%>','<%=member%>','<%=leader%>')">
+					<button type="button" class="btn-blue" id="in-group-btn" value="그룹참가" onclick="showPasswordPrompt('<%=list.get(i).getGroupID()%>', '<%=list.get(i).getGroupPassword()%>','<%= list.get(i).getGroupAvailable()%>','<%=member%>','<%=leader%>','<%=memberDel%>')">
 					<span>접속하기</span>
 					</button>
 				</div>
@@ -362,17 +362,18 @@ function createGroup(){
   	window.open("groupPopUp" , "CREATE", "width=450, height=500, top=50%, left=50%") ;
 }
 
-//가입하기 버튼을 클릭하면 id,available값과 현재 멤버 수, 가입 가능 멤버 수, 유저 가입 여부를 받는다.
-function joinGroup(groupID, groupAvailable, mbNum, grNum, member,memberDel) {
+//가입하기 버튼을 클릭하면 id,available값과 현재 멤버 수, 가입 가능 멤버 수, 유저 가입 여부, 유저 탈퇴 여부를 받는다.
+function joinGroup(groupID, groupAvailable, mbNum, grNum, member,mbDel) {
 	//활동중
+	console.log(mbDel);
     if(groupAvailable == 1){
         var joinGroup = confirm("가입 하시겠습니까?");
         if (joinGroup) {
         	if(member != "null"){
-        		if(memberDel != "null"){
+        		if(mbDel != "null"){
         			alert("탈퇴한 회원은 재가입이 불가능합니다.");
         		}else{
-        		alert("이미 가입한 그룹입니다.");
+        			alert("이미 가입한 그룹입니다.");
         		}
         	}else if(mbNum == grNum){
         		alert("정원이 다 찼습니다.");
@@ -392,12 +393,14 @@ function joinGroup(groupID, groupAvailable, mbNum, grNum, member,memberDel) {
 </script>
 <script>
 
-//접속하기 버튼을 클릭하면 id,password,available value, member, leader를 받는다
-function showPasswordPrompt(grID, grPassword, grAvailable, member, leader) {
+//접속하기 버튼을 클릭하면 id,password,available value, member, leader, mbDel를 받는다
+function showPasswordPrompt(grID, grPassword, grAvailable, member, leader, mbDel) {
     var inputPassword = "";
     var count = 0;
     var searchPW = false;
  	 //그룹 활동중
+ 	 	console.log(mbDel);
+
     if(grAvailable == 1){
 		//그룹 생성자이면 비밀번호 입력 없이 접속
 		if(leader == "true"){
@@ -407,7 +410,9 @@ function showPasswordPrompt(grID, grPassword, grAvailable, member, leader) {
 	    	//member에 데이터가 없으면 (userID, groupID가 일치하는 데이터가 없으면) 가입하지 않은 유저
 	    	if(member == "null"){
 	    		alert("가입 후 접속해주세요");
-	    	//member에 데이터가 있으면
+	    	//탈퇴한 회원이면
+	    	}else if(mbDel != "null"){
+	    		alert("탈퇴한 그룹입니다.");
 	    	}else{
 	    		//비밀번호가 일치하지 않으면 입력창 무한반복
 			    while (inputPassword != grPassword) {

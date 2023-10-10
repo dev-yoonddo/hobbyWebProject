@@ -84,7 +84,7 @@ public class ChatDAO {
 	}
 	//해당 그룹의 채팅 리스트 가져오기
 	public ArrayList<ChatDTO> getChatList(int groupID){
-		String SQL = "SELECT * FROM chat WHERE groupID = ? AND chatAvailable = 1 ORDER BY chatDate DESC";
+		String SQL = "SELECT * FROM chat WHERE groupID = ? ORDER BY chatDate DESC";
 		ArrayList<ChatDTO> list = new ArrayList<ChatDTO>();
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
@@ -109,19 +109,19 @@ public class ChatDAO {
 	//delete된 userID와 chat의 userID가 같은 값의 리스트를 가져온다.
 	public List<ChatDTO> getDelChatVOByUserID(String userID) {
 	    List<ChatDTO> chatDTOs = new ArrayList<>();
-	    String SQL = "SELECT chatAvailable , userID FROM chat WHERE userID = ?";//userID가 입력한 chat의 삭제여부 chatAvailable을 가져온다.
+	    String SQL = "SELECT chatAvailable FROM chat WHERE userID = ?";//userID가 입력한 chat의 삭제여부 chatAvailable을 가져온다.
 	    try {
 	        PreparedStatement pstmt = conn.prepareStatement(SQL);
 	        pstmt.setString(1, userID);
 	        ResultSet rs = pstmt.executeQuery();
 	        while (rs.next()) { //user 한명이 여러개의 chat을 입력하면 데이터가 1개 이상 나오기때문에 while을 사용한다.
 	        	int chatAvailable = rs.getInt("chatAvailable");
-	        	String id = rs.getString("userID");
+	        	//String id = rs.getString("userID");
 	            //여기서 다른 속성도 가져올 수 있다.
 
 	        	ChatDTO chatDTO = new ChatDTO();
 	        	chatDTO.setChatAvailable(chatAvailable);
-	        	chatDTO.setUserID(id);
+	        	chatDTO.setUserID(userID);
 	        	chatDTOs.add(chatDTO);
 	        }
 	        rs.close();
@@ -132,8 +132,22 @@ public class ChatDAO {
 	    return chatDTOs;
 	}
 	
-	//memberDAO - delete에서 사용되는 메서드
-	//delete된 memberID로 userID를 구한 후 chat의 userID가 같은 값의 리스트를 가져온다.
+	//UserDAO - delete에서 삭제된 user와 관련된 정보를 업데이트 한다.
+	public void updateChatVO(ChatDTO chatDTO){
+	    String SQL = "UPDATE chat SET chatAvailable = ? WHERE userID = ?";
+	    try {
+	        PreparedStatement pstmt = conn.prepareStatement(SQL);
+	        pstmt.setInt(1, chatDTO.getChatAvailable());
+	        pstmt.setString(2, chatDTO.getUserID());
+	        pstmt.executeUpdate();
+	        pstmt.close();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	}
+		
+	//MemberDAO - delete에서 사용되는 메서드
+	//탈퇴한 그룹의 memberID로 userID를 구한 후 chat의 userID가 같은 값의 리스트를 가져온다.
 	public List<ChatDTO> getDelChatVOByMbID(String userID, int groupID) {
 	    List<ChatDTO> chatDTOs = new ArrayList<>();
 	    String SQL = "SELECT chatAvailable FROM chat WHERE userID = ? AND groupID = ?";//userID가 입력한 chat의 삭제여부 chatAvailable을 가져온다.
@@ -163,8 +177,8 @@ public class ChatDAO {
 	    return chatDTOs;
 	}
 		
-	//UserDAO - delete에서 삭제된 user와 관련된 정보를 업데이트 한다.
-	public void updateChatVO(ChatDTO chatDTO){
+	//MemberDAO - delete에서 삭제된 user와 관련된 정보를 업데이트 한다.
+	public void updateMbChatVO(ChatDTO chatDTO){
 	    String SQL = "UPDATE chat SET chatAvailable = ? WHERE userID = ? AND groupID = ?";
 	    try {
 	        PreparedStatement pstmt = conn.prepareStatement(SQL);
