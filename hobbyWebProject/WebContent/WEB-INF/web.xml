@@ -240,6 +240,14 @@
     <url-pattern>/spot</url-pattern>
   </servlet-mapping>
   <servlet>
+    <servlet-name>spotAccess.jsp</servlet-name>
+    <jsp-file>/spotAccess.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>spotAccess.jsp</servlet-name>
+    <url-pattern>/spotAccess</url-pattern>
+  </servlet-mapping>
+  <servlet>
     <servlet-name>emailSendAction.jsp</servlet-name>
     <jsp-file>/emailSendAction.jsp</jsp-file>
   </servlet>
@@ -311,6 +319,22 @@
   <servlet-mapping>
     <servlet-name>getNewChatMessage.jsp</servlet-name>
     <url-pattern>/getNewChatMessage</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>scheduleRegistPopUp.jsp</servlet-name>
+    <jsp-file>/scheduleRegistPopUp.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>scheduleRegistPopUp.jsp</servlet-name>
+    <url-pattern>/scheduleRegistPopUp</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>scheduleRegistAction.jsp</servlet-name>
+    <jsp-file>/scheduleRegistAction.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>scheduleRegistAction.jsp</servlet-name>
+    <url-pattern>/scheduleRegistAction</url-pattern>
   </servlet-mapping>
   
   <servlet>

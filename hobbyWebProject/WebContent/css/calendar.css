@@ -1,0 +1,145 @@
+table {
+	border: 0px solid tomato;
+}
+
+tr {
+	height: 80px;
+	border-width: 0px;
+}
+
+th {
+	border-width: 0px;
+}
+
+th#title {
+	font-size: 30pt;
+	font-weight: bold;
+	color: black;
+}
+
+td {
+	border: 1px solid #c8c8c8;
+	border-radius: 20px;
+	font-size: 11pt;
+	font-weight: bold;
+	width: 80px;
+	text-align: center;
+	padding: 10px;
+	margin: 5px;
+}
+
+td.sat:hover , td.sun:hover , td.etc:hover, td.holiday:hover{
+	font-size: 13pt;
+	font-weight: bold;
+	border-color: #FF9614;
+	cursor: pointer;
+}
+span.after-txt{
+	width: 30px;
+	font-size: 11pt;
+}
+td#sunday {
+	font-size: 20pt;
+	background-color: #A4C3FF;
+	border-color: white;
+	color: black;
+}
+td.etcday {
+	font-size: 20pt;
+	background-color: #EBF5FF;
+	border-color: white;
+	color: black;
+}
+td#saturday {
+	font-size: 20pt;
+	background-color: #A4C3FF;
+	border-color: white;
+	color: black;
+}
+
+td.sun {
+	color: #FF9614;
+	text-align: left;
+	vertical-align: top;
+}
+td.etc {
+	text-align: left;
+	vertical-align: top;
+}
+td.sat {
+	color: #FF9614;
+	text-align: left;
+	vertical-align: top;
+}
+
+td.beforesun {
+	color: #FF9614;
+	text-align: left;
+	vertical-align: top;
+	background-color: #CCE1FF;
+}
+td.before {
+	color: #787878;
+	text-align: left;
+	vertical-align: top;
+	background-color: #CCE1FF;
+}
+
+td.aftersat {
+	color: #FF9614;
+	text-align: left;
+	vertical-align: top;
+	background-color: #CCE1FF;
+}
+td.after {
+	color: #787878;
+	text-align: left;
+	vertical-align: top;
+	background-color: #CCE1FF;
+}
+
+.select {
+	width: 120px;
+	height: 30px;
+	display: flex;
+	align-items: center;
+	float: left;
+}
+select{
+	width: 90px;
+	height: 30px;
+}
+td.holiday {
+	color: #FF9614;
+	text-align: left;
+	vertical-align: top;
+	background-color: white;
+}
+
+span {
+	font-size: 9pt;
+}
+
+#viewCal{
+	width: 40px;
+	height: 30px;
+	padding: 0;
+}
+#viewCal span{
+	width: 40px;
+	height: 10px;
+	font-size: 9pt;
+}
+#select-month{
+	justify-content: center;
+	
+}
+/*종 아이콘 애니메이션*/
+.bell{
+	animation: ani 1s infinite;  /* keyframe이름, 지속시간, 반복횟수 */
+}
+@keyframes ani{
+	0%{transform: rotate(-30deg);}
+	50%{transform: rotate(30deg);}
+	100%{transform: rotate(-30deg);}
+}

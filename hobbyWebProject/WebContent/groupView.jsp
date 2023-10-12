@@ -61,10 +61,10 @@ h2{
 	width: 1000px;
 	height: auto;
 }
-#group-info{
+#groupInfo{
 	height: auto;
 	max-height: 300px;
-	margin-bottom: 50px;
+	margin-bottom: 5px;
 }
 #join-list-animated{
 	width: 350px;
@@ -195,10 +195,6 @@ h2{
 	position: absolute;
 	right:20px;
 	display: none;
-}
-#group-info{
-	height: auto;
-	margin-bottom: 0;
 }
 #info{
 	display: flex; 
@@ -491,7 +487,7 @@ int chatsize = chatlist.size();
 <section>
 	<div id="group-main">
 		<!-- 그룹보기 페이지 상단 -->
-		<div id="group-info">
+		<div id="groupInfo">
 			<div id="group-title">
 				<div id="title-text">
 				<span><%= group.getGroupName() %> 에서 함께 취미를 즐겨보세요 </span>
@@ -591,7 +587,10 @@ int chatsize = chatlist.size();
 					        MemberDTO mbID = mbDAO.getMemberVO(chatlist.get(i).getUserID(), chatlist.get(i).getGroupID());
 					%>
 							<div id="chatList">
-								<%if(!chatlist.get(i).getUserID().equals(userID)){%>
+								<%
+									boolean userChat = chatlist.get(i).getUserID().equals(userID);
+									if(!userChat){
+								%>
 								<div id="chat" style="float: right;">
 								<%}else{ %>
 								<div id="chat" style="float: left;">
@@ -620,7 +619,11 @@ int chatsize = chatlist.size();
 									<%} %>
 									</div>
 								</div>
+							<%if(!userChat){%>
 							</div>
+							<%}else{ %>
+							</div>
+							<%} %>
 					<%
 						}
 				}
@@ -692,7 +695,8 @@ function reloadChat(){
 
 //공지사항 등록이 완료되면 공지, 채팅 부분 새로고침
 function reloadNotice(){
-	$('#group-main').load(location.href+' #group-main');
+	$('#info').load(location.href+' #info');
+	$('#notice').load(location.href+' #notice');
 }
 
 //공지사항 입력 및 변경
@@ -813,36 +817,39 @@ function registChat(value, userID, groupID){
 	}else{
 		
 	var data2 = {
-            content: value,
-            userID: userID,
-            groupID: groupID
-        };
-        $.ajax({
-            type: 'POST',
-            //url: 'https://toogether.me/chatSendAction',
-            url: 'chatSendAction',
-            data: data2,
-            success: function (response) {
-            	if(response.includes("Information Error")){
-            		alert('정보 오류');
-            	}else if(response.includes("none")){
-            		alert('채팅을 입력하세요');
-            	}else if(response.includes("Database Error")){
-            		alert('데이터베이스 오류');
-           		}else{
-	                //console.log('Spot registration successful:', response);
-	                //alert('완료');
-	               	reloadChat();
-	              	//채팅 입력창을 비운다.
-	            	$('#chatText').val('');
-	                //console.log(data);
-           		}
-            },
-            error: function (xhr, status, error) {
-                //console.error('Spot registration error:', error);
-                alert('채팅 오류');
-            }
-        });
+           content: value,
+           userID: userID,
+           groupID: groupID
+       };
+       $.ajax({
+           type: 'POST',
+           //url: 'https://toogether.me/chatSendAction',
+           url: 'chatSendAction',
+           data: data2,
+           success: function (response) {
+           	if(response.includes("null userID")){
+           		alert('로그인을 해주세요');
+           		window.open('loginPopUp', 'Login', 'width=450, height=500, top=50%, left=50%');
+           	}else if(response.includes("Information Error")){
+           		alert('정보 오류');
+           	}else if(response.includes("none")){
+           		alert('채팅을 입력하세요');
+           	}else if(response.includes("Database Error")){
+           		alert('데이터베이스 오류');
+          		}else{
+                //console.log('Spot registration successful:', response);
+                //alert('완료');
+               	reloadChat();
+              	//채팅 입력창을 비운다.
+            	$('#chatText').val('');
+                //console.log(data);
+          		}
+           },
+           error: function (xhr, status, error) {
+               //console.error('Spot registration error:', error);
+               alert('채팅 오류');
+           }
+       });
 	}
 	
 }

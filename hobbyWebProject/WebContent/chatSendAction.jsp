@@ -29,7 +29,10 @@
 		script.println("window.open('loginPopUp', 'Login', 'width=450, height=500, top=50%, left=50%')");
 		script.println("</script>");
 	}
-	if(userID == null || groupID == 0 || chatContent == null){
+	if(userID == null){
+		script.print("null userID");
+        script.flush();
+	}else if(groupID == 0 || chatContent == null){
 		script.print("Information Error");
         script.flush();
 	}else if(chatContent.equals("")){

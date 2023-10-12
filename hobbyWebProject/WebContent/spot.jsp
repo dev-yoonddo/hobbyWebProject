@@ -1,4 +1,6 @@
 <%@page import="location.LocationDTO"%>
+<%@page import="crew.CrewDTO"%>
+<%@page import="crew.CrewDAO"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="location.LocationDAO"%>
 <%@page import="java.io.PrintWriter"%>
@@ -779,42 +781,72 @@ if(userID == null){
     function joinSpot(){
     	//console.log("Clicked on location: " + clickname);
         //console.log("Address: " + clickaddress);
-        var joinResult = confirm('참여 하시겠습니까?');
-        if(joinResult){
-	        var data2 = {
-	        	leader: clickleader,//marker를 클릭했을 때 저장된 clickleader, clickname,clickaddress 가져오기
-	            name: clickname,
-	            address: clickaddress
-	        };
-	        $.ajax({
-	            type: 'POST',
-	            //url: 'https://toogether.me/spotJoinAction',
-	            url: 'spotJoinAction',
-	            data: data2,
-	            success: function (response) {
-	            	if (response.includes("Spot joined successfully")) {
-	            		alert('스팟 참여 완료');
-		               	location.reload(true);
-	            	}else if(response.includes("leaders cannot join")){
-	            		alert('스팟 생성 유저는 가입할 수 없습니다.')
-	            	}else if(response.includes("joined exist")){
-	            		alert('이미 참여한 스팟입니다.');
-	            	}else if(response.includes("Join Error")){
-	            		alert('참여 오류');
-	            	}else if(response.includes("Database Error")){
-	            		alert('데이터베이스 오류');
-	            	}else{
-	            		alert('정보 오류');	            		
-	            	}
-	            },
-		        error: function (xhr, status, error) {
-		            //console.error('Spot registration error:', error);
-		            alert('스팟 참여 오류');
-		        }
-	        });
-        }else{
-        	return;
-        }
+        var data2 = {
+        	leader: clickleader,//marker를 클릭했을 때 저장된 clickleader, clickname,clickaddress 가져오기
+            name: clickname,
+            address: clickaddress
+        };
+        $.ajax({
+            type: 'POST',
+            //url: 'https://toogether.me/spotJoinAction',
+            url: 'spotJoinAction',
+            data: data2,
+            success: function (response) {
+            	if (response.includes("successfully")) { //초기 참여 유저가 가입 완료시
+            		if(confirm('가입한 그룹으로 접속 하시겠습니까?')){ //접속 여부 묻기
+            			spotAccess(data2.name); //확인을 클릭하면 접속
+            		}else{
+            			location.reload(true); //취소를 클릭하면 화면 새로고침
+            		}
+            		//alert('스팟 참여 완료');
+	               	//location.reload(true);
+            	}else if(response.includes("leaders")){
+            		spotAccess(data2.name); //스팟 생성자는 접속
+            	}else if(response.includes("exist")){
+            		spotAccess(data2.name); //이미 참여한 유저는 접속
+            	}else if(response.includes("join error")){
+            		alert('참여 오류1');
+            	}else if(response.includes("database error")){
+            		alert('데이터베이스 오류');
+            	}else{
+            		alert('정보 오류');	            		
+            	}
+            },
+	        error: function (xhr, status, error) {
+	            //console.error('Spot registration error:', error);
+	            alert('스팟 참여 오류');
+	        }
+        });
+    }
+    
+    //스팟 가입이 됐는지 검사하고 해당페이지로 이동
+    function spotAccess(spotname){
+		if(spotname == null){
+    		alert('스팟 가입 오류');
+    	}else{
+    		var data3 = {
+   	            spotname: spotname,
+   	        };
+   	        $.ajax({
+   	            type: 'GET',
+   	            //url: 'https://toogether.me/spotAccess',
+   	            url: 'spotAccess',
+   	            data: data3,
+   	            success: function (response) {
+   	            	if(response.includes("null")){
+   	            		alert('로그인 오류');   	            		
+   	            	}else if(response.includes("regist error")){
+   	            		alert('참여 오류2');
+   	            	}else if(response.includes("access successfully")){
+   	            		location.href='spotAccess?spot='+spotname;
+   	            	}
+   	            },
+   		        error: function (xhr, status, error) {
+   		            //console.error('Spot registration error:', error);
+   		            alert('스팟 접속 오류');
+   		        }
+   	        });
+    	}
     }
    	
 /* 기본 지도 생성하기

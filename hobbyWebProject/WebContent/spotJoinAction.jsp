@@ -42,41 +42,44 @@
 	//System.out.println(latitude);
 	//System.out.println(longitude);
 	if(userID == null){
-		script.println("<script>");
-		script.println("alert('로그인이 필요합니다.')");
-		script.println("window.open('loginPopUp', 'Login', 'width=450, height=500, top=50%, left=50%')");
-		script.println("</script>");
-	}
-	if(spotName == null || address == null){
+		script.print("null");
+	    script.flush();
+	    script.close();
+	}else if(spotName == null || address == null){
 		script.print("Information Error");
         script.flush();
+        script.close();
 	}else{
 		//해당 스팟 리더를 만든 유저면 가입 불가
 		if(spotLeader.equals(userID)){
-			script.print("leaders cannot join");
+			script.print("leaders");
 	        script.flush();
+	        script.close();
 		}else{
 			//userID와 spotName이 일치하는(이미가입한) 리스트 가져오기
 			ArrayList<CrewDTO> list = crew.getJoinedList(userID,spotName);
 			if(list.size() > 0){
-				script.print("joined exist");
+				script.print("exist");
 		        script.flush();
+		        script.close();
 			}else{
 				//그룹 가입 메서드 실행
 				int result = crew.joinCrew(userID, spotName);
-				if(result == -1){
-					script.print("Join Error");
-			        script.flush();
-				}else{
-					//그룹가입 완료시 location의 crewCount + 1
+				if(result > 0){
 					int result2 = locDAO.spotJoin(spotName);
-					if(result2 == -1){
-						script.print("Database Error");
+					if(result2 > 0){
+						script.print("successfully");
 				        script.flush();
+				        script.close();						
 					}else{
-						script.print("Spot joined successfully");
+						script.print("database error");
 				        script.flush();
+				        script.close();						
 					}
+				}else{
+					script.print("join Error");
+			        script.flush();
+			        script.close();					
 				}
 			}
 		}

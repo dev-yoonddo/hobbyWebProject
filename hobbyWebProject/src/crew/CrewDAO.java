@@ -62,7 +62,27 @@ public class CrewDAO {
 		}
 		return list;
 	}
-	
+
+	//userID와 spotName을 받아 정상적으로 데이터가 저장되었는지 검사
+	public CrewDTO getCheckRegist(String userID, String spotName) {
+		String SQL = "SELECT * FROM crew WHERE userID = ? AND spotName = ? AND crewAvailable = 1";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, userID);
+			pstmt.setString(2, spotName);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				CrewDTO crew = new CrewDTO();
+				crew.setUserID(rs.getString(1));
+				crew.setSpotName(rs.getString(2));
+				crew.setCrewAvailable(rs.getInt(3));
+				return crew;
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 	//UserDAO - delete에서 사용되는 메서드
 		//delete된 userID와 crew의 userID가 같은 값의 리스트를 가져온다.
 		public List<CrewDTO> getDelCrewVOByUserID(String userID) {
