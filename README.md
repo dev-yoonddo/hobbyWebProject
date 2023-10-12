@@ -31,7 +31,7 @@
 
 ### Database ERD
 
-![ERD](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/2dd7fd90-f48c-418f-a91d-68ba913cfd4b)
+![ERD](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/259992c2-eaaf-42b5-8941-b3ebe2ef31ba)
 
 <br><br>
 
@@ -67,6 +67,8 @@
 ⚫ [커뮤니티](#--커뮤니티-)
 
 ⚫ [그룹](#--그룹-)
+
+⚫ [채팅](#--채팅-)
 
 ⚫ [메시지](#--메시지-)
 
@@ -534,7 +536,7 @@
 
 <br><br>
 
-### ⚙ 메시지 보기
+### ⚙ 메시지 보기 (30일동안 보관)
 
 <br>
 
@@ -975,13 +977,14 @@
 
 <br>
 
-![groupnotice1](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/e96c82a8-291f-4c3f-b94b-7e75451eb007)
+![chat2](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/144aa3c2-5728-4541-9994-35df409de4c7)
 
-![groupnotice2](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/d801cf33-2fe5-4c88-800f-d1dba7797c66)
+<br>
 
-![groupnotice3](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/a0bb74c3-ac5a-4bf9-befe-69e822b6ca23)
-
-![groupnotice4](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/1b5d6d25-767f-48a7-8d70-6bdb7986ad87)
+<div style="display: flex;">
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/9581fd6a-af43-4a60-a5ff-29e6f5037fab.PNG" width="38%">
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/1b5d6d25-767f-48a7-8d70-6bdb7986ad87.PNG" width="58%">
+</div>
 
 <br>
 
@@ -989,8 +992,7 @@
 
 <br>
 
-![groupnotice5](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/50e46fa7-abfd-4ffc-a6c4-fe97d085d26a)
-
+![chat4](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/3ad7b552-bfe5-471a-ba09-0a132c4f7ad5)
 
 ---
 
@@ -1058,19 +1060,11 @@
 
 <br><br>
 
-### ⚙ 그룹 가입 완료시 가입한 사용자의 정보를 그룹 게시판에 출력
-
-<br>
-
-![view1](https://user-images.githubusercontent.com/84071666/236120957-d0ab98b0-ebd1-4cab-8193-420172182699.PNG)
-  
-<br><br>
-
 ## 🔘 3 ) 그룹 접속
 
 <br><br>
 
-![access1](https://user-images.githubusercontent.com/84071666/236120122-b697ac25-6e63-4fd1-a26b-cdc4beae9103.PNG)
+![chat1](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/14f1883d-5812-4aeb-b751-c85880ff62c9)
 
 <br><br>
 
@@ -1196,9 +1190,56 @@
 
 ![groupdelete4](https://user-images.githubusercontent.com/84071666/236124076-998c703f-a070-498c-afd8-7864477b50b3.PNG)
 
---
+---
 
-<br><br><br>
+<br><br>
+
+# - 채팅 📍
+
+<br><br>
+
+## 🔘 그룹 멤버들간의 실시간 채팅
+
+<br><br>
+
+### ⚙ 채팅 시작 전 초기화면
+
+<br>
+
+![chat2-1](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/ed29af3c-db7b-464f-9a32-a085cf31e2b3)
+
+<br><br>
+
+### ⚙ 채팅 전송 시 실시간으로 채팅화면 업데이트
+
+<br>
+
+<div style="display: flex;">
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/e32f23f3-2a26-4e0e-9954-82bd721281ac.PNG" width="44%">
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/a3a86565-49a3-476e-8eb8-acd6bf56074d.PNG" width="52%">
+</div>
+
+<br><br>
+
+### ⚙ 다른 브라우저를 이용한 채팅 테스트
+
+<br>
+
+![chat9](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/a9920f41-abc7-46f2-8d55-59c28108edaf)
+
+<br><br>
+
+### ⚙ 그룹 탈퇴 또는 회원 탈퇴시 아이디와 채팅내용 삭제
+
+<br>
+
+![out](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/ea690589-f154-46f9-851e-1bfb3c2e061d)
+
+<br><br>
+
+---
+
+<br><br>
 
 # - 메시지 📍
 
@@ -1215,7 +1256,7 @@
 
 <div style="display: flex;">
 <img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/f7344195-a4cb-41d4-9fa4-e41bfd91f921.PNG" width="47%">
-<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/bbdede0b-3dd5-4dd0-bf52-83c21c24e17e.PNG" width="45%">
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/bbdede0b-3dd5-4dd0-bf52-83c21c24e17e.PNG" width="44%">
 </div>
 
 <br><br>
