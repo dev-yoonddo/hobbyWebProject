@@ -793,7 +793,7 @@ if(userID == null){
             data: data2,
             success: function (response) {
             	if (response.includes("successfully")) { //초기 참여 유저가 가입 완료시
-            		if(confirm('가입한 그룹으로 접속 하시겠습니까?')){ //접속 여부 묻기
+            		if(confirm('가입한 스팟에 접속 하시겠습니까?')){ //접속 여부 묻기
             			spotAccess(data2.name); //확인을 클릭하면 접속
             		}else{
             			location.reload(true); //취소를 클릭하면 화면 새로고침

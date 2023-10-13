@@ -89,13 +89,14 @@ public class ScheduleDAO {
 		return list; 
 	}
 	//지정된 날짜와 일치하는 스케줄 리스트 가져오기
-	public ArrayList<ScheduleDTO> getScheduleListByTime(int skedMonth, int skedDay){
-		String SQL = "SELECT * FROM schedule WHERE skedMonth = ? AND skedDay = ?"; 
+	public ArrayList<ScheduleDTO> getScheduleListByTime(String spotName, int skedMonth, int skedDay){
+		String SQL = "SELECT * FROM schedule WHERE spotName = ? AND skedMonth = ? AND skedDay = ?"; 
 		ArrayList<ScheduleDTO> list = new ArrayList<ScheduleDTO>();
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
-			pstmt.setInt(1, skedMonth);
-			pstmt.setInt(2, skedDay);
+			pstmt.setString(1, spotName);
+			pstmt.setInt(2, skedMonth);
+			pstmt.setInt(3, skedDay);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				ScheduleDTO sked = new ScheduleDTO();

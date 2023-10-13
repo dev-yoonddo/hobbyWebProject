@@ -51,6 +51,7 @@ section{
 	color: #505050;
     display: flex;
     align-items: center;
+    margin-bottom: 20px;
     animation: fadeInLeft 2s;
 }
 #spot-title h4 {
@@ -66,12 +67,60 @@ section{
         transform: translateZ(0);
     }
 }
-
-.btn-blue span{
-	width: 55px;
+#btn-next{
+	align-items: center;
+}
+#btn-next span{
+	width: 70px;
 	height: 25px;
 	padding: 5px;
 	font-family: 'Noto Sans KR', sans-serif;
+	font-size: 12pt;
+}
+#wrapBtns{
+	width: 400px;
+	display: flex;
+}
+#putSked, #checkSked{
+	width: 200px;
+	height: 35px;
+}
+#putSked > span , #checkSked > span{
+	color: #2E2F49;
+	background-color: #ffffff;
+	border: 1px solid #ffffff;
+}
+#putSked::before , #checkSked::before{
+	background-color: #ffffff;
+}
+#putSked > span:hover , #checkSked > span:hover{
+	color: #ffffff;
+	background-color: #2E2F49;
+	border: 1px solid #2E2F49;
+}
+.btn-blue{
+	float: none;
+	display: flex;
+	justify-content: center;
+	margin: 0 auto;	 
+}
+.btn-blue span{
+	margin: 0 auto;
+	color: #ffffff;
+	background-color: #2E2F49;
+	border: 1px solid #2E2F49;
+	border-radius: 200px;
+	font-size: 15pt;
+	padding: 15px 20px;
+}
+
+.btn-blue::before {
+	background-color: #2E2F49;
+}
+
+.btn-blue span:hover {
+	color: #2E2F49;
+	background-color: #ffffff;
 }
 </style>
 <body>
@@ -104,7 +153,6 @@ section{
 	ArrayList<ScheduleDTO> list = skedDAO.getScheduleListBySpot(spotName);
 	//Map<String , String> scheduleDates = new HashMap<>();
 	
-			//System.out.println(list.size());
 	if(userID == null){
 		script.println("<script>");
 		script.println("alert('로그인이 필요합니다.')");
@@ -128,23 +176,21 @@ section{
 			Calendar calendar = Calendar.getInstance();
 			int year = calendar.get(Calendar.YEAR);
 			int month = calendar.get(Calendar.MONTH) + 1;
-	
-			try {
-				year = Integer.parseInt(request.getParameter("year"));
-				month = Integer.parseInt(request.getParameter("month"));
-				if (month >= 13) {
-					year++;
-					month = 1;
-				} else if (month <= 0) {
-					year--;
-					month = 12;
+				try {
+					year = Integer.parseInt(request.getParameter("year"));
+					month = Integer.parseInt(request.getParameter("month"));
+					if (month >= 13) {
+						year++;
+						month = 1;
+					} else if (month <= 0) {
+						year--;
+						month = 12;
+					}
+					
+				} catch (NumberFormatException e) {
+					
 				}
-				
-			} catch (NumberFormatException e) {
-				
-			}
 			skedMonth = month;
-			
 
 %>
 <!-- header -->
@@ -162,13 +208,13 @@ section{
 		<table width="700" align="center" border="1">
 			<tr>
 				<th>
-					<button type="button" class="btn-blue" onclick="location.href='?spot=<%=accessSpotName%>&year=<%=year%>&month=<%=month - 1%>'"><span><%=month - 1%>월</span></button>
+					<button type="button" id="btn-next" class="btn-blue" onclick="location.href='?spot=<%=accessSpotName%>&year=<%=year%>&month=<%=month - 1%>'"><span><%=month - 1%>월</span></button>
 				</th>
 				<th id="title" colspan="5">
 					<%=year%>년 <%=month%>월
 				</th>
 				<th>
-					<button type="button" class="btn-blue" onclick="location.href='?spot=<%=accessSpotName%>&year=<%=year%>&month=<%=month + 1%>'"><span><%=month + 1%>월</span></button>
+					<button type="button" id="btn-next" class="btn-blue" onclick="location.href='?spot=<%=accessSpotName%>&year=<%=year%>&month=<%=month + 1%>'"><span><%=month + 1%>월</span></button>
 				</th>
 			</tr>
 			
@@ -193,6 +239,7 @@ section{
 				start = MyCalendar.lastDay(year, month - 1) - week;		// 2 ~ 12월
 			}
 			
+			//1일이 첫번째 일요일부터 시작하지 않으면 전 월의 날짜를 출력한다.
 			for (int i = 0; i < week; i++) {
 				value = (month == 1 ? 12 : month - 1);
 				if (i == 0) {
@@ -203,25 +250,25 @@ section{
 			}
 		
 			for (int i = 1; i <= MyCalendar.lastDay(year, month); i++) {
-				ArrayList<ScheduleDTO> list2 = skedDAO.getScheduleListByTime(month, i);
+				ArrayList<ScheduleDTO> list2 = skedDAO.getScheduleListByTime(accessSpotName, month, i);
 				Tabledata = list2.size();
-				//System.out.println(Tabledata);
 				boolean flag = false;
 				String icon = "";
 			    /*
-				String dateKey = month + "-" + i; // Create a key for the date
+				String dateKey = month + "-" + i; // 데이터를 '월-일'로 저장했을 때 사용
 			    boolean hasSchedule = false;
 				for(int a=0; a < list.size(); a++){
 			        if (list.get(a).getSkedMonth() == month && list.get(a).getSkedDay() == i) {
 			            hasSchedule = true;
-			            icon = "<img src='/image/bell-solid.png' alt='bell'>"; // Add the icon for the date
-			            // You can customize the icon URL and alt text as needed
+			            icon = "<img src='/image/bell-solid.png' alt='bell'>";
 			        }
 				}
 			    */
+			    //해당 스팟의 스케줄 데이터 중 일치하는 값이 있으면 아이콘을 넣어준다.
 				if(list2.size() > 0){
 		            icon = "<img src='./image/bell-small.png' class='bell'>"; // Add the icon for the date
 				}
+			    //어린이날 대체공휴일 계산
 				int child = 0;
 				if (MyCalendar.weekDay(year, 5, 5) == 7) {
 					flag = true;
@@ -230,37 +277,39 @@ section{
 					flag = true;
 					child = 6;
 				}
-				
 				if (month == 1 && i == 1) {
-					out.println("<td class='holiday' value='"+ i +"' onclick='printValue(this)'>" + i + "<br><span>신정</span>"+ icon +"</td>");
+					//out.println("<td class='holiday' value='"+ i +"' onclick='printValue(this)'>" + i + "<span>신정</span><br>"+ icon +"</td>");
+					//똑같은 코드를 적지않고 MyCalendar 클래스에 값을 넘겨줘 코드를 간단하게 만든다.
+					//공휴일이면 notHoli == null로 넘겨주고 공휴일이 아니면 holi == null로 넘겨준다.
+					out.println(MyCalendar.printDay(i, "신정", null, icon));
 				} else if (month == 3 && i == 1) {
-					out.println("<td class='holiday' value='"+ i +"' onclick='printValue(this)'>" + i + "<br><span>삼일절</span><br>"+ icon +"</td>");
+					out.println(MyCalendar.printDay(i, "삼일절", null, icon));
 				} else if (month == 5 && i == 1) {
-					out.println("<td class='holiday' value='"+ i +"' onclick='printValue(this)'>" + i + "<br><span>근로자의날</span><br>"+ icon +"</td>");
+					out.println(MyCalendar.printDay(i, "근로자의날", null, icon));
 				} else if (month == 5 && i == 5) {
-					out.println("<td class='holiday' value='"+ i +"' onclick='printValue(this)'>" + i + "<br><span>어린이날</span><br>"+ icon +"</td>");
+					out.println(MyCalendar.printDay(i, "어린이날", null, icon));
 				} else if (month == 6 && i == 6) {
-					out.println("<td class='holiday' value='"+ i +"' onclick='printValue(this)'>" + i + "<br><span>현충일</span><br>"+ icon +"</td>");
+					out.println(MyCalendar.printDay(i, "현충일", null, icon));
 				} else if (month == 8 && i == 15) {
-					out.println("<td class='holiday' value='"+ i +"' onclick='printValue(this)'>" + i + "<br><span>광복절</span><br>"+ icon +"</td>");
+					out.println(MyCalendar.printDay(i, "광복절", null, icon));
 				} else if (month == 10 && i == 3) {
-					out.println("<td class='holiday' value='"+ i +"' onclick='printValue(this)'>" + i + "<br><span>개천절</span><br>"+ icon +"</td>");
+					out.println(MyCalendar.printDay(i, "개천절", null, icon));
 				} else if (month == 10 && i == 9) {
-					out.println("<td class='holiday' value='"+ i +"' onclick='printValue(this)'>" + i + "<br><span>한글날</span><br>"+ icon +"</td>");
+					out.println(MyCalendar.printDay(i, "한글날", null, icon));
 				} else if (month == 12 && i == 25) {
-					out.println("<td class='holiday' value='"+ i +"' onclick='printValue(this)'>" + i + "<br><span>크리스마스</span><br>"+ icon +"</td>");
+					out.println(MyCalendar.printDay(i, "크리스마스", null, icon));
 				} else if (flag && month == 5 && i == child) {
-					out.println("<td class='holiday' value='"+ i +"' onclick='printValue(this)'>" + i + "<br><span>어린이날<br>대체공휴일</span><br>"+ icon +"</td>");
+					out.println(MyCalendar.printDay(i, "어린이날<br>대체공휴일", null, icon));
 				} else {
 					switch (MyCalendar.weekDay(year, month, i)) {
 						case 0:
-							out.println("<td class='sun' value='"+ i +"' onclick='printValue(this)'>" + i + "<br>"+ icon +"</td>");
+							out.println(MyCalendar.printDay(i, null, "sun", icon));
 							break;
 						case 6:
-							out.println("<td class='sat' value='"+ i +"' onclick='printValue(this)'>" + i + "<br>"+ icon +"</td>");
+							out.println(MyCalendar.printDay(i, null, "sat", icon));
 							break;
 						default:
-							out.println("<td class='etc' value='"+ i +"' onclick='printValue(this)'>" + i + "<br>"+ icon +"</td>");
+							out.println(MyCalendar.printDay(i, null, "etc", icon));
 					}
 				}
 		
@@ -276,7 +325,8 @@ section{
 			} else {
 				week = MyCalendar.weekDay(year, month + 1, 1);
 			}
-		
+			
+			//마지막날짜가 맨 마지막 토요일로 끝나지 않으면 다음달의 날짜를 출력한다.
 			if (week != 0) {
 				start = 0;
 				for (int i = week; i <= 6; i++) {
@@ -293,43 +343,51 @@ section{
 		
 			<tr>
 				<td colspan="7" id="select-month">
-					<form action="?spot=<%=accessSpotName%>" method="post" style="display: flex; justify-content: center;">
+					<form action="?spot=<%=accessSpotName %>" method="post" style="display: flex; justify-content: center;">
 						<div class="select">
-						<select>
-						<%
-							for (int i = 1900; i <= 3000; i++) {
-								if (i == calendar.get(Calendar.YEAR)) {
-									out.println("<option selected='selected'>" + i + "</option>");
-								} else {
-									out.println("<option>" + i + "</option>");
-								}
-							}
-						%>
-						</select>&nbsp;&nbsp;년&nbsp;&nbsp;&nbsp;
+							<!-- 올해 달력만 출력 -->
+							<select class="select" disabled="disabled" name="year">
+							<%	/*int nowYear = calendar.get(Calendar.YEAR);
+								for (int i = nowYear; i <= nowYear+5; i++) { //현재부터 5년후의 달력만 보여준다. (년도 범위 선택 가능)
+									if (i == year) {//달력의 년과 일치하는 옵션을 선택되도록 한다.
+										out.println("<option selected='selected'>" + i + "</option>");
+									} else {
+										out.println("<option>" + i + "</option>");
+									}
+								}*/
+							%>
+								<option selected="selected"><%= year %></option>
+							</select>&nbsp;&nbsp;년&nbsp;&nbsp;&nbsp;
 						</div>
 						
 						<div class="select">
-						<select name="month">
-						<%
-							int valuem = 0;
-							for (int i = 1; i <= 12; i++) {
-								if (i == calendar.get(Calendar.MONTH) + 1) {
-									valuem = i;
-									out.println("<option selected='selected' value='"+ valuem +"'>" + i + "</option>");
-								} else {
-									out.println("<option>" + i + "</option>");
+							<select class="select" name="month">
+							<%
+								for (int i = 1; i <= 12; i++) {
+									if (i == month) { //달력의 달과 일치하는 옵션을 선택되도록 한다.
+										out.println("<option selected='selected'>" + i + "</option>");
+									} else {
+										out.println("<option>" + i + "</option>");
+									}
 								}
-							}
-						%>
-						</select>&nbsp;&nbsp;월&nbsp;&nbsp;
+							%>
+							</select>&nbsp;&nbsp;월&nbsp;&nbsp;
 						</div>
-						<div class="select" style="width: 50px;">
-						<button class="btn-blue" type="submit" id="viewCal"><span>보기</span></button>
+						<div class="select">
+							<button class="btn-blue" type="submit" id="btn-next"><span>보기</span></button>
 						</div>
 					</form>
 				</td>
 			</tr>
 		</table>
+	</div>
+	<div id="" class="clickWrap" style="display: none;">
+		<div id="wrapInner">
+			<div id="wrapBtns">
+				<button type="button" class="btn-blue" id="putSked"><span>스케줄 등록</span></button>
+				<button type="button" class="btn-blue" id="checkSked"><span>스케줄 확인</span></button>
+			</div>
+		</div>
 	</div>
 </section>
 
@@ -338,40 +396,75 @@ section{
 %>
 
 <script>
+
+/*지점에서 상세보기 버튼을 클릭했을 때 정보를 보여주는 팝업창 띄우기
+var target = document.querySelectorAll('.openInfo');
+var btnPopClose = document.querySelectorAll('.pop_wrap .btn-black');
+var targetID;
+
+// 팝업 열기
+for(var i = 0; i < target.length; i++){
+  target[i].addEventListener('click', function(){
+	  console.log(i);
+   // console.log(target[i].value);
+	  //var id = target[i].value;
+	  //document.getElementById(id).style.display = 'block';
+    document.querySelector('.clickWrap').style.display = 'block'
+  });
+}*/
+
 function printValue(e) { //클릭한 날짜를 받아 팝업창에 전달
-	var spot = "<%=accessSpotName%>";
-	var month = "<%=skedMonth%>";
-	var value = e.getAttribute('value');
-	var a = "a";
-    //console.log('Clicked value: ' + value);
-    // You can perform other actions with the value as needed
-    console.log(value);
-    var data = {
-        spot: spot,
-        month: month,
-        day: value,
-    };
-    $.ajax({
-        type: 'POST',
-        //url: 'https://toogether.me/spotAccess',
-        url: 'scheduleRegistPopUp',
-        data: data,
-        success: function (response) {
-        	console.log(response);
-        	if (response.includes("null")) {
-        		alert("로그인 후 다시 시도해주세요.");
-     			window.open('loginPopUp', 'Login', 'width=450, height=500, top=50%, left=50%');
-        	}else if(response.includes("info error")){
-        		alert('정보 오류');
-        	}else{
-				window.open('scheduleRegistPopUp?spot='+spot+'&month='+month+'&day='+value+'&a='+a, 'SCHEDULE', 'width=450, height=500, top=50%, left=50%');
-        	}
-        },
-     error: function (xhr, status, error) {
-         //console.error('Spot registration error:', error);
-         alert('오류');
-     }
-    });
+	document.querySelector('.clickWrap').style.display = 'block';
+	
+	var put = document.getElementById('putSked');
+	var check = document.getElementById('checkSked');
+	var wrap = document.querySelector('.clickWrap');
+	
+	//스케줄 등록하기 클릭
+	put.addEventListener('click', function(){	
+		var spot = "<%=accessSpotName%>";
+		var month = "<%=skedMonth%>";
+		var value = e.getAttribute('value');
+		var a = "a";
+	
+		console.log('Clicked value: ' + value);
+	
+		var data = {
+	        spot: spot,
+	        month: month,
+	        day: value,
+	    };
+	    $.ajax({
+	        type: 'POST',
+	        //url: 'https://toogether.me/spotAccess',
+	        url: 'scheduleRegistPopUp',
+	        data: data,
+	        success: function (response) {
+	        	if (response.includes("null")) {
+	        		alert("로그인 후 다시 시도해주세요.");
+	     			window.open('loginPopUp', 'Login', 'width=450, height=500, top=50%, left=50%');
+	        	}else if(response.includes("info error")){
+	        		alert('정보 오류');
+	        	}else{
+					window.open('scheduleRegistPopUp?spot='+spot+'&month='+month+'&day='+value+'&a='+a, 'SCHEDULE', 'width=450, height=500, top=50%, left=50%');
+	        	}
+	        },
+	     error: function (xhr, status, error) {
+	         //console.error('Spot registration error:', error);
+	         alert('오류');
+	     }
+	    });
+	});
+	
+	//스케줄 확인하기 클릭
+	check.addEventListener('click', function(){
+		alert('시스템 준비중입니다');
+	}
+	//팝업을 클릭하면 팝업 없애기
+	wrap.addEventListener('click', function(){
+		wrap.style.display = 'none';
+	})
+	
 }
 </script>
 </body>

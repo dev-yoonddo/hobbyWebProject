@@ -86,6 +86,9 @@ if(a == null){
 	    script.flush();
 	    script.close();
 	}else if(spotName == null || skedMonth == 0 || skedDay == 0){
+		System.out.println(spotName);
+		System.out.println(skedMonth);
+		System.out.println(skedDay);
 		script.print("info error");
 	    script.flush();
 	    script.close();

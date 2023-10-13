@@ -1,7 +1,6 @@
-table {
-	border: 0px solid tomato;
+table{
+	border: 0px solid white;
 }
-
 tr {
 	height: 80px;
 	border-width: 0px;
@@ -14,7 +13,7 @@ th {
 th#title {
 	font-size: 30pt;
 	font-weight: bold;
-	color: black;
+	color: #2E2F49;
 }
 
 td {
@@ -28,7 +27,7 @@ td {
 	margin: 5px;
 }
 
-td.sat:hover , td.sun:hover , td.etc:hover, td.holiday:hover{
+td#sat:hover , td#sun:hover , td#etc:hover, td#holiday:hover{
 	font-size: 13pt;
 	font-weight: bold;
 	border-color: #FF9614;
@@ -42,31 +41,32 @@ td#sunday {
 	font-size: 20pt;
 	background-color: #A4C3FF;
 	border-color: white;
-	color: black;
+	color: #2E2F49;
 }
 td.etcday {
 	font-size: 20pt;
 	background-color: #EBF5FF;
 	border-color: white;
-	color: black;
+	color: #2E2F49;
 }
 td#saturday {
 	font-size: 20pt;
 	background-color: #A4C3FF;
 	border-color: white;
-	color: black;
+	color: #2E2F49;
 }
 
-td.sun {
+td#sun {
 	color: #FF9614;
 	text-align: left;
 	vertical-align: top;
 }
-td.etc {
+td#etc {
+	color: #2E2F49;
 	text-align: left;
 	vertical-align: top;
 }
-td.sat {
+td#sat {
 	color: #FF9614;
 	text-align: left;
 	vertical-align: top;
@@ -76,26 +76,26 @@ td.beforesun {
 	color: #FF9614;
 	text-align: left;
 	vertical-align: top;
-	background-color: #CCE1FF;
+	background-color: #dcdcdc;
 }
 td.before {
 	color: #787878;
 	text-align: left;
 	vertical-align: top;
-	background-color: #CCE1FF;
+	background-color: #dcdcdc;
 }
 
 td.aftersat {
 	color: #FF9614;
 	text-align: left;
 	vertical-align: top;
-	background-color: #CCE1FF;
+	background-color: #dcdcdc;
 }
 td.after {
 	color: #787878;
 	text-align: left;
 	vertical-align: top;
-	background-color: #CCE1FF;
+	background-color: #dcdcdc;
 }
 
 .select {
@@ -109,29 +109,23 @@ select{
 	width: 90px;
 	height: 30px;
 }
-td.holiday {
+td#holiday {
 	color: #FF9614;
 	text-align: left;
 	vertical-align: top;
 	background-color: white;
 }
-
+td#holiday > span{
+	margin-left: 5px;
+	
+}
 span {
 	font-size: 9pt;
 }
 
-#viewCal{
-	width: 40px;
-	height: 30px;
-	padding: 0;
-}
-#viewCal span{
-	width: 40px;
-	height: 10px;
-	font-size: 9pt;
-}
 #select-month{
 	justify-content: center;
+	align-items: center;
 	
 }
 /*종 아이콘 애니메이션*/
@@ -142,4 +136,32 @@ span {
 	0%{transform: rotate(-30deg);}
 	50%{transform: rotate(30deg);}
 	100%{transform: rotate(-30deg);}
+}
+
+.clickWrap{
+	position:fixed; 
+	top:0;
+	left:0;
+	right:0;
+	bottom:0;
+	background:rgba(0,.3,0,.6); 
+	text-align:center;
+	justify-content: center;
+	z-index: 700;
+}
+.clickWrap:after{
+	display:inline-block; 
+	height:100%; 
+	vertical-align:middle; 
+	content:'';
+}
+#wrapInner{
+	display:inline-block; 
+	margin: 0;
+	background:none; 
+	font-size:15px;
+	font-weight: bold;
+	border-radius: 10px;
+	width: 400px;
+	height: auto;
 }
