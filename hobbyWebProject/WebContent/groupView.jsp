@@ -568,7 +568,6 @@ int chatsize = chatlist.size();
 					<%
 							}
 						}else{ //공지사항이  null이면 공지없음을 출력한다.
-					
 					%>
 							<span>등록된 공지가 없어요</span>
 					<%
@@ -618,15 +617,15 @@ int chatsize = chatlist.size();
 										<%= chatlist.get(i).getChatContent() %>
 									<%} %>
 									</div>
+								<%if(!userChat){%>
 								</div>
-							<%if(!userChat){%>
+								<%}else{ %>
+								</div>
+								<%} %>
 							</div>
-							<%}else{ %>
-							</div>
-							<%} %>
 					<%
 						}
-				}
+					}
 					%>
 				</div>
 			</div>

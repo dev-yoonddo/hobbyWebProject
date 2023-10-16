@@ -39,10 +39,7 @@ section{
 	display: flex;
 	justify-content: center;
 }
-.spot-container{
-	width: auto;
-	margin: 0 auto;
-}
+
 #spot-title{
 	height: 70px;
 	font-family: 'Noto Sans KR', sans-serif;
@@ -129,6 +126,7 @@ section{
 	String userID = null;
 	String spotName = null;
 	String accessSpotName = null;
+
 	int skedMonth = 0;
 	int Tabledata = 0;
 	CrewDAO crewDAO = new CrewDAO();
@@ -144,7 +142,7 @@ section{
 	if(request.getParameter("spot") != null){
 		accessSpotName = request.getParameter("spot");
 	}
-	
+
 	//해당 스팟 생성자 구하기
 	LocationDTO leader = new LocationDAO().getLocationVO(spotName);
 	//크루 테이블에 정보가 저장되었는지 확인
@@ -173,24 +171,25 @@ section{
 	        script.close();
 		}
 	}else{
-			Calendar calendar = Calendar.getInstance();
-			int year = calendar.get(Calendar.YEAR);
-			int month = calendar.get(Calendar.MONTH) + 1;
-				try {
-					year = Integer.parseInt(request.getParameter("year"));
-					month = Integer.parseInt(request.getParameter("month"));
-					if (month >= 13) {
-						year++;
-						month = 1;
-					} else if (month <= 0) {
-						year--;
-						month = 12;
-					}
-					
-				} catch (NumberFormatException e) {
-					
-				}
-			skedMonth = month;
+		Calendar calendar = Calendar.getInstance();
+		int year = calendar.get(Calendar.YEAR);
+		int month = calendar.get(Calendar.MONTH) + 1;
+
+		try {
+				//year = Integer.parseInt(request.getParameter("year"));
+				month = Integer.parseInt(request.getParameter("month"));
+			if (month >= 13) {
+				year++;
+				month = 1;
+			} else if (month <= 0) {
+				year--;
+				month = 12;
+			}
+			
+		} catch (NumberFormatException e) {
+			
+		}
+		skedMonth = month;
 
 %>
 <!-- header -->
@@ -205,7 +204,7 @@ section{
 			<h3><%=accessSpotName%></h3><h4>크루들과 함께 일정을 계획해보세요</h4>
 		</div>
 		
-		<table width="700" align="center" border="1">
+		<table id="spot-calendar" width="700" align="center" border="1">
 			<tr>
 				<th>
 					<button type="button" id="btn-next" class="btn-blue" onclick="location.href='?spot=<%=accessSpotName%>&year=<%=year%>&month=<%=month - 1%>'"><span><%=month - 1%>월</span></button>
@@ -238,7 +237,6 @@ section{
 			} else {
 				start = MyCalendar.lastDay(year, month - 1) - week;		// 2 ~ 12월
 			}
-			
 			//1일이 첫번째 일요일부터 시작하지 않으면 전 월의 날짜를 출력한다.
 			for (int i = 0; i < week; i++) {
 				value = (month == 1 ? 12 : month - 1);
@@ -381,11 +379,19 @@ section{
 			</tr>
 		</table>
 	</div>
-	<div id="" class="clickWrap" style="display: none;">
-		<div id="wrapInner">
+	<div class="clickWrap" id="clickWrap1" style="display: none;">
+		<div id="wrapInner1">
 			<div id="wrapBtns">
 				<button type="button" class="btn-blue" id="putSked"><span>스케줄 등록</span></button>
 				<button type="button" class="btn-blue" id="checkSked"><span>스케줄 확인</span></button>
+			</div>
+		</div>
+	</div>
+	<div class="clickWrap" id="clickWrap2" style="display: none;">
+		<div id="wrapInner2">
+			<div id="wrapSkeds">
+				<h3>스케줄 확인</h3>
+				<div id="skedList"></div>
 			</div>
 		</div>
 	</div>
@@ -393,6 +399,7 @@ section{
 
 <% 
 }
+
 %>
 
 <script>
@@ -414,22 +421,25 @@ for(var i = 0; i < target.length; i++){
 }*/
 
 function printValue(e) { //클릭한 날짜를 받아 팝업창에 전달
-	document.querySelector('.clickWrap').style.display = 'block';
+	document.querySelector('#clickWrap1').style.display = 'block';
 	
 	var put = document.getElementById('putSked');
 	var check = document.getElementById('checkSked');
-	var wrap = document.querySelector('.clickWrap');
+	var wrap1 = document.getElementById('clickWrap1');
+	var wrap2 = document.getElementById('clickWrap2');
+	//var checkWrap = document.getElementById('wrapCheckSked');
 	
+	var spot = "<%=accessSpotName%>";
+	var month = "<%=skedMonth%>";
+	var value = e.getAttribute('value');
 	//스케줄 등록하기 클릭
-	put.addEventListener('click', function(){	
-		var spot = "<%=accessSpotName%>";
-		var month = "<%=skedMonth%>";
-		var value = e.getAttribute('value');
+	put.addEventListener('click', function(){
+		wrap.style.display = 'block';
 		var a = "a";
 	
 		console.log('Clicked value: ' + value);
 	
-		var data = {
+		var data1 = {
 	        spot: spot,
 	        month: month,
 	        day: value,
@@ -438,7 +448,7 @@ function printValue(e) { //클릭한 날짜를 받아 팝업창에 전달
 	        type: 'POST',
 	        //url: 'https://toogether.me/spotAccess',
 	        url: 'scheduleRegistPopUp',
-	        data: data,
+	        data: data1,
 	        success: function (response) {
 	        	if (response.includes("null")) {
 	        		alert("로그인 후 다시 시도해주세요.");
@@ -458,13 +468,41 @@ function printValue(e) { //클릭한 날짜를 받아 팝업창에 전달
 	
 	//스케줄 확인하기 클릭
 	check.addEventListener('click', function(){
-		alert('시스템 준비중입니다');
-	}
+		wrap2.style.display = 'block';
+		var b = "b";
+		var data2 = {
+		        spot: spot,
+		        month: month,
+		        day: value,
+		        b: b
+		    };
+		    $.ajax({
+		        type: 'GET',
+		        //url: 'https://toogether.me/spotAccess',
+		        url: 'scheduleRegistPopUp',
+		        data: data2,
+		        success: function (list) {
+
+			        	$('#skedList').append(list);
+	        },
+		    error: function (xhr, status, error) {
+		         //console.error('Spot registration error:', error);
+		         alert('오류');
+		    }
+		    });
+	        $('#skedList').empty();
+
+	});
 	//팝업을 클릭하면 팝업 없애기
-	wrap.addEventListener('click', function(){
-		wrap.style.display = 'none';
-	})
-	
+	wrap1.addEventListener('click', function(){
+		wrap1.style.display = 'none';
+	});
+	wrap2.addEventListener('click', function(){
+		wrap2.style.display = 'none';
+        $('#skedList').empty();
+
+	});
+
 }
 </script>
 </body>

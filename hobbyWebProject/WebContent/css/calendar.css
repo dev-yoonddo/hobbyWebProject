@@ -146,16 +146,21 @@ span {
 	bottom:0;
 	background:rgba(0,.3,0,.6); 
 	text-align:center;
+	display: flex;
 	justify-content: center;
 	z-index: 700;
+	align-items: center;
 }
 .clickWrap:after{
 	display:inline-block; 
 	height:100%; 
-	vertical-align:middle; 
+	vertical-align:middle;
+	align-items: center;
+	justify-content: center;
 	content:'';
 }
-#wrapInner{
+
+#wrapInner1{
 	display:inline-block; 
 	margin: 0;
 	background:none; 
@@ -164,4 +169,22 @@ span {
 	border-radius: 10px;
 	width: 400px;
 	height: auto;
+}
+#wrapInner2{
+	margin: 0 auto;
+	background: none; 
+	font-weight: bold;
+	width: 400px;
+	height: 100%;
+	display:flex;
+	align-items: center;
+}
+#wrapSkeds{
+	width: 400px;
+	min-height: 200px;
+	max-height: 500px;
+	border-radius: 10px;
+	border: 4px solid #2E2F49;
+	color: #2E2F49;
+	background: white;
 }
