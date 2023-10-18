@@ -157,9 +157,6 @@ section{
 		script.println("window.open('loginPopUp', 'Login', 'width=450, height=500, top=50%, left=50%')");
 		script.println("</script>");
 
-		script.print("null");
-        script.flush();
-        script.close();
 	}else if(accessSpotName == null && spotName != null){ //가입했는지 검사 (spotname 파라미터만 존재)
 		if(!userID.equals(leader.getUserID()) && crew == null){ //스팟 생성자도 아니고 참여한 유저도 아니면
 			script.print("regist error"); //접속 불가
@@ -341,7 +338,7 @@ section{
 		
 			<tr>
 				<td colspan="7" id="select-month">
-					<form action="?spot=<%=accessSpotName %>" method="post" style="display: flex; justify-content: center;">
+					<form action="?spot=<%=accessSpotName %>" method="get" style="display: flex; justify-content: center;">
 						<div class="select">
 							<!-- 올해 달력만 출력 -->
 							<select class="select" disabled="disabled" name="year">
@@ -402,7 +399,7 @@ section{
 
 %>
 
-<script>
+<script type="text/javascript">
 
 /*지점에서 상세보기 버튼을 클릭했을 때 정보를 보여주는 팝업창 띄우기
 var target = document.querySelectorAll('.openInfo');
@@ -419,79 +416,26 @@ for(var i = 0; i < target.length; i++){
     document.querySelector('.clickWrap').style.display = 'block'
   });
 }*/
+var spot = "<%=accessSpotName%>";
+var month = "<%=skedMonth%>";
+var put = document.getElementById('putSked');
+var check = document.getElementById('checkSked');
+var wrap1 = document.getElementById('clickWrap1');
+var wrap2 = document.getElementById('clickWrap2');
 
 function printValue(e) { //클릭한 날짜를 받아 팝업창에 전달
-	document.querySelector('#clickWrap1').style.display = 'block';
-	
-	var put = document.getElementById('putSked');
-	var check = document.getElementById('checkSked');
-	var wrap1 = document.getElementById('clickWrap1');
-	var wrap2 = document.getElementById('clickWrap2');
+	wrap1.style.display = 'block';
+    //$('#skedList').empty();
 	//var checkWrap = document.getElementById('wrapCheckSked');
+	day = e.getAttribute('value');
 	
-	var spot = "<%=accessSpotName%>";
-	var month = "<%=skedMonth%>";
-	var value = e.getAttribute('value');
 	//스케줄 등록하기 클릭
 	put.addEventListener('click', function(){
-		wrap.style.display = 'block';
-		var a = "a";
-	
-		console.log('Clicked value: ' + value);
-	
-		var data1 = {
-	        spot: spot,
-	        month: month,
-	        day: value,
-	    };
-	    $.ajax({
-	        type: 'POST',
-	        //url: 'https://toogether.me/spotAccess',
-	        url: 'scheduleRegistPopUp',
-	        data: data1,
-	        success: function (response) {
-	        	if (response.includes("null")) {
-	        		alert("로그인 후 다시 시도해주세요.");
-	     			window.open('loginPopUp', 'Login', 'width=450, height=500, top=50%, left=50%');
-	        	}else if(response.includes("info error")){
-	        		alert('정보 오류');
-	        	}else{
-					window.open('scheduleRegistPopUp?spot='+spot+'&month='+month+'&day='+value+'&a='+a, 'SCHEDULE', 'width=450, height=500, top=50%, left=50%');
-	        	}
-	        },
-	     error: function (xhr, status, error) {
-	         //console.error('Spot registration error:', error);
-	         alert('오류');
-	     }
-	    });
+		skedPut(day);
 	});
-	
 	//스케줄 확인하기 클릭
 	check.addEventListener('click', function(){
-		wrap2.style.display = 'block';
-		var b = "b";
-		var data2 = {
-		        spot: spot,
-		        month: month,
-		        day: value,
-		        b: b
-		    };
-		    $.ajax({
-		        type: 'GET',
-		        //url: 'https://toogether.me/spotAccess',
-		        url: 'scheduleRegistPopUp',
-		        data: data2,
-		        success: function (list) {
-
-			        	$('#skedList').append(list);
-	        },
-		    error: function (xhr, status, error) {
-		         //console.error('Spot registration error:', error);
-		         alert('오류');
-		    }
-		    });
-	        $('#skedList').empty();
-
+		skedCheck(day);
 	});
 	//팝업을 클릭하면 팝업 없애기
 	wrap1.addEventListener('click', function(){
@@ -499,11 +443,70 @@ function printValue(e) { //클릭한 날짜를 받아 팝업창에 전달
 	});
 	wrap2.addEventListener('click', function(){
 		wrap2.style.display = 'none';
-        $('#skedList').empty();
-
+	    //$('#getlist').remove();
 	});
-
 }
+function skedPut(day){
+	wrap1.style.display = 'block';
+
+	var a = "a";
+
+	var data1 = {
+        spot: spot,
+        month: month,
+        day: day,
+    };
+    $.ajax({
+        type: 'POST',
+        //url: 'https://toogether.me/spotAccess',
+        url: 'scheduleRegistPopUp',
+        data: data1,
+        success: function (response) {
+        	if (response.includes("null")) {
+        		alert("로그인 후 다시 시도해주세요.");
+     			window.open('loginPopUp', 'Login', 'width=450, height=500, top=50%, left=50%');
+        	}else if(response.includes("info error")){
+        		alert('정보 오류');
+        	}else{
+				window.open('scheduleRegistPopUp?spot='+spot+'&month='+month+'&day='+value+'&a='+a, 'SCHEDULE', 'width=450, height=500, top=50%, left=50%');
+        	}
+        },
+     error: function (xhr, status, error) {
+         //console.error('Spot registration error:', error);
+         alert('오류');
+     }
+    });
+}
+function skedCheck(day){
+		wrap2.style.display = 'block';
+		
+		var data2 = {
+	        spot: spot,
+	        month: month,
+	        day: day
+	    };
+	    $('#skedList').empty();
+
+	    $.ajax({
+	        type: 'GET',
+	        //url: 'https://toogether.me/spotAccess',
+	        url: 'scheduleCheckAction',
+	        data: data2,
+	        success: function (list) {
+	        	var result = "<div id='getlist'>"+list+"</div>";
+	        	$('#skedList').html(result);
+	        	console.log(month);
+				console.log(day);
+	        	
+        },
+	    error: function (xhr, status, error) {
+	         //console.error('Spot registration error:', error);
+	         alert('오류');
+	    }
+	    });
+   
+}
+
 </script>
 </body>
 </html>

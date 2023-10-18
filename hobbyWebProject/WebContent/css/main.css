@@ -39,7 +39,7 @@
   background-color: var(--color-mousea);
   border-radius: 50%;
   position: absolute;
-  z-index: 1000;
+  z-index: 999;
   transform: translate(-50%, -50%);
   pointer-events: none;
   transition: all 0.3s ease;

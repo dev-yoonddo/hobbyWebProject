@@ -336,6 +336,14 @@
     <servlet-name>scheduleRegistAction.jsp</servlet-name>
     <url-pattern>/scheduleRegistAction</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>scheduleCheckAction.jsp</servlet-name>
+    <jsp-file>/scheduleCheckAction.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>scheduleCheckAction.jsp</servlet-name>
+    <url-pattern>/scheduleCheckAction</url-pattern>
+  </servlet-mapping>
   
   <servlet>
     <servlet-name>downloadAction</servlet-name>

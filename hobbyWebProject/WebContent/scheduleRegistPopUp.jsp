@@ -67,9 +67,7 @@ String spotName = null;
 int skedMonth = 0;
 int skedDay = 0;
 String a = null;
-String b = null;
-String name = null;
-String content = null;
+
 
 ScheduleDAO skedDAO = new ScheduleDAO();
 
@@ -88,35 +86,18 @@ if(request.getParameter("day") != null){
 if(request.getParameter("a") != null){
 	a = request.getParameter("a");
 }
-if(request.getParameter("b") != null){
-	b = request.getParameter("b");
-}
-if(a == null){ //a값이 존재하지 않으면 접속이 아닌 검사를 의미한다.
-	if(b == null){
-		if(userID == null){
-			script.print("null");
-		}else if(spotName == null || skedMonth == 0 || skedDay == 0){
-			script.print("info error");
-		}else{
-			script.print("ok");
-		}
-	}else{
-		ArrayList<ScheduleDTO> skedlist = skedDAO.getScheduleListByTime(spotName, skedMonth, skedDay);
-		if(skedlist.size() > 0){
-			for(int i=0; i < skedlist.size(); i++){
-				name = skedlist.get(i).getUserID();
-				content = skedlist.get(i).getSkedContent();
-				script.println(name+" : "+content+"<br>");
-			}
-			skedMonth = 0;
-			skedDay = 0;
 
-		}else{
-			script.print("no list");
-		}
-			
+if(a == null){ //a값이 존재하지 않으면 접속이 아닌 검사를 의미한다.
+	if(userID == null){
+		script.print("null");
+		script.flush();
+	}else if(spotName == null || skedMonth == 0 || skedDay == 0){
+		script.print("info error");
+		script.flush();
+	}else{
+		script.print("ok");
+		script.flush();
 	}
-	script.flush();
 	script.close();
 }else{
 %>
