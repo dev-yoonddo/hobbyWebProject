@@ -77,10 +77,10 @@ section{
 #wrapBtns{
 	width: 400px;
 	display: flex;
+	z-index: 720;
 }
 #putSked, #checkSked{
 	width: 200px;
-	height: 35px;
 }
 #putSked > span , #checkSked > span{
 	color: #2E2F49;
@@ -94,6 +94,12 @@ section{
 	color: #ffffff;
 	background-color: #2E2F49;
 	border: 1px solid #2E2F49;
+}
+#skedList{
+	height: 150px;
+	align-items: center;
+	overflow-y: auto;
+	flex-direction:column-reverse;
 }
 .btn-blue{
 	float: none;
@@ -118,6 +124,79 @@ section{
 .btn-blue span:hover {
 	color: #2E2F49;
 	background-color: #ffffff;
+}
+.getlist{
+	margin-bottom: 10px;
+}
+@media screen and (max-width:900px) {
+	#spot-calendar{
+		width: 550px;
+		margin-top: 30px;
+	}
+	th{
+		width: 70px;
+	}
+	td{
+		width: 70px;
+		font-size: 9pt;
+	}
+	h3,h4{
+		margin: 0;
+	}
+	#spot-title{
+		width: auto;
+		height: 200px;
+		display: inline;
+		align-items: center;
+	}
+	#spot-title h4 {
+		margin-left: 0px;
+	}
+	.btn-blue{
+		width: 65px;
+	}
+	.btn-blue span{
+		font-size: 9pt;
+		padding: 5px;
+	}
+	#putSked span , #checkSked span{
+		font-size: 15pt;
+		padding: 15px 20px;
+	}
+}
+@media screen and (max-width:650px) {
+	#spot-calendar{
+		width: 400px;
+	}
+	th{
+		width: 55px;
+		height: 55px;
+	}
+	td{
+		width: 55px;
+		height: 55px;
+		font-size: 8pt;
+	}
+	h3,h4{
+		margin: 0;
+		font-size: 20pt;
+	}
+	#spot-title{
+		width: auto;
+		height: 200px;
+		display: inline;
+		align-items: center;
+		font-size: 13pt;
+	}
+	#spot-title h4 {
+		margin-left: 0px;
+	}
+	.btn-blue{
+		width: 57px;
+	}
+	#btn-next span{
+		font-size: 9.5pt;
+	}
 }
 </style>
 <body>
@@ -326,9 +405,9 @@ section{
 				start = 0;
 				for (int i = week; i <= 6; i++) {
 					if (i == 6) {
-						out.println("<td class='aftersat'><span class='after-txt'>" + (month == 12 ? 1 : month + 1) + "/" + ++start + "</span></td>");
+						out.println("<td class='aftersat'>" + (month == 12 ? 1 : month + 1) + "/" + ++start + "</td>");
 					} else {
-						out.println("<td class='after'><span class='after-txt'>" + (month == 12 ? 1 : month + 1) + "/" + ++start + "</span></td>");
+						out.println("<td class='after'>" + (month == 12 ? 1 : month + 1) + "/" + ++start + "</td>");
 					}
 				}
 			}
@@ -338,7 +417,7 @@ section{
 		
 			<tr>
 				<td colspan="7" id="select-month">
-					<form action="?spot=<%=accessSpotName %>" method="get" style="display: flex; justify-content: center;">
+					<form action="?spot=<%=accessSpotName %>" method="POST" style="display: flex; justify-content: center;">
 						<div class="select">
 							<!-- 올해 달력만 출력 -->
 							<select class="select" disabled="disabled" name="year">
@@ -387,7 +466,7 @@ section{
 	<div class="clickWrap" id="clickWrap2" style="display: none;">
 		<div id="wrapInner2">
 			<div id="wrapSkeds">
-				<h3>스케줄 확인</h3>
+				<div style="font-size: 15pt; margin: 10px;">스케줄 확인</div>
 				<div id="skedList"></div>
 			</div>
 		</div>
@@ -468,7 +547,7 @@ function skedPut(day){
         	}else if(response.includes("info error")){
         		alert('정보 오류');
         	}else{
-				window.open('scheduleRegistPopUp?spot='+spot+'&month='+month+'&day='+value+'&a='+a, 'SCHEDULE', 'width=450, height=500, top=50%, left=50%');
+				window.open('scheduleRegistPopUp?spot='+spot+'&month='+month+'&day='+day+'&a='+a, 'SCHEDULE', 'width=450, height=500, top=50%, left=50%');
         	}
         },
      error: function (xhr, status, error) {
@@ -478,32 +557,32 @@ function skedPut(day){
     });
 }
 function skedCheck(day){
-		wrap2.style.display = 'block';
-		
-		var data2 = {
-	        spot: spot,
-	        month: month,
-	        day: day
-	    };
-	    $('#skedList').empty();
+	wrap2.style.display = 'block';
+	
+	var data2 = {
+        spot: spot,
+        month: month,
+        day: day
+    };
+    $('#skedList').empty();
 
-	    $.ajax({
-	        type: 'GET',
-	        //url: 'https://toogether.me/spotAccess',
-	        url: 'scheduleCheckAction',
-	        data: data2,
-	        success: function (list) {
-	        	var result = "<div id='getlist'>"+list+"</div>";
-	        	$('#skedList').html(result);
-	        	console.log(month);
-				console.log(day);
-	        	
-        },
-	    error: function (xhr, status, error) {
-	         //console.error('Spot registration error:', error);
-	         alert('오류');
-	    }
-	    });
+    $.ajax({
+        type: 'GET',
+        //url: 'https://toogether.me/spotAccess',
+        url: 'scheduleCheckAction',
+        data: data2,
+        success: function (list) {
+        	//가져온 list를 skedList요소에 넣어준다.
+        	$('#skedList').html(list);
+        	//console.log(month);
+			//console.log(day);
+        	
+       },
+    error: function (xhr, status, error) {
+         //console.error('Spot registration error:', error);
+         alert('오류');
+    }
+    });
    
 }
 

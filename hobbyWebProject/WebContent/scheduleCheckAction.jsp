@@ -8,6 +8,9 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+<head>
+<link rel="stylesheet" href="css/main.css?after">
+</head>
 <body>
 <%
 PrintWriter script = response.getWriter();
@@ -33,15 +36,15 @@ ArrayList<ScheduleDTO> skedlist = skedDAO.getScheduleListByTime(spotName, skedMo
 String[] value = new String[skedlist.size()];
 
 if(skedlist.size() > 0){
-		for(int i=0; i < skedlist.size(); i++){
-			value[i] = skedlist.get(i).getUserID()+" : "+skedlist.get(i).getSkedContent()+"<br>";
-			System.out.println(value[i]);
-			script.print(value[i]);
-		}
+	for(int i=0; i < skedlist.size(); i++){
+		value[i] = "<div class='getlist'>"+skedlist.get(i).getUserID()+" : "+skedlist.get(i).getSkedContent()+"</div>";
+		//System.out.println(value[i]);
+		script.print(value[i]);
 	}
-		script.flush();
-		script.close();
-	
+}
+script.flush();
+script.close();
+
 
 %>
 </body>

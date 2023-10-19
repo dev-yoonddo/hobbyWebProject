@@ -139,7 +139,7 @@ span {
 }
 
 .clickWrap{
-	position:fixed; 
+	position:fixed;
 	top:0;
 	left:0;
 	right:0;
@@ -148,27 +148,22 @@ span {
 	text-align:center;
 	display: flex;
 	justify-content: center;
-	z-index: 700;
+	z-index: 500;
 	align-items: center;
-}
-.clickWrap:after{
-	display:inline-block; 
-	height:100%; 
-	vertical-align:middle;
-	align-items: center;
-	justify-content: center;
-	content:'';
 }
 
+
 #wrapInner1{
-	display:inline-block; 
+	display:flex;
+	justify-content: center;
+	align-items: center;
 	margin: 0;
 	background:none; 
 	font-size:15px;
 	font-weight: bold;
 	border-radius: 10px;
-	width: 400px;
-	height: auto;
+	height: 100%;
+	z-index: 710;
 }
 #wrapInner2{
 	margin: 0 auto;
@@ -178,6 +173,8 @@ span {
 	height: 100%;
 	display:flex;
 	align-items: center;
+	z-index: 710;
+	
 }
 #wrapSkeds{
 	width: 400px;
@@ -187,4 +184,6 @@ span {
 	border: 4px solid #2E2F49;
 	color: #2E2F49;
 	background: white;
+	z-index: 720;
+}
 }

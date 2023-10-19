@@ -677,7 +677,7 @@ if(userID == null){
             var location = locationData[i];
             var latlng = new naver.maps.LatLng(location.latitude, location.longitude);
             var infoContent = [
-            	'<div id="info-window">',
+            	'<div id="info-window">',//이름을 클릭하면 스팟가입 메서드가 실행된다.
             	'<div id="info-name" onclick="joinSpot()"><i id="name-icon" class="fa-solid fa-globe"></i>',
             	'<div id="info-spotName">' + location.name + '</div><div id="info-join">참여</div></div>', 
             	'<div id="info-address">'+ location.address + '</div>',
@@ -801,9 +801,9 @@ if(userID == null){
             		//alert('스팟 참여 완료');
 	               	//location.reload(true);
             	}else if(response.includes("leaders")){
-            		spotAccess(data2.name); //스팟 생성자는 접속
+            		spotAccess(data2.name); //스팟 생성자는 바로 접속
             	}else if(response.includes("exist")){
-            		spotAccess(data2.name); //이미 참여한 유저는 접속
+            		spotAccess(data2.name); //이미 참여한 유저는 바로 접속
             	}else if(response.includes("join error")){
             		alert('참여 오류1');
             	}else if(response.includes("database error")){

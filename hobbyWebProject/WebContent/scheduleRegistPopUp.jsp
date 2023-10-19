@@ -102,7 +102,7 @@ if(a == null){ //a값이 존재하지 않으면 접속이 아닌 검사를 의�
 }else{
 %>
 <div id="schedule-container">
-    <h2>New Schedule</h2>
+    <h2><%=skedMonth%>/<%=skedDay%>&nbsp;&nbsp;New Schedule</h2>
     <div id="sked-form">
         <input type="text" placeholder="스케줄 내용을 입력하세요" name="skedContent" id="skedContent" class="intro" maxlength="100">
         <button type="button" class="btn-blue" id="sb" onclick="regist()"><span>등록하기</span></button>
