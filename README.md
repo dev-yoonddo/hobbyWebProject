@@ -31,7 +31,7 @@
 
 ### Database ERD
 
-![ERD](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/259992c2-eaaf-42b5-8941-b3ebe2ef31ba)
+![ERD](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/85a42eea-260b-426b-9696-5924f4ad9cf3)
 
 <br><br>
 
