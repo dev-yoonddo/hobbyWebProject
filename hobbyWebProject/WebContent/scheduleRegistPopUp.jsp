@@ -100,6 +100,12 @@ if(a == null){ //a값이 존재하지 않으면 접속이 아닌 검사를 의�
 	}
 	script.close();
 }else{
+	if(userID == null){
+		script.println("<script>");
+		script.println("alert('로그인이 필요합니다.')");
+		script.println("window.open('loginPopUp', 'Login', 'width=450, height=500, top=50%, left=50%')");
+		script.println("</script>");
+	}else{
 %>
 <div id="schedule-container">
     <h2><%=skedMonth%>/<%=skedDay%>&nbsp;&nbsp;New Schedule</h2>
@@ -108,7 +114,9 @@ if(a == null){ //a값이 존재하지 않으면 접속이 아닌 검사를 의�
         <button type="button" class="btn-blue" id="sb" onclick="regist()"><span>등록하기</span></button>
 	</div>
 </div>
-<%}%>
+<%	}
+	
+}%>
 <script>
 
 function regist(){
