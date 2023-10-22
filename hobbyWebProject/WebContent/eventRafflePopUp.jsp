@@ -161,7 +161,7 @@ ArrayList<EventDTO> list = eventDAO.getList();
 			</tr>
 		</tbody>
 		
-		<!-- 리스트가 1개 이상이면 -->
+		<!-- 리스트가 1개 이상이면 응모 회원 리스트 출력 -->
 		<% }else{ %>
 		<tbody>
 			<%
@@ -213,7 +213,7 @@ function getCheckboxValue(){
 	    result += el.value + '  ';
 	  });
 	  
-	  // 출력
+	  // 선택한 아이디 출력
 	  document.getElementById('result').innerText
 	    = result;
 }

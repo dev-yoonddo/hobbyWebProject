@@ -23,28 +23,31 @@
 </head>
 <style>
 ::-webkit-scrollbar {
-  display: none;
+	display: none;
 }
-section{
-  width: 100%;
-  height: 500px;
-  display: flex;
+
+section {
+	width: 100%;
+	height: 500px;
+	display: flex;
 }
+
 .select {
-  position: relative;
-  width: 500px;
+	position: relative;
+	width: 500px;
 }
+
 .select .option-list {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  width: 100%;
-  overflow: hidden;
-  max-height: 0;
+	position: absolute;
+	top: 100%;
+	left: 0;
+	width: 100%;
+	overflow: hidden;
+	max-height: 0;
 }
 
 .select.active .option-list {
-  max-height: none;
+	max-height: none;
 }
 
 /* select css */
@@ -57,40 +60,46 @@ section{
 	font-family: 'Nanum Gothic', sans-serif;
 	display: flex;
 }
+
 #select-sec .select {
-  box-shadow: 0 0 10px #86A5FF;
-  border-radius: 15px;
-  padding: 15px;
-  cursor: pointer;
+	box-shadow: 0 0 10px #86A5FF;
+	border-radius: 15px;
+	padding: 15px;
+	cursor: pointer;
 }
 
 #select-sec .select .text {
-font-size: 16pt;
-font-weight: bold;
-color: #6e6e6e;
-display: flex;
+	font-size: 16pt;
+	font-weight: bold;
+	color: #6e6e6e;
+	display: flex;
 }
-.option{
-display: flex;
+
+.option {
+	display: flex;
 }
-span{
-margin: 0 auto;
+
+span {
+	margin: 0 auto;
 }
 
 #select-sec .select .option-list {
-  list-style: none;
-  padding: 0;
-  border-radius: 15px;
-  box-shadow: 0 0 10px #86A5FF;
+	list-style: none;
+	padding: 0;
+	border-radius: 15px;
+	box-shadow: 0 0 10px #86A5FF;
 }
+
 #select-sec .select .option-list .option {
-  padding: 15px;
+	padding: 15px;
 }
+
 #select-sec .select .option-list .option:hover {
-border-radius: 15px;
-background-color: #E0EBFF;
+	border-radius: 15px;
+	background-color: #E0EBFF;
 }
-button{
+
+button {
 	border: 0;
 	outline: 0;
 	width: 70px;
@@ -102,17 +111,19 @@ button{
 	box-shadow: 0 0 10px #86A5FF;
 	cursor: pointer;
 }
-#sc{
+
+#sc {
 	font-size: 16pt;
 	font-weight: bold;
 	color: 6e6e6e;
 	font-family: 'Nanum Gothic', sans-serif;
 }
+
 @media screen and (max-width:650px) {
-	#select-sec{
+	#select-sec {
 		width: 400px;
 	}
-	#select-sec .select .text{
+	#select-sec .select .text {
 		font-size: 13pt;
 	}
 }
@@ -126,26 +137,9 @@ button{
 	UserDTO user=new UserDAO().getUserVO(userID);
 %>
 <header>
-<jsp:include page="/header/header.jsp"/>
+	<jsp:include page="/header/header.jsp"/>
 </header>
 <section>
-<!-- 기본적인 select box
-<div class="search">
-<form method="post" name="search" action="searchPage.jsp">
-			<div class="select-box">
-			<select class="select" name="searchField2">
-				<option value="0">SELECT</option>
-				<option value="SPORTS">SPORTS</option>
-				<option value="LEISURE">LEISURE</option>
-				<option value="ART&MUSIC">ART & MUSIC</option>
-				<option value="OTHER">OTHER</option>
-			</select>
-			<span class="icon"><i class="fa-solid fa-chevron-down"></i></span>
-			</div>
-			<button type="submit" class="btn-black" id="cmt-btn"><span>검색</span></button>
-</form>
-</div>
--->
 <div class="select-hobby">
 <form method="post" id ="searchField2" action="searchPage">
 	<div id="select-sec">
@@ -174,25 +168,26 @@ button{
 <script>
 //select box 클릭하면 접고 펼치기
 function onClickSelect(e) {
-	  const isActive = e.currentTarget.className.indexOf("active") !== -1;
-	  if (isActive) {
-	    e.currentTarget.className = "select";
-	  } else {
-	    e.currentTarget.className = "select active";
-	  }
+	const isActive = e.currentTarget.className.indexOf("active") !== -1;
+	if (isActive) {
+	  e.currentTarget.className = "select";
+	} else {
+	  e.currentTarget.className = "select active";
 	}
-	document.querySelector("#select-sec .select").addEventListener("click", onClickSelect);
+}
+document.querySelector("#select-sec .select").addEventListener("click", onClickSelect);
 
-	function onClickOption(e) {
-	  const selectedValue = e.currentTarget.innerHTML;
-	  document.querySelector("#select-sec .text").innerHTML = selectedValue;
-	}
+//클릭한 값을 박스안에 넣기
+function onClickOption(e) {
+	const selectedValue = e.currentTarget.innerHTML;
+	document.querySelector("#select-sec .text").innerHTML = selectedValue;
+}
 
-	var optionList = document.querySelectorAll("#select-sec .option");
-	for (var i = 0; i < optionList.length; i++) {
-	  var option = optionList[i];
-	  option.addEventListener("click", onClickOption);
-  }
+var optionList = document.querySelectorAll("#select-sec .option");
+for (var i = 0; i < optionList.length; i++) {
+	var option = optionList[i];
+	option.addEventListener("click", onClickOption);
+}
   
 //검색버튼 깜빡이기
 var speed=500 

@@ -14,18 +14,14 @@
 <jsp:setProperty name="group" property="groupNoP" />
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>JSP 게시판 웹 사이트</title>
-</head>
 <body>
 	<%
+		PrintWriter script = response.getWriter();
 		String userID = null;
 		if(session.getAttribute("userID") != null){
 			userID = (String) session.getAttribute("userID");
 		}
 		if(userID == null){
-			PrintWriter script = response.getWriter();
 			script.println("<script>");
 			script.println("alert('로그인이 필요합니다.')");
 			script.println("window.open('loginPopUp', 'Login', 'width=500, height=550, top=50%, left=50%')");
@@ -33,7 +29,6 @@
 		}else{
 			if(group.getGroupName() == null || group.getGroupPassword() == null
 			|| group.getGroupNoP() == 0) {
-				PrintWriter script = response.getWriter();
 				script.println("<script>");
 				script.println("alert('그룹정보를 모두 입력해주세요')");
 				script.println("history.back()");
@@ -43,14 +38,12 @@
 				GroupDAO groupDAO = new GroupDAO();
 				int result = groupDAO.createGroup(group.getGroupName(),group.getGroupPassword(), userID, group.getGroupNoP());
 				if(result == -1){
-					PrintWriter script = response.getWriter();
 					script.println("<script>");
 					script.println("alert('그룹 생성이 실패했습니다.')");
 					script.println("history.back()");
 					script.println("</script>");
 				}else {
 					//session.setAttribute("groupID", group.getGroupID());
-					PrintWriter script = response.getWriter();
 					script.println("<script>");
 					script.println("alert('그룹 생성이 완료되었습니다.')");
 					script.println("location.href = 'groupPage'");

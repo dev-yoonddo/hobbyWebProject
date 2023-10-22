@@ -1,3 +1,4 @@
+<%@page import="group.GroupDAO"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="event.EventDTO"%>
 <%@page import="event.EventDAO"%>
@@ -38,11 +39,13 @@ if(session.getAttribute("userID") != null){
 }
 BoardDAO bdDAO = new BoardDAO();
 EventDAO eventDAO = new EventDAO();
-//작성한 게시글이 5개 이상일 때 이벤트에 응모할 수 있는 팝업창이 뜨도록 한다.
+GroupDAO groupDAO = new GroupDAO();
+//작성한 게시글이 5개 이상이고 운영중인 그룹이 있을때 이벤트에 응모할 수 있는 팝업창이 뜨도록 한다.
 //이벤트에 응모는 아이디당 한번씩만 가능하다.
 int boardCount = bdDAO.getListByUser(userID).size(); //유저가 작성한 게시글 수 가져오기
+int groupCount = groupDAO.getListActiveByUser(userID).size(); //유저가 생성한 그룹 중 활동중인 그룹 수 가져오기
 int eventCount = eventDAO.getListByUser(userID).size(); //이벤트 응모 기록 가져오기
-if(boardCount >= 5 && eventCount == 0){ //게시글이 5개 이상이고 이벤트 응모 기록이 없으면 팝업창 띄우기
+if(boardCount >= 5 && groupCount > 0 && eventCount == 0){ //게시글이 5개 이상이고 이벤트 응모 기록이 없으면 팝업창 띄우기
 	script.println("<script>");
 	script.println("window.open('eventPopUp', 'EVENT', 'width=500, height=550, top=50%, left=50%')");
 	script.println("</script>");

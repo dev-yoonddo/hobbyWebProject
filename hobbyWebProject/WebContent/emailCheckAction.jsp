@@ -16,17 +16,10 @@
 <jsp:setProperty name="user" property="userEmail" />
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>Email 인증</title>
-<script src="option/jquery/jquery.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<script type="text/javascript" src="js/script.js"></script>
-</head>
 <body>
 	<%
-	UserDAO userDAO = new UserDAO();
-	String code = null;
+		UserDAO userDAO = new UserDAO();
+		String code = null;
 		String userID = null;
 		if(session.getAttribute("userID") != null){
 			userID = (String) session.getAttribute("userID");

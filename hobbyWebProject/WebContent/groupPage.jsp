@@ -229,119 +229,104 @@ if(userID == null){
 //}
 %>
 <header id="header">
-<jsp:include page="/header/header.jsp"/>
+	<jsp:include page="/header/header.jsp"/>
 </header>
 <section>
-<div>
-<div id="sec-top">
 	<div>
-		<div style="width : auto;">
-			<span class="text" id="ani-text"></span><br><br><br>
+		<div id="sec-top">
+			<div>
+				<div style="width : auto;">
+					<span class="text" id="ani-text"></span><br><br><br>
+				</div>
+				<div style="width: 600px; margin: 0 auto;">
+					<span id="main-text">그룹을 만들거나 참여해보세요</span><br>
+					<button type="button" class="btn-blue" id="create-group" onclick="createGroup()" value="그룹생성"><span>그룹 만들기</span></button>	
+				</div>
+			</div>
 		</div>
-		<div style="width: 600px; margin: 0 auto;">
-			<span id="main-text">그룹을 만들거나 참여해보세요</span><br>
-			<button type="button" class="btn-blue" id="create-group" onclick="createGroup()" value="그룹생성"><span>그룹 만들기</span></button>	
-		</div>
-	</div>
-</div>
-<div id="gallery">
-<div id="gal-inner">
-		<%
-			GroupDAO groupDAO = new GroupDAO();
-			ArrayList<GroupDTO> list = groupDAO.getList();
-			int counter = 0;
-			for (int i = 0; i < list.size(); i++) {	
-			//int groupID = list.get(i).getGroupID();
-		%>
-		<%
-		//group을 한개씩 출력할 때 마다 counter++ 해서 3개가 출력될 때 마다 group-row로 감싸도록 한다.
-		if (counter % 3 == 0) {
-        %>
-        <div class="group-row">
-        <%
-        } counter++;
-        %>
-		<div class="group-box">
-			<div class="info-box">
-				<div style="">
-				<div class="info-title" id="in-group" style="font-size:30pt; font-weight: bold;">  
-	                <a>
-	                	<%=list.get(i).getGroupName().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%>
-	                </a>
-		        </div>
-				<% if(list.get(i).getGroupAvailable() == 1){%>
-				<div class="info-a">
-					<a>활동중</a>
-				</div>
-				<%}else{ %>
-				<div class="info-a" id="disable" style="background-color: black;">
-					<a>비활동중</a>
-				</div>
-				<%} %>
-				</div>
-				<div class="info-b">
-		 			<div class="info-l"><a>Leader  <%= list.get(i).getUserID() %></a></div>
+		<div id="gallery">
+			<div id="gal-inner">
 					<%
-						//그룹에 가입한 멤버숫자 가져오기
-						MemberDAO mbDAO = new MemberDAO();
-						ArrayList<MemberDTO> mblist = mbDAO.getList(list.get(i).getGroupID());
-						
-						//해당 그룹을 만든 유저 정보 가져오기
-						GroupDTO groupuser = new GroupDAO().getGroupVO(list.get(i).getGroupID());
-						//그룹을 생성한 유저인지 확인하기
-						boolean leader = userID.equals(groupuser.getUserID());
-						
-						//해당 그룹에 유저가 이미 가입했는지 확인
-						MemberDTO member = new MemberDAO().getMemberVO(userID, list.get(i).getGroupID());
-						//해당 그룹에 유저가 이미 탈퇴했는지 확인
-						MemberDTO memberDel = new MemberDAO().getMemberDelVO(userID, list.get(i).getGroupID());
+						GroupDAO groupDAO = new GroupDAO();
+						ArrayList<GroupDTO> list = groupDAO.getList();
+						int counter = 0;
+						for (int i = 0; i < list.size(); i++) {	
+						//int groupID = list.get(i).getGroupID();
 					%>
-					<div class="info-p"><a><%= mblist.size() %>명 / <%= list.get(i).getGroupNoP() %>명</a></div>
-				</div>
-			</div>
-  			<div class="group-inner-box">
-				<div class="access-group">
-				<% if(!userID.equals(list.get(i).getUserID())){%>
-					<button type="button" class="btn-blue" id="join-group-btn" value="그룹가입" onclick="joinGroup('<%=list.get(i).getGroupID()%>','<%= list.get(i).getGroupAvailable()%>','<%= mblist.size() %>','<%= list.get(i).getGroupNoP() %>','<%=member%>','<%=memberDel%>')">
-					<span>가입하기</span>
-					</button>
-				<%} %>
-					<button type="button" class="btn-blue" id="in-group-btn" value="그룹참가" onclick="showPasswordPrompt('<%=list.get(i).getGroupID()%>', '<%=list.get(i).getGroupPassword()%>','<%= list.get(i).getGroupAvailable()%>','<%=member%>','<%=leader%>','<%=memberDel%>')">
-					<span>접속하기</span>
-					</button>
-				</div>
-			</div>
-		</div>		
-		<% 
-      if (counter % 3 == 0) {
-        %>
-        </div>
-        
-        <%  
-      }
-    }
-    %>
-		
-</div>		
-</div>
-</div>	
+					<%
+					//group을 한개씩 출력할 때 마다 counter++ 해서 3개가 출력될 때 마다 group-row로 감싸도록 한다.
+					if (counter % 3 == 0) {
+			        %>
+			        <div class="group-row">
+			        <%
+			        } counter++;
+			        %>
+					<div class="group-box">
+						<div class="info-box">
+							<div style="">
+							<div class="info-title" id="in-group" style="font-size:30pt; font-weight: bold;">  
+				                <a>
+				                	<%=list.get(i).getGroupName().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%>
+				                </a>
+					        </div>
+							<% if(list.get(i).getGroupAvailable() == 1){%>
+							<div class="info-a">
+								<a>활동중</a>
+							</div>
+							<%}else{ %>
+							<div class="info-a" id="disable" style="background-color: black;">
+								<a>비활동중</a>
+							</div>
+							<%} %>
+							</div>
+							<div class="info-b">
+					 			<div class="info-l"><a>Leader  <%= list.get(i).getUserID() %></a></div>
+								<%
+									//그룹에 가입한 멤버숫자 가져오기
+									MemberDAO mbDAO = new MemberDAO();
+									ArrayList<MemberDTO> mblist = mbDAO.getList(list.get(i).getGroupID());
+									
+									//해당 그룹을 만든 유저 정보 가져오기
+									GroupDTO groupuser = new GroupDAO().getGroupVO(list.get(i).getGroupID());
+									//그룹을 생성한 유저인지 확인하기
+									boolean leader = userID.equals(groupuser.getUserID());
+									
+									//해당 그룹에 유저가 이미 가입했는지 확인
+									MemberDTO member = new MemberDAO().getMemberVO(userID, list.get(i).getGroupID());
+									//해당 그룹에 유저가 이미 탈퇴했는지 확인
+									MemberDTO memberDel = new MemberDAO().getMemberDelVO(userID, list.get(i).getGroupID());
+								%>
+								<div class="info-p"><a><%= mblist.size() %>명 / <%= list.get(i).getGroupNoP() %>명</a></div>
+							</div>
+						</div>
+			  			<div class="group-inner-box">
+							<div class="access-group">
+							<% if(!userID.equals(list.get(i).getUserID())){%>
+								<button type="button" class="btn-blue" id="join-group-btn" value="그룹가입" onclick="joinGroup('<%=list.get(i).getGroupID()%>','<%= list.get(i).getGroupAvailable()%>','<%= mblist.size() %>','<%= list.get(i).getGroupNoP() %>','<%=member%>','<%=memberDel%>')">
+								<span>가입하기</span>
+								</button>
+							<%} %>
+								<button type="button" class="btn-blue" id="in-group-btn" value="그룹참가" onclick="showPasswordPrompt('<%=list.get(i).getGroupID()%>', '<%=list.get(i).getGroupPassword()%>','<%= list.get(i).getGroupAvailable()%>','<%=member%>','<%=leader%>','<%=memberDel%>')">
+								<span>접속하기</span>
+								</button>
+							</div>
+						</div>
+					</div>		
+					<% 
+			      if (counter % 3 == 0) {
+			        %>
+			        </div>
+			        
+			        <%  
+			      }
+			    }
+			    %>
+					
+			</div>		
+		</div>
+	</div>	
 </section>
-<!--  
-  <div class="wrapper">
-    <section class="main">
-      <div class="first-container item">1</div>
-      <div class="second-container item">2</div>
-      <div class="third-container item">3</div>
-    </section>
-    <section class="aside">
-      <div class="first-sidebar side droppable"></div>
-      <div class="second-sidebar side droppable"></div>
-      <div class="third-sidebar side droppable"></div>
-      <div class="xxx-sidebar side droppable"></div>
 
-    </section>
-  </div>
--->
 <script>
 //텍스트 타이핑
 const content = "ALWAYS BETTER TOGETHER";
@@ -354,7 +339,7 @@ function typing() {
 	    i++;
     }
 }
-	setInterval(typing, 150)
+setInterval(typing, 150)
 </script>
 <script>
 //그룹 만들기 버튼 클릭시 그룹 팝업을 띄운다.

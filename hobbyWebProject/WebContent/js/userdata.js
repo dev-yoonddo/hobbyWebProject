@@ -159,6 +159,7 @@ $(document).ready(function(){
 	});
 	
 	//그룹 수신 메시지 더보기
+	
 	$('.showRcvGrMsg').hide();
     $('.showRcvGrMsg').slice(0, 5).show(); // 초기갯수
     $("#more-btn-msg").click(function(e){ // 클릭시 more

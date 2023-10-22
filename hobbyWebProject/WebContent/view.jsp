@@ -148,7 +148,9 @@ table caption{
 	margin: 0 auto;
 	padding-right: 10px;
 }
-
+.fa-heart{
+	cursor: pointer;
+}
 #cmt-btn{
 	width: 40px;
 	height: 20px;
@@ -375,9 +377,9 @@ String filename = board.getFilename();
 			<div class="row"><br>
 				<!-- 공지사항은 카테고리가 아닌 제목을 출력한다. -->
 				<% if(notice == true){%>
-				<a id="view-title"><%=board.getBoardTitle()%></a><br><br>
+					<a id="view-title"><%=board.getBoardTitle()%></a><br><br>
 				<%}else{%>
-				<a id="view-title"><%=board.getBoardCategory()%></a><br><br>
+					<a id="view-title"><%=board.getBoardCategory()%></a><br><br>
 				<%} %>
 				<div id="tb-top">
 					<div id="tb-top-1">
@@ -392,12 +394,11 @@ String filename = board.getFilename();
 							<div id="count">
 								<span>
 							
-								<%
-			                 	HeartDAO heartDAO = new HeartDAO();
-								ArrayList<HeartDTO> hearts = heartDAO.getHeartList(boardID);
-								
-								if (userID != null) {
+								<%	
+				                 	HeartDAO heartDAO = new HeartDAO();
+									ArrayList<HeartDTO> hearts = heartDAO.getHeartList(boardID);
 								    boolean heartMatch = false;
+								    if(userID != null){
 								    for (HeartDTO heart: hearts) {
 								    	//hearts 리스트안에 boardID와 userID값이 모두 일치하는 값이 있으면 해당 글에 이미 좋아요를 눌렀음을 의미한다.
 								        if (userID.equals(heart.getUserID()) && boardID == heart.getBoardID()) {
@@ -406,23 +407,18 @@ String filename = board.getFilename();
 								        }
 								        heartMatch = false;
 								    }
-								    if (heartMatch){ //heartMatch == true 이면 (이미 하트를 눌렀으면)
+								 	//userID == null 이거나 하트를 누르지 않았으면
+								    if(heartMatch){
+							    %>
+								    	<i id="heart2" class="fa-solid fa-heart"onclick="heartAction()"></i>&nbsp;<%=board.getHeartCount()%>
+								<%	//userID =! null 이고 하트를 이미 눌렀으면
+								    }
+								 	}else if(userID == null || !heartMatch){ 
 								%>
-								        <i id="heart2" class="fa-solid fa-heart"onclick="location.href='heartAction.jsp?boardID=<%=boardID%>'"></i>&nbsp;<%=board.getHeartCount()%>
-								<%
-								    } else {
-								%>
-								        <i id="heart1" class="fa-regular fa-heart" onclick="location.href='heartAction.jsp?boardID=<%=boardID%>'"></i>&nbsp;<%= board.getHeartCount()%>
+								 		<i id="heart1" class="fa-regular fa-heart" onclick="heartAction()"></i>&nbsp;<%= board.getHeartCount()%>
 								<%
 								    }
-								} else { //userID == null이면 id=noUser로 변경해 클릭했을때 로그인팝업을 생성하도록 한다.
 								%>
-								    <i id="noUser" class="fa-regular fa-heart"></i>&nbsp;<%= board.getHeartCount()%> 
-								<%
-								}
-								%>
-			                	
-								
 								</span>&nbsp;&nbsp;
 								<span><i class="fa-solid fa-eye"></i>&nbsp;<%=board.getViewCount()+1%></span>
 							</div>
@@ -430,20 +426,28 @@ String filename = board.getFilename();
 					</div>
 				</div>
 				<table id="view-table">
-					<!-- 공지사항이면 내용만 출력 -->
-					<% if(notice == true){ %>
+					<!-- 관리자가 작성한 공지사항이면 내용만 출력 -->
+					<% 
+						if(notice == true){
+					%>
 						<tr class="tr" id="tr3" height="75%" valign="top">
 							<td style="padding: 30px; word-break: break-all;" class="td-content"><%=board.getBoardContent().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></td>
 							<!-- 파일이 이미지일때만 서버에 업로드 된 파일 노출하기 -->
-							<%if(filename != null && (filename.endsWith(".jpg") || filename.endsWith(".JPG") || filename.endsWith(".jpeg") || filename.endsWith(".JPEG") || filename.endsWith(".png") || filename.endsWith(".PNG"))){%>
+					<%
+							if(filename != null && (filename.endsWith(".jpg") || filename.endsWith(".JPG") || filename.endsWith(".jpeg") || filename.endsWith(".JPEG") || filename.endsWith(".png") || filename.endsWith(".PNG"))){
+					%>
 							<td class="view-file" id="view-file-1" width="35%">
 								<button id="close-file" onclick="closeFile()">X</button>
 								<img src="/resources/fileupload/<%=filename%>" width="300px">
 							</td>
-							<%} %>
+					<%
+							} 
+					%>
 						</tr>
 					<!-- 기본 게시글 -->
-					<%}else{%>					
+					<%
+						}else{
+					%>					
 						<tr class="tr" id="tr1" height="150px" style="border-bottom: 1px solid #C0C0C0;">
 							<td class="td"><span>제목</span></td>
 							<td><%=board.getBoardTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></td>
@@ -453,16 +457,21 @@ String filename = board.getFilename();
 							<!-- 특수문자 처리 -->
 							<td class="td-content" style="word-break: break-all; margin: 10px;"><%=board.getBoardContent().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></td>
 							<!-- 파일이 이미지일때만 서버에 업로드 된 파일 노출하기 -->
-							<%if(filename != null && (filename.endsWith(".jpg") || filename.endsWith(".JPG") || filename.endsWith(".jpeg") || filename.endsWith(".JPEG") || filename.endsWith(".png") || filename.endsWith(".PNG"))){%>
+					<%
+							if(filename != null && (filename.endsWith(".jpg") || filename.endsWith(".JPG") || filename.endsWith(".jpeg") || filename.endsWith(".JPEG") || filename.endsWith(".png") || filename.endsWith(".PNG"))){
+					%>
 							<td class="view-file" id="view-file-1" width="35%">
 								<button id="close-file" onclick="closeFile()">X</button>
 								<img src="/resources/fileupload/<%=filename%>" width="300px">
 							</td>
-							<%} %>
+					<%
+							}
+					%>
 						</tr>
-					<%}%>
-					<!-- 공지사항을 포함한 모든 게시글의 화면이 작아지면 요소를 tr로 변경해준다.-->
-					<%if(filename != null && (filename.endsWith(".jpg") || filename.endsWith(".JPG") || filename.endsWith(".jpeg") || filename.endsWith(".JPEG") || filename.endsWith(".png") || filename.endsWith(".PNG"))){%>
+					<%
+						}
+					if(filename != null && (filename.endsWith(".jpg") || filename.endsWith(".JPG") || filename.endsWith(".jpeg") || filename.endsWith(".JPEG") || filename.endsWith(".png") || filename.endsWith(".PNG"))){
+					%><!-- 공지사항을 포함한 모든 게시글의 화면이 작아지면 요소를 tr로 변경해준다.-->
 						<tr class="tr" id="view-file-2" height="200px">
 							<td width="300px">
 								<img src="/resources/fileupload/<%=filename%>" >
@@ -474,6 +483,7 @@ String filename = board.getFilename();
 					<%}%>
 				</table>
 			</div><br>
+			
 			<div id="row2" >
 				<div id="fileList">
 					<span class="files">첨부 파일 :&nbsp;</span>
@@ -505,17 +515,22 @@ String filename = board.getFilename();
 					//} }
 					else{
 					%>
-					<span class="files">첨부된 파일이 없습니다.</span>
+						<span class="files">첨부된 파일이 없습니다.</span>
 					<%
 					}
 					%>
 				</div>
+				
 				<div id="btnList">
-				<%if(notice == true) { //공지사항은 카테고리가 NOTICE이기 때문에 경로를 community로 변경해준다. %>
+				<%
+					if(notice == true) { //공지사항은 카테고리가 NOTICE이기 때문에 경로를 community로 변경해준다.
+				%>
 					<button type="button" id="list" class="btn-blue" onclick="location.href='community'"><span>목록</span></button>			
-				<%}else{ //모든 사용자에게 목록 버튼 노출%>
+				<%
+					}else{ //모든 사용자에게 목록 버튼 노출
+				%>
 					<button type="button" id="list" class="btn-blue" onclick="location.href= 'searchPage?searchField2=<%=board.getBoardCategory()%>'"><span>목록</span></button>
-				<%} //로그인된 모든 유저에게 댓글쓰기 버튼 노출
+				<%	} //로그인된 모든 유저에게 댓글쓰기 버튼 노출
 					if(userID != null){
 				%>
 						<button type="button" class="btn-blue" id="cmt-write-btn" onclick="cmtAction()"><span>댓글쓰기</span></button>
@@ -533,36 +548,39 @@ String filename = board.getFilename();
 				%>
 				</div>
 			</div>
-			</div>
-			<%
-            	CommentDAO cmtDAO = new CommentDAO();
-            	ArrayList<CommentDTO> cmtlist = cmtDAO.getList(boardID);
-            %>
-			<h5 style="font-size: 15pt; color: #646464; float: left;">댓글 (<%= cmtlist.size() %>)<br></h5><hr id="cmt-line" style="width: 1000px;"><br>
-			
-            <!-- 답변쓰기 버튼을 눌렀을 때만 답변쓰기 섹션이 나타나도록 설정 -->
-			<div id="cmt-write" style="display: none; width: 600px; height: 220px;"> 
-		          <form method="post" action="commentAction.jsp?boardID=<%= boardID %>">
-			          <table class="cmt-table" style="height: 100px; border-style: none;">
-			             <tbody>
-			                <tr>
-			                   <td><input type="text" placeholder="댓글을 입력하세요" name="cmtContent" maxlength="60" style="width: 600px; height: 150px; font-size: 12pt;"></td>
-			                </tr>
-			             </tbody>
-			          </table>
-			      <button type="submit" class="btn-blue" id="cmt-cpl"><span>완료</span></button>
-			      </form>
-		   </div><br><br>	
-			<div class="cmt-view" style="height: auto;">
-	         	<div class="row" style="width: 600px; height: auto;">
-                    <%
-	                   for(int i=cmtlist.size()-1; i>=0; i--){ //거꾸로 출력
-	                %>
-	                <div class="cmt-list" style="width: 600px; height: 110px;">
-	                	<div style="display: flex;">
+		</div>
+		<%
+           	CommentDAO cmtDAO = new CommentDAO();
+           	ArrayList<CommentDTO> cmtlist = cmtDAO.getList(boardID);
+           %>
+		<h5 style="font-size: 15pt; color: #646464; float: left;">댓글 (<%= cmtlist.size() %>)<br></h5><hr id="cmt-line" style="width: 1000px;"><br>
+		
+        <!-- 답변쓰기 버튼을 눌렀을 때만 답변쓰기 섹션이 나타나도록 설정 -->
+		<div id="cmt-write" style="display: none; width: 600px; height: 220px;"> 
+	          <form method="post" action="commentAction.jsp?boardID=<%= boardID %>">
+		          <table class="cmt-table" style="height: 100px; border-style: none;">
+		             <tbody>
+		                <tr>
+		                   <td><input type="text" placeholder="댓글을 입력하세요" name="cmtContent" maxlength="60" style="width: 600px; height: 150px; font-size: 12pt;"></td>
+		                </tr>
+		             </tbody>
+		          </table>
+		      <button type="submit" class="btn-blue" id="cmt-cpl"><span>완료</span></button>
+		      </form>
+	   </div><br><br>
+	   
+	   <!-- 댓글 리스트 출력 -->
+		<div class="cmt-view" style="height: auto;">
+         	<div class="row" style="width: 600px; height: auto;">
+                   <%
+                   for(int i=cmtlist.size()-1; i>=0; i--){ //거꾸로 출력
+                %>
+                <div class="cmt-list" style="width: 600px; height: 110px;">
+                	<div style="display: flex;">
 		               	<div class="cmt-icon" style="justify-content: center; padding: 10px;">
-		               	<i style="font-size: 30pt;"class="fa-regular fa-face-smile"></i>
+		               		<i style="font-size: 30pt;"class="fa-regular fa-face-smile"></i>
 		               	</div>
+		               	
 		               	<table class="cmt-table" style="width: 600px;">
 		               		<tr style="height: 30px; table-layout:fixed; ">
 		               			<td align="left" style="width:30%;"><%= cmtlist.get(i).getUserID() %></td>
@@ -572,20 +590,20 @@ String filename = board.getFilename();
 		               			<td colspan="2"><%= cmtlist.get(i).getCmtContent() %></td>
 		               		</tr>		               		
 			           	</table>
-			           	</div>
-            			<%
-            				if(userID != null && userID.equals(cmtlist.get(i).getUserID()) || userID == ("admin")){
-            			%>
-            			<button type="button" class="btn-blue" id="cmt-btn" onclick="if(confirm('답글을 삭제하시겠습니까?')){location.href='commentDeleteAction.jsp?boardID=<%= boardID%>&cmtID=<%=cmtlist.get(i).getCmtID() %>'}"><span>삭제</span></button>
-            			<%
-            				}
-            			%>
-		           		</div>
-	                  <%
-	                     }
-	                  %>
-	         	</div>  
-	      	</div>
+		           	</div>
+           			<%
+           				if(userID != null && userID.equals(cmtlist.get(i).getUserID()) || userID == ("admin")){
+           			%>
+           			<button type="button" class="btn-blue" id="cmt-btn" onclick="if(confirm('답글을 삭제하시겠습니까?')){location.href='commentDeleteAction.jsp?boardID=<%= boardID%>&cmtID=<%=cmtlist.get(i).getCmtID() %>'}"><span>삭제</span></button>
+           			<%
+           				}
+           			%>
+	           		</div>
+                  <%
+                     }
+                  %>
+         	</div>  
+      	</div>
    </div>
 </section>
 <!-- section -->
@@ -603,22 +621,51 @@ String filename = board.getFilename();
 </footer>
 <!-- footer -->
 <script>
-$(function(){
-	$('#noUser').on('click',function(){
-	  var login = confirm('로그인을 해주세요');
-	  if (login) {
-	    window.open("loginPopUp", "Login", "width=500, height=550, top=50%, left=50%") ;
-	  }
-	  else {
-	  }
-	});
-});
 
 function cmtAction(){
 	document.getElementById('cmt-write').style.display = 'block';
 	document.getElementById('cmt-write-btn').style.display = 'none';
 }
-
+//하트 클릭 또는 취소완료시 count-item 부분만 새로고침
+function reloadHeart(){
+	$('#count-item').load(location.href+' #count-item');
+}
+//하트 클릭 또는 취소
+function heartAction(){
+	if(<%=userID%> == null){
+		var login = confirm('로그인을 해주세요');
+		if (login) {
+		  window.open("loginPopUp", "Login", "width=500, height=550, top=50%, left=50%") ;
+		}
+	}else{
+	var data = {
+          boardID: <%=boardID%>
+    };
+    $.ajax({
+        type: 'POST',
+        url: 'heartAction.jsp',
+        data: data,
+        success: function (response) {
+         	if(response.includes("userID null")){
+         		alert('로그인을 해주세요');
+         		window.open('loginPopUp', 'Login', 'width=450, height=500, top=50%, left=50%');
+       		}else if(response.includes("boardID null")){
+         		alert('로그인을 해주세요');
+       		}else if(response.includes("database error")){
+         		alert('데이터베이스 오류');
+       		}else{
+             //하트 클릭 또는 취소가 완료되면 그 부분만 새로고침
+           		reloadHeart();
+       		}
+        },
+        error: function (xhr, status, error) {
+            //console.error('Spot registration error:', error);
+            alert('좋아요 오류');
+        }
+    });
+	}
+	
+}
 //파일 다운로드 submit
 function submit(){
 	let form = document.getElementById("download_form"); //form sumbit을 위해 form id를 가져온다.

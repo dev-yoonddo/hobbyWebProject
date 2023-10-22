@@ -34,7 +34,7 @@ h3{
 	color: #2E2F49;
 }
 #sb{
-width: 100%;
+	swidth: 100%;
 }
 #sb span{
   padding-top: 15px;

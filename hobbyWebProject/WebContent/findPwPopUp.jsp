@@ -35,7 +35,7 @@
 }
 
 .category-sel{
-width: 400px;
+	width: 400px;
 
 }
 body{

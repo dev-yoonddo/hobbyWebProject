@@ -49,23 +49,20 @@ section{
 	<%
 		UserDAO userDAO = new UserDAO();
 		String userID = null;
-		//이메일 인증 여부 확인
 		if(session.getAttribute("userID") != null){
 			userID = (String) session.getAttribute("userID");
 		}
 		UserDTO user=new UserDAO().getUserVO(userID);
 		boolean emailChecked = user.isUserEmailChecked();
 
-		//System.out.println("----");
-		//System.out.println(userDAO.getUserEmail(userID));
-		//System.out.println("----");
 		if(userID == null){
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
 			script.println("alert('로그인이 필요합니다')");
 			script.println("window.open('loginPopUp', 'Login', 'width=450, height=500, top=50%, left=50%')");
 			script.println("</script>");
-		}else if(userDAO.getUserEmail(userID).equals("")){
+		//인증할 이메일 정보가 존재하지 않으면 팝업창 생성
+		}else if(userDAO.getUserEmail(userID).equals("") || userDAO.getUserEmail(userID) == null){
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
 			script.println("window.open('emailAdUpdatePopUp', 'Email', 'width=450, height=450, top=50%, left=50%')");
@@ -151,49 +148,9 @@ section{
 		
 	%>
 
-<div id="header" class="de-active">
-	<nav class="navbar">
-		<nav class="navbar_left">
-			<div class="navbar_logo">
-				<a href="mainPage" id="mainlogo" >TOGETHER</a>
-			</div>
-			<ul class="navbar_menu" style="float: left;">
-				<li><a href="community" class ="menu">COMMUNITY</a></li>
-				<% 
-					if(userID == null){
-				%>
-				<li><a id="go-group-1" class="menu">GROUP</a></li>
-				<%
-					} else { 
-				%>
-				<li><a id="go-group-2" class="menu" onclick="location.href='groupPage'">GROUP</a></li>
-				<%
-					}
-				%>
-				<li><a href="shop" class ="menu">SHOP</a></li>
-			</ul>
-		</nav>
-			<ul class="navbar_login" >
-				<%
-					if(userID == null){
-				%>	
-				<li><a href="login">LOGIN</a></li>
-				<li><a href="join">JOIN</a></li>
-				<%
-					}else{
-				%>
-				<li></li>
-				<li><a href="logout.jsp">LOGOUT</a></li>
-				<%
-					}
-				%>
-			</ul>
-			<a class="navbar_toggleBtn" id="toggleicon">
-				<i class="fa-solid fa-bars"></i>
-			</a>
-			<input type="checkbox" id="toggleDeActive" hidden="hidden">
-	</nav>
-</div>
+<header>
+	<jsp:include page="/header/header.jsp"/>
+</header>
 <section>
 	<div id="sendEmail">
 		이메일 주소 인증 메일이 발송되었습니다.<br>해당 이메일에 접속해 인증해주세요.
@@ -204,7 +161,7 @@ section{
 <%} %>
 </section>
 <script>
-//emailSendAction 버튼 클릭
+//emailSendAction 버튼 클릭시 이메일 인증이 완료된 상태면 userUpdate페이지로 이동하고 완료되지 않은 상태면 알림창을 띄운다.
 function successEmail(sc){
 	console.log(sc);
 	if(sc == 'true'){
@@ -214,13 +171,13 @@ function successEmail(sc){
 		return false;
 	}
 }
-</script>
-<script>
+
 function reload(){
 	window.location.reload();
 }
 <%if(userID != null && !userDAO.getUserEmail(userID).equals("") && emailChecked == false){%>
-	//로그인되면 10초에 한번씩 페이지 새로고침
+	//로그인이 되고 이메일 정보가 존재하고 이메일 인증이 아직 완료되지 않았으면 10초마다 새로고침한다
+	//(이메일 정보가 존재하지 않을 때 띄워지는 팝업도 함께 새로고침 되는것을 방지)
 	setInterval(reload, 10000);
 <%}%>
 

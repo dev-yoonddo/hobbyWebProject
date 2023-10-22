@@ -72,9 +72,14 @@ String msg = eventDAO.getEventVO(userID).getEventWinMsg().replaceAll(" ", "&nbsp
 	</div>
 <script>
 function eventMsgExit(){
-   	window.open('eventMsgExit', '', 'width=100, height=100, top=50%, left=50%');
-   	self.close(); //이전 팝업 닫기
-}
+	var result = "<%=eventDAO.raffleMsgExit(userID)%>";
+	if(result == "-1"){
+		alert('데이터베이스 오류');
+		history.back();
+	}else{
+	   	self.close(); //팝업 닫기
+	}
+s}
 </script>
 </body>
 </html>

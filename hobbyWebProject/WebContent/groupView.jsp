@@ -88,8 +88,8 @@ h2{
 }
 /* 가입리스트 애니메이션 */
 @keyframes marquee {
-  from { transform: translateY(20%); }
-  to { transform: translateY(-100%); }
+	from { transform: translateY(20%); }
+	to { transform: translateY(-100%); }
 }
 .btn-blue{
 	width: 100px;
@@ -411,6 +411,7 @@ h2{
 </style>
 <body>
 <%
+PrintWriter script = response.getWriter();
 //userID 가져오기
 String userID = null;
 if(session.getAttribute("userID") != null){
@@ -423,7 +424,6 @@ if(request.getParameter("groupID") != null){
 }
 
 if(userID == null){
-	PrintWriter script = response.getWriter();
 	script.println("<script>");
 	script.println("alert('로그인이 필요합니다.')");
 	script.println("window.open('loginPopUp', 'Login', 'width=450, height=500, top=50%, left=50%')");
@@ -431,7 +431,6 @@ if(userID == null){
 }
 //유효하지 않은 그룹일때
 if(groupID == 0){
-	PrintWriter script = response.getWriter();
 	script.println("<script>");
 	script.println("alert('해당 그룹이 존재하지 않습니다.')");
 	script.println("location.href = 'groupPage'");
@@ -446,7 +445,6 @@ MemberDTO member = new MemberDAO().getMemberVO(userID, groupID); //현재 로그
 ChatDTO chat = new ChatDAO().getChatVO(groupID);
 
 if(group.getGroupAvailable() == 0){
-	PrintWriter script = response.getWriter();
 	script.println("<script>");
 	script.println("alert('비활동중인 그룹입니다.')");
 	script.println("history.back()");
@@ -457,7 +455,6 @@ boolean leader = userID.equals(group.getUserID());
 	if(!leader){
 		//접속하는 userID의 데이터가 member에 없으면
 		if( member == null){
-		PrintWriter script = response.getWriter();
 		script.println("<script>");
 		script.println("alert('가입하지 않은 회원입니다.')");
 		script.println("location.href = 'groupPage'");
@@ -465,7 +462,6 @@ boolean leader = userID.equals(group.getUserID());
 		}
 		//데이터는 있지만 available값이 0이면
 		if( member.getMbAvailable() == 0){ //탈퇴한 회원이기때문에 접속 불가능
-		PrintWriter script = response.getWriter();
 		script.println("<script>");
 		script.println("alert('탈퇴한 회원입니다.')");
 		script.println("location.href = 'groupPage'");
@@ -473,10 +469,9 @@ boolean leader = userID.equals(group.getUserID());
 		}
 	}
 
-
 ArrayList<MemberDTO> mblist = mbDAO.getList(groupID); //해당 그룹의 멤버리스트 가져오기
 ArrayList<ChatDTO> chatlist = chatDAO.getChatList(groupID); //해당 그룹의 채팅리스트 가져오기
-int chatsize = chatlist.size();
+int chatsize = chatlist.size(); 
 %>
 
 <!-- header -->
@@ -580,40 +575,56 @@ int chatsize = chatlist.size();
 				<div id="chatView">
 				<% if(chatlist.size() == 0){ %>
 					<h3> 멤버들과 대화를 시작해보세요 !</h3>
-				<%}else{ %>
-					<%
+				<%
+					}else{
+
 						for(int i = 0; i < chatlist.size(); i++){
 					        MemberDTO mbID = mbDAO.getMemberVO(chatlist.get(i).getUserID(), chatlist.get(i).getGroupID());
-					%>
+				%>
 							<div id="chatList">
 								<%
 									boolean userChat = chatlist.get(i).getUserID().equals(userID);
+									//내가 전송한 채팅은 왼쪽에, 다른 사용자가 전송한 채팅은 오른쪽에 위치시킨다.
 									if(!userChat){
 								%>
-								<div id="chat" style="float: right;">
-								<%}else{ %>
-								<div id="chat" style="float: left;">
+									<div id="chat" style="float: right;">
+								<%
+									}else{
+								%>
+									<div id="chat" style="float: left;">
 								<%} %>
+									<!-- 채팅 상단 (닉네임, 날짜 출력) -->
 									<div id="chat-head">
-									<%if(group.getUserID().equals(chatlist.get(i).getUserID())){ %>
+									<%
+										if(group.getUserID().equals(chatlist.get(i).getUserID())){
+									%>
 										<span style="font-weight: bold;">리더</span>
-									<%}else{%>
-										<% if(mbID.getMbAvailable() == 0 || chatlist.get(i).getChatAvailable() == 0){ //탈퇴한 회원이거나 그룹탈퇴한 회원이면%>
+									<%
+										}else{ //탈퇴한 회원이거나 그룹탈퇴한 회원이면
+										if(mbID.getMbAvailable() == 0 || chatlist.get(i).getChatAvailable() == 0){ %>
 											<span>탈퇴한 회원</span>										
-										
-										<%}else{ %>
+									<%
+										}else{
+									%>
 											<span><%= mbID.getMemberID()%></span>
-										<%}
-									}%>
+									<%
+											}
+										}
+									%>
 										<span id="large" ><%= chatlist.get(i).getChatDate().substring(0,11)+chatlist.get(i).getChatDate().substring(11,13)+"시"+chatlist.get(i).getChatDate().substring(14,16)+"분" %></span>
 										<!-- 화면이 작아지면 시간은 뺀다 -->
 										<span id="small" ><%= chatlist.get(i).getChatDate().substring(0,11)%></span>
 									</div>
 									
+									<!-- 채팅 하단 (채팅 내용 출력) -->
 									<div id="chat-content">
-									<%if(mbID != null && mbID.getMbAvailable() == 0 || chatlist.get(i).getChatAvailable() == 0){ //리더가 아니고 (mbID != null) 회원탈퇴 또는 그룹탈퇴했으면 삭제된 메시지로 출력%>
+									<%
+										if(mbID != null && mbID.getMbAvailable() == 0 || chatlist.get(i).getChatAvailable() == 0){ //리더가 아니고 (mbID != null) 회원탈퇴 또는 그룹탈퇴했으면 삭제된 메시지로 출력
+									%>
 										<span>삭제된 메시지입니다.</span>
-									<%}else{ //리더이거나 (mbID == null) 회원탈퇴, 그룹탈퇴 하지 않은 멤버의 메시지 출력%>
+									<%
+										}else{ //리더이거나 (mbID == null) 회원탈퇴, 그룹탈퇴 하지 않은 멤버의 메시지 출력
+									%>
 										<%= chatlist.get(i).getChatContent() %>
 									<%} %>
 									</div>
@@ -630,7 +641,7 @@ int chatsize = chatlist.size();
 				</div>
 			</div>
 
-			<!-- 채팅 전송 -->
+			<!-- 채팅 입력 -->
 			<div class="group-bottom">
 				<div id="chatSend">
 			        <textarea id="chatText" placeholder="채팅 내용을 입력하세요" maxlength="300"></textarea>
@@ -668,14 +679,13 @@ function ntcAction(){
 </script>
 
 <script>
-//채팅입력 후 엔터키 클릭
+//채팅입력 후 엔터키 클릭, 전송버튼 클릭시 registChat() 실행
 $('#chatText').on('keydown', function(e) {
     var keyCode = e.which;
     if (keyCode === 13) { // Enter Key
         registChat($('#chatText').val(), userID, groupID);
     }
 });
-//채팅입력 후 전송버튼 클릭
 $('#submit').on('click', function(e) {
     e.preventDefault();
 	registChat($('#chatText').val() , userID, groupID);
@@ -692,7 +702,7 @@ function reloadChat(){
 	noticeAction($('#text-notice').val() , groupID);
 });*/
 
-//공지사항 등록이 완료되면 공지, 채팅 부분 새로고침
+//공지사항 등록이 완료되면 공지부분만 새로고침
 function reloadNotice(){
 	$('#info').load(location.href+' #info');
 	$('#notice').load(location.href+' #notice');
@@ -708,8 +718,7 @@ function noticeAction(){
 	else if(userID == null){
 		alert('로그인이 필요합니다.');
 		window.open('loginPopUp', 'Login', 'width=450, height=500, top=50%, left=50%');
-	}else{
-		
+	}else{		
 		var data = {
 	            content: value,
 	            groupID: groupID
@@ -751,7 +760,6 @@ setInterval(function () { //1초마다 데이터베이스에서 해당그룹의 
    };
     $.ajax({
         type: 'GET',
-        //url: 'https://toogether.me/getLatestChatMessage',
         url: 'getNewChatMessage',
         data: data1,
         success: function (size) {
@@ -762,7 +770,6 @@ setInterval(function () { //1초마다 데이터베이스에서 해당그룹의 
             	//console.log(chatsize1);
             	//console.log(chatsize2);
            	}else{ //리스트 사이즈가 같으면 새로고침 하지 않는다.
-            	//console.log(chatsize1==chatsize2);
            	}
         },
         error: function (xhr, status, error) {
@@ -771,41 +778,7 @@ setInterval(function () { //1초마다 데이터베이스에서 해당그룹의 
     });
 }, 1000); 
 
-//마지막 유저 이름을 가져와서 본인이 아닌 사용자가 마지막으로 채팅을 입력했을때만
-//새로고침하는 이 방법은 채팅창의 윗부분을 볼 때 새로고침되는 오류가 생겨 사용하기 어렵다.
-/*setInterval(function () {
-	   var data1 = {
-		  userID: userID,
-	      groupID: groupID
-	   };
-	    $.ajax({
-	        type: 'GET',
-	        //url: 'https://toogether.me/getLatestChatMessage',
-	        url: 'getLatestChatMessage',
-	        data: data1,
-	        success: function (latestMessage) {
-	            if(latestMessage.includes("no user")){
-	            	console.log("데이터베이스 오류");
-	            	//alert('로그인이 필요합니다');
-	            	//window.open('loginPopUp', 'Login', 'width=450, height=500, top=50%, left=50%');
-	            }else if(latestMessage.includes("empty")){
-	            	console.log('채팅 데이터가 없습니다');
-	            }else if(latestMessage.includes("mismatch")) {
-	            	//console.log("불일치");
-	            	//1초마다 채팅리스트 데이터에 마지막으로 채팅을 전송한 유저와 로그인 유저가 일치하는지
-	            	//구해서 불일치하면 채팅창을 새로고침한다.
-	                reloadChat();
-	            }else{
-	            	//console.log("마지막 채팅전송 유저 일치");
-	            }
-	        },
-	        error: function (xhr, status, error) {
-	            console.error('Error fetching latest chat message:', error);
-	        }
-	    });
-	}, 1000);*/
-	
-	
+//채팅 입력	
 function registChat(value, userID, groupID){
 	if(groupID == null || groupID == 0){
 		alert('그룹 오류입니다.');
@@ -822,26 +795,22 @@ function registChat(value, userID, groupID){
        };
        $.ajax({
            type: 'POST',
-           //url: 'https://toogether.me/chatSendAction',
            url: 'chatSendAction',
            data: data2,
            success: function (response) {
-           	if(response.includes("null userID")){
-           		alert('로그인을 해주세요');
-           		window.open('loginPopUp', 'Login', 'width=450, height=500, top=50%, left=50%');
-           	}else if(response.includes("Information Error")){
-           		alert('정보 오류');
-           	}else if(response.includes("none")){
-           		alert('채팅을 입력하세요');
-           	}else if(response.includes("Database Error")){
-           		alert('데이터베이스 오류');
+	           	if(response.includes("null userID")){
+	           		alert('로그인을 해주세요');
+	           		window.open('loginPopUp', 'Login', 'width=450, height=500, top=50%, left=50%');
+	           	}else if(response.includes("Information Error")){
+	           		alert('정보 오류');
+	           	}else if(response.includes("none")){
+	           		alert('채팅을 입력하세요');
+	           	}else if(response.includes("Database Error")){
+	           		alert('데이터베이스 오류');
           		}else{
-                //console.log('Spot registration successful:', response);
-                //alert('완료');
+                //채팅이 정상적으로 전송되면 채팅을 새로고침하고 입력창을 비운다.
                	reloadChat();
-              	//채팅 입력창을 비운다.
             	$('#chatText').val('');
-                //console.log(data);
           		}
            },
            error: function (xhr, status, error) {
@@ -853,8 +822,6 @@ function registChat(value, userID, groupID){
 	
 }
 
-</script>
-<script>
 opener.location.reload(); //부모창 리프레쉬
 self.close(); // 팝업 창 닫기
 </script>

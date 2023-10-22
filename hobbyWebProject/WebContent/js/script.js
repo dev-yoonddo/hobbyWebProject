@@ -7,89 +7,15 @@ $(function(){
     var login = confirm('로그인이 필요합니다');
     if (login) {
       window.open("loginPopUp", "Login", "width=500, height=550, top=50%, left=50%");
+    }else{
+    	
     }
-    else {
-    }
-    });
-  $('#go-spot-1').on('click',function(){
-    var login = confirm('로그인이 필요합니다');
-    if (login) {
-      window.open("loginPopUp", "Login", "width=500, height=550, top=50%, left=50%");
-    }
-    else {
-    }
-    });
+  });
 });
  
-//loginPopUp 페이지에서 회원가입을 클릭했을때
 
-
-//// 그룹 생성하기를 클릭했을때
-//$(function(){
-//  $('#create-group').on('click',function(){
-//      window.open("groupPopUp", "CREATE", "width=500, height=500, top=50%, left=50%");
-//    });
-//});
-// $(function(){
-//   $('#join-group-btn').on('click',function(){
-//     var groupID = '<%= list.get(i).getGroupID() %>';
-//     var groupAvailable = '<%= list.get(i).getGroupAvailable() %>';
-//     if(groupAvailable == 1){
-//       var joinGroup = confirm('가입 하시겠습니까?');
-//       if (joinGroup) {
-//         window.open("groupJoinPopUp.jsp?groupID=" + groupID , "Join", "width=450, height=450, top=50%, left=50%") ;
-//       }
-//       else {
-//         location.href='history.back()';
-//       }
-//     }else{
-//       alert("비활동 중인 그룹입니다.");
-//     }
-//   })
-// });
-
-//마우스 커서 이벤트 ------
-let a = document.createElement('div');
-let header = document.getElementById('header');
-//모든 페이지에 <div class="cursor"> 삽입
-a.setAttribute("class","cursor");
-header.appendChild(a);
-
-let mouseCursor = document.querySelector(".cursor");
-//window 객체에 scroll & mouse 이벤트를 추가하고 cursor함수 실행되도록 함
-window.addEventListener("scroll", cursor);
-window.addEventListener("mousemove", cursor);
-//커스텀 커서의 left값과 top값을 커서의 XY좌표값과 일치시킴
-function cursor(e) {
-mouseCursor.style.left = e.pageX + "px";
-mouseCursor.style.top = e.pageY - scrollY + "px";
-}
 // ------------------------
 
-// $(function loginPU(){
-// 		var login = confirm('로그인시 이용이 가능합니다. 로그인 페이지로 이동하시겠습니까?');
-// 		if (login) {
-// 			window.open("login", "Login", "width=410, height=400, top=50%, left=50%") ;
-//     }
-// 		else {
-// 			location.href='mainPage';
-// 		}
-// });
-
- 
-// $(function(){
-//     $("#go-qna").on('click', function(){
-//       var login = confirm('로그인시 이용이 가능합니다. 로그인 페이지로 이동하시겠습니까?');
-//       if (login) {
-//         window.open("login", "Login", "width=410, height=400, top=50%, left=50%") ;
-//       }
-//       else {
-//         location.href='mainPage';
-//       }
-//     });
-// });
-
-  
 /*
 //navbar togglebuttton 눌렀을 때 메뉴 펼치고 접기
 const toggleBtn = document.querySelector('.navbar_toggleBtn');
@@ -192,6 +118,23 @@ function hasScrolled() {
 
 */
 
+//마우스 커서 이벤트 ------
+let a = document.createElement('div');
+let header = document.getElementById('header');
+//모든 페이지에 <div class="cursor"> 삽입
+a.setAttribute("class","cursor");
+header.appendChild(a);
+
+let mouseCursor = document.querySelector(".cursor");
+//window 객체에 scroll & mouse 이벤트를 추가하고 cursor함수 실행되도록 함
+window.addEventListener("scroll", cursor);
+window.addEventListener("mousemove", cursor);
+//커스텀 커서의 left값과 top값을 커서의 XY좌표값과 일치시킴
+function cursor(e) {
+mouseCursor.style.left = e.pageX + "px";
+mouseCursor.style.top = e.pageY - scrollY + "px";
+}
+// ------------------
 
 //mainPage 슬라이드
 var btn = document.querySelectorAll('.arrowBtn')
@@ -248,6 +191,7 @@ function autoPlay() {
   }  
 }
 var play = setInterval(autoPlay, 5000)
+//------------------
 
 // mainPage 오른쪽 스크롤버튼
 
@@ -270,6 +214,7 @@ $(function(){
       window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
     });
 });
+//------------------
 
 //userUpdate 페이지
 //select box 클릭하면 접고 펼치기
@@ -293,6 +238,7 @@ for (var i = 0; i < optionList.length; i++) {
   var option = optionList[i];
   option.addEventListener("click", onClickOption);
  }
+//------------------
 
 //메시지 리스트에서 제목을 클릭하면 해당 메시지 상세보기 팝업이 열린다.
 function viewMsg(msgID){

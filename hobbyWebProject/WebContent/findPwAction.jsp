@@ -25,32 +25,31 @@
 </head>
 <body>
 	<%
+		PrintWriter script = response.getWriter();
 		String userID = null;
-			if(session.getAttribute("userID") != null){
-		userID = (String) session.getAttribute("userID");
-			}
-			if(userID == null){
-		PrintWriter script = response.getWriter();
-		script.println("<script>");
-		script.println("alert('로그인이 필요합니다')");
-		script.println("self.close()");
-		script.println("opener.location.href='login'");
-		script.println("</script>");
-			}
-			//groupID 가져오기
-			int groupID = 0;
-			if(request.getParameter("groupID") != null){
-		groupID = Integer.parseInt(request.getParameter("groupID"));
-			}
-			GroupDAO group = new GroupDAO();
-			int groupActive = group.getGroupVO(groupID).getGroupAvailable();
-			if(groupActive == 0){
-		PrintWriter script = response.getWriter();
-		script.println("<script>");
-		script.println("alert('비활동중인 그룹입니다.')");
-		script.println("self.close()");
-		script.println("</script>");
-			}else{
+		if(session.getAttribute("userID") != null){
+			userID = (String) session.getAttribute("userID");
+		}
+		if(userID == null){
+			script.println("<script>");
+			script.println("alert('로그인이 필요합니다')");
+			script.println("self.close()");
+			script.println("opener.location.href='login'");
+			script.println("</script>");
+		}
+		//groupID 가져오기
+		int groupID = 0;
+		if(request.getParameter("groupID") != null){
+			groupID = Integer.parseInt(request.getParameter("groupID"));
+		}
+		GroupDAO group = new GroupDAO();
+		int groupActive = group.getGroupVO(groupID).getGroupAvailable();
+		if(groupActive == 0){
+			script.println("<script>");
+			script.println("alert('비활동중인 그룹입니다.')");
+			script.println("self.close()");
+			script.println("</script>");
+		}else{
 		UserDAO userDAO = new UserDAO();
 		//회원 비밀번호를 가져온다.
 		String userPW = userDAO.getUserVO(userID).getUserPassword();
@@ -60,25 +59,21 @@
 		String userPhone = userDAO.getUserVO(userID).getUserPhone();
 		//입력한 정보 검사
 		if(user.getUserPhone() == null) {
-			PrintWriter script = response.getWriter();
 			script.println("<script>");
 			script.println("alert('핸드폰 번호를 입력해주세요')");
 			script.println("history.back()");
 			script.println("</script>");
 		}else if(!userPhone.equals(user.getUserPhone())){ //회원 전화번호가 일치하는지 검사
-			PrintWriter script = response.getWriter();
 			script.println("<script>");
 			script.println("alert('핸드폰 번호가 일치하지 않습니다.')");
 			script.println("history.back()");
 			script.println("</script>");
 		}else if(user.getUserPassword() == null) {
-			PrintWriter script = response.getWriter();
 			script.println("<script>");
 			script.println("alert('회원 비밀번호를 입력해주세요')");
 			script.println("history.back()");
 			script.println("</script>");
 		}else if(!userPW.equals(inputPW)) { //회원 비밀번호가 일치하는지 검사
-			PrintWriter script = response.getWriter();
 			script.println("<script>");
 			script.println("alert('비밀번호가 일치하지 않습니다')");
 			script.println("history.back()");
@@ -86,7 +81,6 @@
 		}else{
 			String groupPW = group.getGroupVO(groupID).getGroupPassword();
 			//모든 검사 완료시 비밀번호 알려주기
-			PrintWriter script = response.getWriter();
 			script.println("<script>");
 			script.println("alert('비밀번호는 " + groupPW + " 입니다.')");
 			script.println("self.close()");

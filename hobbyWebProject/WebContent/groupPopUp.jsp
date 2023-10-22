@@ -28,23 +28,22 @@ h2{
 	color: #2E2F49;
 }
 #sb{
-width: 100%;
+	width: 100%;
 }
 #sb span{
-color: #ffffff;
-  background-color: #2E2F49;
-  border: 1px solid #2E2F49;
-  padding-top: 15px;
-  padding-bottom: 15px;
-  
+	color: #ffffff;
+  	background-color: #2E2F49;
+	border: 1px solid #2E2F49;
+	padding-top: 15px;
+	padding-bottom: 15px; 
 }
 #sb::before {
-  background-color: #2E2F49;
+	background-color: #2E2F49;
 }
 
 #sb span:hover {
-  color: #2E2F49;
-  background-color: #ffffff;
+	color: #2E2F49;
+	background-color: #ffffff;
 }
   
 #createGroup{
