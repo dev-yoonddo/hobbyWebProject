@@ -31,7 +31,7 @@
 
 ### Database ERD
 
-![ERD](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/259992c2-eaaf-42b5-8941-b3ebe2ef31ba)
+![ERD](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/85a42eea-260b-426b-9696-5924f4ad9cf3)
 
 <br><br>
 
@@ -1446,19 +1446,63 @@
 
 <br><br>
 
-### ⚙ 스팟 가입, 생성자 여부 검사 후 가입 완료
+---
+
+<br><br>
+
+# - 스팟등록 및 가입 📍
+
+<br><br>
+
+### ⚙ 가입완료시 접속 여부를 묻는 알림창이 생성되고 스팟 생성자와 기존 가입자는 바로 접속
+
+<br>
+
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/665906f8-a729-412b-ad8f-f7f0d7e09cd3.PNG" width="47%">
+
+<br><br>
+
+### ⚙ 스케줄 등록을 원하는 날짜 클릭시 버튼 생성
 
 <br>
 
 <div style="display: flex;">
-<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/de6eb8f0-36c5-4154-bf6a-a538bfef9ccf.PNG" width="47%">
-<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/9f7fb0a0-236b-4d7e-b66b-14f491c20f9b.PNG" width="47%">
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/61a3cdec-8057-44a6-87b9-eb835a7d5899.PNG" width="47%">
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/9e56f8cf-7b34-4b2c-a51f-512100a094e5.PNG" width="47%">
 </div>
 
-<div style="display: flex;">
-<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/8da6b083-74f6-44a5-a0c7-e4d2c1f667b2.PNG" width="47%">
-<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/b1bc0b62-2217-4755-8ffb-544ea1be8ea3.PNG" width="47%">
-</div>
+<br><br>
+
+### ⚙ 스케줄 등록 버튼 클릭시 팝업 생성
+
+<br>
+
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/14f32055-ba80-4014-b93c-700927c7e41a.PNG" width="47%">
+
+<br>
+
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/97bd9449-ec0c-47b1-b3f8-872fb324f708.PNG" width="47%">
+
+<br><br>
+
+### ⚙ 스케줄 내용 입력 후 확인 클릭시 해당날짜에 아이콘 생성
+
+<br>
+
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/e4039ef2-8ef8-421e-91aa-75319909eb07.PNG" width="47%">
+
+<br><br>
+
+### ⚙ 스케줄 확인 클릭시 등록된 스케줄 출력
+
+<br>
+
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/c2829222-8ad7-4059-a3d0-f003377431a8.PNG" width="47%">
+
+<br>
+
+<img src="https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/95762c69-8bbd-4926-b03d-87bb3a59fa47.PNG" width="47%">
+
 
 <br><br>
 
