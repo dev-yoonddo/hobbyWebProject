@@ -7,10 +7,6 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>Regist</title>
-</head>
 <body>
 <%
 	PrintWriter script = response.getWriter();
@@ -21,8 +17,10 @@
 	double longitude = 0;
 	String spName = null;
 	String spAd = null;
+	
 	LocationDAO locDAO = new LocationDAO();
 	ArrayList<LocationDTO> list = locDAO.getNameAdList();
+	
 	if(session.getAttribute("userID") != null){
 		userID = (String) session.getAttribute("userID");
 	}
@@ -38,17 +36,12 @@
 	if(request.getParameter("longitude") != null){
 		longitude = Double.parseDouble(request.getParameter("longitude"));
 	}
-	//System.out.println(spotName);
-	//System.out.println(address);
-	//System.out.println(latitude);
-	//System.out.println(longitude);
+
 	if(userID == null){
-		script.println("<script>");
-		script.println("alert('로그인이 필요합니다.')");
-		script.println("window.open('loginPopUp', 'Login', 'width=450, height=500, top=50%, left=50%')");
-		script.println("</script>");
+		script.print("null userID");
+        script.flush();
 	}
-	if(userID == null || spotName == null || address == null || latitude == 0 || longitude == 0){
+	if(spotName == null || address == null || latitude == 0 || longitude == 0){
 		script.print("Information Error");
         script.flush();
 	}else{
@@ -81,7 +74,7 @@
 			}
 		}		
 	}
-		
+	script.close();
 %>
 </body>
 </html>

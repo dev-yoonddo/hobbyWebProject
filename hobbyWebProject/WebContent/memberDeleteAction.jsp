@@ -14,18 +14,14 @@
 
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
 <body>
 	<%
+		PrintWriter script = response.getWriter();
 		String userID = null;
 		if(session.getAttribute("userID")!=null){
-		userID=(String)session.getAttribute("userID");
+			userID=(String)session.getAttribute("userID");
 		}
 		if(userID == null){
-			PrintWriter script = response.getWriter();
 			script.println("<script>");
 			script.println("alert('로그인이 필요합니다.')");
 			script.println("window.open('loginPopUp', 'Login', 'width=500, height=550, top=50%, left=50%')");
@@ -41,16 +37,14 @@
 		MemberDAO memberDAO = new MemberDAO();
 		int result = memberDAO.delete(memberID, userID, groupID);
 		if(result == -1){//데이터 베이스 오류
-			PrintWriter script=response.getWriter();
 			script.println("<script>");
 			script.println("alert('탈퇴에 실패했습니다.')");
 			script.println("history.back()");
 			script.println("</script>");
 		}
 		else{
-			PrintWriter script=response.getWriter();
 			script.println("<script>");
-			script.println("alert('탈퇴에 성공했습니다.')");
+			script.println("alert('탈퇴 완료되었습니다.')");
 			script.println("location.href='groupPage'");	
 			script.println("</script>");
 		}

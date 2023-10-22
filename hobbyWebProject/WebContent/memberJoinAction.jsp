@@ -13,18 +13,14 @@
 <jsp:setProperty name="member" property="mbAvailable" />
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>JSP 게시판 웹 사이트</title>
-</head>
 <body>
 	<%
+		PrintWriter script = response.getWriter();
 		String userID = null;
 		if(session.getAttribute("userID") != null){
 			userID = (String) session.getAttribute("userID");
 		}
 		if(userID == null){
-			PrintWriter script = response.getWriter();
 			script.println("<script>");
 			script.println("alert('로그인이 필요합니다.')");
 			script.println("window.open('loginPopUp', 'Login', 'width=450, height=500, top=50%, left=50%')");
@@ -35,14 +31,12 @@
 		 		groupID = Integer.parseInt(request.getParameter("groupID"));
 		 	}
 		 	if (groupID == 0){
-		 		PrintWriter script = response.getWriter();
 		 		script.println("<script>");
 		 		script.println("alert('유효하지 않은 그룹입니다.')");
 		 		script.println("history.back()");
 		 		script.println("</script>");
 		 	}
 			if(member.getMemberID() == null || member.getMbContent() == null) {
-				PrintWriter script = response.getWriter();
 				script.println("<script>");
 				script.println("alert('입력이 안된 사항이 있습니다.')");
 				script.println("history.back()");
@@ -54,7 +48,6 @@
 			String pw = groupDAO.getGroupVO(groupID).getGroupPassword();
 			//해당group을 만든 userID와 가입하려는 userID가 같으면 가입할 수 없도록 한다.
 			if(userID.equals(groupDAO.getGroupVO(groupID).getUserID())){
-				PrintWriter script = response.getWriter();
 				script.println("<script>");
 				script.println("alert('유효한 가입 대상이 아닙니다.')");
 				script.println("history.back()");
@@ -73,7 +66,6 @@
 					if(memberDAO.getMemberVO(userID, groupID) != null){
 						//데이터가 있지만 available값이 0이면 탈퇴한 회원
 						if(memberDAO.getMemberVO(userID, groupID).getMbAvailable() == 0){
-							PrintWriter script = response.getWriter();
 							script.println("<script>");
 							script.println("alert('탈퇴한 회원은 재가입이 불가능합니다.')");
 							script.println("history.back()");
@@ -90,14 +82,12 @@
 					}else{
 						int result = memberDAO.join(member.getMemberID(), groupID, userID, member.getMbContent());
 						if(result == -1){ //데이터베이스 오류
-							PrintWriter script = response.getWriter();
 							script.println("<script>");
 							script.println("alert('이미 사용중인 ID입니다.')");
 							script.println("history.back()");
 							script.println("</script>");
 						}
 						else {
-							PrintWriter script = response.getWriter();
 							script.println("<script>");
 							script.println("alert('가입이 완료되었습니다. 비밀번호는" + pw + "입니다')");
 							script.println("location.href = 'groupPage'");

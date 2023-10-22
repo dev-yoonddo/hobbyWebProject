@@ -310,12 +310,12 @@ span{
 </style>
 <body>
 <%
+	PrintWriter script = response.getWriter();
 	String userID=null;
 	if(session.getAttribute("userID")!=null){
 		userID=(String)session.getAttribute("userID");
 	}
 	if(userID == null){
-		PrintWriter script = response.getWriter();
 		script.println("<script>");
 		script.println("alert('로그인이 필요합니다.')");
 		script.println("window.open('loginPopUp', 'Login', 'width=500, height=550, top=50%, left=50%')");
@@ -326,7 +326,6 @@ span{
 	 //하나의 유저 정보 가져오기
 	UserDTO user=new UserDAO().getUserVO(userID);
 	if(user.isUserEmailChecked() == false){
-		PrintWriter script = response.getWriter();
 		script.println("<script>");
 		script.println("alert('이메일 인증이 필요합니다.')");
 		script.println("location.href='emailSendAction'");
@@ -427,8 +426,8 @@ span{
 		<div>
 			<h2>데이터 관리하기</h2>
 			<%
-			BoardDAO boardDAO = new BoardDAO();
-			ArrayList<BoardDTO> list = boardDAO.getListByUser(userID);
+				BoardDAO boardDAO = new BoardDAO();
+				ArrayList<BoardDTO> list = boardDAO.getListByUser(userID);
 			%>
 			<div class="userDataBoard">
 			<!-- 내가 작성한 글 목록 -->
@@ -448,7 +447,9 @@ span{
 							</tr>
 						</thead>
 						<!-- 작성한 글이 0개이면 -->
-						<% if (list.size() == 0) { %>
+						<%
+							if (list.size() == 0) {
+						%>
 						<tbody>
 							<tr>
 								<td colspan="5" class="none-list">작성한 글이 없습니다.</td>
@@ -456,7 +457,9 @@ span{
 						</tbody>
 						
 						<!-- 작성한 글이 1개 이상이면 -->
-						<% }else{ %>
+						<% 
+							}else{ 
+						%>
 						<tbody>
 							<%
 								for (int i = 0; i < list.size(); i++) {
@@ -481,15 +484,19 @@ span{
 						%>
 					</table><br>
 					<!-- 글 갯수가 1 이상이면 MORE 버튼 보이기 -->
-					<% if (list.size() != 0) { %>
+					<% 
+						if (list.size() != 0) { 
+					%>
 					<div id="more-btn">MORE</div>
-					<%} %>
+					<%
+						}
+					%>
 				</div>
 			</div>
 			
 			<%
-			CommentDAO cmtDAO = new CommentDAO();
-			ArrayList<CommentDTO> cmtlist2 = cmtDAO.getListByUser(userID);
+				CommentDAO cmtDAO = new CommentDAO();
+				ArrayList<CommentDTO> cmtlist2 = cmtDAO.getListByUser(userID);
 			%>
 			<div class="userDataBoard">
 			<!-- 내가 작성한 댓글 목록 -->
@@ -506,7 +513,9 @@ span{
 							</tr>
 						</thead>
 						<!-- 작성한 댓글이 0개이면 -->
-						<% if (cmtlist2.size() == 0) { %>
+						<% 
+							if (cmtlist2.size() == 0) { 
+						%>
 						<tbody>
 							<tr>
 								<td colspan="5" class="none-list">작성한 댓글이 없습니다.</td>
@@ -514,7 +523,9 @@ span{
 						</tbody>
 						
 						<!-- 작성한 댓글이 1개 이상이면 -->
-						<% }else{ %>
+						<% 
+							}else{ 
+						%>
 						<tbody>
 							<%
 								for (int i = 0; i < cmtlist2.size(); i++) {
@@ -531,15 +542,19 @@ span{
 							}
 						%>
 					</table><br>
-					<% if (cmtlist2.size() != 0) { %>
-					<div id="more-btn-2">MORE</div>
-					<%} %>
+					<%
+						if (cmtlist2.size() != 0) { 
+					%>
+						<div id="more-btn-2">MORE</div>
+					<%
+						} 
+					%>
 				</div>
 			</div>
 			
 			<%
-			GroupDAO groupDAO = new GroupDAO();
-			ArrayList<GroupDTO> grouplist = groupDAO.getListByUser(userID);
+				GroupDAO groupDAO = new GroupDAO();
+				ArrayList<GroupDTO> grouplist = groupDAO.getListByUser(userID);
 			%>
 			<div class="userDataBoard">
 			<!-- 내가 만든 그룹 목록 -->
@@ -559,14 +574,18 @@ span{
 						</thead>
 						
 						<!-- 생성한 그룹이 0개이면 -->
-						<% if (grouplist.size() == 0) { %>
+						<% 
+							if (grouplist.size() == 0) { 
+						%>
 						<tbody>
 							<tr>
 								<td colspan="4" class="none-list">생성한 그룹이 없습니다.</td>
 							</tr>
 						</tbody>						
 						<!-- 생성한 그룹이 1개 이상이면 -->
-						<% }else{ %>
+						<% 
+							}else{ 
+						%>
 						<tbody>
 							<%			
 								for (int i = 0; i < grouplist.size(); i++) {										
@@ -575,29 +594,37 @@ span{
 								<td><a id="click-view" href="groupView?groupID=<%= grouplist.get(i).getGroupID() %>"><%= grouplist.get(i).getGroupName().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></a></td>
 								<td><%= grouplist.get(i).getGroupPassword() %></td>
 								<!-- 그룹이 비활동중이면 -->
-								<%if(grouplist.get(i).getGroupAvailable() == 0){ %>
+								<%
+									if(grouplist.get(i).getGroupAvailable() == 0){ 
+								%>
 									<td>NO</td>
 								<!-- 그룹이 활동중이면 -->
-								<%}else{ %>
+								<%
+									}else{ 
+								%>
 									<td>YES</td>
-								<%} %>
+								<%	} %>
 								<td><%= grouplist.get(i).getGroupNoP() %></td>
 							</tr>
 							<%	
 								}
 							%>
 						</tbody>
-					<% } %>
+					<% 	
+						}
+					%>
 					</table><br>
-					<% if (grouplist.size() != 0) { %>
-					<div id="more-btn-3">MORE</div>
-					<%} %>
+					<% 
+						if (grouplist.size() != 0) { 
+					%>
+						<div id="more-btn-3">MORE</div>
+					<%	} %>
 				</div>
 			</div>
 			
 			<%
-			MemberDAO memberDAO = new MemberDAO();
-			ArrayList<MemberDTO> mblist = memberDAO.getListByUser(userID);
+				MemberDAO memberDAO = new MemberDAO();
+				ArrayList<MemberDTO> mblist = memberDAO.getListByUser(userID);
 			%>
 			<div class="userDataBoard">
 			<!-- 내가 가입한 그룹 목록 -->
@@ -616,14 +643,18 @@ span{
 							</tr>
 						</thead>
 						<!-- 가입한 그룹이 0개이면 -->
-						<% if (mblist.size() == 0) { %>
+						<% 
+							if (mblist.size() == 0) { 
+						%>
 						<tbody>
 							<tr>
 								<td colspan="4" class="none-list">가입한 그룹이 없습니다.</td>
 							</tr>
 						</tbody>
 						<!-- 가입한 그룹이 1개 이상이면 -->
-						<% }else{ %>
+						<% 
+							}else{ 
+						%>
 						<tbody>
 							<%								
 								for (int i = 0; i < mblist.size(); i++) {
@@ -660,9 +691,11 @@ span{
 							}
 						%>
 					</table><br>
-					<% if (mblist.size() != 0) { %>
+					<% 
+						if (mblist.size() != 0) { 
+					%>
 					<div id="more-btn-4">MORE</div>
-					<%} %>
+					<%	} %>
 				</div>
 			</div>
 		</div>
@@ -723,15 +756,18 @@ span{
 							</tr>
 						</thead>
 						<!-- 받은 메시지가 0개이면 -->
-						<% if (msglist.size() == 0) { %>
+						<% 
+							if (msglist.size() == 0) {
+						%>
 						<tbody>
 							<tr>
 								<td colspan="5" class="none-list">받은 메시지가 없습니다.</td>
 							</tr>
 						</tbody>
-						
 						<!-- 받은 메시지가 1개 이상이면 -->
-						<% }else{ %>
+						<% 
+							}else{
+						%>
 						<tbody>
 							<%	String groupName = null;
 								for (int i = 0; i < msglist.size(); i++) {
@@ -749,11 +785,17 @@ span{
 								<td><%=msglist.get(i).getUserID()%></td>
 								<td><a id="click-view" onclick="viewMsg('<%= msglist.get(i).getMsgID()%>')"><%= msglist.get(i).getMsgTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></a></td>
 								<!-- msgCheck == 0이면 안읽음, 1이면 읽음 표시하기 -->
-								<% if(msglist.get(i).getMsgCheck() == 0){ %>
+								<% 
+									if(msglist.get(i).getMsgCheck() == 0){
+								%>
 								<td>NO</td>						
-								<% }else{ %>
+								<% 
+									}else{
+								%>
 								<td>YES</td>						
-								<% } %>
+								<% 
+									}
+								%>
 								<td><%=msglist.get(i).getMsgDate().substring(0 ,11) + msglist.get(i).getMsgDate().substring(11, 13) + "시" + msglist.get(i).getMsgDate().substring(14, 16) + "분"%></td>
 							</tr>
 							<%
@@ -765,9 +807,11 @@ span{
 						%>
 					</table><br>
 					<!-- 메시지 갯수가 1 이상이면 MORE 버튼 보이기 -->
-					<% if (msglist.size() != 0) { %>
+					<%
+						if (msglist.size() != 0) {
+					%>
 					<div id="more-btn-5">MORE</div>
-					<%} %>
+					<%	} %>
 				</div>
 			</div>
 			<%
@@ -792,7 +836,9 @@ span{
 							</tr>
 						</thead>
 						<!-- 보낸 메시지가 0개이면 -->
-						<% if (sendmsglist.size() == 0) { %>
+						<% 
+							if (sendmsglist.size() == 0) {
+						%>
 						<tbody>
 							<tr>
 								<td colspan="5" class="none-list">보낸 메시지가 없습니다.</td>
@@ -800,7 +846,9 @@ span{
 						</tbody>
 						
 						<!-- 보낸 메시지가 1개 이상이면 -->
-						<% }else{ %>
+						<% 
+							}else{
+						%>
 						<tbody>
 							<%
 								String groupName = null;
@@ -819,9 +867,13 @@ span{
 								<td><%=sendmsglist.get(i).getToUserID()%></td>
 								<td><a id="click-view" onclick="viewMsg('<%= sendmsglist.get(i).getMsgID()%>')"><%= sendmsglist.get(i).getMsgTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></a></td>
 								<!-- msgCheck == 0이면 안읽음, 1이면 읽음 표시하기 -->
-								<% if(sendmsglist.get(i).getMsgCheck() == 0){ %>
+								<% 
+									if(sendmsglist.get(i).getMsgCheck() == 0){
+								%>
 									<td>NO</td>						
-								<% }else{ %>
+								<% 
+									}else{
+								%>
 									<td>YES</td>						
 								<% } %>
 								<td><%=sendmsglist.get(i).getMsgDate().substring(0 ,11) + sendmsglist.get(i).getMsgDate().substring(11, 13) + "시" + sendmsglist.get(i).getMsgDate().substring(14, 16) + "분"%></td>
@@ -872,7 +924,7 @@ span{
 	<%}%>
 </section>
 <script>
-//check email
+/*check email
 window.addEventListener('DOMContentLoaded', function emailChecked(result){
 	if(result == false){
 		var emailck = confirm('이메일 인증이 필요합니다. 인증 메일을 발송 하시겠습니까?');
@@ -882,7 +934,7 @@ window.addEventListener('DOMContentLoaded', function emailChecked(result){
 			break;
 		}
 	}
-});
+});*/
 </script>
 
 <script>
@@ -940,7 +992,7 @@ function getCount(count){
 }
 </script>
 <script>
-//접속하기 버튼을 클릭하면 id,password,available value, member, leader를 받는다
+//그룹이름을 클릭하면 id,password,available value, member, leader를 받는다
 function showPasswordPrompt(grID, grPW, grAvl) {
     var inputPassword = "";
     //그룹 활동중이면

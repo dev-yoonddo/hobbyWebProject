@@ -17,25 +17,20 @@
 %>
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title></title>
-</head>
 <body>
 	<%
+		PrintWriter script=response.getWriter();
 		String userID = null;
 		if(session.getAttribute("userID")!=null){
 			userID=(String)session.getAttribute("userID");
 		}
 		if(userID == null){
-			PrintWriter script = response.getWriter();
 			script.println("<script>");
 			script.println("alert('로그인이 필요합니다.')");
 			script.println("window.open('loginPopUp', 'Login', 'width=500, height=550, top=50%, left=50%')");
 			script.println("</script>");
 		}
 		if(userID.equals("test")){
-			PrintWriter script = response.getWriter();
 			script.println("<script>");
 			script.println("alert('테스트 계정은 탈퇴할 수 없습니다.')");
 			script.println("history.back()");
@@ -74,20 +69,17 @@
 		    }*/
 			int result=userDAO.delete(userID);
 			if(result == -1){//데이터 베이스 오류
-			PrintWriter script=response.getWriter();
-			script.println("<script>");
-			script.println("alert('회원탈퇴에 실패했습니다.')");
-			script.println("history.back()");
-			script.println("</script>");
+				script.println("<script>");
+				script.println("alert('회원탈퇴에 실패했습니다.')");
+				script.println("history.back()");
+				script.println("</script>");
 			}
 			else{
-			session.invalidate();
-			PrintWriter script=response.getWriter();
-			script.println("<script>");
-			script.println("alert('회원탈퇴에 성공했습니다.')");
-			script.println("location.href='mainPage'");
-			script.println("</script>");
-		
+				session.invalidate();
+				script.println("<script>");
+				script.println("alert('회원탈퇴에 성공했습니다.')");
+				script.println("location.href='mainPage'");
+				script.println("</script>");
 			}
 		}
 	%>

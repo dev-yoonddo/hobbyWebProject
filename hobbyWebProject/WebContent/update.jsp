@@ -261,34 +261,34 @@ textarea{
 <body>
 		
 <%
-//userID 가져오기
-String userID = null;
-if(session.getAttribute("userID") != null){
-	userID = (String)session.getAttribute("userID");
-}
-if(userID == null){
-	PrintWriter script = response.getWriter();
-	script.println("<script>");
-	script.println("alert('로그인이 필요합니다.')");
-	script.println("window.open('loginPopUp', 'Login', 'width=500, height=550, top=50%, left=50%')");
-	script.println("</script>");
-}
-//boardID 가져오기
-int boardID = 0;
-if(request.getParameter("boardID") != null){
-	boardID = Integer.parseInt(request.getParameter("boardID"));
-}
-
-BoardDTO board = new BoardDAO().getBoardVO(boardID);
+	//userID 가져오기
+	String userID = null;
+	if(session.getAttribute("userID") != null){
+		userID = (String)session.getAttribute("userID");
+	}
+	if(userID == null){
+		PrintWriter script = response.getWriter();
+		script.println("<script>");
+		script.println("alert('로그인이 필요합니다.')");
+		script.println("window.open('loginPopUp', 'Login', 'width=500, height=550, top=50%, left=50%')");
+		script.println("</script>");
+	}
+	//boardID 가져오기
+	int boardID = 0;
+	if(request.getParameter("boardID") != null){
+		boardID = Integer.parseInt(request.getParameter("boardID"));
+	}
+	
+	BoardDTO board = new BoardDAO().getBoardVO(boardID);
 %>
 <!-- header -->
 <header id="header">
-<jsp:include page="/header/header.jsp"/>
+	<jsp:include page="/header/header.jsp"/>
 </header>
 <!-- header -->
 <!-- section -->
 <section>	
-		<div class="board-container">
+	<div class="board-container">
 		<h3 style="font-weight: bold; color: #646464;"><%= userID %>님 안녕하세요</h3><br>
 			<div class="right-row">
 				<form method="post" action="updateAction.jsp" enctype="multipart/form-data">

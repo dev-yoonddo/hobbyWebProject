@@ -94,8 +94,6 @@ textarea {
 	font-weight: bolder;
 	color: black;
 }
-#qna-icon{
-}
 #answer{
 	width: 400px;
 	height: 150px;
@@ -316,31 +314,31 @@ h3{
 </style>
 <body>
 <%
-//userID 가져오기
-String userID = null;
-if(session.getAttribute("userID") != null){
-	userID = (String)session.getAttribute("userID");
-}
-//groupID 가져오기
-int groupID = 0;
-if(request.getParameter("groupID") != null){
-	groupID = Integer.parseInt(request.getParameter("groupID"));
-}
-LocationDAO locDAO = new LocationDAO();
-//지도 위에 표시할 저장된 스팟 리스트 가져오기
-ArrayList<LocationDTO> locationList = locDAO.getSpotInfoList();
-
-if(userID == null){
-	PrintWriter script = response.getWriter();
-	script.println("<script>");
-	script.println("alert('로그인이 필요합니다.')");
-	script.println("window.open('loginPopUp', 'Login', 'width=450, height=500, top=50%, left=50%')");
-	script.println("</script>");
-}else{
+	//userID 가져오기
+	String userID = null;
+	if(session.getAttribute("userID") != null){
+		userID = (String)session.getAttribute("userID");
+	}
+	//groupID 가져오기
+	int groupID = 0;
+	if(request.getParameter("groupID") != null){
+		groupID = Integer.parseInt(request.getParameter("groupID"));
+	}
+	LocationDAO locDAO = new LocationDAO();
+	//지도 위에 표시할 저장된 스팟 리스트 가져오기
+	ArrayList<LocationDTO> locationList = locDAO.getSpotInfoList();
+	
+	if(userID == null){
+		PrintWriter script = response.getWriter();
+		script.println("<script>");
+		script.println("alert('로그인이 필요합니다.')");
+		script.println("window.open('loginPopUp', 'Login', 'width=450, height=500, top=50%, left=50%')");
+		script.println("</script>");
+	}else{
 %>
 <!-- header -->
 <header id="header">
-<jsp:include page="/header/header.jsp"/>
+	<jsp:include page="/header/header.jsp"/>
 </header>
 <!-- header -->
 
@@ -469,7 +467,7 @@ if(userID == null){
 	    alert('Error getting location: ' + err.message);
 	}
 	
-	//NAVR MAP API로 구한 주소들을 조합해 현재위치의 주소 구하기
+	//NAVER MAP API로 구한 주소들을 조합해 현재위치의 주소 구하기
 	function makeAddress(item) {
 	    if (!item) {
 	        return;
@@ -763,6 +761,9 @@ if(userID == null){
 		                //console.log(data);
 	            	}else if(response.includes("Information Error")){
 	            		alert('원하는 스팟 주소를 검색하세요');
+	            	}else if(response.includes("null userID")){
+	            		alert("로그인 후 다시 시도해주세요.");
+	         			window.open('loginPopUp', 'Login', 'width=450, height=500, top=50%, left=50%');
 	            	}else if(response.includes("Spot name already exists")){
 	            		//console.error('Spot registration error:', response);
 	                    alert('이미 존재하는 이름입니다');
@@ -834,7 +835,8 @@ if(userID == null){
    	            data: data3,
    	            success: function (response) {
    	            	if(response.includes("null")){
-   	            		alert('로그인 오류');   	            		
+   	            		alert("로그인 후 다시 시도해주세요.");
+   	      				window.open('loginPopUp', 'Login', 'width=450, height=500, top=50%, left=50%');  	            		
    	            	}else if(response.includes("regist error")){
    	            		alert('참여 오류2');
    	            	}else if(response.includes("access successfully")){

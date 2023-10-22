@@ -326,47 +326,47 @@ table caption{
 </style>
 <body>
 <%
-//userID 가져오기
-String userID = null;
-if(session.getAttribute("userID") != null){
-	userID = (String)session.getAttribute("userID");
-}
-//cmtID 가져오기
-int cmtID = 0;
-if(request.getParameter("cmtID")!=null)
-	cmtID = Integer.parseInt(request.getParameter("cmtID"));
-//boardID 가져오기
-int boardID = 0;
-if(request.getParameter("boardID") != null){
-	boardID = Integer.parseInt(request.getParameter("boardID"));
-}
-//글이 유효하다면 1이상의 숫자가 반환되기 때문에 boardID == 0일때  글이 유효하지 않다는 알림창 띄우기
-if(boardID == 0){
-	PrintWriter script = response.getWriter();
-	script.println("<script>");
-	script.println("alert('유효하지 않은 글입니다.')");
-	script.println("history.back()");
-	script.println("</script>");
-}
-
-BoardDAO boardDAO = new BoardDAO();
-BoardDTO board = new BoardDAO().getBoardVO(boardID);
-HeartDTO heartvo = new HeartDAO().getHeartVO(boardID);
-FileDTO filevo = new FileDAO().getFileVO(boardID);
-
-//해당 글이 공지사항인지 구분한다.
-boolean notice = false;
-if((board.getBoardCategory()).equals("NOTICE")){
-	notice = true;
-}
-
-//이미지 이름 가져오기
-String filename = board.getFilename();
+	//userID 가져오기
+	String userID = null;
+	if(session.getAttribute("userID") != null){
+		userID = (String)session.getAttribute("userID");
+	}
+	//cmtID 가져오기
+	int cmtID = 0;
+	if(request.getParameter("cmtID")!=null)
+		cmtID = Integer.parseInt(request.getParameter("cmtID"));
+	//boardID 가져오기
+	int boardID = 0;
+	if(request.getParameter("boardID") != null){
+		boardID = Integer.parseInt(request.getParameter("boardID"));
+	}
+	//글이 유효하다면 1이상의 숫자가 반환되기 때문에 boardID == 0일때  글이 유효하지 않다는 알림창 띄우기
+	if(boardID == 0){
+		PrintWriter script = response.getWriter();
+		script.println("<script>");
+		script.println("alert('유효하지 않은 글입니다.')");
+		script.println("history.back()");
+		script.println("</script>");
+	}
+	
+	BoardDAO boardDAO = new BoardDAO();
+	BoardDTO board = new BoardDAO().getBoardVO(boardID);
+	HeartDTO heartvo = new HeartDAO().getHeartVO(boardID);
+	FileDTO filevo = new FileDAO().getFileVO(boardID);
+	
+	//해당 글이 공지사항인지 구분한다.
+	boolean notice = false;
+	if((board.getBoardCategory()).equals("NOTICE")){
+		notice = true;
+	}
+	
+	//이미지 이름 가져오기
+	String filename = board.getFilename();
 %>
 
 <!-- header -->
 <header id="header">
-<jsp:include page="/header/header.jsp"/>
+	<jsp:include page="/header/header.jsp"/>
 </header>
 <!-- header -->
 
@@ -376,11 +376,15 @@ String filename = board.getFilename();
 		<div class="inquiry">
 			<div class="row"><br>
 				<!-- 공지사항은 카테고리가 아닌 제목을 출력한다. -->
-				<% if(notice == true){%>
+				<% 
+					if(notice == true){
+				%>
 					<a id="view-title"><%=board.getBoardTitle()%></a><br><br>
-				<%}else{%>
+				<%
+					}else{
+				%>
 					<a id="view-title"><%=board.getBoardCategory()%></a><br><br>
-				<%} %>
+				<%	} %>
 				<div id="tb-top">
 					<div id="tb-top-1">
 						<div id="user-item">
@@ -399,21 +403,26 @@ String filename = board.getFilename();
 									ArrayList<HeartDTO> hearts = heartDAO.getHeartList(boardID);
 								    boolean heartMatch = false;
 								    if(userID != null){
-								    for (HeartDTO heart: hearts) {
-								    	//hearts 리스트안에 boardID와 userID값이 모두 일치하는 값이 있으면 해당 글에 이미 좋아요를 눌렀음을 의미한다.
-								        if (userID.equals(heart.getUserID()) && boardID == heart.getBoardID()) {
-								        	heartMatch = true;
-								            break; // 일치하는 값을 찾으면 반복문을 나간다.
-								        }
-								        heartMatch = false;
-								    }
-								 	//userID == null 이거나 하트를 누르지 않았으면
-								    if(heartMatch){
-							    %>
-								    	<i id="heart2" class="fa-solid fa-heart"onclick="heartAction()"></i>&nbsp;<%=board.getHeartCount()%>
-								<%	//userID =! null 이고 하트를 이미 눌렀으면
-								    }
-								 	}else if(userID == null || !heartMatch){ 
+									    for (HeartDTO heart: hearts) {
+									    	//hearts 리스트안에 boardID와 userID값이 모두 일치하는 값이 있으면 해당 글에 이미 좋아요를 눌렀음을 의미한다.
+									        if (userID.equals(heart.getUserID()) && boardID == heart.getBoardID()) {
+									        	heartMatch = true;
+									            break; // 일치하는 값을 찾으면 반복문을 나간다.
+									        }
+									        heartMatch = false;
+									    }
+									 	
+									    if(heartMatch){//하트를 이미 눌렀으면 채운하트
+								%>
+									    	<i id="heart2" class="fa-solid fa-heart"onclick="heartAction()"></i>&nbsp;<%=board.getHeartCount()%>
+								<%	
+									    }else{//하트를 누르지 않았으면 빈하트
+								%>
+								 			<i id="heart1" class="fa-regular fa-heart" onclick="heartAction()"></i>&nbsp;<%= board.getHeartCount()%>
+									    	
+								<%
+									    }
+								 	}else{//로그인 하지 않으면 빈하트
 								%>
 								 		<i id="heart1" class="fa-regular fa-heart" onclick="heartAction()"></i>&nbsp;<%= board.getHeartCount()%>
 								<%
@@ -511,8 +520,7 @@ String filename = board.getFilename();
 						</div>
 					</form>
 					<%
-					}
-					//} }
+					}//} }
 					else{
 					%>
 						<span class="files">첨부된 파일이 없습니다.</span>
@@ -606,7 +614,7 @@ String filename = board.getFilename();
       	</div>
    </div>
 </section>
-<!-- section -->
+<!-- section end -->
 
 <!-- footer -->
 <footer>
@@ -619,9 +627,10 @@ String filename = board.getFilename();
 	</ul>
 </div>
 </footer>
-<!-- footer -->
-<script>
+<!-- footer end -->
 
+<script>
+//댓글쓰기를 클릭하면 댓글 입력 창 보이기
 function cmtAction(){
 	document.getElementById('cmt-write').style.display = 'block';
 	document.getElementById('cmt-write-btn').style.display = 'none';
@@ -632,12 +641,6 @@ function reloadHeart(){
 }
 //하트 클릭 또는 취소
 function heartAction(){
-	if(<%=userID%> == null){
-		var login = confirm('로그인을 해주세요');
-		if (login) {
-		  window.open("loginPopUp", "Login", "width=500, height=550, top=50%, left=50%") ;
-		}
-	}else{
 	var data = {
           boardID: <%=boardID%>
     };
@@ -663,8 +666,6 @@ function heartAction(){
             alert('좋아요 오류');
         }
     });
-	}
-	
 }
 //파일 다운로드 submit
 function submit(){

@@ -17,19 +17,15 @@
 
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
 <body>
 	<%
+		PrintWriter script = response.getWriter();
 		int success = 0;
 		String userID = null;
 		if(session.getAttribute("userID") != null){
 			userID = (String) session.getAttribute("userID");
 		}
 		if(userID == null){
-			PrintWriter script = response.getWriter();
 			script.println("<script>");
 			script.println("alert('로그인이 필요합니다')");
 			script.println("self.close()");
@@ -44,7 +40,6 @@
 		    	//userID와 입력한 메시지를 raffleWinMsg() 메서드에 넘겨 저장한다.
 		    	int result = eventDAO.raffleWinMsg(events[i], event.getEventWinMsg());
 		    	if(result == -1){
-					PrintWriter script = response.getWriter();
 					script.println("<script>");
 					script.println("alert('데이터베이스 오류')");
 					script.println("history.back()");
@@ -55,7 +50,6 @@
 		    }
 			//배열의 길이와 seccess의 크기가 같으면 모든 userID의 eventWinMsg에 값이 정상적으로 들어감을 의미한다.
 		    if(events.length == success){
-		    	PrintWriter script = response.getWriter();
 				script.println("<script>");
 				script.println("alert('전송 완료')");
 				script.println("self.close()");
@@ -64,8 +58,6 @@
 		}
 		
 	%>
-<script>
 
-</script>
 </body>
 </html>

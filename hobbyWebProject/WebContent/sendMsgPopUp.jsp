@@ -32,11 +32,11 @@ h2{
 	color: #2E2F49;
 }
 #sb{
-width: 100%;
+	width: 100%;
 }
 #sb span{
-  padding-top: 15px;
-  padding-bottom: 15px;
+	padding-top: 15px;
+	padding-bottom: 15px;
 }
   
 #sendMsg{
@@ -56,77 +56,88 @@ width: 100%;
 </head>
 <body id="header">
 <%
-//userID 가져오기
-String userID = null;
-if(session.getAttribute("userID") != null){
-	userID = (String)session.getAttribute("userID");
-}
-if(userID == null){
-	PrintWriter script = response.getWriter();
-	script.println("<script>");
-	script.println("alert('로그인이 필요합니다.')");
-	script.println("window.open('loginPopUp', 'Login', 'width=500, height=550, top=50%, left=50%')");
-	script.println("</script>");
-}
-
-GroupDAO groupDAO = new GroupDAO();
-MessageDAO msgDAO = new MessageDAO();
-int msgID = 0;
-int groupID = 0;
-String qna = null;
-
-//groupView 페이지에서 받은 msgID와 groupID를 저장한다.
-if(request.getParameter("groupID") != null){
-	groupID = Integer.parseInt(request.getParameter("groupID"));
-}
-if(request.getParameter("msgID") != null){
-	msgID = Integer.parseInt(request.getParameter("msgID"));
-}
-if(request.getParameter("qna") != null){
-	qna = request.getParameter("qna");
-}
-//메시지 전송하기, 답장하기에 따라 toUserID를 저장한다.
-String sendMsgToUser = "";
-String rcvMsgToUser = "";
-if(qna == null){
-	if(msgID == 0){
-		sendMsgToUser = groupDAO.getGroupVO(groupID).getUserID();
-	}else{
-		rcvMsgToUser = msgDAO.getMsgVO(msgID).getUserID();
+	//userID 가져오기
+	String userID = null;
+	int msgID = 0;
+	int groupID = 0;
+	String qna = null;
+	
+	if(session.getAttribute("userID") != null){
+		userID = (String)session.getAttribute("userID");
 	}
-}
+	//groupView 페이지에서 받은 msgID와 groupID를 저장한다.
+	if(request.getParameter("groupID") != null){
+		groupID = Integer.parseInt(request.getParameter("groupID"));
+	}
+	if(request.getParameter("msgID") != null){
+		msgID = Integer.parseInt(request.getParameter("msgID"));
+	}
+	if(request.getParameter("qna") != null){
+		qna = request.getParameter("qna");
+	}
+	if(userID == null){
+		PrintWriter script = response.getWriter();
+		script.println("<script>");
+		script.println("alert('로그인이 필요합니다.')");
+		script.println("window.open('loginPopUp', 'Login', 'width=500, height=550, top=50%, left=50%')");
+		script.println("</script>");
+	}
+	
+	GroupDAO groupDAO = new GroupDAO();
+	MessageDAO msgDAO = new MessageDAO();
+
+	//메시지 전송하기, 답장하기에 따라 toUserID를 저장한다.
+	String sendMsgToUser = "";
+	String rcvMsgToUser = "";
+	if(qna == null){
+		if(msgID == 0){
+			sendMsgToUser = groupDAO.getGroupVO(groupID).getUserID();
+		}else{
+			rcvMsgToUser = msgDAO.getMsgVO(msgID).getUserID();
+		}
+	}
 %>
 <div id="sendMsg">
-	<% if((qna != null && qna.equals("y")) || sendMsgToUser.equals("manager") || rcvMsgToUser.equals("manager")) { //파라미터로 qna = y 이거나 toUserId = manager 이면 관리자에게 문의하기 %>
-	<h2>To. 관리자</h2>
-    <form method="post" action="sendMsgAction.jsp?qna=y" id="send-form">
-        <input type="text" placeholder="제목을 입력하세요" name="msgTitle" id="msgTitle" maxlength="20">
-        <input type="text" placeholder="내용을 입력하세요" name="msgContent" id="msgContent" class="intro" maxlength="200">
-        <button type="submit" class="btn-blue" id="sb"><span>메시지 전송</span></button>
-    </form>
-	<% } else { %>
-		<!-- 메시지전송 버튼을 눌렀을때와 답장하기 버튼을 눌렀을때 가져온 값이 다르기때문에 따로 설정해준다. -->
-		<% if(msgID == 0){  //msgID = 0 이면 메시지전송을 클릭했다는 의미이다. %>
-	    <h2>To. <%=sendMsgToUser%></h2>
-	    <form method="post" action="sendMsgAction.jsp?groupID=<%= groupID %>" id="send-form">
+	<%
+		if((qna != null && qna.equals("y")) || sendMsgToUser.equals("manager") || rcvMsgToUser.equals("manager")) { //파라미터로 qna = y 이거나 toUserID = manager 이면 관리자에게 문의하기
+	%>
+		<h2>To. 관리자</h2>
+	    <form method="post" action="sendMsgAction.jsp?qna=y" id="send-form">
 	        <input type="text" placeholder="제목을 입력하세요" name="msgTitle" id="msgTitle" maxlength="20">
 	        <input type="text" placeholder="내용을 입력하세요" name="msgContent" id="msgContent" class="intro" maxlength="200">
 	        <button type="submit" class="btn-blue" id="sb"><span>메시지 전송</span></button>
 	    </form>
-	   	<%}else{ //메시지 답장은 msgID와 groupID를 모두 받는다.%>
-	    <h2>To. <%=rcvMsgToUser%></h2>
-	    <form method="post" action="sendMsgAction.jsp?msgID=<%= msgID %>&groupID=<%=groupID%>" id="send-form">
-	    	<%if(userID.equals("manager")){ //manager가 유저에게 답장할 땐 제목에 기존 문의 제목을 넣는다.%>
-	        	<input type="text" placeholder="제목을 입력하세요" value="<%= msgDAO.getMsgVO(msgID).getMsgTitle() %> [답변]" name="msgTitle" id="msgTitle" maxlength="20">
-	        <%}else{%>
-	        	<input type="text" placeholder="제목을 입력하세요" name="msgTitle" id="msgTitle" maxlength="20">
-	        <%} %>
-	        <input type="text" placeholder="내용을 입력하세요" name="msgContent" id="msgContent" class="intro" maxlength="200">
-	        <button type="submit" class="btn-blue" id="sb"><span>답장 전송</span></button>
-	    </form>
+	<% 
+		} else {
+			//메시지전송 버튼을 눌렀을때와 답장하기 버튼을 눌렀을때 가져온 파라미터 값이 다르기때문에 따로 설정해준다.
+			if(msgID == 0){  //msgID = 0 이면 메시지전송을 클릭했다는 의미이다.
+	%>
+		    <h2>To. <%=sendMsgToUser%></h2>
+		    <form method="post" action="sendMsgAction.jsp?groupID=<%= groupID %>" id="send-form">
+		        <input type="text" placeholder="제목을 입력하세요" name="msgTitle" id="msgTitle" maxlength="20">
+		        <input type="text" placeholder="내용을 입력하세요" name="msgContent" id="msgContent" class="intro" maxlength="200">
+		        <button type="submit" class="btn-blue" id="sb"><span>메시지 전송</span></button>
+		    </form>
+	<%
+	   		}else{ //메시지 답장은 msgID와 groupID를 모두 받는다.
+	%>
+		    <h2>To. <%=rcvMsgToUser%></h2>
+		    <form method="post" action="sendMsgAction.jsp?msgID=<%= msgID %>&groupID=<%=groupID%>" id="send-form">
+		    	<%
+		    		if(userID.equals("manager")){ //manager가 유저에게 답장할 땐 제목에 기존 문의 제목을 넣는다.
+		    	%>
+		        	<input type="text" placeholder="제목을 입력하세요" value="<%= msgDAO.getMsgVO(msgID).getMsgTitle() %> [답변]" name="msgTitle" id="msgTitle" maxlength="20">
+		        <%
+		        	}else{
+		        %>
+		        	<input type="text" placeholder="제목을 입력하세요" name="msgTitle" id="msgTitle" maxlength="20">
+		        <%	} %>
+		        <input type="text" placeholder="내용을 입력하세요" name="msgContent" id="msgContent" class="intro" maxlength="200">
+		        <button type="submit" class="btn-blue" id="sb"><span>답장 전송</span></button>
+		    </form>
     <%
-    	}
-	}
+    		}
+		}
 	%>
 </div>
 </body>

@@ -8,44 +8,39 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-<head>
-<link rel="stylesheet" href="css/main.css?after">
-</head>
 <body>
 <%
-PrintWriter script = response.getWriter();
-String userID = null;
-String spotName = null;
-int skedMonth = 0;
-int skedDay = 0;
-ScheduleDAO skedDAO = new ScheduleDAO();
-if(session.getAttribute("userID") != null){
-	userID = (String)session.getAttribute("userID");
-}
-if(request.getParameter("spot") != null){
-	spotName = request.getParameter("spot");
-}
-if(request.getParameter("month") != null){
-	skedMonth = Integer.parseInt(request.getParameter("month"));
-}
-if(request.getParameter("day") != null){
-	skedDay = Integer.parseInt(request.getParameter("day"));
-}
-
-ArrayList<ScheduleDTO> skedlist = skedDAO.getScheduleListByTime(spotName, skedMonth, skedDay);
-String[] value = new String[skedlist.size()];
-
-if(skedlist.size() > 0){
-	for(int i=0; i < skedlist.size(); i++){
-		value[i] = "<div class='getlist'>"+skedlist.get(i).getUserID()+" : "+skedlist.get(i).getSkedContent()+"</div>";
-		//System.out.println(value[i]);
-		script.print(value[i]);
+	PrintWriter script = response.getWriter();
+	String userID = null;
+	String spotName = null;
+	int skedMonth = 0;
+	int skedDay = 0;
+	ScheduleDAO skedDAO = new ScheduleDAO();
+	if(session.getAttribute("userID") != null){
+		userID = (String)session.getAttribute("userID");
 	}
-}
-script.flush();
-script.close();
-
-
+	if(request.getParameter("spot") != null){
+		spotName = request.getParameter("spot");
+	}
+	if(request.getParameter("month") != null){
+		skedMonth = Integer.parseInt(request.getParameter("month"));
+	}
+	if(request.getParameter("day") != null){
+		skedDay = Integer.parseInt(request.getParameter("day"));
+	}
+	
+	ArrayList<ScheduleDTO> skedlist = skedDAO.getScheduleListByTime(spotName, skedMonth, skedDay);
+	String[] value = new String[skedlist.size()];
+	
+	if(skedlist.size() > 0){
+		for(int i=0; i < skedlist.size(); i++){
+			value[i] = "<div class='getlist'>"+skedlist.get(i).getUserID()+" : "+skedlist.get(i).getSkedContent()+"</div>";
+			//System.out.println(value[i]);
+			script.print(value[i]);
+		}
+	}
+	script.flush();
+	script.close();
 %>
 </body>
 </html>

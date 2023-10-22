@@ -16,23 +16,19 @@
 <jsp:setProperty name="user" property="userEmail" />
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title></title>
-</head>
 <body>
 	<%
 			PrintWriter script=response.getWriter();
 			String userID = null;
 			if(session.getAttribute("userID")!=null){
-			userID=(String)session.getAttribute("userID");
+				userID=(String)session.getAttribute("userID");
 			}
 			//로그아웃 됐을때
 			if(userID == null){
-			script.println("<script>");
-			script.println("alert('로그인을 하세요.')");
-			script.println("location.href='login'");
-			script.println("</script>");
+				script.println("<script>");
+				script.println("alert('로그인을 하세요.')");
+				script.println("location.href='login'");
+				script.println("</script>");
 			}
 			UserDAO userDAO = new UserDAO();
 			UserDTO userDTO = new UserDAO().getUserVO(userID);

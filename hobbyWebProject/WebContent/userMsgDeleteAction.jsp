@@ -14,18 +14,14 @@
 <jsp:useBean id="message" class="message.MessageDAO" scope="page"/>
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title></title>
-</head>
 <body>
 <%
+	PrintWriter script = response.getWriter();
 	String userID = null;
 	if(session.getAttribute("userID") != null){
 		userID = (String) session.getAttribute("userID");
 	}
 	if(userID == null){
-		PrintWriter script = response.getWriter();
 		script.println("<script>");
 		script.println("alert('로그인이 필요합니다.')");
 		script.println("window.open('loginPopUp', 'Login', 'width=500, height=550, top=50%, left=50%')");
@@ -33,9 +29,7 @@
 	}
 	else{
 		String deleteField2 = request.getParameter("deleteField2");
-	
 		if(deleteField2 == null) {
-			PrintWriter script = response.getWriter();
 			script.println("<script>");
 			script.println("alert('삭제할 메시지를 선택하세요.')");
 			script.println("history.back()");
@@ -52,13 +46,11 @@
 		    }
 		
 		    if(result > 0) {
-		    	PrintWriter script = response.getWriter();
 				script.println("<script>");
 				script.println("alert('메시지가 삭제되었습니다.')");
 				script.println("location.href='userUpdate'");
 				script.println("</script>");
 		    } else {
-		    	PrintWriter script = response.getWriter();
 				script.println("<script>");
 				script.println("alert('삭제할 메시지가 없습니다.')");
 				script.println("history.back()");

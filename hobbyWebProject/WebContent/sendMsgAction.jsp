@@ -8,20 +8,10 @@
 	request.setCharacterEncoding("UTF-8");
 %>
 <jsp:useBean id="message" class="message.MessageDTO" scope="page" />
-<jsp:setProperty name="message" property="userID" />
-<jsp:setProperty name="message" property="toUserID" />
 <jsp:setProperty name="message" property="msgTitle" />
 <jsp:setProperty name="message" property="msgContent" />
-<jsp:setProperty name="message" property="msgDate" />
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>JSP 게시판 웹 사이트</title>
-<script src="option/jquery/jquery.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<script type="text/javascript" src="js/script.js"></script>
-</head>
 <body>
 	<%
 		PrintWriter script = response.getWriter();
@@ -62,7 +52,7 @@
 				script.println("history.back()");
 				script.println("</script>");
 			}else{
-				//qna = y값을 받으면 유저가 관리자에게 문의 및 답장 하는것을 의미한다.
+				//qna = y값을 받으면 유저가 관리자에게 문의 하는것을 의미한다.
 				if(qna != null && qna.equals("y")){
 					String toUserID = "manager";
 					int result = msgDAO.send(userID, toUserID , 0 , message.getMsgTitle(), message.getMsgContent());
@@ -96,7 +86,7 @@
 							script.println("</script>");
 						}
 					}else{ //문의하기 또는 답변하기가 아니면 유저간의 메시지 주고받기를 의미한다.
-						//유저가 gtoupView.jsp에서 그룹생성자에게 메시지를 보낼때(msgID생성전)는 groupID를 가져오고 답장할때(msgID생성후)는 msgID를 가져온다.
+						//유저가 gRoupView.jsp에서 그룹생성자에게 메시지를 보낼때(msgID생성전)는 groupID를 가져오고 답장할때(msgID생성후)는 msgID를 가져온다.
 						//따라서 각각 send()메서드에 넘겨주는 값이 다르고 전송 완료 후 이동하는 페이지도 다르게 만든다.
 						int active = groupDAO.getGroupVO(groupID).getGroupAvailable();
 						if(active == 0){
@@ -144,7 +134,4 @@
 		}
 	%>
 </body>
-<script>
-
-</script>
 </html>

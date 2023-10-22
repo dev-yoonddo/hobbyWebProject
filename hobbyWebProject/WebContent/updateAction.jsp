@@ -16,30 +16,26 @@
 <jsp:setProperty property="boardCategory" name="board"/>
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
 <body>
-	<%
+	<%			
+		PrintWriter script = response.getWriter();
 		String userID = null;
 		if(session.getAttribute("userID") != null){
 			userID = (String) session.getAttribute("userID");
 		}
 		if(userID == null){
-			PrintWriter script = response.getWriter();
 			script.println("<script>");
 			script.println("alert('로그인이 필요합니다.')");
 			script.println("window.open('loginPopUp', 'Login', 'width=500, height=550, top=50%, left=50%')");
 			script.println("</script>");
 		}else{
-			//writeAction과 같이 경로를 각각 지정해준다.
+			//writeAction과 같이 파일 저장 경로를 각각 지정해준다.
 			String path = null;
 			String jspPath = application.getRealPath("/fileupload/");
 			String awsPath = "/home/tomcat/apache-tomcat-8.5.88/webapps/fileupload/";
 			if(jspPath.startsWith("C")){ //경로가 C로 시작하면 JSP에서 파일 업로드를 의미하기 때문에
 				path = jspPath; //path에 JSP경로를 저장하고
-			}else{ //경로가 C로 시작하지 않으면 배포 프로젝트에서 파일 업로드를 의미하기 때문에
+			}else{ //경로가 C로 시작하지 않으면 배포 서버에서 파일 업로드를 의미하기 때문에
 				path = awsPath; //tomcat 경로를 저장한다.
 			}
 			
@@ -61,26 +57,22 @@
 			
 			//빈칸이 있으면 알림창을 띄운다.
 			if(title.length() == 0){
-				PrintWriter script = response.getWriter();
 				script.println("<script>");
 				script.println("alert('제목을 입력해주세요')");
 				script.println("history.back()");
 				script.println("</script>");				
 			}else if(content.length() == 0){
-				PrintWriter script = response.getWriter();
 				script.println("<script>");
 				script.println("alert('내용을 입력해주세요')");
 				script.println("history.back()");
 				script.println("</script>");				
 			}else if(category.length() == 0 || category.equals("0")){
-				PrintWriter script = response.getWriter();
 				script.println("<script>");
 				script.println("alert('카테고리를 선택해주세요')");
 				script.println("history.back()");
 				script.println("</script>");				
 			}//전달받은 파일이 있으면
 			else if (filename != null && !filename.endsWith(".zip") && !filename.endsWith(".ZIP") && !filename.endsWith(".pdf") && !filename.endsWith(".PDF") && !filename.endsWith(".jpg") && !filename.endsWith(".JPG") && !filename.endsWith(".jpeg") && !filename.endsWith(".JPEG") && !filename.endsWith(".png") && !filename.endsWith(".PNG")) {
-				PrintWriter script = response.getWriter();
 				script.println("<script>");
 				script.println("alert('" + filename +  "은(는) 업로드 할 수 없는 형식의 파일입니다.\\nzip, pdf, jpg, png파일만 업로드가 가능합니다.')");
 				script.println("history.back()");
@@ -91,14 +83,12 @@
 				BoardDAO boardDAO = new BoardDAO();
 					result = boardDAO.update(boardID, title, content, category , filename, fileRealname);
 					if(result == -1 || result == -2){
-						PrintWriter script = response.getWriter();
 						script.println("<script>");
 						script.println("alert('글쓰기에 실패했습니다')");
 						script.println("history.back()");
 						script.println("</script>");
 					}
 					else{
-						PrintWriter script = response.getWriter();
 						script.println("<script>");
 						script.println("alert('수정이 완료되었습니다')");
 						script.println("location.href='view?boardID="+boardID+"'");

@@ -229,15 +229,12 @@ th span{
 </style>
 <body>
 <%
+	PrintWriter script = response.getWriter();
 	String userID=null;
+	int boardID = 0;
 	if(session.getAttribute("userID")!=null){
 		userID=(String)session.getAttribute("userID");
 	}
-	int pageNumber = 1; //기본 페이지
-	if(request.getParameter("pageNumber") != null){
-		pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
-	}
-	int boardID = 0;
 	if(request.getParameter("boardID") != null){
 		boardID = Integer.parseInt(request.getParameter("boardID"));
 	}
@@ -248,14 +245,12 @@ th span{
 	//카테고리에 해당하는 글 리스트 가져오기
 	ArrayList<BoardDTO> list = boardDAO.getSearch(boardCategory);
 	if(boardCategory == ""){
-		PrintWriter script = response.getWriter();
 		script.println("<script>");
 		script.println("alert('옵션을 선택해주세요')");
 		script.println("history.back()");
 		script.println("</script>");
 	}
 	if(list.size() == 0){
-		PrintWriter script = response.getWriter();
 		script.println("<script>");
 		script.println("alert('검색 결과가 없습니다.')");
 		script.println("history.back()");
@@ -264,7 +259,7 @@ th span{
 	
 %>
 <header id="header">
-<jsp:include page="/header/header.jsp"/>
+	<jsp:include page="/header/header.jsp"/>
 </header>
 <section>
 	<div class="board-container">
@@ -285,7 +280,7 @@ th span{
 					</div>
 				</div>
 			<%
-			}
+				}
 			%>
 			</div>
 		</div>
@@ -306,24 +301,28 @@ th span{
 					<%
 						for (int i = 0; i < list.size(); i++) {
 					%>
-				
 					<tr class="board-row">
 						<td><%=list.get(i).getViewCount()%></td>
-						<%if(list.get(i).getFilename() == null){%>
-						<td><a id="click-view" href="view?boardID=<%= list.get(i).getBoardID() %>"><%= list.get(i).getBoardTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></a></td>
-						<%}else{ %>
-						<td><a id="click-view" href="view?boardID=<%= list.get(i).getBoardID() %>"><%= list.get(i).getBoardTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%>&nbsp;&nbsp;<i class="fa-solid fa-paperclip"></i></a></td>
-						<%} %>
+						<%
+							if(list.get(i).getFilename() == null){
+						%>
+							<td><a id="click-view" href="view?boardID=<%= list.get(i).getBoardID() %>"><%= list.get(i).getBoardTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></a></td>
+						<%
+							}else{
+						%>
+							<td><a id="click-view" href="view?boardID=<%= list.get(i).getBoardID() %>"><%= list.get(i).getBoardTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%>&nbsp;&nbsp;<i class="fa-solid fa-paperclip"></i></a></td>
+						<%
+							}
+						%>
 						<td><%= list.get(i).getUserID() %></td>
 						<td><%=list.get(i).getHeartCount()%></td>
 						<%
-	                 	CommentDAO cmtDAO = new CommentDAO();
-	                 	ArrayList<CommentDTO> cmtlist = cmtDAO.getList(list.get(i).getBoardID());
+		                 	CommentDAO cmtDAO = new CommentDAO();
+		                 	ArrayList<CommentDTO> cmtlist = cmtDAO.getList(list.get(i).getBoardID());
 	                 	%>
 						<td><%= cmtlist.size() %></td>
 						<td class="date" ><%= list.get(i).getBoardDate().substring(0 ,11) + list.get(i).getBoardDate().substring(11, 13) + "시" + list.get(i).getBoardDate().substring(14, 16) + "분" %></td>
 					</tr>
-					
 					<%
 						}
 					%>
@@ -366,6 +365,7 @@ th span{
 </div>
 </footer>
 <script>
+//게시글 더보기
 $(document).ready(function(){
 	$('.board-row').hide();
     $('.board-row').slice(0, 10).show(); // 초기갯수
@@ -374,11 +374,9 @@ $(document).ready(function(){
             alert("마지막 글입니다."); // 컨텐츠 없을시 alert 창 띄우기 
         }
         e.preventDefault();
-        $('.board-row:hidden').slice(0, 5).show('slow'); // 클릭시 more 갯수 지저정
+        $('.board-row:hidden').slice(0, 5).show('slow'); 
 	});
-    
 });
-
 </script>
 </body>
 </html>

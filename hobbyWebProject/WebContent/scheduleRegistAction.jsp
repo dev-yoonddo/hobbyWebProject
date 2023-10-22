@@ -45,25 +45,22 @@
 		if(userID == null){
 			script.print("null");
 		    script.flush();
-		    script.close();
 		}else{
 		 	if (skedContent == null || skedContent == ""){
 		 		script.print("info error");
 		 	    script.flush();
-			    script.close();
 		 	}else{
 				int result = skedDAO.registSchedule(userID, spotName, skedMonth, skedDay, skedContent);
 				if(result > 0){
 					script.print("ok");
 				    script.flush();
-				    script.close();
 				}else{
 					script.print("database error");
 				    script.flush();
-				    script.close();
 				}
 		 	}
-		}		
+		}	
+	    script.close();
 	%>
 </body>
 </html>

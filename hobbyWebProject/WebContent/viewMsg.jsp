@@ -42,10 +42,6 @@ body{
 	border: 1px solid #C0C0C0;
 	font-size: 12pt;
 }
-
-thead{
-
-}
 .td{
 	text-align: center;
 	font-size: 12pt;
@@ -61,42 +57,40 @@ thead{
 </style>
 <body id="header">
 <%
-//userID 가져오기
-String userID = null;
-if(session.getAttribute("userID") != null){
-	userID = (String)session.getAttribute("userID");
-}
-if(userID == null){
 	PrintWriter script = response.getWriter();
-	script.println("<script>");
-	script.println("alert('로그인이 필요합니다.')");
-	script.println("window.open('loginPopUp', 'Login', 'width=450, height=500, top=50%, left=50%')");
-	script.println("</script>");
-}
-//msgID 가져오기
-int msgID = 0;
-if(request.getParameter("msgID") != null){
-	msgID = Integer.parseInt(request.getParameter("msgID"));
-}
-if(msgID == 0){
-	PrintWriter script = response.getWriter();
-	script.println("<script>");
-	script.println("alert('유효하지 않은 접근입니다.')");
-	script.println("history.back()");
-	script.println("</script>");
-}
-MessageDAO msgDAO = new MessageDAO();
-//msgID에 해당하는 글의 정보 가져오기
-MessageDTO msg = new MessageDAO().getMsgVO(msgID);
-//페이지 접속시 msgCheck = 1 로 변경해서 메시지 읽음으로 변경하기
-int result = msgDAO.msgCheckUpdate(msgID, userID);
-if(result == -1){
-	PrintWriter script = response.getWriter();
-	script.println("<script>");
-	script.println("alert('데이터베이스 오류')");
-	script.println("history.back()");
-	script.println("</script>");
-}
+	//userID 가져오기
+	String userID = null;
+	if(session.getAttribute("userID") != null){
+		userID = (String)session.getAttribute("userID");
+	}
+	if(userID == null){
+		script.println("<script>");
+		script.println("alert('로그인이 필요합니다.')");
+		script.println("window.open('loginPopUp', 'Login', 'width=450, height=500, top=50%, left=50%')");
+		script.println("</script>");
+	}
+	//msgID 가져오기
+	int msgID = 0;
+	if(request.getParameter("msgID") != null){
+		msgID = Integer.parseInt(request.getParameter("msgID"));
+	}
+	if(msgID == 0){
+		script.println("<script>");
+		script.println("alert('유효하지 않은 접근입니다.')");
+		script.println("history.back()");
+		script.println("</script>");
+	}
+	MessageDAO msgDAO = new MessageDAO();
+	//msgID에 해당하는 글의 정보 가져오기
+	MessageDTO msg = new MessageDAO().getMsgVO(msgID);
+	//페이지 접속시 msgCheck = 1 로 변경해서 메시지 읽음으로 변경하기
+	int result = msgDAO.msgCheckUpdate(msgID, userID);
+	if(result == -1){
+		script.println("<script>");
+		script.println("alert('데이터베이스 오류')");
+		script.println("history.back()");
+		script.println("</script>");
+	}
 %>
 <div class="board-container">
 	<div>
@@ -104,13 +98,17 @@ if(result == -1){
 				<table id="view-table">
 					<tbody>
 						<tr height="20%" style="border-bottom: 1px solid #C0C0C0;">
-							<%if((msg.getUserID()).equals(userID)){ //보낸 메시지이면 받는사람 출력%>
+							<%
+								if((msg.getUserID()).equals(userID)){ //보낸 메시지이면 받는사람 출력
+							%>
 								<td class="td" style="width:30%;"><span>받는사람</span></td>
 								<td><%=msg.getToUserID().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></td>
-							<%}else{ //받은 메시지이면 보낸사람 출력%>
+							<%
+								}else{ //받은 메시지이면 보낸사람 출력
+							%>
 								<td class="td" style="width:30%;"><span>보낸사람</span></td>
 								<td><%=msg.getUserID().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></td>
-							<%} %>
+							<%	} %>
 						</tr>
 						<tr height="20%" style="border-bottom: 1px solid #C0C0C0;">
 							<td class="td"><span>제목</span></td>

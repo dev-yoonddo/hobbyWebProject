@@ -13,7 +13,7 @@
 <head>
 <meta name="viewport" content="width = device-width , initial-scale = 1, user-scalable = no, maximum-scale = 1 , minimum-scale = 1">
 <meta charset="UTF-8">
-<title>MESSAGE</title>
+<title>MESSAGE LIST</title>
 <link rel="icon" href="image/logo.png">
 <link rel="stylesheet" href="css/main.css?after">
 <link rel="stylesheet" href="css/member.css?after">
@@ -99,33 +99,33 @@ tr{
 </head>
 <body id="header">
 <%
-//userID 가져오기
-String userID = null;
-if(session.getAttribute("userID") != null){
-	userID = (String)session.getAttribute("userID");
-}
-if(userID == null){
-	PrintWriter script = response.getWriter();
-	script.println("<script>");
-	script.println("alert('로그인이 필요합니다.')");
-	script.println("window.open('loginPopUp', 'Login', 'width=450, height=500, top=50%, left=50%')");
-	script.println("</script>");
-}
-
-//groupID 가져오기
-int groupID = 0;
-if(request.getParameter("groupID") != null){
-	groupID = Integer.parseInt(request.getParameter("groupID"));
-}
-
-GroupDAO grDAO = new GroupDAO();
-MessageDAO msgDAO = new MessageDAO();
-
-//msgCheck = 0(안읽은 메시지)인 리스트 가져오기 (30일 이전까지)
-ArrayList<MessageDTO> checklist = msgDAO.getMessageCheck(userID, groupID);
-
-//같은 그룹의 멤버가 나에게 보낸 메시지 리스트 가져오기 (30일 이전까지)
-ArrayList<MessageDTO> msglist = msgDAO.getMsgList(userID, groupID);
+	//userID 가져오기
+	String userID = null;
+	if(session.getAttribute("userID") != null){
+		userID = (String)session.getAttribute("userID");
+	}
+	if(userID == null){
+		PrintWriter script = response.getWriter();
+		script.println("<script>");
+		script.println("alert('로그인이 필요합니다.')");
+		script.println("window.open('loginPopUp', 'Login', 'width=450, height=500, top=50%, left=50%')");
+		script.println("</script>");
+	}
+	
+	//groupID 가져오기
+	int groupID = 0;
+	if(request.getParameter("groupID") != null){
+		groupID = Integer.parseInt(request.getParameter("groupID"));
+	}
+	
+	GroupDAO grDAO = new GroupDAO();
+	MessageDAO msgDAO = new MessageDAO();
+	
+	//msgCheck = 0(안읽은 메시지)인 리스트 가져오기 (30일 이전까지)
+	ArrayList<MessageDTO> checklist = msgDAO.getMessageCheck(userID, groupID);
+	
+	//같은 그룹의 멤버가 나에게 보낸 메시지 리스트 가져오기 (30일 이전까지)
+	ArrayList<MessageDTO> msglist = msgDAO.getMsgList(userID, groupID);
 %>
 
 <!-- 받은 메시지 리스트 -->
@@ -136,13 +136,19 @@ ArrayList<MessageDTO> msglist = msgDAO.getMsgList(userID, groupID);
 		<div style="height: 50px; display: flex; justify-content: center; align-items: center;">
 		<h2 style="font-size: 25pt;">
 		<i class="fa-regular fa-envelope" style="font-size: 30pt;"></i>
-		<%if(groupID > 0){ //groupID = 0이면 문의하기, 0이상이면 유저간의 메시지 주고받기를 의미한다.%>
+		<%
+			if(groupID > 0){ //groupID = 0이면 문의하기, 0이상이면 유저간의 메시지 주고받기를 의미한다.
+		%>
 			<%=grDAO.getGroupVO(groupID).getGroupName()%>
-		<%}else if(!userID.equals("manager")){ %>
+		<%
+			}else if(!userID.equals("manager")){
+		%>
 			문의 답변
-		<%}else{%>
+		<%
+			}else{
+		%>
 			문의 목록
-		<%} %>
+		<%	} %>
 		</h2>
 		</div><br>
 		</td>
@@ -159,7 +165,9 @@ ArrayList<MessageDTO> msglist = msgDAO.getMsgList(userID, groupID);
 			</tr>
 		</thead>
 		<!-- 글이 0개이면 -->
-		<% if (msglist.size() == 0) { %>
+		<%
+			if (msglist.size() == 0) {
+		%>
 		<tbody>
 			<tr>
 				<td colspan="4" class="none-list">수신된 메시지가 없습니다.</td>
@@ -167,7 +175,9 @@ ArrayList<MessageDTO> msglist = msgDAO.getMsgList(userID, groupID);
 		</tbody>
 		
 		<!-- 글이 1개 이상이면 -->
-		<% }else{ %>
+		<% 
+			}else{
+		%>
 		<tbody>
 			<% 
 				for (int i = 0; i < msglist.size(); i++) {
@@ -176,11 +186,15 @@ ArrayList<MessageDTO> msglist = msgDAO.getMsgList(userID, groupID);
 				<td><%=msglist.get(i).getUserID()%></td>
 				<td><a id="click-view" onclick="viewMsg('<%= msglist.get(i).getMsgID()%>')"><%= msglist.get(i).getMsgTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></a></td>
 				<!-- msgCheck == 0이면 안읽음, 1이면 읽음 표시하기 -->
-				<% if(msglist.get(i).getMsgCheck() == 0){ %>
+				<% 
+					if(msglist.get(i).getMsgCheck() == 0){ 
+				%>
 					<td>NO</td>						
-				<% }else{ %>
+				<% 
+					}else{
+				%>
 					<td>YES</td>						
-				<% } %>
+				<% 	} %>
 				<td><%=msglist.get(i).getMsgDate().substring(0 ,11) + msglist.get(i).getMsgDate().substring(11, 13) + "시" + msglist.get(i).getMsgDate().substring(14, 16) + "분" %></td>
 			</tr>
 			<%
@@ -191,7 +205,9 @@ ArrayList<MessageDTO> msglist = msgDAO.getMsgList(userID, groupID);
 			}
 		%>
 	</table><br>
-	<% if (msglist.size() > 5) { %>
+	<% 
+		if (msglist.size() > 5) {
+	%>
 		<div id="row-btn-sec">
 			<div id="more-btn-msg">
 				<a>
@@ -200,10 +216,10 @@ ArrayList<MessageDTO> msglist = msgDAO.getMsgList(userID, groupID);
 				</a>
 			</div>
 		</div>
-	<%} %>
+	<%
+		}
+	%>
 </div>
-
-
 <script>
 
 //메시지 제목을 클릭하면 상세팝업 띄우기

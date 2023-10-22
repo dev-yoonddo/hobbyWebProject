@@ -235,17 +235,15 @@ section{
 		script.println("alert('로그인이 필요합니다.')");
 		script.println("window.open('loginPopUp', 'Login', 'width=450, height=500, top=50%, left=50%')");
 		script.println("</script>");
-
 	}else if(accessSpotName == null && spotName != null){ //가입했는지 검사 (spotname 파라미터만 존재)
 		if(!userID.equals(leader.getUserID()) && crew == null){ //스팟 생성자도 아니고 참여한 유저도 아니면
 			script.print("regist error"); //접속 불가
 	        script.flush();
-	        script.close();
 		}else{
 			script.print("access successfully");
 	        script.flush();
-	        script.close();
 		}
+        script.close();
 	}else{
 		Calendar calendar = Calendar.getInstance();
 		int year = calendar.get(Calendar.YEAR);
@@ -270,7 +268,7 @@ section{
 %>
 <!-- header -->
 <header id="header">
-<jsp:include page="/header/header.jsp"/>
+	<jsp:include page="/header/header.jsp"/>
 </header>
 <!-- header -->
 
@@ -525,11 +523,11 @@ function printValue(e) { //클릭한 날짜를 받아 팝업창에 전달
 	    //$('#getlist').remove();
 	});
 }
+
+//스케줄 등록하기
 function skedPut(day){
 	wrap1.style.display = 'block';
-
 	var a = "a";
-
 	var data1 = {
         spot: spot,
         month: month,
@@ -556,6 +554,8 @@ function skedPut(day){
      }
     });
 }
+
+//스케줄 체크하기
 function skedCheck(day){
 	wrap2.style.display = 'block';
 	
@@ -578,10 +578,10 @@ function skedCheck(day){
 			//console.log(day);
         	
        },
-    error: function (xhr, status, error) {
-         //console.error('Spot registration error:', error);
-         alert('오류');
-    }
+	    error: function (xhr, status, error) {
+	         //console.error('Spot registration error:', error);
+	         alert('오류');
+	    }
     });
    
 }

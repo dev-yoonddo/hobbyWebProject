@@ -43,36 +43,36 @@ section{
 	width: 1000px;
 }
 select{
-width: 200px;
-height: 40px;
-margin-bottom: 10px;
-text-align: center;
-font-size: 15pt;
-font-weight: 500;
-color: #B3C1EE;
+	width: 200px;
+	height: 40px;
+	margin-bottom: 10px;
+	text-align: center;
+	font-size: 15pt;
+	font-weight: 500;
+	color: #B3C1EE;
 
 }
 option{
-color: #B3C1EE;
-height: 40px;
+	color: #B3C1EE;
+	height: 40px;
 }
 textarea{
-width: 1000px;
-font-size: 13pt;
-font-family: 'Nanum Gothic', monospace;
-border: none;
-resize: none;
-padding: 10px;
+	width: 1000px;
+	font-size: 13pt;
+	font-family: 'Nanum Gothic', monospace;
+	border: none;
+	resize: none;
+	padding: 10px;
 }
 .inquiry{
-padding-bottom: 100px;
+	padding-bottom: 100px;
 }
 #view-table{
-width: 1000px;
-height: 500px;
-border-collapse: collapse;
-border: 1px solid #C0C0C0;
-font-size: 12pt;
+	width: 1000px;
+	height: 500px;
+	border-collapse: collapse;
+	border: 1px solid #C0C0C0;
+	font-size: 12pt;
 }
 .btn-blue{
 	position: relative;
@@ -87,28 +87,28 @@ font-size: 12pt;
 }
 
 .btn-blue span {         
-  position: relative;
-  display: inline-block;
-  font-size: 12pt;
-  font-weight: bold;
-  letter-spacing: 2px;
-  border-radius: 20px;
-  width: 100%;
-  padding: 10px;
-  transition: 0.5s; 
-  color: #ffffff;
-  background-color: #7D95E5;
-  border: 1px solid #7D95E5;
-  font-family: 'Nanum Gothic Coding', monospace;
+	position: relative;
+	display: inline-block;
+	font-size: 12pt;
+	font-weight: bold;
+	letter-spacing: 2px;
+	border-radius: 20px;
+	width: 100%;
+	padding: 10px;
+	transition: 0.5s; 
+	color: #ffffff;
+	background-color: #7D95E5;
+	border: 1px solid #7D95E5;
+	font-family: 'Nanum Gothic Coding', monospace;
 }
 
 .btn-blue::before {
-  background-color: #7D95E5;
+	background-color: #7D95E5;
 }
 
 .btn-blue span:hover {
-  color: #7D95E5;
-  background-color: #ffffff
+	color: #7D95E5;
+	background-color: #ffffff
 }
 #write-bottom{
 	display: flex;
@@ -239,12 +239,16 @@ String bdcategory = request.getParameter("category");
 				<div class="form-check" style="display: flex; height: 40px; align-items: center;">
 					<input type="checkbox" hidden="hidden" name="notice" value="NULL" checked="checked">
 				<!-- 관리자 계정으로 공지사항 체크박스 체크시 value값을 NOTICE로 넘긴다. -->
-				<% if(userID.equals("manager")){%>
+				<% 
+					if(userID.equals("manager")){
+				%>
 					<input class="form-check-input" type="checkbox" name="notice" value="NOTICE" id="flexCheckDefault">
 					<label class="form-check-label" for="flexCheckDefault">
 					  공지사항
 					</label>
-				<%} %>
+				<%
+					}
+				%>
 				</div>
 				</div>
 				<table class="write-table" style="text-align: center; border: 1px solid #dddddd">
@@ -309,7 +313,6 @@ for (let i = 0; i < selectBox.options.length; i++) {
 
 function filename(input){
 	var file = input.files[0];	//선택된 파일 가져오기
-
     //미리 만들어 놓은 div에 text(파일 이름) 추가
     var name = document.getElementById('filename');
     name.textContent = file.name;
