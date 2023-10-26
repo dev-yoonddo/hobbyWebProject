@@ -243,14 +243,14 @@ th span{
 	//선택한 카테고리 가져오기
 	String boardCategory = request.getParameter("searchField2");
 	//카테고리에 해당하는 글 리스트 가져오기
-	ArrayList<BoardDTO> list = boardDAO.getSearch(boardCategory);
+	ArrayList<BoardDTO> boardlist = boardDAO.getSearch(boardCategory);
 	if(boardCategory == ""){
 		script.println("<script>");
 		script.println("alert('옵션을 선택해주세요')");
 		script.println("history.back()");
 		script.println("</script>");
 	}
-	if(list.size() == 0){
+	if(boardlist.size() == 0){
 		script.println("<script>");
 		script.println("alert('검색 결과가 없습니다.')");
 		script.println("history.back()");
@@ -272,11 +272,11 @@ th span{
 			<div id="notice">
 			<% 
 				ArrayList<BoardDTO> noticelist = boardDAO.getNotice();
-				for(int i = 0; i < noticelist.size(); i++){
+				for(BoardDTO notice : noticelist){
 			%>
 				<div id="notice-inner">
-					<div id="notice-option" onclick="location.href='view?boardID=<%= noticelist.get(i).getBoardID() %>'">
-					<i class="fa-regular fa-bell"></i>&nbsp;&nbsp;<%= noticelist.get(i).getBoardTitle()%>
+					<div id="notice-option" onclick="location.href='view?boardID=<%= notice.getBoardID() %>'">
+					<i class="fa-regular fa-bell"></i>&nbsp;&nbsp;<%= notice.getBoardTitle()%>
 					</div>
 				</div>
 			<%
@@ -299,29 +299,29 @@ th span{
 				</thead>
 				<tbody>
 					<%
-						for (int i = 0; i < list.size(); i++) {
+						for (BoardDTO bd : boardlist) {
 					%>
 					<tr class="board-row">
-						<td><%=list.get(i).getViewCount()%></td>
+						<td><%=bd.getViewCount()%></td>
 						<%
-							if(list.get(i).getFilename() == null){
+							if(bd.getFilename() == null){
 						%>
-							<td><a id="click-view" href="view?boardID=<%= list.get(i).getBoardID() %>"><%= list.get(i).getBoardTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></a></td>
+							<td><a id="click-view" href="view?boardID=<%= bd.getBoardID() %>"><%= bd.getBoardTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></a></td>
 						<%
 							}else{
 						%>
-							<td><a id="click-view" href="view?boardID=<%= list.get(i).getBoardID() %>"><%= list.get(i).getBoardTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%>&nbsp;&nbsp;<i class="fa-solid fa-paperclip"></i></a></td>
+							<td><a id="click-view" href="view?boardID=<%= bd.getBoardID() %>"><%= bd.getBoardTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%>&nbsp;&nbsp;<i class="fa-solid fa-paperclip"></i></a></td>
 						<%
 							}
 						%>
-						<td><%= list.get(i).getUserID() %></td>
-						<td><%=list.get(i).getHeartCount()%></td>
+						<td><%= bd.getUserID() %></td>
+						<td><%=bd.getHeartCount()%></td>
 						<%
 		                 	CommentDAO cmtDAO = new CommentDAO();
-		                 	ArrayList<CommentDTO> cmtlist = cmtDAO.getList(list.get(i).getBoardID());
+		                 	ArrayList<CommentDTO> cmtlist = cmtDAO.getList(bd.getBoardID());
 	                 	%>
 						<td><%= cmtlist.size() %></td>
-						<td class="date" ><%= list.get(i).getBoardDate().substring(0 ,11) + list.get(i).getBoardDate().substring(11, 13) + "시" + list.get(i).getBoardDate().substring(14, 16) + "분" %></td>
+						<td class="date" ><%= bd.getBoardDate().substring(0 ,11) + bd.getBoardDate().substring(11, 13) + "시" + bd.getBoardDate().substring(14, 16) + "분" %></td>
 					</tr>
 					<%
 						}
@@ -330,7 +330,7 @@ th span{
 			</table>
 		</div>	
 		<% 
-			if( list.size() > 10 ){ //검색된 리스트의 갯수가 10개 이상일때만 더보기 버튼 보이기
+			if( boardlist.size() > 10 ){ //검색된 리스트의 갯수가 10개 이상일때만 더보기 버튼 보이기
 		%>
 		<br><div id="row-btn-sec">
 			<div id="more-btn">

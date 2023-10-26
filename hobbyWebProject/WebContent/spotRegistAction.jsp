@@ -19,7 +19,7 @@
 	String spAd = null;
 	
 	LocationDAO locDAO = new LocationDAO();
-	ArrayList<LocationDTO> list = locDAO.getNameAdList();
+	ArrayList<LocationDTO> locationlist = locDAO.getNameAdList();
 	
 	if(session.getAttribute("userID") != null){
 		userID = (String) session.getAttribute("userID");
@@ -47,11 +47,11 @@
 	}else{
 		int nameExist = 0;
 		int adExist = 0;
-		for(int i = 0; i < list.size(); i++){			
-			if(spotName.equals(list.get(i).getSpotName())){ //데이터베이스에 이미 같은 이름이 존재하면
+		for(LocationDTO loc : locationlist){			
+			if(spotName.equals(loc.getSpotName())){ //데이터베이스에 이미 같은 이름이 존재하면
 				nameExist++; //exist + 1
 			}
-			else if(address.equals(list.get(i).getAddress())){ //데이터베이스에 이미 같은 주소가 존재하면
+			else if(address.equals(loc.getAddress())){ //데이터베이스에 이미 같은 주소가 존재하면
 				adExist++; //exist + 1
 			}
 		}

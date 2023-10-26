@@ -510,10 +510,10 @@ int chatsize = chatlist.size();
 					<div id="join-list-animated">
 						<div id="join-list">
 						<%
-							for(int i=0; i<mblist.size(); i++){
+							for(MemberDTO mb : mblist){
 						%>
 							<div class="join-list-inner">
-								<span><%= mblist.get(i).getMemberID() %>님이 가입했습니다</span>
+								<span><%= mb.getMemberID() %>님이 가입했습니다</span>
 							</div>
 						<%	} %>
 						</div>
@@ -578,12 +578,12 @@ int chatsize = chatlist.size();
 				<%
 					}else{
 
-						for(int i = 0; i < chatlist.size(); i++){
-					        MemberDTO mbID = mbDAO.getMemberVO(chatlist.get(i).getUserID(), chatlist.get(i).getGroupID());
+						for(ChatDTO i : chatlist){
+					        MemberDTO mbID = mbDAO.getMemberVO(i.getUserID(), i.getGroupID());
 				%>
 							<div id="chatList">
 								<%
-									boolean userChat = chatlist.get(i).getUserID().equals(userID);
+									boolean userChat = i.getUserID().equals(userID);
 									//내가 전송한 채팅은 왼쪽에, 다른 사용자가 전송한 채팅은 오른쪽에 위치시킨다.
 									if(!userChat){
 								%>
@@ -596,12 +596,12 @@ int chatsize = chatlist.size();
 									<!-- 채팅 상단 (닉네임, 날짜 출력) -->
 									<div id="chat-head">
 									<%
-										if(group.getUserID().equals(chatlist.get(i).getUserID())){
+										if(group.getUserID().equals(i.getUserID())){
 									%>
 										<span style="font-weight: bold;">리더</span>
 									<%
 										}else{ //탈퇴한 회원이거나 그룹탈퇴한 회원이면
-										if(mbID.getMbAvailable() == 0 || chatlist.get(i).getChatAvailable() == 0){ %>
+										if(mbID.getMbAvailable() == 0 || i.getChatAvailable() == 0){ %>
 											<span>탈퇴한 회원</span>										
 									<%
 										}else{
@@ -611,21 +611,21 @@ int chatsize = chatlist.size();
 											}
 										}
 									%>
-										<span id="large" ><%= chatlist.get(i).getChatDate().substring(0,11)+chatlist.get(i).getChatDate().substring(11,13)+"시"+chatlist.get(i).getChatDate().substring(14,16)+"분" %></span>
+										<span id="large" ><%= i.getChatDate().substring(0,11)+i.getChatDate().substring(11,13)+"시"+i.getChatDate().substring(14,16)+"분" %></span>
 										<!-- 화면이 작아지면 시간은 뺀다 -->
-										<span id="small" ><%= chatlist.get(i).getChatDate().substring(0,11)%></span>
+										<span id="small" ><%= i.getChatDate().substring(0,11)%></span>
 									</div>
 									
 									<!-- 채팅 하단 (채팅 내용 출력) -->
 									<div id="chat-content">
 									<%
-										if(mbID != null && mbID.getMbAvailable() == 0 || chatlist.get(i).getChatAvailable() == 0){ //리더가 아니고 (mbID != null) 회원탈퇴 또는 그룹탈퇴했으면 삭제된 메시지로 출력
+										if(mbID != null && mbID.getMbAvailable() == 0 || i.getChatAvailable() == 0){ //리더가 아니고 (mbID != null) 회원탈퇴 또는 그룹탈퇴했으면 삭제된 메시지로 출력
 									%>
 										<span>삭제된 메시지입니다.</span>
 									<%
 										}else{ //리더이거나 (mbID == null) 회원탈퇴, 그룹탈퇴 하지 않은 멤버의 메시지 출력
 									%>
-										<%= chatlist.get(i).getChatContent() %>
+										<%= i.getChatContent() %>
 									<%} %>
 									</div>
 								<%if(!userChat){%>

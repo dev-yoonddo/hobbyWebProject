@@ -86,10 +86,10 @@ ArrayList<GroupDTO> list = grDAO.getListByUser(userID);
 					<!-- select에서는 option의 value값이 넘어간다. -->
 					<option value="0">SELECT GROUP</option>
 					<%
-				    	for (int i = 0; i < list.size(); i++) {
-				    		if(list.get(i).getGroupAvailable() == 1){
+				    	for (GroupDTO i : list) {
+				    		if(i.getGroupAvailable() == 1){
 				  	%>
-						<option class="group" value="<%=list.get(i).getGroupName()%>"><%= list.get(i).getGroupName() %></option>
+						<option class="group" value="<%=i.getGroupName()%>"><%= i.getGroupName() %></option>
 					<%	
 				    		}
 				    	}

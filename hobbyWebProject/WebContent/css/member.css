@@ -207,8 +207,10 @@ section{
 #userMsg > div{
 	margin: 0 auto;
 }
-
-#userMsg > div > h2{
+#userMsg > div > div{
+	margin: 0 auto;
+}
+#userMsg > div > div > h2{
     font-size: 24px;
     color: #86A5FF;
     margin-bottom: 20px;

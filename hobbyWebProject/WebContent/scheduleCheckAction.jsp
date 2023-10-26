@@ -31,12 +31,13 @@
 	
 	ArrayList<ScheduleDTO> skedlist = skedDAO.getScheduleListByTime(spotName, skedMonth, skedDay);
 	String[] value = new String[skedlist.size()];
-	
+	int index = 0;
 	if(skedlist.size() > 0){
-		for(int i=0; i < skedlist.size(); i++){
-			value[i] = "<div class='getlist'>"+skedlist.get(i).getUserID()+" : "+skedlist.get(i).getSkedContent()+"</div>";
+		for(ScheduleDTO i : skedlist){
+			value[index] = "<div class='getlist'>"+i.getUserID()+" : "+i.getSkedContent()+"</div>";
 			//System.out.println(value[i]);
-			script.print(value[i]);
+			script.print(value[index]);
+			index++;
 		}
 	}
 	script.flush();

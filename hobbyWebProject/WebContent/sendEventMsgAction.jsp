@@ -17,6 +17,12 @@
 
 <!DOCTYPE html>
 <html>
+<head>
+<meta name="viewport" content="width = device-width , initial-scale = 1, user-scalable = no, maximum-scale = 1 , minimum-scale = 1">
+<meta charset="UTF-8">
+<title>TOGETHER</title>
+<link rel="icon" href="image/logo.png">
+</head>
 <body>
 	<%
 		PrintWriter script = response.getWriter();
@@ -34,11 +40,11 @@
 		}else{
 			EventDAO eventDAO = new EventDAO();
 			//파라미터 값들을 배열에 저장한다.
-		    String[] events = request.getParameterValues("event");
+		    String[] userIDs = request.getParameterValues("event");
 			//배열의 길이만큼 반복한다.
-		    for(int i = 0 ; i < events.length ; i++){
+		    for(String id : userIDs){
 		    	//userID와 입력한 메시지를 raffleWinMsg() 메서드에 넘겨 저장한다.
-		    	int result = eventDAO.raffleWinMsg(events[i], event.getEventWinMsg());
+		    	int result = eventDAO.raffleWinMsg(id, event.getEventWinMsg());
 		    	if(result == -1){
 					script.println("<script>");
 					script.println("alert('데이터베이스 오류')");
@@ -49,7 +55,7 @@
 		    	success++;
 		    }
 			//배열의 길이와 seccess의 크기가 같으면 모든 userID의 eventWinMsg에 값이 정상적으로 들어감을 의미한다.
-		    if(events.length == success){
+		    if(userIDs.length == success){
 				script.println("<script>");
 				script.println("alert('전송 완료')");
 				script.println("self.close()");

@@ -12,6 +12,12 @@
 <jsp:setProperty name="user" property="userEmail" />
 <!DOCTYPE html>
 <html>
+<head>
+<meta name="viewport" content="width = device-width , initial-scale = 1, user-scalable = no, maximum-scale = 1 , minimum-scale = 1">
+<meta charset="UTF-8">
+<title>TOGETHER</title>
+<link rel="icon" href="image/logo.png">
+</head>
 <body>
 <%
 	PrintWriter script = response.getWriter();
@@ -35,30 +41,35 @@
 	}else{
 		//이미 사용중인 이메일인지 검사
 		ArrayList<UserDTO> list = userDAO.getEmailList();
+		int emailcheck = 0;
 		for (int i = 0; i < list.size(); i++) {		
-			String email = list.get(i).getUserEmail();
-			if(email.equals(user.getUserEmail())){
+			//데이터베이스에 이미 같은 이메일이 존재하면 emailcheck++
+			if(list.get(i).getUserEmail().equals(user.getUserEmail())){
+				emailcheck++;
+			}
+		}
+		if(emailcheck > 0){
+			script.println("<script>");
+			script.println("alert('이미 사용중인 이메일입니다.')");
+			script.println("history.back()");
+			script.println("</script>");
+		}else{
+			int result = userDAO.userEmailUpdate(userID, user.getUserEmail());
+			if(result == -1){
 				script.println("<script>");
-				script.println("alert('이미 사용중인 이메일입니다.')");
+				script.println("alert('오류가 발생했습니다.')");
 				script.println("history.back()");
 				script.println("</script>");
 			}else{
-				int result = userDAO.userEmailUpdate(userID, user.getUserEmail());
-				if(result == -1){
-					script.println("<script>");
-					script.println("alert('오류가 발생했습니다.')");
-					script.println("history.back()");
-					script.println("</script>");
-				}else{
-					script.println("<script>");
-					//팝업을 닫고 부모창 페이지 새로고침
-					script.println("self.close()");
-					script.println("opener.location.reload()");
-					script.println("</script>");
-				}
+				script.println("<script>");
+				//팝업을 닫고 부모창 페이지 새로고침
+				script.println("self.close()");
+				script.println("opener.location.reload()");
+				script.println("</script>");
 			}
 		}
 	}
+	
 %>
 </body>
 </html>

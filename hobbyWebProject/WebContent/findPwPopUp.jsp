@@ -85,7 +85,6 @@ GroupDAO groupDAO = new GroupDAO();
 MemberDAO memberDAO = new MemberDAO();
 
 UserDTO user=new UserDAO().getUserVO(userID); //유저 정보 가져오기
-ArrayList<MemberDTO> mbList = memberDAO.getListByUser(userID); //유저가 가입한 그룹 리스트 가져오기
 %>
 <div class="login-wrapper" id="header">
 	<div>

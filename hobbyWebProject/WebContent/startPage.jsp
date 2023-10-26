@@ -156,13 +156,13 @@ section{
 <footer>
 </footer>	
 <script>
-  setTimeout('pageStart()', 6000); //5초후에 move_page함수실행
+  setTimeout('pageStart()', 3000); //3초후에 move_page함수실행
   function pageStart(){
   location.href="mainPage"  // 페이지 이동
   }
 </script>
 <script>
-const content = "주말에 취미 활동 시작하고 싶은데.. 누구랑 하지?";
+const content = "인생을 즐기고 싶을 때, TOGETHER";
 const text1 = document.querySelector('.text1');
 let i = 0;
 
@@ -173,7 +173,7 @@ function typing(){
 	    i++;
     }
 }
-setInterval(typing, 150)
+setInterval(typing, 120)
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>

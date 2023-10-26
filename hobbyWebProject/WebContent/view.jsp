@@ -1,3 +1,4 @@
+<%@page import="java.util.stream.Stream"%>
 <%@page import="file.FileDAO"%>
 <%@page import="file.FileDTO"%>
 <%@page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy"%>
@@ -580,7 +581,7 @@ table caption{
 	   <!-- 댓글 리스트 출력 -->
 		<div class="cmt-view" style="height: auto;">
          	<div class="row" style="width: 600px; height: auto;">
-                   <%
+                <% 
                    for(int i=cmtlist.size()-1; i>=0; i--){ //거꾸로 출력
                 %>
                 <div class="cmt-list" style="width: 600px; height: 110px;">

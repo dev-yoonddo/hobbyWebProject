@@ -17,10 +17,10 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta name="viewport" content="width = device-width , initial-scale = 1, user-scalable = no, maximum-scale = 1 , minimum-scale = 1">
 <meta charset="UTF-8">
-<script src="option/jquery/jquery.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<script type="text/javascript" src="js/script.js"></script>
+<title>TOGETHER</title>
+<link rel="icon" href="image/logo.png">
 </head>
 <body>
 	<%
@@ -47,8 +47,8 @@
 			//이미 사용중인 이메일인지 검사
 			int emailOK = 0;
 			ArrayList<UserDTO> list = userDAO.getEmailList();
-			for (int i = 0; i < list.size(); i++) {
-				String email = list.get(i).getUserEmail();
+			for (UserDTO i : list) {
+				String email = i.getUserEmail();
 				if(email.equals(user.getUserEmail())){
 					script.println("<script>");
 					script.println("alert('이미 사용중인 이메일입니다.')");

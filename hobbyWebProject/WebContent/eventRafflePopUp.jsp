@@ -137,7 +137,7 @@ if(!userID.equals("manager")){
 	script.println("</script>");
 }
 EventDAO eventDAO = new EventDAO();
-ArrayList<EventDTO> list = eventDAO.getList();
+ArrayList<EventDTO> eventlist = eventDAO.getList();
 %>
 <div id="viewEvent">
 	<form action="eventRaffleAction.jsp">
@@ -154,7 +154,7 @@ ArrayList<EventDTO> list = eventDAO.getList();
 			</tr>
 		</thead>
 		<!-- 리스트가 0개이면 -->
-		<% if (list.size() == 0) { %>
+		<% if (eventlist.size() == 0) { %>
 		<tbody>
 			<tr>
 				<td colspan="4" class="none-list">응모한 회원이 없습니다.</td>
@@ -165,12 +165,12 @@ ArrayList<EventDTO> list = eventDAO.getList();
 		<% }else{ %>
 		<tbody>
 			<%
-				for (int i = 0; i < list.size(); i++) {
+				for (EventDTO i : eventlist) {
 			%>
 			<tr class="showEventList" style="height: 50px;">
-				<td><input type="checkbox" id="event" name="event" onclick="getCheckboxValue()" value="<%=list.get(i).getUserID()%>"><%=list.get(i).getUserID()%></td>
-				<td><%=list.get(i).getGroupName() %></td>
-				<td><%=list.get(i).getEventContent() %></td>			
+				<td><input type="checkbox" id="event" name="event" onclick="getCheckboxValue()" value="<%=i.getUserID()%>"><%=i.getUserID()%></td>
+				<td><%=i.getGroupName() %></td>
+				<td><%=i.getEventContent() %></td>			
 			</tr>
 			<%
 				}
@@ -183,7 +183,7 @@ ArrayList<EventDTO> list = eventDAO.getList();
 	
 	<br>
 	<% 
-		if( list.size() >= 5 ){ //검색된 리스트의 갯수가 10개 이상일때만 더보기 버튼 보이기
+		if( eventlist.size() >= 5 ){ //검색된 리스트의 갯수가 10개 이상일때만 더보기 버튼 보이기
 	%>
 	<div id="row-btn-sec">
 		<div id="more-btn-event">

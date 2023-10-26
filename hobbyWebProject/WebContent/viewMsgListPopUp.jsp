@@ -104,6 +104,11 @@ tr{
 	if(session.getAttribute("userID") != null){
 		userID = (String)session.getAttribute("userID");
 	}
+	//groupID 가져오기
+	int groupID = 0;
+	if(request.getParameter("groupID") != null){
+		groupID = Integer.parseInt(request.getParameter("groupID"));
+	}
 	if(userID == null){
 		PrintWriter script = response.getWriter();
 		script.println("<script>");
@@ -111,16 +116,10 @@ tr{
 		script.println("window.open('loginPopUp', 'Login', 'width=450, height=500, top=50%, left=50%')");
 		script.println("</script>");
 	}
-	
-	//groupID 가져오기
-	int groupID = 0;
-	if(request.getParameter("groupID") != null){
-		groupID = Integer.parseInt(request.getParameter("groupID"));
-	}
-	
+
 	GroupDAO grDAO = new GroupDAO();
 	MessageDAO msgDAO = new MessageDAO();
-	
+
 	//msgCheck = 0(안읽은 메시지)인 리스트 가져오기 (30일 이전까지)
 	ArrayList<MessageDTO> checklist = msgDAO.getMessageCheck(userID, groupID);
 	
@@ -220,6 +219,8 @@ tr{
 		}
 	%>
 </div>
+
+
 <script>
 
 //메시지 제목을 클릭하면 상세팝업 띄우기

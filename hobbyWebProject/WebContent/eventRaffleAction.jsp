@@ -63,7 +63,7 @@ h3{
 		boolean raffle = false;
 		EventDAO eventDAO = new EventDAO();
 		//eventRafflePopUp.jsp에서 가져온 파라미터(userID)를 배열에 저장한다. 
-	    String[] events = request.getParameterValues("event");
+	    String[] userIDs = request.getParameterValues("event");
 		
 		String userID = null;
 		if(session.getAttribute("userID") != null){
@@ -78,9 +78,9 @@ h3{
 		}else{
 		    int raffleResult = 0;
 		    //넘어온 파라미터 갯수만큼 반복
-		    for(int i = 0 ; i < events.length ; i++){
+		    for(String id : userIDs){
 		    	//파라미터를 raffleWin메서드에 넣어 eventWin = 1로 변경한다 (당첨)
-		        int eventWin = eventDAO.raffleWin(events[i]);
+		        int eventWin = eventDAO.raffleWin(id);
 		        if(eventWin == -1){ //데이터베이스 오류
 					PrintWriter script = response.getWriter();
 					script.println("<script>");
@@ -92,7 +92,7 @@ h3{
 		        raffleResult++;
 		    }
 		    //배열의 길이와 raffleResult의 크기가 같으면 당첨처리가 정상적으로 실행됨을 의미한다.
-		    if(events.length == raffleResult){
+		    if(userIDs.length == raffleResult){
 		    	raffle = true;
 		    }
 			
@@ -103,8 +103,8 @@ h3{
 	<div id="eventMsg">
 	<h3>당첨자에게 메시지 전송</h3>
 	<form method="post" action="sendEventMsgAction.jsp" id="send-form">
-		<%for(int i = 0 ; i < events.length ; i++){ //value값에 userID를 넣어 파라미터 값으로 넘긴다.%>
-		<input type="checkbox" checked="checked" hidden="hidden" name="event" value="<%=events[i]%>">
+		<%for(String id : userIDs){ //value값에 userID를 넣어 파라미터 값으로 넘긴다.%>
+		<input type="checkbox" checked="checked" hidden="hidden" name="event" value="<%=id%>">
 		<%} %>
 	    <textarea name="eventWinMsg" id="eventWinMsg"  maxlength="200"></textarea>
 	    <button type="submit" class="btn-blue" id="sb"><span>메시지 전송</span></button>

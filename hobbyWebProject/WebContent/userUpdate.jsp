@@ -730,14 +730,16 @@ span{
 	<!-- 데이터 관리하기 끝 -->
 		
 	<!-- 메시지 관리하기 -->
+	<%
+		MessageDAO msgDAO = new MessageDAO();
+		//받은 메시지 리스트
+		ArrayList<MessageDTO> msglist = msgDAO.getMessageList(userID);
+	%>
 	<div id="userMsg" hidden="">
 		<div>
-			<h2>메시지 관리하기</h2>
-			<%
-			MessageDAO msgDAO = new MessageDAO();
-			//받은 메시지 리스트
-			ArrayList<MessageDTO> msglist = msgDAO.getMessageList(userID);
-			%>
+			<div style="display: flex;">
+				<h2>메시지 관리하기</h2>&nbsp;&nbsp;<h4 style="color: #C0C0C0; padding-top: 10px;">30일간 보관됩니다</h4>
+			</div>
 			<!-- 받은 메시지 목록 -->
 			<div class="userDataBoard">
 				<tr class="view-head">
