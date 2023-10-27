@@ -35,7 +35,7 @@
 
 <hr>
 
-<br><br><br>
+<br><br>
 
 # 💻 Detailed Description
 
