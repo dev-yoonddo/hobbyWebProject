@@ -1,3 +1,4 @@
+<%@page import="java.util.HashMap"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="user.PwEncrypt"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -53,9 +54,13 @@
 				script.println("history.back()");
 				script.println("</script>");
 				}
+				//기존 salt값 가져오기
+				String salt = userDTO.getUserSalt();
 				//입력받은 비밀번호를 암호화 한 뒤 기존 비밀와 비교 후 같으면 이미 사용중인 비밀번호라고 알림
-				String encryptPW = PwEncrypt.encoding(request.getParameter("userPassword"));
-				if(encryptPW.equals(userDTO.getUserPassword())){
+				HashMap<String, String> encryptPW = PwEncrypt.encoding(request.getParameter("userPassword"), salt);
+				String hashPW =  encryptPW.get("hash");
+				String existPW = userDTO.getUserPassword();
+				if(hashPW.equals(existPW)){ //새로운 비밀번호를 암호화한 값과 기존 비밀번호가 같으면 수정 불가
 					script.println("<script>");
 					script.println("alert('이미 사용중인 비밀번호입니다.')");
 					script.println("history.back()");
@@ -76,7 +81,7 @@
 							}
 						}
 					}else{
-						int result=userDAO.update(userID , user.getUserName(),user.getUserEmail() ,user.getUserBirth(), user.getUserPhone() ,encryptPW);
+						int result=userDAO.update(userID , user.getUserName(),user.getUserEmail() ,user.getUserBirth(), user.getUserPhone() ,salt, user.getUserPassword());
 						if(result == -1){//데이터 베이스 오류가 날 때
 							script.println("<script>");
 							script.println("alert('회원정보 수정에 실패했습니다.')");
