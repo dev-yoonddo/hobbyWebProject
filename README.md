@@ -5,7 +5,7 @@
 
 ## https://toogether.me <br><br> 테스트 아이디 : test / 비밀번호 : 1234
 
-<br><br>
+<br>
 
 ## ❔ Tech Skills
 
@@ -24,7 +24,7 @@
 
 <br><br>
 
-### 배포 과정
+### 배포
 
 1. AWS EC2 인스턴스 생성 후 퍼블릭ip를 발급받아 인스턴스와 연결
 2. FileZilla를 사용해 AWS EC2 인스턴스에 업로드
