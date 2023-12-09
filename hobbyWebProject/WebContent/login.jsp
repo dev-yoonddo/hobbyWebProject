@@ -20,7 +20,10 @@
 <script src="https://kit.fontawesome.com/f95555e5d8.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 <script type="text/javascript" src="js/script.js"></script>
-
+<meta name="google-signin-client_id" content="315665536455-3tfd5ggibvp9hq5at75db0mfic3sm5n6.apps.googleusercontent.com">
+<script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
+<script src="https://apis.google.com/js/platform.js?onload=triggerGoogleLoaded"></script>
+<script src="https://apis.google.com/js/platform.js?onload=init" async defer></script>
 </head>
 <style>
 .login-wrapper{
@@ -49,6 +52,7 @@ if(session.getAttribute("userID") != null){
 		        <input type="checkbox" id="remember-check">아이디 저장하기
 		    </label>
 		    <input type="submit" value="Login">
+		    <div class="g-signin2" style="max-width:400px;max-height:50px" data-onsuccess="onSignIn" data-theme="dark" data-width="auto" data-height="60"></div>
 		</form>
 	   </div>
 	</div>
@@ -114,6 +118,37 @@ function getCookie(cookieName) {
 		cookieValue = cookieData.substring(start, end);
 	}
 	return unescape(cookieValue);
+}
+</script>
+<script>
+function onSignIn(googleUser){
+	var profile = googleUser.getBasicProfile();
+	id = profile.getId();
+	username = profile.getName();
+	img = profile.getImageUrl();
+	email = profile.getEmail();
+	alert("로그인 완료");
+	console.log(id);
+	console.log(username);
+	console.log(email);
+	post_to_url("http://localhost:8080/glLoginAction.jsp",{'id' : id , 'username' : username, 'email' : email , 'img': img})
+}
+function post_to_url(path, params){
+	const form = document.createElement('form');
+	form.method = 'POST';
+	form.action = path;
+	console.log(params);
+	for(const key in params){
+		if(params.hasOwnProperty(key)){
+			const hiddenField = document.createElement('input');
+			hiddenField.type = 'hidden';
+			hiddenField.name = key;
+			hiddenField.value = params[key];
+			form.appendChild(hiddenField);
+		}
+	}
+	document.body.appendChild(form);
+	form.submit();
 }
 </script>
 </body>
