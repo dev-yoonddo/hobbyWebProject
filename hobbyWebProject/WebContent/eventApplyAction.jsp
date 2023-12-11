@@ -1,3 +1,5 @@
+<%@page import="java.util.HashMap"%>
+<%@page import="user.UserDTO"%>
 <%@page import="user.PwEncrypt"%>
 <%@page import="org.apache.tomcat.jni.Directory"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -40,10 +42,13 @@
 			script.println("</script>");
 		}else{
 		UserDAO user = new UserDAO();
+		UserDTO userDTO = user.getUserVO(userID);
 		//응모하는 회원의 비밀번호를 가져온다.
-		String userPW = user.getUserVO(userID).getUserPassword();
+		String userPW = userDTO.getUserPassword();
 		//암호화된 비밀번호와 비교하기 위해 입력한 비밀번호를 암호화한다.
-		String inputPW = PwEncrypt.encoding(event.getUserPassword());
+		HashMap<String, String> pw = PwEncrypt.encoding(event.getUserPassword(), userDTO.getUserSalt());
+		String inputPW = pw.get("hash");
+		//String inputPW = PwEncrypt.encoding(event.getUserPassword(), userDTO.getUserSalt());
 		//입력한 정보 검사
 		//받아온 값이 0이면 응모 기준에는 충족하지만 활동중인 그룹이 없음을 의미한다.
 			if(event.getGroupName().equals("0")) {

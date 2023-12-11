@@ -1,3 +1,5 @@
+<%@page import="user.UserDTO"%>
+<%@page import="java.util.HashMap"%>
 <%@page import="group.GroupDAO"%>
 <%@page import="group.GroupDTO"%>
 <%@page import="user.PwEncrypt"%>
@@ -53,10 +55,12 @@
 			script.println("</script>");
 		}else{
 		UserDAO userDAO = new UserDAO();
+		UserDTO userDTO = userDAO.getUserVO(userID);
 		//회원 비밀번호를 가져온다.
-		String userPW = userDAO.getUserVO(userID).getUserPassword();
-		//암호화된 비밀번호와 비교하기 위해 입력한 비밀번호를 암호화한다.
-		String inputPW = PwEncrypt.encoding(user.getUserPassword());
+		String userPW = userDTO.getUserPassword();
+		//암호화된 비밀번호와 비교하기 위해 입력한 비밀번호 + salt키를 암호화 한 값을 가져온다.
+		HashMap<String,String> pw = PwEncrypt.encoding(user.getUserPassword(), userDTO.getUserSalt());
+		String inputPW = pw.get("hash");
 		//회원 전화번호를 가져온다.
 		String userPhone = userDAO.getUserVO(userID).getUserPhone();
 		//입력한 정보 검사
