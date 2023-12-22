@@ -3,7 +3,7 @@
 	var info = 0;
 		
 //	console.log('실행됨');
-//	console.log(locationData);
+//	console.log(locationData); //데이터를 잘 받았는지 확인한다.
 	
 	function question(){
 		$('#answer').show();
@@ -267,12 +267,21 @@
     	var clickname = null;
     	var clickaddress = null;
     	
-        for(const [name, location] of Object.entries(locationData)){
+        for(const location of Object.values(locationData)){ // locationData의 value값들만 사용한다.
+      //for(const [name, location] of Object.entries(locationData)){ {locationName : {locationKey : locationValue}} 형태의 데이터를
+      //그대로 변환하기 위해서는 이 코드를 사용한다.
    	   	 //데이터베이스의 locationData 길이만큼 반복해 각 위치에 marker2를 생성하고 marker2를 클릭하면 해당하는 정보를 infoWindow에 표시한다.
-            //  for (var i = 0; i < locationData.length; i++) {
-                  //var location = locationData[i];
-          var latlng = new naver.maps.LatLng(location.latitude, location.longitude);
-      	    
+         //  for (var i = 0; i < locationData.length; i++) { 데이터들이 JSON형태가 아니면 이렇게 사용할 수 있다.
+           //var location = locationData[i];
+//          location 값들을 확인한다.
+//  		console.log('==========================');
+//  		console.log(location.name);
+//  		console.log(location.address);
+//  	    console.log(location.latitude);
+//  	    console.log(location.longitude);
+//  	    console.log(location.crew);
+//  	    console.log('==========================');
+          var latlng = new naver.maps.LatLng(location.latitude, location.longitude); 
           var infoContent = [
           	'<div id="info-window">',//이름을 클릭하면 스팟가입 메서드가 실행된다.
           	'<div id="info-name" onclick="joinSpot()"><i id="name-icon" class="fa-solid fa-globe"></i>',
@@ -281,7 +290,6 @@
           	'<div id="info-member"> Crew : '+ location.crew + '명</div>',
           	'</div>'
           ].join('');
-          
           var infoWindow = new naver.maps.InfoWindow({
           	//content: infoContent
               content: infoContent,
@@ -297,7 +305,7 @@
          	    	 url: './image/map-pin-navy.png', //아이콘 경로
          	    }
          	};
-   	/*
+        /*
           var markerOptions2 = {
           	position: latlng, //마커찍을 좌표
           	map: map,
@@ -316,7 +324,7 @@
            //
            naver.maps.Event.addListener(marker2, 'click', handleMarkerClick(marker2, infoWindow, location.leader, location.name, location.address));
           }
-      }
+       }
     }
     
     

@@ -328,12 +328,15 @@ h3{
 		groupID = Integer.parseInt(request.getParameter("groupID"));
 	}
 	LocationDAO locDAO = new LocationDAO();
-	//지도 위에 표시할 저장된 스팟 리스트 가져오기
+	// DB에 저장된 스팟 리스트 가져오기
 	ArrayList<LocationDTO> locationList = locDAO.getSpotInfoList();
+	//모든 위치 데이터를 넣을 Map
     Map<String, Object> locationMap = new HashMap<>();
+ 
     for(LocationDTO location:locationList){
-        HashMap<String, Object> locationData = new HashMap<>();
-        locationData.put("leader", location.getUserID());
+    	//하나의 스팟 데이터를 각각 저장하기 위한 HashMap
+        HashMap<String, Object> locationData = new HashMap<>(); 
+        locationData.put("leader", location.getUserID()); //key,value값 저장
         locationData.put("name", location.getSpotName());
         locationData.put("address", location.getAddress());
         locationData.put("latitude", location.getLatitude());
@@ -341,13 +344,14 @@ h3{
         locationData.put("crew", location.getCrewCount());
         locationData.put("available", location.getSpotAvailable());
         
+        //spot name을 key로, 위에서 저장한 locationData를 value로 반복될 때 마다 저장한다.
         locationMap.put(location.getSpotName(), locationData);
-	}
+    }
+  	//저장한 데이터들을 JSON객체로 변환한다.
+	Object locationJSON = new JSONObject(locationMap);
 	
 	System.out.println(locationMap);
-	System.out.println(new JSONObject(locationMap));
-	Object locationJSON = new JSONObject(locationMap);
-	System.out.println("json 저장" + locationJSON);
+	System.out.println("json :" + locationJSON);
 
 	if(userID == null){
 		PrintWriter script = response.getWriter();
@@ -410,11 +414,10 @@ h3{
 </section>
 
 <%} %>
-<script>
-var locationData = <%=locationJSON%>;
+<script type="text/javascript">
+	var locationData = <%=locationJSON%>; //Object.values(<%=locationJSON%>) 미리 value 값만 추출할 수 있다.
 </script>
-<script type="text/javascript" src="js/spot.js">
-</script>
+<script type="text/javascript" src="js/spot.js"></script>
 
 </body>
 </html>
