@@ -89,9 +89,9 @@ public class UserDAO {
 		String hashEmail = null;
 		String salt = null;
 //		String salt2 = null;
+		HashMap<String, String> encrypt = null;
 
 		// 회원가입시 salt값이 null이기 때문에 null을 넘겨준다.
-		HashMap<String, String> encrypt;
 		encrypt = PwEncrypt.encoding(user.getUserPassword(), null);
 		// 암호화 된 값과 salt값을 가져온다.
 		hashPW = encrypt.get("hash");

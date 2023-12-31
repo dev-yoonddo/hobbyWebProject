@@ -15,14 +15,10 @@ public class PwEncrypt {
 			salt = PwEncrypt.getSalt();
 		}
 		try {
-			String shaAndSalt = str + salt;
-
-			System.out.println("str = " + str);
-			System.out.println("salt = " + salt);
-			System.out.println("str+salt = " + shaAndSalt);
-
 			// 암호화 시작
 			MessageDigest md = MessageDigest.getInstance("SHA-256");
+			String shaAndSalt = str + salt;
+
 			/*
 			 * 사용자가 입력한 비밀번호 암호화 md.update((str).getBytes());
 			 * 
@@ -33,27 +29,29 @@ public class PwEncrypt {
 			 * encodeString);
 			 */
 
-			// 사용자 입력 비밀번호 + salt 암호화
+			// (사용자 입력 비밀번호 + salt) 해쉬값 업데이트
 			md.update((shaAndSalt).getBytes());
 
 			byte[] encodeData = md.digest();
+			System.out.println("digest: " + md.digest());
 
 			for (int i = 0; i < encodeData.length; i++) {
-				encodeString += Integer.toHexString(encodeData[i] & 0xFF);
+				encodeString += Integer.toHexString(encodeData[i] & 0xFF); // 10진수 정수 배열을 16진수 문자열로 변환한다.
 			}
-			System.out.println("평문+salt 암호화 = " + encodeString);
 
-//			if (encodeString.equals("ca46b47ddeae3475f399b415b68015c5239619cc9b190e1a3b248edfdf68b7")) {
-//				System.out.println("평문 암호화 일치");
+			// 확인
+			System.out.println("str = " + str);
+			System.out.println("salt = " + salt);
+			System.out.println("str + salt 암호화 전 = " + shaAndSalt);
+			System.out.println("str + salt 암호화 후 = " + encodeString);
+
+//			if (encodeString.equals("317d7d8884d5f0871a2e7761ff4382a57fd70a47dba3dad65a087149bbb1cdd")) {
+//				System.out.println("평문+솔트 암호화 일치");
 //			} else {
-//				System.out.println("평문 암호화 불일치");
+//				System.out.println("평문+솔트 암호화 불일치");
 //			}
-			if (encodeString.equals("317d7d8884d5f0871a2e7761ff4382a57fd70a47dba3dad65a087149bbb1cdd")) {
-				System.out.println("평문+솔트 암호화 일치");
-			} else {
-				System.out.println("평문+솔트 암호화 불일치");
-			}
-			// HsashMap에 사용자입력 패스워드 + salt 암호화 값과 salt값을 저장해 반환한다.
+
+			// HsashMap에 저장 후 반환
 			resultPW.put("hash", encodeString);
 			resultPW.put("salt", salt);
 		} catch (Exception e) {
@@ -65,12 +63,16 @@ public class PwEncrypt {
 	// 랜덤 salt값을 생성하는 메서드
 	public static String getSalt() {
 		try {
-			SecureRandom random = SecureRandom.getInstance("SHA1PRNG");
+			SecureRandom random = new SecureRandom();
+//			SecureRandom sha = SecureRandom.getInstance("SHA1PRNG"); 위와 같은 결과가 나온다.
 			byte[] bytes = new byte[16];
 			random.nextBytes(bytes);
-
+			System.out.println("random : " + random);
+			System.out.println("bytes : " + bytes);
 			// create salt
-			String salt = new String(Base64.getEncoder().encode(bytes));
+			String salt = new String(Base64.getEncoder().encode(bytes)); // 배열을 다시 문자열로 변경
+
+			System.out.println(salt);
 			return salt;
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -91,13 +91,13 @@ section{
 					script.println("</script>");
 				}else{
 					String id = "check";
-					//String host = "http://localhost:8080/hobbyWebProject/";
-					String host = "https://toogether.me/";
+					String host = "http://localhost:8080/hobbyWebProject/";
+					//String host = "https://toogether.me/";
 					String from = "we.are.together.2023.03@gmail.com";
 					String to = userDAO.getUserEmail(userID);
 					HashMap<String,String> encrypt = PwEncrypt.encoding(to, userSalt);
 					String hashCode = encrypt.get("hash");
-					System.out.println(hashCode);
+					//System.out.println(hashCode);
 					String subject = "TOGETHER 회원가입을 위한 이메일 인증입니다.";
 					String content = "다음 링크에 접속해 이메일 인증을 하세요 &nbsp;&nbsp;[" +
 					"<a href='" + host + "emailCheckAction?code=" + hashCode + "'>이메일 인증하기</a>]";
@@ -122,7 +122,7 @@ section{
 						Session ses = Session.getInstance(p, new Authenticator(){
 							protected PasswordAuthentication getPasswordAuthentication(){
 								//계속 메일 전송시 오류가 발생했지만 계정을 새로 생성한 뒤에 정상적으로 실행됨
-								return new PasswordAuthentication("we.are.together.2023.03@gmail.com","hatq mcez jbha twgj");
+								return new PasswordAuthentication("we.are.together.2023.03@gmail.com","squh rcex burm djim");
 							}
 						});
 						ses.setDebug(true);
