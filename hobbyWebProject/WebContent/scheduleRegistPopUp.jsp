@@ -70,6 +70,7 @@ h2 {
 		PrintWriter script = response.getWriter();
 		String userID = null;
 		String spotName = null;
+		int skedYear = 0;
 		int skedMonth = 0;
 		int skedDay = 0;
 		String a = null;
@@ -82,6 +83,9 @@ h2 {
 		if (request.getParameter("spot") != null) {
 			spotName = request.getParameter("spot");
 		}
+		if (request.getParameter("year") != null){
+	 		skedYear = Integer.parseInt(request.getParameter("year"));
+	 	}
 		if (request.getParameter("month") != null) {
 			skedMonth = Integer.parseInt(request.getParameter("month"));
 		}
@@ -96,7 +100,7 @@ h2 {
 			if (userID == null) {
 				script.print("null");
 				script.flush();
-			} else if (spotName == null || skedMonth == 0 || skedDay == 0) {
+			} else if (spotName == null || skedYear == 0 || skedMonth == 0 || skedDay == 0) {
 				script.print("info error");
 				script.flush();
 			} else {
@@ -134,11 +138,13 @@ function regist(){
 	var spot = "<%=spotName%>";
 	var content = document.getElementById('skedContent').value;
 	//console.log(content);
+	var year = "<%=skedYear%>";
 	var month = "<%=skedMonth%>";
 	var day = "<%=skedDay%>";
 	var data = {
 		spot : spot,
 		content : content,
+		year: year,
 		month : month,
 		day : day
 	};

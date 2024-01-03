@@ -13,6 +13,7 @@
 	PrintWriter script = response.getWriter();
 	String userID = null;
 	String spotName = null;
+	int skedYear = 0;
 	int skedMonth = 0;
 	int skedDay = 0;
 	ScheduleDAO skedDAO = new ScheduleDAO();
@@ -22,6 +23,9 @@
 	if(request.getParameter("spot") != null){
 		spotName = request.getParameter("spot");
 	}
+	if(request.getParameter("year") != null){
+		skedYear = Integer.parseInt(request.getParameter("year"));
+	}
 	if(request.getParameter("month") != null){
 		skedMonth = Integer.parseInt(request.getParameter("month"));
 	}
@@ -29,7 +33,7 @@
 		skedDay = Integer.parseInt(request.getParameter("day"));
 	}
 	
-	ArrayList<ScheduleDTO> skedlist = skedDAO.getScheduleListByTime(spotName, skedMonth, skedDay);
+	ArrayList<ScheduleDTO> skedlist = skedDAO.getScheduleListByTime(spotName, skedYear, skedMonth, skedDay);
 	String[] value = new String[skedlist.size()];
 	int index = 0;
 	if(skedlist.size() > 0){

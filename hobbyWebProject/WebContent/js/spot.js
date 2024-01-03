@@ -242,6 +242,11 @@
     	rePlaceMap(latitude, longitude);
    	}
 	
+   	var clickedInfoAddress;
+	var clickleader = null;
+	var clickname = null;
+	var clickaddress = null;
+	
    	//검색한 주소 또는 클릭한 주소로 지도와 마커의 위치를 변경한다.
     function rePlaceMap(latitude, longitude){
     	var map = new naver.maps.Map('map', {
@@ -261,11 +266,6 @@
     	    reverse(e.latlng.y, e.latlng.x); //e.latlng.x == longitude & e.latlng.y == latitude
     	    //console.log(e.latlng.y);
     	});
-        
-        var clickedInfoAddress;
-    	var clickleader = null;
-    	var clickname = null;
-    	var clickaddress = null;
     	
         for(const location of Object.values(locationData)){ // locationData의 value값들만 사용한다.
       //for(const [name, location] of Object.entries(locationData)){ {locationName : {locationKey : locationValue}} 형태의 데이터를
@@ -315,13 +315,13 @@
            var marker2 = new naver.maps.Marker(markerOptions);
            function handleMarkerClick(clickedMarker, clickedInfoWindow, leader, name, address) {
                return function () {
+            	   //console.log('리더는'+leader);
                    clickedInfoWindow.open(map, clickedMarker);
                    clickleader = leader; //marker를 클릭하면 해당스팟 리더와 스팟이름, 주소를 따로 저장
                    clickname = name;
                    clickaddress = address;
                };
            }
-           //
            naver.maps.Event.addListener(marker2, 'click', handleMarkerClick(marker2, infoWindow, location.leader, location.name, location.address));
           }
        }

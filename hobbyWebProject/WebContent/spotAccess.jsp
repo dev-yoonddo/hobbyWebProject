@@ -206,6 +206,7 @@ section{
 	String spotName = null;
 	String accessSpotName = null;
 
+	int skedYear = 0;
 	int skedMonth = 0;
 	int Tabledata = 0;
 	CrewDAO crewDAO = new CrewDAO();
@@ -248,21 +249,30 @@ section{
 		Calendar calendar = Calendar.getInstance();
 		int year = calendar.get(Calendar.YEAR);
 		int month = calendar.get(Calendar.MONTH) + 1;
-
-		try {
-				//year = Integer.parseInt(request.getParameter("year"));
+		try{
+			if(request.getParameter("year") != null){ //이전,다음달 버튼을 클릭하면 파라미터로 전달되는 year 값을 가져온다.
+				year = Integer.parseInt(request.getParameter("year"));
+			}
+			if(request.getParameter("month") != null){ //이전,다음달 버튼을 클릭하면 파라미터로 전달되는 month 값을 가져온다.
 				month = Integer.parseInt(request.getParameter("month"));
-			if (month >= 13) {
+			}
+			if (month >= 13) { //month가 13 이상이면 다음해로 넘어간걸 의미하므로 year + 1, month = 1로 저장한다.
 				year++;
 				month = 1;
-			} else if (month <= 0) {
+			} else if (month <= 0) { //month가 0이하이면 이전해로 넘어간걸 의미하므로 year - 1, month = 12로 저장한다.
 				year--;
 				month = 12;
 			}
-			
-		} catch (NumberFormatException e) {
+		}catch(NumberFormatException e){
 			
 		}
+		//기본적으로 이전달은 현재달 - 1 , 다음달은 현재달 +1 인데
+		//현재달이 1월일 때 이전 달은 1 - 1 = 0이 되므로 month - 1 = 0이면 before을 12로 저장하고
+		//현재달이 12월일 때 다음 달은 12 + 1 = 13이 되므로 month  + 1 = 13이면 next를 1로 저장한다.
+		int before = (month == 1) ? 12 : month-1;	
+		int next = (month == 12) ? 1 : month+1;
+
+		skedYear = year;
 		skedMonth = month;
 
 %>
@@ -281,13 +291,13 @@ section{
 		<table id="spot-calendar" width="700" align="center" border="1">
 			<tr>
 				<th>
-					<button type="button" id="btn-next" class="btn-blue" onclick="location.href='?spot=<%=accessSpotName%>&year=<%=year%>&month=<%=month - 1%>'"><span><%=month - 1%>월</span></button>
+					<button type="button" id="btn-next" class="btn-blue" onclick="location.href='?spot=<%=accessSpotName%>&year=<%=year%>&month=<%=month-1%>'"><span><%=before%>월</span></button>
 				</th>
 				<th id="title" colspan="5">
 					<%=year%>년 <%=month%>월
 				</th>
 				<th>
-					<button type="button" id="btn-next" class="btn-blue" onclick="location.href='?spot=<%=accessSpotName%>&year=<%=year%>&month=<%=month + 1%>'"><span><%=month + 1%>월</span></button>
+					<button type="button" id="btn-next" class="btn-blue" onclick="location.href='?spot=<%=accessSpotName%>&year=<%=year%>&month=<%=month+1%>'"><span><%=next%>월</span></button>
 				</th>
 			</tr>
 			
@@ -322,7 +332,7 @@ section{
 			}
 		
 			for (int i = 1; i <= MyCalendar.lastDay(year, month); i++) {
-				ArrayList<ScheduleDTO> list2 = skedDAO.getScheduleListByTime(accessSpotName, month, i);
+				ArrayList<ScheduleDTO> list2 = skedDAO.getScheduleListByTime(accessSpotName, year, month, i);
 				Tabledata = list2.size();
 				boolean flag = false;
 				String icon = "";
@@ -418,7 +428,7 @@ section{
 					<form action="?spot=<%=accessSpotName %>" method="POST" style="display: flex; justify-content: center;">
 						<div class="select">
 							<!-- 올해 달력만 출력 -->
-							<select class="select" disabled="disabled" name="year">
+							<select class="select" name="year">
 							<%	/*int nowYear = calendar.get(Calendar.YEAR);
 								for (int i = nowYear; i <= nowYear+5; i++) { //현재부터 5년후의 달력만 보여준다. (년도 범위 선택 가능)
 									if (i == year) {//달력의 년과 일치하는 옵션을 선택되도록 한다.
@@ -428,7 +438,9 @@ section{
 									}
 								}*/
 							%>
+								<option><%=year-1%></option>
 								<option selected="selected"><%= year %></option>
+								<option><%=year+1%></option>
 							</select>&nbsp;&nbsp;년&nbsp;&nbsp;&nbsp;
 						</div>
 						
@@ -494,6 +506,7 @@ for(var i = 0; i < target.length; i++){
   });
 }*/
 var spot = "<%=accessSpotName%>";
+var year = "<%=skedYear%>";
 var month = "<%=skedMonth%>";
 var put = document.getElementById('putSked');
 var check = document.getElementById('checkSked');
@@ -530,6 +543,7 @@ function skedPut(day){
 	var a = "a";
 	var data1 = {
         spot: spot,
+        year: year,
         month: month,
         day: day,
     };
@@ -545,7 +559,7 @@ function skedPut(day){
         	}else if(response.includes("info error")){
         		alert('정보 오류');
         	}else{
-				window.open('scheduleRegistPopUp?spot='+spot+'&month='+month+'&day='+day+'&a='+a, 'SCHEDULE', 'width=450, height=500, top=50%, left=50%');
+				window.open('scheduleRegistPopUp?spot='+spot+'&year='+year+'&month='+month+'&day='+day+'&a='+a, 'SCHEDULE', 'width=450, height=500, top=50%, left=50%');
         	}
         },
      error: function (xhr, status, error) {
@@ -561,6 +575,7 @@ function skedCheck(day){
 	
 	var data2 = {
         spot: spot,
+        year: year,
         month: month,
         day: day
     };

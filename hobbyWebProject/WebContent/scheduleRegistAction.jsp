@@ -17,6 +17,7 @@
 		String userID = null;
 		String spotName = null;
 		String content = null;
+		int skedYear = 0; 
 		int skedMonth = 0; 
 		int skedDay = 0;
 		String skedContent = null;
@@ -30,6 +31,9 @@
 	 	}
 		if (request.getParameter("content") != null){
 	 		skedContent = request.getParameter("content");
+	 	}
+		if (request.getParameter("year") != null){
+	 		skedYear = Integer.parseInt(request.getParameter("year"));
 	 	}
 		if (request.getParameter("month") != null){
 	 		skedMonth = Integer.parseInt(request.getParameter("month"));
@@ -46,7 +50,7 @@
 		 		script.print("info error");
 		 	    script.flush();
 		 	}else{
-				int result = skedDAO.registSchedule(userID, spotName, skedMonth, skedDay, skedContent);
+				int result = skedDAO.registSchedule(userID, spotName, skedYear, skedMonth, skedDay, skedContent);
 				if(result > 0){
 					script.print("ok");
 				    script.flush();
