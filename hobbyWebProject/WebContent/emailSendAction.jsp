@@ -122,7 +122,7 @@ section{
 						Session ses = Session.getInstance(p, new Authenticator(){
 							protected PasswordAuthentication getPasswordAuthentication(){
 								//계속 메일 전송시 오류가 발생했지만 계정을 새로 생성한 뒤에 정상적으로 실행됨
-								return new PasswordAuthentication("we.are.together.2023.03@gmail.com","cpjn oaur ukfa wlth");
+								return new PasswordAuthentication("we.are.together.2023.03@gmail.com","wyov rtrm mdhq jjhj");
 							}
 						});
 						ses.setDebug(true);
