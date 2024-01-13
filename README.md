@@ -36,6 +36,7 @@
 # 💻 Detailed Description
 
 <br>
+프로젝트 오류 최종 수정 완료
 
 ⚫ [메인](#--메인-)
 
