@@ -102,7 +102,7 @@ h2{
 		if((qna != null && qna.equals("y")) || sendMsgToUser.equals("manager") || rcvMsgToUser.equals("manager")) { //파라미터로 qna = y 이거나 toUserID = manager 이면 관리자에게 문의하기
 	%>
 		<h2>To. 관리자</h2>
-	    <form method="post" action="sendMsgAction.jsp?qna=y" id="send-form">
+	    <form method="post" action="sendMsgAction?qna=y" id="send-form">
 	        <input type="text" placeholder="제목을 입력하세요" name="msgTitle" id="msgTitle" maxlength="20">
 	        <input type="text" placeholder="내용을 입력하세요" name="msgContent" id="msgContent" class="intro" maxlength="200">
 	        <button type="submit" class="btn-blue" id="sb"><span>메시지 전송</span></button>
@@ -113,7 +113,7 @@ h2{
 			if(msgID == 0){  //msgID = 0 이면 메시지전송을 클릭했다는 의미이다.
 	%>
 		    <h2>To. <%=sendMsgToUser%></h2>
-		    <form method="post" action="sendMsgAction.jsp?groupID=<%= groupID %>" id="send-form">
+		    <form method="post" action="sendMsgAction?groupID=<%= groupID %>" id="send-form">
 		        <input type="text" placeholder="제목을 입력하세요" name="msgTitle" id="msgTitle" maxlength="20">
 		        <input type="text" placeholder="내용을 입력하세요" name="msgContent" id="msgContent" class="intro" maxlength="200">
 		        <button type="submit" class="btn-blue" id="sb"><span>메시지 전송</span></button>
@@ -122,7 +122,7 @@ h2{
 	   		}else{ //메시지 답장은 msgID와 groupID를 모두 받는다.
 	%>
 		    <h2>To. <%=rcvMsgToUser%></h2>
-		    <form method="post" action="sendMsgAction.jsp?msgID=<%= msgID %>&groupID=<%=groupID%>" id="send-form">
+		    <form method="post" action="sendMsgAction?msgID=<%= msgID %>&groupID=<%=groupID%>" id="send-form">
 		    	<%
 		    		if(userID.equals("manager")){ //manager가 유저에게 답장할 땐 제목에 기존 문의 제목을 넣는다.
 		    	%>

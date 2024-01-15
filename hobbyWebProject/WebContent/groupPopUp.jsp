@@ -70,7 +70,7 @@ if(userID == null){
 %>
 <div id="createGroup">
     <h2>Create Group</h2>
-    <form method="post" action="groupCreateAction.jsp" id="join-form">
+    <form method="post" action="groupCreateAction" id="join-form">
         <input type="text" placeholder="그룹이름을 입력하세요" name="groupName" id="groupName" maxlength="10">
         <input type="password" placeholder="비밀번호를 입력하세요" name="groupPassword" id="groupPassword" maxlength="20">
         <input type="text" placeholder="인원을 입력하세요" name="groupNoP" id="groupNoP" maxlength="2">

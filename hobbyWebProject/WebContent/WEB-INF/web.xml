@@ -247,6 +247,160 @@
     <servlet-name>spotAccess.jsp</servlet-name>
     <url-pattern>/spotAccess</url-pattern>
   </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>eventApplyAction.jsp</servlet-name>
+    <jsp-file>/eventApplyAction.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>eventApplyAction.jsp</servlet-name>
+    <url-pattern>/eventApplyAction</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>emailRaffleAction.jsp</servlet-name>
+    <jsp-file>/emailRaffleAction.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>emailRaffleAction.jsp</servlet-name>
+    <url-pattern>/emailRaffleAction</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>findPwAction.jsp</servlet-name>
+    <jsp-file>/findPwAction.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>findPwAction.jsp</servlet-name>
+    <url-pattern>/findPwAction</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>groupCreateAction.jsp</servlet-name>
+    <jsp-file>/groupCreateAction.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>groupCreateAction.jsp</servlet-name>
+    <url-pattern>/groupCreateAction</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>groupDeleteAction.jsp</servlet-name>
+    <jsp-file>/groupDeleteAction.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>groupDeleteAction.jsp</servlet-name>
+    <url-pattern>/groupDeleteAction</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>joinAction.jsp</servlet-name>
+    <jsp-file>/joinAction.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>joinAction.jsp</servlet-name>
+    <url-pattern>/joinAction</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>loginAction.jsp</servlet-name>
+    <jsp-file>/loginAction.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>loginAction.jsp</servlet-name>
+    <url-pattern>/loginAction</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>memberDeleteAction.jsp</servlet-name>
+    <jsp-file>/memberDeleteAction.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>memberDeleteAction.jsp</servlet-name>
+    <url-pattern>/memberDeleteAction</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>memberJoinAction.jsp</servlet-name>
+    <jsp-file>/memberJoinAction.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>memberJoinAction.jsp</servlet-name>
+    <url-pattern>/memberJoinAction</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>scheduleCheckAction.jsp</servlet-name>
+    <jsp-file>/scheduleCheckAction.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>scheduleCheckAction.jsp</servlet-name>
+    <url-pattern>/scheduleCheckAction</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>scheduleRegistAction.jsp</servlet-name>
+    <jsp-file>/scheduleRegistAction.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>scheduleRegistAction.jsp</servlet-name>
+    <url-pattern>/scheduleRegistAction</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>sendEventMsgAction.jsp</servlet-name>
+    <jsp-file>/sendEventMsgAction.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>sendEventMsgAction.jsp</servlet-name>
+    <url-pattern>/sendEventMsgAction</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>spotJoinAction.jsp</servlet-name>
+    <jsp-file>/spotJoinAction.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>spotJoinAction.jsp</servlet-name>
+    <url-pattern>/spotJoinAction</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>spotRegistAction.jsp</servlet-name>
+    <jsp-file>/spotRegistAction.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>spotRegistAction.jsp</servlet-name>
+    <url-pattern>/spotRegistAction</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>updateAction.jsp</servlet-name>
+    <jsp-file>/updateAction.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>updateAction.jsp</servlet-name>
+    <url-pattern>/updateAction</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>userUpdateAction.jsp</servlet-name>
+    <jsp-file>/userUpdateAction.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>userUpdateAction.jsp</servlet-name>
+    <url-pattern>/userUpdateAction</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>writeAction.jsp</servlet-name>
+    <jsp-file>/writeAction.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>writeAction.jsp</servlet-name>
+    <url-pattern>/writeAction</url-pattern>
+  </servlet-mapping>
+  
   <servlet>
     <servlet-name>emailSendAction.jsp</servlet-name>
     <jsp-file>/emailSendAction.jsp</jsp-file>
@@ -280,22 +434,7 @@
     <servlet-name>emailAdUpdateAction.jsp</servlet-name>
     <url-pattern>/emailAdUpdateAction</url-pattern>
   </servlet-mapping>
-  <servlet>
-    <servlet-name>spotRegistAction.jsp</servlet-name>
-    <jsp-file>/spotRegistAction.jsp</jsp-file>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>spotRegistAction.jsp</servlet-name>
-    <url-pattern>/spotRegistAction</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <servlet-name>spotJoinAction.jsp</servlet-name>
-    <jsp-file>/spotJoinAction.jsp</jsp-file>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>spotJoinAction.jsp</servlet-name>
-    <url-pattern>/spotJoinAction</url-pattern>
-  </servlet-mapping>
+
   <servlet>
     <servlet-name>chatSendAction.jsp</servlet-name>
     <jsp-file>/chatSendAction.jsp</jsp-file>
@@ -327,22 +466,6 @@
   <servlet-mapping>
     <servlet-name>scheduleRegistPopUp.jsp</servlet-name>
     <url-pattern>/scheduleRegistPopUp</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <servlet-name>scheduleRegistAction.jsp</servlet-name>
-    <jsp-file>/scheduleRegistAction.jsp</jsp-file>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>scheduleRegistAction.jsp</servlet-name>
-    <url-pattern>/scheduleRegistAction</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <servlet-name>scheduleCheckAction.jsp</servlet-name>
-    <jsp-file>/scheduleCheckAction.jsp</jsp-file>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>scheduleCheckAction.jsp</servlet-name>
-    <url-pattern>/scheduleCheckAction</url-pattern>
   </servlet-mapping>
   
   <servlet>

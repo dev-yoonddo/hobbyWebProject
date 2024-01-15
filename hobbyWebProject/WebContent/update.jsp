@@ -291,7 +291,7 @@ textarea{
 	<div class="board-container">
 		<h3 style="font-weight: bold; color: #646464;"><%= userID %>님 안녕하세요</h3><br>
 			<div class="right-row">
-				<form method="post" action="updateAction.jsp" enctype="multipart/form-data">
+				<form method="post" action="updateAction" enctype="multipart/form-data">
 					<div class="category-sel">
 					<input type="text" name="boardID" value="<%=boardID%>" hidden="hidden"/>
 					<select name="boardCategory">

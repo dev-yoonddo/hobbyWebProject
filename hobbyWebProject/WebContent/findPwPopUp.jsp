@@ -90,7 +90,7 @@ UserDTO user=new UserDAO().getUserVO(userID); //유저 정보 가져오기
 	<div>
 		<h2>정보를 입력하세요</h2>
 		<br><br>
-		<form method="post" action="findPwAction.jsp" role="form" id="login-form">
+		<form method="post" action="findPwAction" role="form" id="login-form">
 		    <input hidden="hidden" type="text" name="groupID" id="groupID" maxlength="11" value="<%=groupID%>" placeholder="회원 전화번호를 입력해주세요">
 		    <input type="text" name="userPhone" id="userPhone" maxlength="11" placeholder="회원 전화번호를 입력해주세요">
 		    <input type="password" name="userPassword" id="userPassword" placeholder="회원 비밀번호를 입력해주세요">

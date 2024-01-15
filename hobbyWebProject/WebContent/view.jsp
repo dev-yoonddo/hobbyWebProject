@@ -547,11 +547,11 @@ table caption{
 						if(userID.equals(board.getUserID())){
 				%>
 							<button type="button" class="btn-blue" id="update" onclick="location.href='update?boardID=<%=boardID%>'"><span>수정</span></button>
-							<button type="button" class="btn-blue" id="btn-del" onclick="if(confirm('정말로 삭제하시겠습니까?')){location.href='deleteAction.jsp?boardID=<%=boardID%>'}"><span>삭제</span></button>
+							<button type="button" class="btn-blue" id="btn-del" onclick="if(confirm('정말로 삭제하시겠습니까?')){location.href='deleteAction?boardID=<%=boardID%>'}"><span>삭제</span></button>
 				<%} //해당 글을 작성하지 않았지만 관리자인 유저에게 삭제 버튼 노출
 						else if(userID.equals("manager")){
 				%>
-							<button type="button" class="btn-blue" id="btn-del" onclick="if(confirm('정말로 삭제하시겠습니까?')){location.href='deleteAction.jsp?boardID=<%=boardID%>'}"><span>삭제</span></button>
+							<button type="button" class="btn-blue" id="btn-del" onclick="if(confirm('정말로 삭제하시겠습니까?')){location.href='deleteAction?boardID=<%=boardID%>'}"><span>삭제</span></button>
 				<%		}
 					}
 				%>

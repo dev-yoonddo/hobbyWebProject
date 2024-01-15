@@ -49,7 +49,7 @@
 				%>
 				<li><a href="userUpdate"><i class="fa-solid fa-gear"
 						id="updateicon"></i></a></li>
-				<li><a href="logout.jsp">LOGOUT</a></li>
+				<li><a href="logout">LOGOUT</a></li>
 				<%
 					}
 				%>

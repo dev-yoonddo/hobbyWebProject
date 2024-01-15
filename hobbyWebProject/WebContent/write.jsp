@@ -227,7 +227,7 @@ String bdcategory = request.getParameter("category");
 	<div class="board-container">
 	<h3 style="font-weight: bold; color: #646464;"><%= userID %>님 안녕하세요</h3><br>
 		<div class="right-row">
-			<form method="post" action="writeAction.jsp" enctype="multipart/form-data">
+			<form method="post" action="writeAction" enctype="multipart/form-data">
 				<div class="category-sel" style="display: flex;">
 				<select name="boardCategory">
 					<option value="0">CATEGORY</option>

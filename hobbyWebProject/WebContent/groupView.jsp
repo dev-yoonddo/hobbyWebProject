@@ -492,12 +492,12 @@ int chatsize = chatlist.size();
 					<!-- 그룹을 만든 userID일때는 메세지확인, 그룹삭제 버튼 생성 -->
 					<% if(leader){ %>
 						<button type="button" class="btn-blue" id="btn-msg" onclick="viewMsgList('<%= group.getGroupID()%>')"><span>메세지확인</span></button>
-						<button type="button" class="btn-blue" id="btn-del" onclick="if(confirm('정말로 삭제하시겠습니까?')){location.href='groupDeleteAction.jsp?groupID=<%=groupID%>'}"><span>그룹삭제</span></button>
+						<button type="button" class="btn-blue" id="btn-del" onclick="if(confirm('정말로 삭제하시겠습니까?')){location.href='groupDeleteAction?groupID=<%=groupID%>'}"><span>그룹삭제</span></button>
 					
 					<!-- 그룹에 가입한 userID일때는 메세지전송, 그룹탈퇴 버튼 생성하고 정보 넘기기 -->
 					<%}else{ %>
 						<button type="button" class="btn-blue" id="btn-msg" onclick="sendMSG('<%= group.getGroupID()%>')"><span>메세지전송</span></button>							
-						<button type="button" class="btn-blue" id="btn-out" onclick="if(confirm('탈퇴 후 재가입이 불가합니다.\n정말로 탈퇴하시겠습니까?')){location.href='memberDeleteAction.jsp?groupID=<%=groupID%>&memberID=<%=member.getMemberID()%>'}"><span>그룹탈퇴</span></button>
+						<button type="button" class="btn-blue" id="btn-out" onclick="if(confirm('탈퇴 후 재가입이 불가합니다.\n정말로 탈퇴하시겠습니까?')){location.href='memberDeleteAction?groupID=<%=groupID%>&memberID=<%=member.getMemberID()%>'}"><span>그룹탈퇴</span></button>
 					<%} %>
 				</div>
 			</div>
