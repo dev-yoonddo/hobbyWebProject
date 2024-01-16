@@ -44,7 +44,10 @@ section {
 	max-height: 500px;
 	margin: 30px;
 }
-.select-hobby .small{
+.select-hobby.small{
+	height: 80px;
+	display: flex;
+	align-items: center;
 	
 }
 
@@ -157,6 +160,9 @@ span {
 	margin: 0 auto;
 }
 #search-title{
+	display: flex;
+}
+#animation-title{
 	font-family: 'Noto Sans KR', sans-serif;
 	font-size: 20pt;
 	font-weight: 300;
@@ -166,7 +172,7 @@ span {
 	position: relative;
     animation: fadeInLeft 2s;
 }
-#search-title h4 {
+#animation-title h4{
 	margin-left: 30px;
 }
 @keyframes fadeInLeft {
@@ -424,11 +430,9 @@ th span{
 	%>
 	<div class="board-container" id="board-list">
 		<div id="search-title">
-			<tr>
-			<td>
+			<div id="animation-title">
 			<h2><%=boardCategory%></h2><h4>함께 할 사람들과 이야기 나눠보세요</h4>
-			</td>
-			<td>
+			</div>
 			<div class="select-hobby small">
 				<form method="post" id ="searchField2" action="community" onsubmit="searchPage(search)">
 					<div id="select-sec">
@@ -451,8 +455,6 @@ th span{
 					</div>
 				</form>
 			</div>
-			</td>
-			</tr>
 		</div><br>
 		
 		<div id="notice-animated">
@@ -547,31 +549,34 @@ th span{
 
 <script>
 function searchPage(category){
-	var list = document.getElementById('board-list');
-	if(category === null || category === ""){
-		alert("카테고리를 선택하세요");
-		return;
+	var select = category[0];
+	console.log(select);
+	console.log(select.value);
+	if(select.value === ''){
+		return alert('카테고리를 선택하세요.');
+	}else{
+		var data = {
+	        search: select
+	    };
+		$.ajax({
+	        type: 'GET',
+	        //url: 'https://toogether.me/spotAccess',
+	        url: 'community',
+	        data: data,
+	        success: function (response) {
+	        	if (response.includes("error")) {
+	        		alert("카테고리를 선택하세요.");
+	        		history.back();
+	        	}else{
+	        		location.href='community?search=' + select.value;
+	        	}
+	        },
+	     error: function (xhr, status, error) {
+	         //console.error('Spot registration error:', error);
+	         alert('오류');
+	     }
+	    });
 	}
-	var data = {
-        search: category
-    };
-	$.ajax({
-        type: 'GET',
-        //url: 'https://toogether.me/spotAccess',
-        url: 'community',
-        data: data,
-        success: function (response) {
-        	if (response.includes("error")) {
-        		alert("카테고리를 선택하세요.");
-        	}else{
-        		location.href='community?search=' + category;
-        	}
-        },
-     error: function (xhr, status, error) {
-         //console.error('Spot registration error:', error);
-         alert('오류');
-     }
-    });
 }
 </script>
 <script>
@@ -594,6 +599,10 @@ function onClickSelect(e) {
 	  e.currentTarget.className = "select";
 	} else {
 	  e.currentTarget.className = "select active";
+	  //if(document.getElementsByName("selected") != null){
+		//  var select = document.getElementsByName("selected");
+		//  select.setAttribute("name", "search");
+	  //}
 	}
 }
 document.querySelector("#select-sec .select").addEventListener("click", onClickSelect);
@@ -602,6 +611,10 @@ document.querySelector("#select-sec .select").addEventListener("click", onClickS
 function onClickOption(e) {
 	const selectedValue = e.currentTarget.innerHTML;
 	document.querySelector("#select-sec .text").innerHTML = selectedValue;
+	//console.log(e.currentTarget);
+	//console.log($('input[name=search]'));
+	//e.currentTarget.setAttribute("name","selected");
+	//document.getElementsByName("selected").setAttribute("name", "search");
 }
 
 var optionList = document.querySelectorAll("#select-sec .option");
