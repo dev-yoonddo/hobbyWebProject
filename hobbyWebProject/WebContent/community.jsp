@@ -322,15 +322,18 @@ th span{
 		font-size: 11pt;
 	}
 	#search-title{
-		display: block;
-		margin-bottom: 50px;
+		margin-bottom: 30px;
 	}
 	#search-title h2{
-		margin: 0;
+		font-size: 18pt;
 	}
 	#search-title h4{
-		margin: 0;
-		font-size: 16pt;
+		font-size: 14pt;
+	}
+	#animation-title{
+		max-width: 250px;
+		display: inline;
+		padding-left: 30px;
 	}
 	.date{
 		display: none;
@@ -376,9 +379,13 @@ th span{
 		boardID = Integer.parseInt(request.getParameter("boardID"));
 	}
 	//선택한 카테고리 가져오기
-	if(request.getParameter("search") != null){
+	if(request.getParameter("search") != null || request.getParameter("search") != ""){
 		boardCategory = request.getParameter("search");
+	}else{
+		script.println("error");
+		script.close();
 	}
+
 	UserDTO user=new UserDAO().getUserVO(userID);
 	BoardDAO boardDAO = new BoardDAO();
 	CommentDAO cmtDAO = new CommentDAO();
@@ -391,14 +398,15 @@ th span{
 <section>
 <div id="community">
 	<%
+	//처음 접속시엔 boardCategory == null이기 때문에 검색창만 노출
 	if(boardCategory == null){
 	%>
 	<div class="select-hobby">
-		<form method="post" id ="searchField" action="community" onsubmit="searchPage(search)">
+		<form method="post" id ="searchField" action="community" onsubmit="return searchPage(search)">
 			<div id="select-sec">
 				<div class="select">
 					<div class="text">
-						<input type="hidden" name="search">
+						<input type="hidden" name="search" value="">
 						<span>함께 하고싶은 취미를 선택하세요 !</span>
 						<span><i class="fa-solid fa-chevron-down"></i></span>
 					</div>
@@ -416,17 +424,11 @@ th span{
 		</form>
 	</div>
 	<%
-	//카테고리에 해당하는 글 리스트 가져오기
+	//특정 카테고리를 검색하면 boardCategory값을 가져오므로 글 리스트 노출
+	//파라미터 값이 정상적으로 넘어오지 않았거나 노출할 리스트가 없으면 PrintWriter로 오류값 전송
 	}else{
 		boardlist = boardDAO.getSearch(boardCategory);
-		if(boardCategory == ""){
-			script.println("error");
-			script.close();
-		}
-		if(boardlist.size() == 0){
-			script.println("none");
-			script.close();			
-		}
+
 	%>
 	<div class="board-container" id="board-list">
 		<div id="search-title">
@@ -434,11 +436,11 @@ th span{
 			<h2><%=boardCategory%></h2><h4>함께 할 사람들과 이야기 나눠보세요</h4>
 			</div>
 			<div class="select-hobby small">
-				<form method="post" id ="searchField2" action="community" onsubmit="searchPage(search)">
+				<form method="post" id ="searchField2" action="community" onsubmit="return searchPage(search)">
 					<div id="select-sec">
 						<div class="select">
 							<div class="text">
-								<input type="hidden" name="search">
+								<input type="hidden" name="search" value="">
 								<span>함께 하고싶은 취미를 선택하세요 !</span>
 								<span><i class="fa-solid fa-chevron-down"></i></span>
 							</div>
@@ -533,7 +535,7 @@ th span{
 			}
 		%>
 		
-			<button type="button" class="btn-blue" id="search" onclick="location.href='community'"><span>돌아가기</span></button>
+			<button type="button" class="btn-blue" id="search" onclick="location.href='mainPage'"><span>메인으로</span></button>
 		<% 
 			if( userID != null ){
 		%>
@@ -549,11 +551,11 @@ th span{
 
 <script>
 function searchPage(category){
+	//name = search인 요소들 중 0번째 인덱스 값 가져오기
 	var select = category[0];
-	console.log(select);
-	console.log(select.value);
 	if(select.value === ''){
-		return alert('카테고리를 선택하세요.');
+		alert('카테고리를 선택하세요.');
+		return false;
 	}else{
 		var data = {
 	        search: select
@@ -565,16 +567,16 @@ function searchPage(category){
 	        data: data,
 	        success: function (response) {
 	        	if (response.includes("error")) {
-	        		alert("카테고리를 선택하세요.");
-	        		history.back();
+	        		alert('오류 발생');
+	        		return false;
 	        	}else{
 	        		location.href='community?search=' + select.value;
 	        	}
 	        },
-	     error: function (xhr, status, error) {
-	         //console.error('Spot registration error:', error);
-	         alert('오류');
-	     }
+		     error: function (xhr, status, error) {
+		         //console.error('Spot registration error:', error);
+		         alert('오류');
+		     }
 	    });
 	}
 }

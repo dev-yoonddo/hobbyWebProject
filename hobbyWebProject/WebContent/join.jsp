@@ -54,7 +54,7 @@ ArrayList<UserDTO> list = userDAO.getEmailList(); //모든 유저 이메일 리�
 	<input type="hidden" id="rsaPublicKeyExponent" value="${publicKeyExponent}" />
 	 -->
         <h2>회원가입</h2>
-        <form method="post" action="joinAction" id="join-form" role="form" onsubmit="return userDataCheck(this)">
+        <form method="post" action="joinAction.jsp" id="join-form" role="form" onsubmit="return userDataCheck(this)">
             <input type="text" name="userID" id="userID" placeholder="아이디 입력">
             <input type="text" name="userName" id="userName" placeholder="이름 입력">
             <input type="text" name="userEmail" id="userEmail" placeholder="이메일 입력" onkeyup="emailCheck('<%=list%>')">

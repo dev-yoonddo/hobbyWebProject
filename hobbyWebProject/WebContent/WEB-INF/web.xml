@@ -294,11 +294,11 @@
   </servlet-mapping>
   
   <servlet>
-    <servlet-name>joinAction.jsp</servlet-name>
+    <servlet-name>joinAction</servlet-name>
     <jsp-file>/joinAction.jsp</jsp-file>
   </servlet>
   <servlet-mapping>
-    <servlet-name>joinAction.jsp</servlet-name>
+    <servlet-name>joinAction</servlet-name>
     <url-pattern>/joinAction</url-pattern>
   </servlet-mapping>
   

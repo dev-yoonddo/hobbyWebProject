@@ -17,12 +17,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width = device-width , initial-scale = 1, user-scalable = no, maximum-scale = 1 , minimum-scale = 1">
 <meta charset="UTF-8">
 <title>TOGETHER</title>
 <link rel="icon" href="image/logo.png">
 </head>
-<body>
 	<%
 		PrintWriter script = response.getWriter();
 		String userID = null;
@@ -68,14 +66,10 @@
 				}else{
 					script.println("<script>");
 					script.println("alert('회원가입이 완료되었습니다.')");	
-					script.println("location.href = 'emailSendAction'");
+					script.println("location.href = 'login'");
 					script.println("</script>");
 				}
 			}
 		}
 	%>
-</body>
-<script>
-
-</script>
 </html>

@@ -42,7 +42,7 @@ if(session.getAttribute("userID") != null){
 	 <div>
 		<h2>로그인
 		</h2>
-		<form method="post" action="loginAction" role="form" id="login-form">
+		<form method="post" action="loginAction.jsp" id="login-form">
 		    <input type="text" name="userID" id="userID" placeholder="아이디 입력">
 		    <input type="password" name="userPassword" id="userPassword" placeholder="비밀번호 입력">
 		    <label for="remember-check">
