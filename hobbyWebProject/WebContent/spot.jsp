@@ -414,6 +414,7 @@ h3{
 </section>
 
 <%} %>
+
 <script type="text/javascript">
 	var locationData = <%=locationJSON%>; //Object.values(<%=locationJSON%>) 미리 value 값만 추출할 수 있다.
 </script>

@@ -3,7 +3,10 @@
 	var info = 0;
 		
 //	console.log('실행됨');
+//	console.log('=================JSON DATA=====================');
 //	console.log(locationData); //데이터를 잘 받았는지 확인한다.
+//	console.log('===============================================');
+	
 	
 	function question(){
 		$('#answer').show();
