@@ -33,7 +33,7 @@
 
 <br><br>
 
-# 💻 Detailed Description
+# 💻
 
 <br>
 
