@@ -19,7 +19,7 @@
 
 ![ERD](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/85a42eea-260b-426b-9696-5924f4ad9cf3)
 
-<br><br>
+<br>
 
 ### 배포
 1. AWS EC2 인스턴스 생성 후 퍼블릭ip를 발급받아 인스턴스와 연결
