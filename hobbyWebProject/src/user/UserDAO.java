@@ -308,7 +308,7 @@ public class UserDAO {
 			int result = pstmt.executeUpdate(); // userAvailable = 0이 성공적으로 실행되면 0이상의 결과를 result에 저장
 			pstmt.close();
 			if (result > 0) {
-				BoardDAO boardDAO = new BoardDAO();
+				BoardDAO boardDAO = BoardDAO.getInstance();
 				List<BoardDTO> boardVOList = boardDAO.getDelBoardVOByUserID(userID);
 				for (BoardDTO boardDTO : boardVOList) {
 					boardDTO.setBoardAvailable(0);
