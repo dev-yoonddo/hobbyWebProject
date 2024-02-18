@@ -31,7 +31,7 @@ public class UserTest {
 //		// 입력한 문자 디코딩
 //		String decode = new String(Base64.getDecoder().decode(encode.getBytes()));
 //		System.out.println("decode: " + decode);
-		BoardDAO board1 = new BoardDAO();
+
 		BoardDAO board = BoardDAO.getInstance();
 
 		System.out.println("====================");

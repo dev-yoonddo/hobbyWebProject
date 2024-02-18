@@ -15,22 +15,32 @@ import file.FileDAO;
 
 public class BoardDAO {
 
-	// singleton : Eager Initialization 기법
-	private static BoardDAO instance;
+	// singleton : Bill Pugh Solution (LazyHolder) 기법
+	private BoardDAO() {
+	}
 
-	public BoardDAO() {
+	// static 내부 클래스를 이용
+	// Holder로 만들어, 클래스가 메모리에 로드되지 않고 getInstance 메서드가 호출되어야 로드됨
+	private static class BoardDAOHolder {
+		private static final BoardDAO INSTANCE = new BoardDAO();
 	}
 
 	public static BoardDAO getInstance() {
-		if (instance == null) {
-			synchronized (BoardDAO.class) {
-				if (instance == null) {
-					instance = new BoardDAO();
-				}
-			}
-		}
-		return instance;
+		return BoardDAOHolder.INSTANCE;
 	}
+
+// singleton : Eager Initialization 기법
+//private static BoardDAO instance;
+//	public static BoardDAO getInstance() {
+//		if (instance == null) {
+//			synchronized (BoardDAO.class) {
+//				if (instance == null) {
+//					instance = new BoardDAO();
+//				}
+//			}
+//		}
+//		return instance;
+//	}
 
 	private Connection conn = SqlConfig.getConn();
 

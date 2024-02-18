@@ -8,8 +8,6 @@ import java.sql.SQLException;
 
 public class SqlConfig {
 	private static Connection conn; // 자바와 데이터베이스 연결
-	private static PreparedStatement pstmt;
-	private static ResultSet rs; // 결과값 받아오기
 
 	private SqlConfig() {
 	}
