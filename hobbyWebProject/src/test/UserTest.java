@@ -31,8 +31,14 @@ public class UserTest {
 //		// 입력한 문자 디코딩
 //		String decode = new String(Base64.getDecoder().decode(encode.getBytes()));
 //		System.out.println("decode: " + decode);
-
+		BoardDAO board1 = new BoardDAO();
 		BoardDAO board = BoardDAO.getInstance();
+
+		System.out.println("====================");
+		System.out.println("no singleton: " + Thread.currentThread().getName());
+		System.out.println("singleton: " + Thread.currentThread());
+		System.out.println("====================");
+
 		int id = board.getNext() - 1;
 		BoardDTO vo = board.getBoardVO(id);
 		String date = board.getDate();
@@ -50,29 +56,7 @@ public class UserTest {
 		}
 		System.out.println("===========================");
 
-//		String[] category = {};
-//		String[] count = new String[category.length];
-//		String[][] all = new String[category.length][count.length];
-//		try {
-//			for (BoardDTO i : getList) {
-//				String getCategory = i.getBoardCategory();
-//				for (int j = 0; j < category.length; j++) {
-//					category[j] = i.getBoardCategory();
-//					if (category[j] == getCategory) {
-//						count[j] = count[j] + 1;
-//						j++;
-//					} else {
-//						category[j] = i.getBoardCategory();
-//						j++;
-//					}
-//
-//				}
-//
-//			}
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-		System.out.println("사용자 작성 게시글의 카테고리 갯수 구하기 -------------------");
+		System.out.println("카테고리 갯수-------------------");
 
 		Map<String, Integer> categoryCounts = new HashMap<>(); // 카테고리와 갯수를 저장하기 위한 Map 객체 생성
 		for (BoardDTO post : getList) { // 사용자 "test"가 작성한 게시글 리스트 반복
@@ -85,7 +69,7 @@ public class UserTest {
 
 		System.out.println("-----------------------------------");
 
-		System.out.println("게시글 작성 테스트 -------------------");
+		System.out.println("게시글 작성 -------------------");
 
 		int update = board.update(70, "수정하깅", "성공", "SPORTS", null, null);
 		System.out.println(update);
@@ -98,6 +82,12 @@ public class UserTest {
 		}
 		// System.out.println(vo.toString());
 		System.out.println("-----------------------------------");
+
+		System.out.println("BoardDAO 검사 -------------------");
+		List<BoardDTO> categorylist = board.getSearch("SPORTS");
+		for (BoardDTO i : categorylist) {
+			System.out.println(i.getBoardContent());
+		}
 
 	}
 }

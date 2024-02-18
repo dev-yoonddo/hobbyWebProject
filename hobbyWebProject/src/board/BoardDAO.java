@@ -18,7 +18,7 @@ public class BoardDAO {
 	// singleton : Eager Initialization 기법
 	private static BoardDAO instance;
 
-	private BoardDAO() {
+	public BoardDAO() {
 	}
 
 	public static BoardDAO getInstance() {
@@ -166,11 +166,13 @@ public class BoardDAO {
 	// 해당 userID가 작성한 글의 리스트 가져오기
 	public ArrayList<BoardDTO> getListByUser(String userID) {
 		String SQL = "SELECT * FROM board WHERE userID = ? AND boardAvailable = 1 ORDER BY boardID DESC";
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		ArrayList<BoardDTO> list = new ArrayList<BoardDTO>();
 		try {
-			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
-			ResultSet rs = pstmt.executeQuery();
+			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				BoardDTO board = new BoardDTO();
 				board.setBoardID(rs.getInt(1));
@@ -187,10 +189,10 @@ public class BoardDAO {
 				board.setFileDownCount(rs.getInt(12));
 				list.add(board);
 			}
-			pstmt.close();
-			rs.close();
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			SqlConfig.closeResources(null, rs, pstmt);
 		}
 		return list;
 	}
@@ -198,11 +200,13 @@ public class BoardDAO {
 	// 해당 글의 파일 전체 목록 출력 (삭제된 글, LIMIT 제외)
 	public ArrayList<BoardDTO> getFileList(int boardID) {
 		String SQL = "SELECT * FROM board WHERE boardID = ? AND boardAvailable = 1 AND filename IS NOT NULL";
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		ArrayList<BoardDTO> list = new ArrayList<BoardDTO>();
 		try {
-			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, boardID);
-			ResultSet rs = pstmt.executeQuery();
+			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				BoardDTO board = new BoardDTO();
 				board.setBoardID(rs.getInt(1));
@@ -219,10 +223,10 @@ public class BoardDAO {
 				board.setFileDownCount(rs.getInt(12));
 				list.add(board);
 			}
-			pstmt.close();
-			rs.close();
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			SqlConfig.closeResources(null, rs, pstmt);
 		}
 		return list;
 	}
@@ -247,10 +251,12 @@ public class BoardDAO {
 	// 작성된 게시글 보기
 	public BoardDTO getBoardVO(int boardID) {
 		String SQL = "SELECT * FROM board WHERE boardID = ?";
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		try {
-			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, boardID);
-			ResultSet rs = pstmt.executeQuery();
+			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				BoardDTO board = new BoardDTO();
 				board.setBoardID(rs.getInt(1));
@@ -270,10 +276,10 @@ public class BoardDAO {
 				board.setFileDownCount(rs.getInt(12));
 				return board;
 			}
-			pstmt.close();
-			rs.close();
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			SqlConfig.closeResources(null, rs, pstmt);
 		}
 		return null;
 	}
@@ -304,7 +310,6 @@ public class BoardDAO {
 			pstmt.setInt(7, boardID);
 			// 성공적으로 수행했다면 0이상의 결과 반환
 			int result = pstmt.executeUpdate();
-			pstmt.close();
 			// 성공적으로 수행되고 첨부파일이 존재하면 file테이블에도 데이터를 넣어준다.
 			if (result >= 0) {
 				if (filename != null) {
@@ -323,6 +328,8 @@ public class BoardDAO {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			SqlConfig.closeResources(null, null, pstmt);
 		}
 		return -1; // 데이터베이스 오류
 
@@ -331,8 +338,9 @@ public class BoardDAO {
 	// 삭제하기 : 글을 삭제하면 글에 달린 댓글들도 삭제하기
 	public int delete(int boardID) {
 		String SQL = "UPDATE board SET boardAvailable = 0 WHERE boardID = ? ";
+		PreparedStatement pstmt = null;
 		try {
-			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, boardID);
 			// 성공적으로 수행했다면 0이상의 결과 반환
 			int result = pstmt.executeUpdate();
@@ -349,6 +357,8 @@ public class BoardDAO {
 			return result;
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			SqlConfig.closeResources(null, null, pstmt);
 		}
 		return -1; // 데이터베이스 오류
 	}
@@ -356,14 +366,16 @@ public class BoardDAO {
 	// 해당 userID데이터 삭제하기
 	public int deleteByUser(String userID) {
 		String SQL = "UPDATE board SET boardAvailable = 0 WHERE userID = ? ";
+		PreparedStatement pstmt = null;
 		try {
-			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
 			pstmt.executeUpdate();
-			pstmt.close();
 			return 1;
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			SqlConfig.closeResources(null, null, pstmt);
 		}
 		return -1; // 데이터베이스 오류
 	}
@@ -371,14 +383,16 @@ public class BoardDAO {
 	// 좋아요 갯수
 	public int heart(int boardID) {
 		String SQL = "UPDATE board SET heartCount = heartCount + 1 WHERE boardID = ?";
+		PreparedStatement pstmt = null;
 		try {
-			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, boardID);
 			pstmt.executeUpdate();
-			pstmt.close();
 			return 1;
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			SqlConfig.closeResources(null, null, pstmt);
 		}
 		return -1;
 	}
@@ -386,14 +400,16 @@ public class BoardDAO {
 	// 좋아요 취소
 	public int heartDelete(int boardID) {
 		String SQL = "UPDATE board SET heartCount = heartCount - 1 WHERE boardID = ?";
+		PreparedStatement pstmt = null;
 		try {
-			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, boardID);
 			pstmt.executeUpdate();
-			pstmt.close();
 			return 1;
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			SqlConfig.closeResources(null, null, pstmt);
 		}
 		return -1;
 	}
@@ -401,31 +417,35 @@ public class BoardDAO {
 	// 조회수
 	public int viewCountUpdate(int viewCount, int boardID) {
 		String SQL = "UPDATE board SET viewCount = ? WHERE boardID = ?";
+		PreparedStatement pstmt = null;
 		try {
-			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, viewCount);
 			pstmt.setInt(2, boardID);
 			pstmt.executeUpdate();
-			pstmt.close();
 			return 1;// insert,delete,update
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			SqlConfig.closeResources(null, null, pstmt);
 		}
 		return -1;// 데이터베이스 오류
 	}
 
 	// 파일 다운로드가 완료되면 다운로드 횟수를 1증가시키는 메소드
 	public int download(int boardID, String filename) {
+		String SQL = "UPDATE board SET fileDownCount = fileDownCount + 1 WHERE boardID = ? AND filename = ?";
+		PreparedStatement pstmt = null;
 		try {
-			String SQL = "UPDATE board SET fileDownCount = fileDownCount + 1 WHERE boardID = ? AND filename = ?";
-			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, boardID);
 			pstmt.setString(2, filename);
 			pstmt.executeUpdate();
-			pstmt.close();
 			return 1;
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			SqlConfig.closeResources(null, null, pstmt);
 		}
 		return -1;
 	}
@@ -434,9 +454,11 @@ public class BoardDAO {
 	public ArrayList<BoardDTO> getNotice() {
 		ArrayList<BoardDTO> list = new ArrayList<BoardDTO>();
 		String SQL = "SELECT * FROM board WHERE boardAvailable = 1 AND boardCategory LIKE '%NOTICE%' ORDER BY boardID DESC";
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		try {
-			PreparedStatement pstmt = conn.prepareStatement(SQL);
-			ResultSet rs = pstmt.executeQuery();
+			pstmt = conn.prepareStatement(SQL);
+			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				BoardDTO board = new BoardDTO();
 				board.setBoardID(rs.getInt(1));
@@ -453,10 +475,10 @@ public class BoardDAO {
 				board.setFileDownCount(rs.getInt(12));
 				list.add(board);// list에 해당 인스턴스를 담는다.
 			}
-			pstmt.close();
-			rs.close();
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			SqlConfig.closeResources(null, rs, pstmt);
 		}
 		return list;// 리스트 반환
 	}
@@ -466,11 +488,12 @@ public class BoardDAO {
 	public ArrayList<BoardDTO> getSearch(String searchField2) {// 특정한 리스트를 받아서 반환
 		ArrayList<BoardDTO> list = new ArrayList<BoardDTO>();
 		String SQL = "SELECT * FROM board WHERE boardAvailable = 1 AND boardCategory";
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		try {
 			SQL += " LIKE '%" + searchField2 + "%' ORDER BY boardID DESC";
-
-			PreparedStatement pstmt = conn.prepareStatement(SQL);
-			ResultSet rs = pstmt.executeQuery();
+			pstmt = conn.prepareStatement(SQL);
+			rs = pstmt.executeQuery();
 			while (rs.next()) {
 
 				BoardDTO board = new BoardDTO();
@@ -488,10 +511,11 @@ public class BoardDAO {
 				board.setFileDownCount(rs.getInt(12));
 				list.add(board);// list에 해당 인스턴스를 담는다.
 			}
-			pstmt.close();
-			rs.close();
+
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			SqlConfig.closeResources(null, rs, pstmt);
 		}
 		return list;// 리스트 반환
 	}
@@ -501,11 +525,12 @@ public class BoardDAO {
 	public List<BoardDTO> getDelBoardVOByUserID(String userID) {
 		List<BoardDTO> boardDTOs = new ArrayList<>();
 		String SQL = "SELECT boardID, boardAvailable FROM board WHERE userID = ?";// userID가 작성한 board의 boardID와
-																					// boardAvailable의 값을 가져온다.
+		PreparedStatement pstmt = null;
+		ResultSet rs = null; // boardAvailable의 값을 가져온다.
 		try {
-			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
-			ResultSet rs = pstmt.executeQuery();
+			rs = pstmt.executeQuery();
 
 			while (rs.next()) { // user 한명이 여러개의 board를 생성하면 데이터가 1개 이상 나오기때문에 while을 사용한다.
 				int boardID = rs.getInt("boardID");
@@ -520,10 +545,10 @@ public class BoardDAO {
 				// boardVOs list에 boardVO object 추가
 				boardDTOs.add(boardDTO);
 			}
-			rs.close();
-			pstmt.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			SqlConfig.closeResources(null, rs, pstmt);
 		}
 		return boardDTOs;
 	}
@@ -531,14 +556,16 @@ public class BoardDAO {
 	// UserDAO - delete에서 삭제된 user와 관련된 정보를 업데이트 한다.
 	public void updateBoardVO(BoardDTO boardDTO) {
 		String SQL = "UPDATE board SET boardAvailable = ? WHERE boardID = ?";
+		PreparedStatement pstmt = null;
 		try {
-			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, boardDTO.getBoardAvailable());
 			pstmt.setInt(2, boardDTO.getBoardID());
 			pstmt.executeUpdate();
-			pstmt.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			SqlConfig.closeResources(null, null, pstmt);
 		}
 	}
 }

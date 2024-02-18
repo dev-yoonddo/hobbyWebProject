@@ -41,12 +41,15 @@ public class SqlConfig {
 	public static void closeResources(Connection conn, ResultSet rs, PreparedStatement pstmt) {
 		try {
 			if (rs != null) {
+				// System.out.println("resultset close");
 				rs.close();
 			}
 			if (pstmt != null) {
+				// System.out.println("prepared close");
 				pstmt.close();
 			}
 			if (conn != null) {
+				// System.out.println("connection close");
 				conn.close();
 			}
 		} catch (SQLException ex) {

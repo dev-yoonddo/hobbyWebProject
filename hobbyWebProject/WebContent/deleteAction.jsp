@@ -20,6 +20,7 @@
 	<%
 		String userID = null;
 		int boardID = 0;
+		BoardDAO boardDAO = BoardDAO.getInstance();
 		if(session.getAttribute("userID") != null){
 			userID = (String) session.getAttribute("userID");
 		}
@@ -40,7 +41,7 @@
 			script.println("history.back()");
 			script.println("</script>");
 		}
-		BoardDTO board = new BoardDAO().getBoardVO(boardID);
+		BoardDTO board = boardDAO.getBoardVO(boardID);
 		if(!userID.equals(board.getUserID()) && !userID.equals("admin")){
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
@@ -48,7 +49,6 @@
 			script.println("history.back()");
 			script.println("</script>");
 		}else{
-			BoardDAO boardDAO = new BoardDAO();
 			int result = boardDAO.delete(boardID);
 			if(result == -1){
 				PrintWriter script = response.getWriter();

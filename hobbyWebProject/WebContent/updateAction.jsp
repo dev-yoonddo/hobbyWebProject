@@ -86,7 +86,7 @@
 			//file.delete();
 			}else{
 				int result = 0;
-				BoardDAO boardDAO = new BoardDAO();
+				BoardDAO boardDAO = BoardDAO.getInstance();
 					result = boardDAO.update(boardID, title, content, category , filename, fileRealname);
 					if(result == -1 || result == -2){
 						script.println("<script>");

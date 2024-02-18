@@ -278,8 +278,8 @@ textarea{
 	if(request.getParameter("boardID") != null){
 		boardID = Integer.parseInt(request.getParameter("boardID"));
 	}
-	
-	BoardDTO board = new BoardDAO().getBoardVO(boardID);
+	BoardDAO boardDAO = BoardDAO.getInstance();
+	BoardDTO board = boardDAO.getBoardVO(boardID);
 %>
 <!-- header -->
 <header id="header">

@@ -387,9 +387,9 @@ th span{
 	}
 
 	UserDTO user=new UserDAO().getUserVO(userID);
-	BoardDAO boardDAO = new BoardDAO();
+	BoardDAO boardDAO = BoardDAO.getInstance();
 	CommentDAO cmtDAO = new CommentDAO();
-	BoardDTO board = new BoardDAO().getBoardVO(boardID);
+	BoardDTO board = boardDAO.getBoardVO(boardID);
 	ArrayList<BoardDTO> boardlist = new ArrayList<>();
 %>
 <header>

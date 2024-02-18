@@ -32,7 +32,7 @@
 		script.print("boardID null");
 		script.flush();
 	}
-	BoardDAO boardDAO = new BoardDAO();
+	BoardDAO boardDAO = BoardDAO.getInstance();
 	HeartDAO heartDAO = new HeartDAO();
 	//해당 게시판에 이미 하트를 눌렀는지 확인한다.
 	HeartDTO heartvo = new HeartDAO().getHeartVOByUser(userID, boardID);

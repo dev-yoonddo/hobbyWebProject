@@ -350,8 +350,8 @@ table caption{
 		script.println("</script>");
 	}
 	
-	BoardDAO boardDAO = new BoardDAO();
-	BoardDTO board = new BoardDAO().getBoardVO(boardID);
+	BoardDAO boardDAO = BoardDAO.getInstance();
+	BoardDTO board = boardDAO.getBoardVO(boardID);
 	HeartDTO heartvo = new HeartDAO().getHeartVO(boardID);
 	FileDTO filevo = new FileDAO().getFileVO(boardID);
 	

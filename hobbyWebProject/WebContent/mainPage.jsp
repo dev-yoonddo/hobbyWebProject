@@ -38,7 +38,7 @@
 		if (session.getAttribute("userID") != null) {
 			userID = (String) session.getAttribute("userID");
 		}
-		BoardDAO bdDAO = new BoardDAO();
+		BoardDAO bdDAO = BoardDAO.getInstance();
 		EventDAO eventDAO = new EventDAO();
 		GroupDAO groupDAO = new GroupDAO();
 		//작성한 게시글이 5개 이상이고 운영중인 그룹이 있을때 이벤트에 응모할 수 있는 팝업창이 뜨도록 한다.

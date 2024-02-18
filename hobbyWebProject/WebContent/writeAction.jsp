@@ -94,7 +94,7 @@
 			//file.delete();
 			}else{
 				int result = 0;
-				BoardDAO boardDAO = new BoardDAO();
+				BoardDAO boardDAO = BoardDAO.getInstance();
 				//관리자 계정으로 공지사항 등록시
 				//notice = request.getParameter("notice");
 				if(userID.equals("manager") && notice.equals("NOTICE")){

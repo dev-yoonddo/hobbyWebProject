@@ -238,8 +238,8 @@ th span{
 	if(request.getParameter("boardID") != null){
 		boardID = Integer.parseInt(request.getParameter("boardID"));
 	}
-	BoardDTO board = new BoardDAO().getBoardVO(boardID);
-	BoardDAO boardDAO = new BoardDAO();
+	BoardDAO boardDAO = BoardDAO.getInstance();
+	BoardDTO board = boardDAO.getBoardVO(boardID);
 	//선택한 카테고리 가져오기
 	String boardCategory = request.getParameter("searchField2");
 	//카테고리에 해당하는 글 리스트 가져오기
