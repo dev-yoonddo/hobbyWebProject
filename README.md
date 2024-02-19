@@ -1,7 +1,7 @@
 # 취미는 갖고 싶은데 혼자는 싫을 때 TOGETHER 🏊‍♂️🏋️‍♀️🚴‍♀️
 
 ## https://toogether.me <br><br> 테스트 아이디 : test / 비밀번호 : 1234
-
+## DB Mapping 구조 변경중
 <br>
 
 ## ❔ Tech Skills
