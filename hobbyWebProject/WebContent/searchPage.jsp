@@ -300,6 +300,7 @@ th span{
 				<tbody>
 					<%
 						for (BoardDTO bd : boardlist) {
+		                 	ArrayList<CommentDTO> cmtlist = CommentDAO.getInstance().getList(bd.getBoardID());
 					%>
 					<tr class="board-row">
 						<td><%=bd.getViewCount()%></td>
@@ -316,10 +317,6 @@ th span{
 						%>
 						<td><%= bd.getUserID() %></td>
 						<td><%=bd.getHeartCount()%></td>
-						<%
-		                 	CommentDAO cmtDAO = new CommentDAO();
-		                 	ArrayList<CommentDTO> cmtlist = cmtDAO.getList(bd.getBoardID());
-	                 	%>
 						<td><%= cmtlist.size() %></td>
 						<td class="date" ><%= bd.getBoardDate().substring(0 ,11) + bd.getBoardDate().substring(11, 13) + "시" + bd.getBoardDate().substring(14, 16) + "분" %></td>
 					</tr>

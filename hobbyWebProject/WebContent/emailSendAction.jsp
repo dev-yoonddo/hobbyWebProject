@@ -48,12 +48,12 @@ section{
 </style>
 <body>
 	<%
-		UserDAO userDAO = new UserDAO();
+		UserDAO userDAO = UserDAO.getInstance();
 		String userID = null;
 		if(session.getAttribute("userID") != null){
 			userID = (String) session.getAttribute("userID");
 		}
-		UserDTO user=new UserDAO().getUserVO(userID);
+		UserDTO user=userDAO.getUserVO(userID);
 		String userSalt = user.getUserSalt();
 		boolean emailChecked = user.isUserEmailChecked();
 

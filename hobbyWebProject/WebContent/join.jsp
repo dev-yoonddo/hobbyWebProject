@@ -40,8 +40,7 @@ if(userID != null){
 	script.println("location.href='userUpdate'");
 	script.println("</script>");
 }
-UserDAO userDAO = new UserDAO();
-ArrayList<UserDTO> list = userDAO.getEmailList(); //모든 유저 이메일 리스트 가져오기
+ArrayList<UserDTO> list = UserDAO.getInstance().getEmailList(); //모든 유저 이메일 리스트 가져오기
 %>
 <header id="header">
 <jsp:include page="/header/header.jsp"/>

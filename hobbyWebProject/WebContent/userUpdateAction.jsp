@@ -37,8 +37,8 @@
 				script.println("location.href='login'");
 				script.println("</script>");
 			}
-			UserDAO userDAO = new UserDAO();
-			UserDTO userDTO = new UserDAO().getUserVO(userID);
+			UserDAO userDAO = UserDAO.getInstance();
+			UserDTO userDTO = userDAO.getUserVO(userID);
 			//test계정에서 비밀번호 수정요청이 들어올때
 			if(userID.equals("test")){
 				script.println("<script>");

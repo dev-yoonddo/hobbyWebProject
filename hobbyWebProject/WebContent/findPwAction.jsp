@@ -31,6 +31,10 @@
 	<%
 		PrintWriter script = response.getWriter();
 		String userID = null;
+		UserDAO userDAO = UserDAO.getInstance();
+		UserDTO userDTO = userDAO.getUserVO(userID);
+		GroupDAO group = GroupDAO.getInstance();
+
 		if(session.getAttribute("userID") != null){
 			userID = (String) session.getAttribute("userID");
 		}
@@ -46,7 +50,6 @@
 		if(request.getParameter("groupID") != null){
 			groupID = Integer.parseInt(request.getParameter("groupID"));
 		}
-		GroupDAO group = new GroupDAO();
 		int groupActive = group.getGroupVO(groupID).getGroupAvailable();
 		if(groupActive == 0){
 			script.println("<script>");
@@ -54,8 +57,6 @@
 			script.println("self.close()");
 			script.println("</script>");
 		}else{
-		UserDAO userDAO = new UserDAO();
-		UserDTO userDTO = userDAO.getUserVO(userID);
 		//회원 비밀번호를 가져온다.
 		String userPW = userDTO.getUserPassword();
 		//암호화된 비밀번호와 비교하기 위해 입력한 비밀번호 + salt키를 암호화 한 값을 가져온다.

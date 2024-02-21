@@ -18,7 +18,7 @@
 	String spName = null;
 	String spAd = null;
 	
-	LocationDAO locDAO = new LocationDAO();
+	LocationDAO locDAO = LocationDAO.getInstance();
 	ArrayList<LocationDTO> locationlist = locDAO.getNameAdList();
 	
 	if(session.getAttribute("userID") != null){

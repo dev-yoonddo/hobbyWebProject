@@ -21,7 +21,6 @@
 		int skedMonth = 0; 
 		int skedDay = 0;
 		String skedContent = null;
-		ScheduleDAO skedDAO = new ScheduleDAO();
 
 		if(session.getAttribute("userID") != null){
 			userID = (String) session.getAttribute("userID");
@@ -50,7 +49,7 @@
 		 		script.print("info error");
 		 	    script.flush();
 		 	}else{
-				int result = skedDAO.registSchedule(userID, spotName, skedYear, skedMonth, skedDay, skedContent);
+				int result = ScheduleDAO.getInstance().registSchedule(userID, spotName, skedYear, skedMonth, skedDay, skedContent);
 				if(result > 0){
 					script.print("ok");
 				    script.flush();

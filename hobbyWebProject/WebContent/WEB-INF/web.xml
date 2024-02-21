@@ -355,7 +355,14 @@
     <servlet-name>sendEventMsgAction.jsp</servlet-name>
     <url-pattern>/sendEventMsgAction</url-pattern>
   </servlet-mapping>
-  
+  <servlet>
+    <servlet-name>sendMsgAction.jsp</servlet-name>
+    <jsp-file>/sendMsgAction.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>sendMsgAction.jsp</servlet-name>
+    <url-pattern>/sendMsgAction</url-pattern>
+  </servlet-mapping>
   <servlet>
     <servlet-name>spotJoinAction.jsp</servlet-name>
     <jsp-file>/spotJoinAction.jsp</jsp-file>

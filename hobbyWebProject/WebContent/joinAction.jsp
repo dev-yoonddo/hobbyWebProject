@@ -41,7 +41,7 @@
 			script.println("</script>");
 			
 		}else{
-			UserDAO userDAO = new UserDAO();
+			UserDAO userDAO = UserDAO.getInstance();
 			//이미 사용중인 이메일인지 검사
 			int emailOK = 0;
 			ArrayList<UserDTO> list = userDAO.getEmailList();

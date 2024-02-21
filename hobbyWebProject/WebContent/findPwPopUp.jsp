@@ -81,10 +81,7 @@ if(userID == null){
 	script.println("window.open('loginPopUp', 'Login', 'width=500, height=550, top=50%, left=50%')");
 	script.println("</script>");
 }
-GroupDAO groupDAO = new GroupDAO();
-MemberDAO memberDAO = new MemberDAO();
-
-UserDTO user=new UserDAO().getUserVO(userID); //유저 정보 가져오기
+UserDTO user= UserDAO.getInstance().getUserVO(userID); //유저 정보 가져오기
 %>
 <div class="login-wrapper" id="header">
 	<div>

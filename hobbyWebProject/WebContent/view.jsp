@@ -22,6 +22,7 @@
 <%
 	request.setCharacterEncoding("UTF-8");
 %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -349,20 +350,23 @@ table caption{
 		script.println("history.back()");
 		script.println("</script>");
 	}
+	BoardDAO board = BoardDAO.getInstance();
+	CommentDAO cmt = CommentDAO.getInstance();
+	HeartDAO heart = HeartDAO.getInstance();
+	FileDAO file = FileDAO.getInstance();
 	
-	BoardDAO boardDAO = BoardDAO.getInstance();
-	BoardDTO board = boardDAO.getBoardVO(boardID);
-	HeartDTO heartvo = new HeartDAO().getHeartVO(boardID);
-	FileDTO filevo = new FileDAO().getFileVO(boardID);
+	BoardDTO boardvo = board.getBoardVO(boardID);
+	HeartDTO heartvo = heart.getHeartVO(boardID);
+	FileDTO filevo = file.getFileVO(boardID);
 	
 	//해당 글이 공지사항인지 구분한다.
 	boolean notice = false;
-	if((board.getBoardCategory()).equals("NOTICE")){
+	if((boardvo.getBoardCategory()).equals("NOTICE")){
 		notice = true;
 	}
 	
 	//이미지 이름 가져오기
-	String filename = board.getFilename();
+	String filename = boardvo.getFilename();
 %>
 
 <!-- header -->
@@ -380,17 +384,17 @@ table caption{
 				<% 
 					if(notice == true){
 				%>
-					<a id="view-title"><%=board.getBoardTitle()%></a><br><br>
+					<a id="view-title"><%=boardvo.getBoardTitle()%></a><br><br>
 				<%
 					}else{
 				%>
-					<a id="view-title"><%=board.getBoardCategory()%></a><br><br>
+					<a id="view-title"><%=boardvo.getBoardCategory()%></a><br><br>
 				<%	} %>
 				<div id="tb-top">
 					<div id="tb-top-1">
 						<div id="user-item">
-						<span>작성자 <%=board.getUserID()%></span>
-						<span>&nbsp;&nbsp;|&nbsp;&nbsp; <%=board.getBoardDate().substring(0 ,11) + board.getBoardDate().substring(11, 13) + "시" + board.getBoardDate().substring(14, 16) + "분"%></span>
+						<span>작성자 <%=boardvo.getUserID()%></span>
+						<span>&nbsp;&nbsp;|&nbsp;&nbsp; <%=boardvo.getBoardDate().substring(0 ,11) + boardvo.getBoardDate().substring(11, 13) + "시" + boardvo.getBoardDate().substring(14, 16) + "분"%></span>
 						</div>
 					</div>
 					
@@ -400,13 +404,12 @@ table caption{
 								<span>
 							
 								<%	
-				                 	HeartDAO heartDAO = new HeartDAO();
-									ArrayList<HeartDTO> hearts = heartDAO.getHeartList(boardID);
+									ArrayList<HeartDTO> hearts = heart.getHeartList(boardID);
 								    boolean heartMatch = false;
 								    if(userID != null){
-									    for (HeartDTO heart: hearts) {
+									    for (HeartDTO h: hearts) {
 									    	//hearts 리스트안에 boardID와 userID값이 모두 일치하는 값이 있으면 해당 글에 이미 좋아요를 눌렀음을 의미한다.
-									        if (userID.equals(heart.getUserID()) && boardID == heart.getBoardID()) {
+									        if (userID.equals(h.getUserID()) && boardID == h.getBoardID()) {
 									        	heartMatch = true;
 									            break; // 일치하는 값을 찾으면 반복문을 나간다.
 									        }
@@ -415,22 +418,22 @@ table caption{
 									 	
 									    if(heartMatch){//하트를 이미 눌렀으면 채운하트
 								%>
-									    	<i id="heart2" class="fa-solid fa-heart"onclick="heartAction()"></i>&nbsp;<%=board.getHeartCount()%>
+									    	<i id="heart2" class="fa-solid fa-heart"onclick="heartAction()"></i>&nbsp;<%=boardvo.getHeartCount()%>
 								<%	
 									    }else{//하트를 누르지 않았으면 빈하트
 								%>
-								 			<i id="heart1" class="fa-regular fa-heart" onclick="heartAction()"></i>&nbsp;<%= board.getHeartCount()%>
+								 			<i id="heart1" class="fa-regular fa-heart" onclick="heartAction()"></i>&nbsp;<%= boardvo.getHeartCount()%>
 									    	
 								<%
 									    }
 								 	}else{//로그인 하지 않으면 빈하트
 								%>
-								 		<i id="heart1" class="fa-regular fa-heart" onclick="heartAction()"></i>&nbsp;<%= board.getHeartCount()%>
+								 		<i id="heart1" class="fa-regular fa-heart" onclick="heartAction()"></i>&nbsp;<%= boardvo.getHeartCount()%>
 								<%
 								    }
 								%>
 								</span>&nbsp;&nbsp;
-								<span><i class="fa-solid fa-eye"></i>&nbsp;<%=board.getViewCount()+1%></span>
+								<span><i class="fa-solid fa-eye"></i>&nbsp;<%=boardvo.getViewCount()+1%></span>
 							</div>
 						</div>
 					</div>
@@ -441,7 +444,7 @@ table caption{
 						if(notice == true){
 					%>
 						<tr class="tr" id="tr3" height="75%" valign="top">
-							<td style="padding: 30px; word-break: break-all;" class="td-content"><%=board.getBoardContent().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></td>
+							<td style="padding: 30px; word-break: break-all;" class="td-content"><%=boardvo.getBoardContent().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></td>
 							<!-- 파일이 이미지일때만 서버에 업로드 된 파일 노출하기 -->
 					<%
 							if(filename != null && (filename.endsWith(".jpg") || filename.endsWith(".JPG") || filename.endsWith(".jpeg") || filename.endsWith(".JPEG") || filename.endsWith(".png") || filename.endsWith(".PNG"))){
@@ -460,12 +463,12 @@ table caption{
 					%>					
 						<tr class="tr" id="tr1" height="150px" style="border-bottom: 1px solid #C0C0C0;">
 							<td class="td"><span>제목</span></td>
-							<td><%=board.getBoardTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></td>
+							<td><%=boardvo.getBoardTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></td>
 						</tr>
 						<tr class="tr" id="tr2" valign="top">
 							<td class="td" ><span>내용</span></td>
 							<!-- 특수문자 처리 -->
-							<td class="td-content" style="word-break: break-all; margin: 10px;"><%=board.getBoardContent().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></td>
+							<td class="td-content" style="word-break: break-all; margin: 10px;"><%=boardvo.getBoardContent().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></td>
 							<!-- 파일이 이미지일때만 서버에 업로드 된 파일 노출하기 -->
 					<%
 							if(filename != null && (filename.endsWith(".jpg") || filename.endsWith(".JPG") || filename.endsWith(".jpeg") || filename.endsWith(".JPEG") || filename.endsWith(".png") || filename.endsWith(".PNG"))){
@@ -500,7 +503,7 @@ table caption{
 					<%
 					//	테이블에 저장된 파일 정보가 있으면 가져온다.
 					if(filename != null){
-						int downCount = board.getFileDownCount();
+						int downCount = boardvo.getFileDownCount();
 					/* 파일이 여러개일때
 					ArrayList<BoardDTO> files = boardDAO.getFileList(boardID);
 					if(files.size() > 0){
@@ -538,13 +541,13 @@ table caption{
 				<%
 					}else{ //모든 사용자에게 목록 버튼 노출
 				%>
-					<button type="button" id="list" class="btn-blue" onclick="location.href= 'searchPage?searchField2=<%=board.getBoardCategory()%>'"><span>목록</span></button>
+					<button type="button" id="list" class="btn-blue" onclick="location.href= 'searchPage?searchField2=<%=boardvo.getBoardCategory()%>'"><span>목록</span></button>
 				<%	} //로그인된 모든 유저에게 댓글쓰기 버튼 노출
 					if(userID != null){
 				%>
 						<button type="button" class="btn-blue" id="cmt-write-btn" onclick="cmtAction()"><span>댓글쓰기</span></button>
 				<% //로그인되고 해당 글을 쓴 유저에게 수정,삭제 버튼 노출
-						if(userID.equals(board.getUserID())){
+						if(userID.equals(boardvo.getUserID())){
 				%>
 							<button type="button" class="btn-blue" id="update" onclick="location.href='update?boardID=<%=boardID%>'"><span>수정</span></button>
 							<button type="button" class="btn-blue" id="btn-del" onclick="if(confirm('정말로 삭제하시겠습니까?')){location.href='deleteAction?boardID=<%=boardID%>'}"><span>삭제</span></button>
@@ -559,8 +562,7 @@ table caption{
 			</div>
 		</div>
 		<%
-           	CommentDAO cmtDAO = new CommentDAO();
-           	ArrayList<CommentDTO> cmtlist = cmtDAO.getList(boardID);
+           	ArrayList<CommentDTO> cmtlist = cmt.getList(boardID);
            %>
 		<h5 style="font-size: 15pt; color: #646464; float: left;">댓글 (<%= cmtlist.size() %>)<br></h5><hr id="cmt-line" style="width: 1000px;"><br>
 		

@@ -11,7 +11,7 @@
 	String userID = null;
 	int groupID = 0;
 	String chatContent = null;
-	ChatDAO chatDAO = new ChatDAO();
+	ChatDAO chatDAO = ChatDAO.getInstance();
 	
 	if(session.getAttribute("userID") != null){
 		userID = (String) session.getAttribute("userID");

@@ -1,33 +1,38 @@
 package schedule;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
+
+import com.toogether.session.SqlConfig;
 
 public class ScheduleDAO {
-	private Connection conn;
-	private ResultSet rs;
-
-	public ScheduleDAO() {
-		try {
-			String dbURL = "jdbc:mysql://database-1.cxujakzvpvip.ap-southeast-2.rds.amazonaws.com:3306/hobbyWebProject?useUnicode=true&characterEncoding=UTF-8";
-			String dbID = "root";
-			String dbPassword = "qlalf9228?";
-			Class.forName("com.mysql.jdbc.Driver");
-			conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	// singleton : Bill Pugh Solution (LazyHolder) 기법
+	private ScheduleDAO() {
 	}
+
+	// static 내부 클래스를 이용
+	// Holder로 만들어, 클래스가 메모리에 로드되지 않고 getInstance 메서드가 호출되어야 로드됨
+	private static class ScheduleDAOHolder {
+		private static final ScheduleDAO INSTANCE = new ScheduleDAO();
+	}
+
+	public static ScheduleDAO getInstance() {
+		return ScheduleDAOHolder.INSTANCE;
+	}
+
+	private Connection conn = SqlConfig.getConn();
 
 	// 스케줄 저장
 	public int registSchedule(String userID, String spotName, int skedYear, int skedMonth, int skedDay,
 			String skedContent) {
+		String SQL = "INSERT INTO schedule VALUES (?, ?, ?, ?, ?, ?, ?)";
+		PreparedStatement pstmt = null;
 		try {
-			String SQL = "INSERT INTO schedule VALUES (?, ?, ?, ?, ?, ?, ?)";
-			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt = conn.prepareStatement(SQL);
 			// pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
 			pstmt.setString(2, spotName);
@@ -39,6 +44,8 @@ public class ScheduleDAO {
 			return pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			SqlConfig.closeResources(null, null, pstmt);
 		}
 		return -1;
 	}
@@ -47,8 +54,10 @@ public class ScheduleDAO {
 	public ArrayList<ScheduleDTO> getScheduleList() {
 		String SQL = "SELECT * FROM schedule ORDER BY skedYear DESC, skedMonth DESC , skedDay DESC";
 		ArrayList<ScheduleDTO> list = new ArrayList<ScheduleDTO>();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		try {
-			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt = conn.prepareStatement(SQL);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				ScheduleDTO sked = new ScheduleDTO();
@@ -63,6 +72,8 @@ public class ScheduleDAO {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			SqlConfig.closeResources(null, rs, pstmt);
 		}
 		return list;
 	}
@@ -71,8 +82,10 @@ public class ScheduleDAO {
 	public ArrayList<ScheduleDTO> getScheduleListBySpot(String spotName) {
 		String SQL = "SELECT * FROM schedule WHERE spotName = ?";
 		ArrayList<ScheduleDTO> list = new ArrayList<ScheduleDTO>();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		try {
-			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, spotName);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
@@ -88,6 +101,8 @@ public class ScheduleDAO {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			SqlConfig.closeResources(null, rs, pstmt);
 		}
 		return list;
 	}
@@ -96,8 +111,10 @@ public class ScheduleDAO {
 	public ArrayList<ScheduleDTO> getScheduleListByTime(String spotName, int skedYear, int skedMonth, int skedDay) {
 		String SQL = "SELECT * FROM schedule WHERE spotName = ? AND skedYear = ? AND skedMonth = ? AND skedDay = ?";
 		ArrayList<ScheduleDTO> list = new ArrayList<ScheduleDTO>();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		try {
-			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, spotName);
 			pstmt.setInt(2, skedYear);
 			pstmt.setInt(3, skedMonth);
@@ -116,7 +133,51 @@ public class ScheduleDAO {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			SqlConfig.closeResources(null, rs, pstmt);
 		}
 		return list;
+	}
+
+	// UserDAO - delete에서 사용되는 메서드
+	// delete된 userID와 schedule의 userID가 같은 값의 리스트를 가져온다.
+	public List<ScheduleDTO> getDelScheduleByUserID(String userID) {
+		List<ScheduleDTO> list = new ArrayList<>();
+		String SQL = "SELECT skedAvailable FROM schedule WHERE userID = ?";
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, userID);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				int skedAvailable = rs.getInt("skedAvailable");
+				ScheduleDTO skedDTO = new ScheduleDTO();
+				skedDTO.setSkedAvailable(skedAvailable);
+				skedDTO.setUserID(userID);
+				list.add(skedDTO);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			SqlConfig.closeResources(null, rs, pstmt);
+		}
+		return list;
+	}
+
+	// UserDAO - delete에서 삭제된 user와 관련된 정보를 업데이트 한다.
+	public void updateSkedVO(ScheduleDTO skedDTO) {
+		String SQL = "UPDATE schedule SET skedAvailable = ? WHERE userID = ?";
+		PreparedStatement pstmt = null;
+		try {
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setInt(1, skedDTO.getSkedAvailable());
+			pstmt.setString(2, skedDTO.getUserID());
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			SqlConfig.closeResources(null, null, pstmt);
+		}
 	}
 }

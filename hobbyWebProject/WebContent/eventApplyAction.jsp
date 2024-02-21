@@ -41,8 +41,7 @@
 			script.println("opener.location.href='login'");
 			script.println("</script>");
 		}else{
-		UserDAO user = new UserDAO();
-		UserDTO userDTO = user.getUserVO(userID);
+		UserDTO userDTO = UserDAO.getInstance().getUserVO(userID);
 		//응모하는 회원의 비밀번호를 가져온다.
 		String userPW = userDTO.getUserPassword();
 		//암호화된 비밀번호와 비교하기 위해 입력한 비밀번호를 암호화한다.
@@ -73,8 +72,7 @@
 				script.println("</script>");
 			}else{
 				//모든 검사 완료시 이벤트 응모하기
-				EventDAO eventDAO = new EventDAO();
-				int result = eventDAO.apply(userID, event.getGroupName(), event.getEventContent(), inputPW);
+				int result = EventDAO.getInstance().apply(userID, event.getGroupName(), event.getEventContent(), inputPW);
 				if(result == -1){ //데이터베이스 오류
 					script.println("<script>");
 					script.println("alert('응모 실패')");

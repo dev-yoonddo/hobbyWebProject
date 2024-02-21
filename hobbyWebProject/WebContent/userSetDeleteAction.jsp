@@ -1,3 +1,6 @@
+<%@page import="member.MemberDAO"%>
+<%@page import="group.GroupDAO"%>
+<%@page import="message.MessageDAO"%>
 <%@page import="comment.CommentDTO"%>
 <%@page import="java.util.List"%>
 <%@page import="comment.CommentDAO"%>
@@ -11,10 +14,6 @@
 <%
 	request.setCharacterEncoding("UTF-8");
 %>
-<jsp:useBean id="board" class="board.BoardDAO" scope="page"/>
-<jsp:useBean id="comment" class="comment.CommentDAO" scope="page"/>
-<jsp:useBean id="group" class="group.GroupDAO" scope="page"/>
-<jsp:useBean id="member" class="member.MemberDAO" scope="page"/>
 
 <!DOCTYPE html>
 <html>
@@ -28,6 +27,11 @@
 <%
 	PrintWriter script = response.getWriter();
 	String userID = null;
+	BoardDAO board = BoardDAO.getInstance();
+	CommentDAO cmt = CommentDAO.getInstance();
+	GroupDAO group = GroupDAO.getInstance();
+	MemberDAO member = MemberDAO.getInstance();
+	
 	if(session.getAttribute("userID") != null){
 		userID = (String) session.getAttribute("userID");
 	}
@@ -49,7 +53,7 @@
 		    if(deleteField.equals("board")) {
 		        result = board.deleteByUser(userID);
 		    } else if(deleteField.equals("cmt")) {
-		        result = comment.deleteByUser(userID);
+		        result = cmt.deleteByUser(userID);
 		    } else if(deleteField.equals("group")) {
 		        result = group.deleteByUser(userID);
 		    } else if(deleteField.equals("mb")) {

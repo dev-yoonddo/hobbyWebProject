@@ -17,8 +17,8 @@
 	String spotName = null;
 	String address = null;
 
-	LocationDAO locDAO = new LocationDAO();
-	CrewDAO crew = new CrewDAO();
+	LocationDAO locDAO = LocationDAO.getInstance();
+	CrewDAO crew = CrewDAO.getInstance();
 
 	if(session.getAttribute("userID") != null){
 		userID = (String) session.getAttribute("userID");

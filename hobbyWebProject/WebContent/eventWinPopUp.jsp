@@ -60,7 +60,7 @@ String userID = null;
 if(session.getAttribute("userID") != null){
 	userID = (String) session.getAttribute("userID");
 }
-EventDAO eventDAO = new EventDAO();
+EventDAO eventDAO = EventDAO.getInstance();
 String msg = eventDAO.getEventVO(userID).getEventWinMsg().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>");
 %>
 	<div class="login-wrapper">

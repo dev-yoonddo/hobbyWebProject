@@ -5,6 +5,7 @@
 <%@page import="java.io.PrintWriter"%>
 <%@page import="board.BoardDAO"%>
 <%@page import="user.PwEncrypt"%>
+<%@page import="com.toogether.session.SqlConfig"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" errorPage="/error/errorPage.jsp"%>
 <!DOCTYPE html>
@@ -35,12 +36,14 @@
 	<%
 		PrintWriter script = response.getWriter();
 		String userID = null;
+		BoardDAO bdDAO = BoardDAO.getInstance();
+		EventDAO eventDAO = EventDAO.getInstance();
+		GroupDAO groupDAO = GroupDAO.getInstance();
+		
 		if (session.getAttribute("userID") != null) {
 			userID = (String) session.getAttribute("userID");
 		}
-		BoardDAO bdDAO = BoardDAO.getInstance();
-		EventDAO eventDAO = new EventDAO();
-		GroupDAO groupDAO = new GroupDAO();
+		
 		//작성한 게시글이 5개 이상이고 운영중인 그룹이 있을때 이벤트에 응모할 수 있는 팝업창이 뜨도록 한다.
 		//이벤트에 응모는 아이디당 한번씩만 가능하다.
 		int boardCount = bdDAO.getListByUser(userID).size(); //유저가 작성한 게시글 수 가져오기
@@ -53,7 +56,7 @@
 		}
 		//유저의 이벤트 정보 가져오기
 		//eventWin == 1이면 이벤트에 당첨된것을 의미한다.
-		EventDTO eventvo = new EventDAO().getEventVO(userID);
+		EventDTO eventvo = eventDAO.getEventVO(userID);
 		if (eventvo != null && eventvo.getEventWin() == 1 && eventvo.getEventAvailable() != 0) {
 			script.println("<script>");
 			script.println("window.open('eventWinPopUp', 'EVENT', 'width=500, height=500, top=50%, left=50%')");

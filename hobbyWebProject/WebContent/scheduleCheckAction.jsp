@@ -16,7 +16,7 @@
 	int skedYear = 0;
 	int skedMonth = 0;
 	int skedDay = 0;
-	ScheduleDAO skedDAO = new ScheduleDAO();
+
 	if(session.getAttribute("userID") != null){
 		userID = (String)session.getAttribute("userID");
 	}
@@ -33,7 +33,7 @@
 		skedDay = Integer.parseInt(request.getParameter("day"));
 	}
 	
-	ArrayList<ScheduleDTO> skedlist = skedDAO.getScheduleListByTime(spotName, skedYear, skedMonth, skedDay);
+	ArrayList<ScheduleDTO> skedlist = ScheduleDAO.getInstance().getScheduleListByTime(spotName, skedYear, skedMonth, skedDay);
 	String[] value = new String[skedlist.size()];
 	int index = 0;
 	if(skedlist.size() > 0){

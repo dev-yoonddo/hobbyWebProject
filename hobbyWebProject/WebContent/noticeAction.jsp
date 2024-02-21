@@ -21,7 +21,7 @@
  	PrintWriter script = response.getWriter();
 	int groupID = 0;
 	String noticeContent = null;
-	GroupDAO groupDAO = new GroupDAO();
+	GroupDAO groupDAO = GroupDAO.getInstance();
 	
 	if(request.getParameter("groupID") != null || request.getParameter("groupID") != "0"){
 		groupID = Integer.parseInt(request.getParameter("groupID"));

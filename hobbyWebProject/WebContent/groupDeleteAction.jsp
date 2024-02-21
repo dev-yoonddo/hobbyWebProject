@@ -22,6 +22,8 @@
 	<%
 		PrintWriter script = response.getWriter();
 		String userID = null;
+		GroupDAO groupDAO = GroupDAO.getInstance();
+
 		if(session.getAttribute("userID") != null){
 			userID = (String) session.getAttribute("userID");
 		}
@@ -41,14 +43,13 @@
 			script.println("history.back()");
 			script.println("</script>");
 		}
-		GroupDTO group = new GroupDAO().getGroupVO(groupID);
+		GroupDTO group = groupDAO.getGroupVO(groupID);
 		if(!userID.equals(group.getUserID()) && !userID.equals("admin")){
 			script.println("<script>");
 			script.println("alert('권한이 없습니다.')");
 			script.println("history.back()");
 			script.println("</script>");
 		}else{
-			GroupDAO groupDAO = new GroupDAO();
 			int result = groupDAO.delete(groupID);
 			if(result == -1){
 				script.println("<script>");

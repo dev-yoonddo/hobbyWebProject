@@ -21,8 +21,8 @@
 <body>
 	<%
 		PrintWriter script = response.getWriter();
-		GroupDAO groupDAO = new GroupDAO();
-		MessageDAO msgDAO = new MessageDAO();
+		GroupDAO groupDAO = GroupDAO.getInstance();
+		MessageDAO msgDAO = MessageDAO.getInstance();
 		
 		String userID = null;
 		int groupID = 0; 

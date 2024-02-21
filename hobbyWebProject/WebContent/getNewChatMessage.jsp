@@ -13,7 +13,7 @@
 			groupID = Integer.parseInt(request.getParameter("groupID"));
 		}
 		//새로운 채팅이 입력됐는지 비교하기 위해 해당 그룹의 채팅갯수를 구한다.
-		ArrayList<ChatDTO> chatlist = new ChatDAO().getChatList(groupID);
+		ArrayList<ChatDTO> chatlist = ChatDAO.getInstance().getChatList(groupID);
 		int chatSize = chatlist.size();
 
     	script.print(chatSize);

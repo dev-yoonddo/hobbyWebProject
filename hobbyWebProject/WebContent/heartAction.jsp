@@ -17,6 +17,9 @@
 	PrintWriter script = response.getWriter();
 	String userID = null;
 	int boardID=0;
+	BoardDAO boardDAO = BoardDAO.getInstance();
+	HeartDAO heartDAO = HeartDAO.getInstance();
+	
 	if(session.getAttribute("userID")!=null){
 		userID = (String)session.getAttribute("userID");
 	}
@@ -32,10 +35,8 @@
 		script.print("boardID null");
 		script.flush();
 	}
-	BoardDAO boardDAO = BoardDAO.getInstance();
-	HeartDAO heartDAO = new HeartDAO();
 	//해당 게시판에 이미 하트를 눌렀는지 확인한다.
-	HeartDTO heartvo = new HeartDAO().getHeartVOByUser(userID, boardID);
+	HeartDTO heartvo = heartDAO.getHeartVOByUser(userID, boardID);
 	//하트를 눌렀으면
 	if(heartvo != null){
 		//하트 취소 메서드 실행

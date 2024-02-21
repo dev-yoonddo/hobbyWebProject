@@ -209,9 +209,10 @@ section{
 	int skedYear = 0;
 	int skedMonth = 0;
 	int Tabledata = 0;
-	CrewDAO crewDAO = new CrewDAO();
-	LocationDAO locDAO = new LocationDAO();
-	ScheduleDAO skedDAO = new ScheduleDAO();
+	
+	CrewDAO crewDAO = CrewDAO.getInstance();
+	LocationDAO locDAO = LocationDAO.getInstance();
+	ScheduleDAO skedDAO = ScheduleDAO.getInstance();
 	
 	if(session.getAttribute("userID") != null){
 		userID = (String)session.getAttribute("userID");
@@ -224,9 +225,9 @@ section{
 	}
 
 	//해당 스팟 생성자 구하기
-	LocationDTO leader = new LocationDAO().getLocationVO(spotName);
+	LocationDTO leader = locDAO.getLocationVO(spotName);
 	//크루 테이블에 정보가 저장되었는지 확인
-	CrewDTO crew = new CrewDAO().getCheckRegist(userID, spotName);
+	CrewDTO crew = crewDAO.getCheckRegist(userID, spotName);
 	//저장된 스케줄 리스트 가져오기
 	ArrayList<ScheduleDTO> list = skedDAO.getScheduleListBySpot(spotName);
 	//Map<String , String> scheduleDates = new HashMap<>();

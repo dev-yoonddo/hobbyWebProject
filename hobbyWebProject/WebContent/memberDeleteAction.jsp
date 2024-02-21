@@ -39,9 +39,7 @@
 		}
 		//memberID값 가져오기
 		String memberID = request.getParameter("memberID");
-
-		MemberDAO memberDAO = new MemberDAO();
-		int result = memberDAO.delete(memberID, userID, groupID);
+		int result = MemberDAO.getInstance().delete(memberID, userID, groupID);
 		if(result == -1){//데이터 베이스 오류
 			script.println("<script>");
 			script.println("alert('탈퇴에 실패했습니다.')");

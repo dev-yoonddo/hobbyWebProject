@@ -24,7 +24,7 @@
 </head>
 <body>
 	<%
-		UserDAO userDAO = new UserDAO();
+		UserDAO userDAO = UserDAO.getInstance();
 		String code = null;
 		String userID = null;
 		if(session.getAttribute("userID") != null){

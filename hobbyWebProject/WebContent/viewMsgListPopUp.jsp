@@ -8,6 +8,7 @@
 <%@page import="message.MessageDTO"%>
 <%@page import="group.GroupDAO"%>
 <%@page import="group.GroupDTO"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -117,14 +118,12 @@ tr{
 		script.println("</script>");
 	}
 
-	GroupDAO grDAO = new GroupDAO();
-	MessageDAO msgDAO = new MessageDAO();
-
+	MessageDAO msg = MessageDAO.getInstance();
+	GroupDAO group = GroupDAO.getInstance();
 	//msgCheck = 0(안읽은 메시지)인 리스트 가져오기 (30일 이전까지)
-	ArrayList<MessageDTO> checklist = msgDAO.getMessageCheck(userID, groupID);
-	
+	ArrayList<MessageDTO> checklist = msg.getMessageCheck(userID, groupID);
 	//같은 그룹의 멤버가 나에게 보낸 메시지 리스트 가져오기 (30일 이전까지)
-	ArrayList<MessageDTO> msglist = msgDAO.getMsgList(userID, groupID);
+	ArrayList<MessageDTO> msglist = msg.getMsgList(userID, groupID);
 %>
 
 <!-- 받은 메시지 리스트 -->
@@ -138,7 +137,7 @@ tr{
 		<%
 			if(groupID > 0){ //groupID = 0이면 문의하기, 0이상이면 유저간의 메시지 주고받기를 의미한다.
 		%>
-			<%=grDAO.getGroupVO(groupID).getGroupName()%>
+			<%=group.getGroupVO(groupID).getGroupName()%>
 		<%
 			}else if(!userID.equals("manager")){
 		%>

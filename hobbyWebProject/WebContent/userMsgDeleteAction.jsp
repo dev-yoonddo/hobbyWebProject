@@ -1,3 +1,4 @@
+<%@page import="message.MessageDAO"%>
 <%@page import="comment.CommentDTO"%>
 <%@page import="java.util.List"%>
 <%@page import="comment.CommentDAO"%>
@@ -11,7 +12,6 @@
 <%
 	request.setCharacterEncoding("UTF-8");
 %>
-<jsp:useBean id="message" class="message.MessageDAO" scope="page"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,6 +24,9 @@
 <%
 	PrintWriter script = response.getWriter();
 	String userID = null;
+
+	MessageDAO msg = MessageDAO.getInstance();
+
 	if(session.getAttribute("userID") != null){
 		userID = (String) session.getAttribute("userID");
 	}
@@ -44,11 +47,11 @@
 		    int result = 0;
 		
 		    if(deleteField2.equals("rcvMsg")) {
-		        result = message.deleteRcvMsg(userID);
+		        result = msg.deleteRcvMsg(userID);
 		    } else if(deleteField2.equals("sendMsg")) {
-		        result = message.deleteSendMsg(userID);
+		        result = msg.deleteSendMsg(userID);
 		    } else if(deleteField2.equals("allMsg")) {
-		        result = message.deleteRcvMsg(userID) + message.deleteSendMsg(userID);
+		        result = msg.deleteRcvMsg(userID) + msg.deleteSendMsg(userID);
 		    }
 		
 		    if(result > 0) {

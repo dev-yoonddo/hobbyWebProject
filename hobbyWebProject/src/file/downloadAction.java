@@ -102,11 +102,11 @@ public class downloadAction extends HttpServlet {
 		outputStream.flush();
 		outputStream.close();
 		fileInputStream.close();
-		BoardDAO board = BoardDAO.getInstance();
+
 		// 다운로드가 완료되면 다운로드 횟수를 증가시킨다.
-		new FileDAO().hit(boardID, filename);
+		FileDAO.getInstance().hit(boardID, filename);
 		// 다운로드가 완료되면 board테이블의 다운로드 횟수도 증가시킨다.
-		board.download(boardID, filename);
+		BoardDAO.getInstance().download(boardID, filename);
 	}
 
 }

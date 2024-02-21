@@ -14,9 +14,11 @@ import comment.CommentDTO;
 import file.FileDAO;
 
 public class BoardDAO {
-
+	private static int instanceCount = 0; // Counter to track instance creation
 	// singleton : Bill Pugh Solution (LazyHolder) 기법
+
 	private BoardDAO() {
+		instanceCount++; // Increment counter when instance is created
 	}
 
 	// static 내부 클래스를 이용
@@ -27,6 +29,10 @@ public class BoardDAO {
 
 	public static BoardDAO getInstance() {
 		return BoardDAOHolder.INSTANCE;
+	}
+
+	public static int getInstanceCount() {
+		return instanceCount;
 	}
 
 // singleton : Eager Initialization 기법
@@ -41,7 +47,7 @@ public class BoardDAO {
 //		}
 //		return instance;
 //	}
-
+	private CommentDAO cmtDAO = CommentDAO.getInstance();
 	private Connection conn = SqlConfig.getConn();
 
 	// 날짜 가져오기
@@ -118,7 +124,7 @@ public class BoardDAO {
 			if (result >= 0) {
 				if (filename != null) {
 					// BoardDTO bdDTO = new BoardDTO();
-					FileDAO fileDAO = new FileDAO();
+					FileDAO fileDAO = FileDAO.getInstance();
 					int ok = fileDAO.upload2(boardID, filename, fileRealname);
 					if (ok >= 0) {// fileDAO의 upload2()메서드가 정상적으로 실행되면
 						return 1; // board,file 테이블 모두 업로드 성공
@@ -299,7 +305,7 @@ public class BoardDAO {
 			String fileRealname) {
 		String SQL = "UPDATE board SET boardTitle = ?, boardContent = ?, boardCategory = ?, filename = ?, fileRealname = ?, fileDownCount = ? WHERE boardID = ?";
 		BoardDTO board = this.getBoardVO(boardID);
-		FileDAO fileDAO = new FileDAO();
+		FileDAO fileDAO = FileDAO.getInstance();
 		PreparedStatement pstmt = null;
 		try {
 			pstmt = conn.prepareStatement(SQL);
@@ -354,9 +360,8 @@ public class BoardDAO {
 			pstmt.setInt(1, boardID);
 			// 성공적으로 수행했다면 0이상의 결과 반환
 			int result = pstmt.executeUpdate();
-			pstmt.close();
 			if (result > 0) {
-				CommentDAO cmtDAO = new CommentDAO();
+
 				// commentDAO의 geList()사용
 				ArrayList<CommentDTO> cmtlist = cmtDAO.getList(boardID);
 				for (CommentDTO cmtDTO : cmtlist) {

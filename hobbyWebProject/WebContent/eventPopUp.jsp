@@ -73,8 +73,7 @@ if(userID == null){
 	script.println("window.open('loginPopUp', 'Login', 'width=500, height=550, top=50%, left=50%')");
 	script.println("</script>");
 }
-GroupDAO grDAO = new GroupDAO();
-ArrayList<GroupDTO> list = grDAO.getListByUser(userID);
+ArrayList<GroupDTO> list = GroupDAO.getInstance().getListByUser(userID);
 %>
 	<div class="login-wrapper">
 	 <div>

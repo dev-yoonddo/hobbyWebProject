@@ -136,8 +136,7 @@ if(!userID.equals("manager")){
 	script.println("self.close()");
 	script.println("</script>");
 }
-EventDAO eventDAO = new EventDAO();
-ArrayList<EventDTO> eventlist = eventDAO.getList();
+ArrayList<EventDTO> eventlist = EventDAO.getInstance().getList();
 %>
 <div id="viewEvent">
 	<form action="eventRaffleAction.jsp">

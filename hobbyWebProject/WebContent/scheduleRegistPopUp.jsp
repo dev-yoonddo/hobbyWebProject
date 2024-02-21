@@ -75,8 +75,6 @@ h2 {
 		int skedDay = 0;
 		String a = null;
 
-		ScheduleDAO skedDAO = new ScheduleDAO();
-
 		if (session.getAttribute("userID") != null) {
 			userID = (String) session.getAttribute("userID");
 		}

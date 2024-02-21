@@ -438,11 +438,12 @@ if(groupID == 0){
 }
 //groupPage에서 이미 가입,접속에 대한 처리를 했지만 실행 도중 자동 로그아웃과같은 상황을 대비해 view 페이지에도 코드를 작성했다.
 //int userAccess = Integer.parseInt(request.getParameter("userAccess"));
-MemberDAO mbDAO = new MemberDAO();
-ChatDAO chatDAO = new ChatDAO();
-GroupDTO group = new GroupDAO().getGroupVO(groupID); //하나의 그룹 정보 가져오기
-MemberDTO member = new MemberDAO().getMemberVO(userID, groupID); //현재 로그인하고 groupID에 가입한 member 정보 가져오기
-ChatDTO chat = new ChatDAO().getChatVO(groupID);
+MemberDAO mbDAO = MemberDAO.getInstance();
+ChatDAO chatDAO = ChatDAO.getInstance();
+GroupDAO groupDAO = GroupDAO.getInstance();
+GroupDTO group = groupDAO.getGroupVO(groupID); //하나의 그룹 정보 가져오기
+MemberDTO member = mbDAO.getMemberVO(userID, groupID); //현재 로그인하고 groupID에 가입한 member 정보 가져오기
+ChatDTO chat = chatDAO.getChatVO(groupID);
 
 if(group.getGroupAvailable() == 0){
 	script.println("<script>");

@@ -34,11 +34,6 @@ public class UserTest {
 
 		BoardDAO board = BoardDAO.getInstance();
 
-		System.out.println("====================");
-		System.out.println("no singleton: " + Thread.currentThread().getName());
-		System.out.println("singleton: " + Thread.currentThread());
-		System.out.println("====================");
-
 		int id = board.getNext() - 1;
 		BoardDTO vo = board.getBoardVO(id);
 		String date = board.getDate();

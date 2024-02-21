@@ -22,6 +22,8 @@
 <body>
  <%
  	String userID = null;
+	CommentDAO cmtDAO = CommentDAO.getInstance();
+
  	if(session.getAttribute("userID") != null){
  		userID = (String) session.getAttribute("userID");
  	}	
@@ -51,7 +53,6 @@
 	 		script.println("history.back()");
 	 		script.println("</script>");
 	 	} else {
-	 		CommentDAO cmtDAO = new CommentDAO();
 	 		int result = cmtDAO.write(comment.getCmtContent(), userID, boardID);
 	 		if (result == -1){
 		 		PrintWriter script = response.getWriter();

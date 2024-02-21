@@ -321,11 +321,17 @@ span{
 		script.println("window.open('loginPopUp', 'Login', 'width=500, height=550, top=50%, left=50%')");
 		script.println("</script>");
 	}
-	UserDAO userDAO = new UserDAO();
-	ArrayList<UserDTO>mailList = userDAO.getEmailList(); //모든 유저 이메일 리스트 가져오기
+	UserDAO user = UserDAO.getInstance();
+	BoardDAO board = BoardDAO.getInstance();
+	CommentDAO cmt = CommentDAO.getInstance();
+	MessageDAO msg = MessageDAO.getInstance();
+	GroupDAO group = GroupDAO.getInstance();
+	MemberDAO member = MemberDAO.getInstance();
+	
+	ArrayList<UserDTO>mailList = user.getEmailList(); //모든 유저 이메일 리스트 가져오기
 	 //하나의 유저 정보 가져오기
-	UserDTO user=new UserDAO().getUserVO(userID);
-	if(user.isUserEmailChecked() == false){
+	UserDTO vo = user.getUserVO(userID);
+	if(vo.isUserEmailChecked() == false){
 		script.println("<script>");
 		script.println("alert('이메일 인증이 필요합니다.')");
 		script.println("location.href='emailSendAction'");
@@ -405,11 +411,11 @@ span{
 	 	<div>
 	        <h2>정보 수정하기</h2>
 	        <form method="post" action="userUpdateAction.jsp" id="user-update" onsubmit="return userDataCheck(this)">
-			<input type="text" value=<%=user.getUserID()%> name="userID" id="userID" maxlength="20" disabled="disabled">
-			<input type="text" value=<%=user.getUserName()%> name="userName" id="userName"maxlength="20">
-			<input type="text" value=<%=user.getUserEmail()%> name="userEmail" id="userEmail"maxlength="20" onkeyup="emailCheck('<%=mailList%>')">
-			<input type="text" value=<%=user.getUserBirth()%> name="userBirth" id="userBirth" maxlength="20" >
-			<input type="text" value=<%=user.getUserPhone()%> name="userPhone" id="userPhone" maxlength="20">
+			<input type="text" value=<%=vo.getUserID()%> name="userID" id="userID" maxlength="20" disabled="disabled">
+			<input type="text" value=<%=vo.getUserName()%> name="userName" id="userName"maxlength="20">
+			<input type="text" value=<%=vo.getUserEmail()%> name="userEmail" id="userEmail"maxlength="20" onkeyup="emailCheck('<%=mailList%>')">
+			<input type="text" value=<%=vo.getUserBirth()%> name="userBirth" id="userBirth" maxlength="20" >
+			<input type="text" value=<%=vo.getUserPhone()%> name="userPhone" id="userPhone" maxlength="20">
 			<input type="password" name="userPassword" id="userPassword" maxlength="20" placeholder="비밀번호 입력" onkeyup="passwordCheck2()">
 	        <input type="password" name="userPassword1" id="userPassword1" placeholder="비밀번호 확인" onkeyup="passwordCheck2()">
 	            <div id="check">
@@ -426,7 +432,7 @@ span{
 		<div>
 			<h2>데이터 관리하기</h2>
 			<%
-				BoardDAO boardDAO = new BoardDAO();
+				BoardDAO boardDAO = BoardDAO.getInstance();
 				ArrayList<BoardDTO> list = boardDAO.getListByUser(userID);
 			%>
 			<div class="userDataBoard">
@@ -464,8 +470,7 @@ span{
 							<%
 								for (int i = 0; i < list.size(); i++) {
 								//댓글 갯수 가져오기
-			                 	CommentDAO cmtDAO = new CommentDAO();
-			                 	ArrayList<CommentDTO> cmtlist = cmtDAO.getList(list.get(i).getBoardID());//밑에 댓글리스트와는 다른 결과를 가져오는 메서드
+			                 	ArrayList<CommentDTO> cmtlist = cmt.getList(list.get(i).getBoardID());//밑에 댓글리스트와는 다른 결과를 가져오는 메서드
 								//list와 cmtlist 혼동 주의
 							%>
 							<tr class="showWrite" style="height: 20px;">
@@ -495,8 +500,7 @@ span{
 			</div>
 			
 			<%
-				CommentDAO cmtDAO = new CommentDAO();
-				ArrayList<CommentDTO> cmtlist2 = cmtDAO.getListByUser(userID);
+				ArrayList<CommentDTO> cmtlist2 = cmt.getListByUser(userID);
 			%>
 			<div class="userDataBoard">
 			<!-- 내가 작성한 댓글 목록 -->
@@ -553,8 +557,7 @@ span{
 			</div>
 			
 			<%
-				GroupDAO groupDAO = new GroupDAO();
-				ArrayList<GroupDTO> grouplist = groupDAO.getListByUser(userID);
+				ArrayList<GroupDTO> grouplist = group.getListByUser(userID);
 			%>
 			<div class="userDataBoard">
 			<!-- 내가 만든 그룹 목록 -->
@@ -623,8 +626,7 @@ span{
 			</div>
 			
 			<%
-				MemberDAO memberDAO = new MemberDAO();
-				ArrayList<MemberDTO> mblist = memberDAO.getListByUser(userID);
+				ArrayList<MemberDTO> mblist = member.getListByUser(userID);
 			%>
 			<div class="userDataBoard">
 			<!-- 내가 가입한 그룹 목록 -->
@@ -660,10 +662,10 @@ span{
 								for (int i = 0; i < mblist.size(); i++) {
 									//비밀번호 검사를 위해 필요한 정보 가져오기 (그룹번호,그룹비밀번호,그룹활동여부)
 									int groupID = mblist.get(i).getGroupID();
-									String groupPW = groupDAO.getGroupVO(groupID).getGroupPassword();
-									int groupAvl = groupDAO.getGroupVO(groupID).getGroupAvailable();
+									String groupPW = group.getGroupVO(groupID).getGroupPassword();
+									int groupAvl = group.getGroupVO(groupID).getGroupAvailable();
 									//가입한 그룹이름 가져오기
-									String groupName = groupDAO.getGroupVO(groupID).getGroupName();
+									String groupName = group.getGroupVO(groupID).getGroupName();
 							%>
 							<tr class="showMember" style="height: 20px;">
 								<td><a id="click-view" onclick="showPasswordPrompt('<%=groupID%>', '<%=groupPW%>','<%=groupAvl%>')"><%= groupName%></a></td>
@@ -671,8 +673,8 @@ span{
 								<td><%= mblist.get(i).getMbDate().substring(0 ,11) + mblist.get(i).getMbDate().substring(11, 13) + "시" + mblist.get(i).getMbDate().substring(14, 16) + "분" %></td>
 								<%
 									//mblist의 groupID와 같은 groupID의 정보를 가져온 후 groupAvailable == 0 이면 해당 그룹이 비활동중임을 표시한다.
-									GroupDTO group = new GroupDAO().getGroupVO(mblist.get(i).getGroupID());
-									if(group.getGroupAvailable() == 0){
+									GroupDTO groupVO = group.getGroupVO(mblist.get(i).getGroupID());
+									if(groupVO.getGroupAvailable() == 0){
 								%>
 									<td>NO</td>
 								<%
@@ -731,9 +733,8 @@ span{
 		
 	<!-- 메시지 관리하기 -->
 	<%
-		MessageDAO msgDAO = new MessageDAO();
 		//받은 메시지 리스트
-		ArrayList<MessageDTO> msglist = msgDAO.getMessageList(userID);
+		ArrayList<MessageDTO> msglist = msg.getMessageList(userID);
 	%>
 	<div id="userMsg" hidden="">
 		<div>
@@ -774,10 +775,10 @@ span{
 							<%	String groupName = null;
 								for (int i = 0; i < msglist.size(); i++) {
 									// MsgVO()에서 groupID를 구한 뒤 각 메시지를 보낸 그룹이름을 구한다.
-									int groupID = msgDAO.getMsgVO(msglist.get(i).getMsgID()).getGroupID();
+									int groupID = msg.getMsgVO(msglist.get(i).getMsgID()).getGroupID();
 									//groupID = 0이면 문의하기, 0 이상이면 메시지 보내기
 									if(groupID > 0){
-										groupName = groupDAO.getGroupVO(groupID).getGroupName();
+										groupName = group.getGroupVO(groupID).getGroupName();
 									}else{
 										groupName = "문의하기";
 									}
@@ -818,7 +819,7 @@ span{
 			</div>
 			<%
 			//보낸 메시지 리스트
-			ArrayList<MessageDTO> sendmsglist = msgDAO.getSendMessageList(userID);
+			ArrayList<MessageDTO> sendmsglist = msg.getSendMessageList(userID);
 			%>
 			<!-- 보낸 메시지 목록 -->
 			<div class="userDataBoard">
@@ -856,10 +857,10 @@ span{
 								String groupName = null;
 								for (int i = 0; i < sendmsglist.size(); i++) {
 									// MsgVO()에서 groupID를 구한 뒤 각 메시지를 보낸 그룹이름을 구한다.
-									int groupID = msgDAO.getMsgVO(sendmsglist.get(i).getMsgID()).getGroupID();
+									int groupID = msg.getMsgVO(sendmsglist.get(i).getMsgID()).getGroupID();
 									//groupID = 0이면 문의하기, 0 이상이면 메시지 보내기
 									if(groupID > 0){
-										groupName = groupDAO.getGroupVO(groupID).getGroupName();
+										groupName = group.getGroupVO(groupID).getGroupName();
 									}else{
 										groupName = "문의하기";
 									}

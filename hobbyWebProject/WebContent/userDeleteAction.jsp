@@ -16,6 +16,7 @@
 	request.setCharacterEncoding("UTF-8");
 %>
 <!DOCTYPE html>
+
 <html>
 <head>
 <meta name="viewport" content="width = device-width , initial-scale = 1, user-scalable = no, maximum-scale = 1 , minimum-scale = 1">
@@ -27,6 +28,7 @@
 	<%
 		PrintWriter script=response.getWriter();
 		String userID = null;
+		UserDAO user = UserDAO.getInstance();
 		if(session.getAttribute("userID")!=null){
 			userID=(String)session.getAttribute("userID");
 		}
@@ -42,7 +44,6 @@
 			script.println("history.back()");
 			script.println("</script>");
 		}else{
-			UserDAO userDAO=new UserDAO();
 			/* DAO페이지에서 이미 실행한 작업
 			BoardDAO boardDAO=new BoardDAO();
 			CommentDAO commentDAO=new CommentDAO();
@@ -73,7 +74,7 @@
 		    		memberDAO.updateMemberVO(memberVO);
 		    	}
 		    }*/
-			int result=userDAO.delete(userID);
+			int result=user.delete(userID);
 			if(result == -1){//데이터 베이스 오류
 				script.println("<script>");
 				script.println("alert('회원탈퇴에 실패했습니다.')");

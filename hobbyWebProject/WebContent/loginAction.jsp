@@ -30,9 +30,8 @@
 		script.println("location.href = 'mainPage'");
 		script.println("</script>");
 	}
-	UserDAO userDAO = new UserDAO();
 	//로그인시 입력한 패스워드를 암호화 한 뒤 데이터베이스 값과 비교한다.  
-	int result = userDAO.login(user.getUserID(), user.getUserPassword(), user.getUserAvailable());
+	int result = UserDAO.getInstance().login(user.getUserID(), user.getUserPassword(), user.getUserAvailable());
 	if(result == 2){
 		script.println("<script>");
 		script.println("alert('정보를 모두 입력해주세요.')");

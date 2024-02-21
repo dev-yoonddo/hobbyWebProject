@@ -41,8 +41,7 @@
 				script.println("</script>");
 				
 			}else{
-				GroupDAO groupDAO = new GroupDAO();
-				int result = groupDAO.createGroup(group.getGroupName(),group.getGroupPassword(), userID, group.getGroupNoP());
+				int result = GroupDAO.getInstance().createGroup(group.getGroupName(),group.getGroupPassword(), userID, group.getGroupNoP());
 				if(result == -1){
 					script.println("<script>");
 					script.println("alert('그룹 생성이 실패했습니다.')");

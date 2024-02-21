@@ -61,7 +61,7 @@ h3{
 <body>
 	<%
 		boolean raffle = false;
-		EventDAO eventDAO = new EventDAO();
+
 		//eventRafflePopUp.jsp에서 가져온 파라미터(userID)를 배열에 저장한다. 
 	    String[] userIDs = request.getParameterValues("event");
 		
@@ -80,7 +80,7 @@ h3{
 		    //넘어온 파라미터 갯수만큼 반복
 		    for(String id : userIDs){
 		    	//파라미터를 raffleWin메서드에 넣어 eventWin = 1로 변경한다 (당첨)
-		        int eventWin = eventDAO.raffleWin(id);
+		        int eventWin = EventDAO.getInstance().raffleWin(id);
 		        if(eventWin == -1){ //데이터베이스 오류
 					PrintWriter script = response.getWriter();
 					script.println("<script>");

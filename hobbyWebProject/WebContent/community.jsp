@@ -386,9 +386,8 @@ th span{
 		script.close();
 	}
 
-	UserDTO user=new UserDAO().getUserVO(userID);
 	BoardDAO boardDAO = BoardDAO.getInstance();
-	CommentDAO cmtDAO = new CommentDAO();
+	CommentDAO cmtDAO = CommentDAO.getInstance();
 	BoardDTO board = boardDAO.getBoardVO(boardID);
 	ArrayList<BoardDTO> boardlist = new ArrayList<>();
 %>
@@ -550,6 +549,7 @@ th span{
 </section>
 
 <script>
+//onsubmit으로 넘어온 카테고리값을 파라미터로 넘겨주기
 function searchPage(category){
 	//name = search인 요소들 중 0번째 인덱스 값 가져오기
 	var select = category[0];
@@ -557,27 +557,7 @@ function searchPage(category){
 		alert('카테고리를 선택하세요.');
 		return false;
 	}else{
-		var data = {
-	        search: select
-	    };
-		$.ajax({
-	        type: 'GET',
-	        //url: 'https://toogether.me/spotAccess',
-	        url: 'community',
-	        data: data,
-	        success: function (response) {
-	        	if (response.includes("error")) {
-	        		alert('오류 발생');
-	        		return false;
-	        	}else{
-	        		location.href='community?search=' + select.value;
-	        	}
-	        },
-		     error: function (xhr, status, error) {
-		         //console.error('Spot registration error:', error);
-		         alert('오류');
-		     }
-	    });
+		location.href='community?search=' + select.value;
 	}
 }
 </script>

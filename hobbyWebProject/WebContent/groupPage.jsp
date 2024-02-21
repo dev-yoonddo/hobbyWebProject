@@ -224,6 +224,9 @@ if(userID == null){
 	script.println("window.open('loginPopUp', 'Login', 'width=450, height=500, top=50%, left=50%')");
 	script.println("</script>");
 }
+GroupDAO groupDAO = GroupDAO.getInstance();
+ArrayList<GroupDTO> list = groupDAO.getList();
+
 //if(userID==null) {
 //	response.sendRedirect(request.getContextPath()+"/login");
 //}
@@ -247,11 +250,21 @@ if(userID == null){
 		<div id="gallery">
 			<div id="gal-inner">
 					<%
-						GroupDAO groupDAO = new GroupDAO();
-						ArrayList<GroupDTO> list = groupDAO.getList();
 						int counter = 0;
 						for (GroupDTO i : list) {	
-						//int groupID = i.getGroupID();
+						//그룹에 가입한 멤버숫자 가져오기
+						MemberDAO mbDAO = MemberDAO.getInstance();
+						ArrayList<MemberDTO> mblist = mbDAO.getList(i.getGroupID());
+						
+						//해당 그룹을 만든 유저 정보 가져오기
+						GroupDTO groupuser = groupDAO.getGroupVO(i.getGroupID());
+						//그룹을 생성한 유저인지 확인하기
+						boolean leader = userID.equals(groupuser.getUserID());
+						
+						//해당 그룹에 유저가 이미 가입했는지 확인
+						MemberDTO member = mbDAO.getMemberVO(userID, i.getGroupID());
+						//해당 그룹에 유저가 이미 탈퇴했는지 확인
+						MemberDTO memberDel = mbDAO.getMemberDelVO(userID, i.getGroupID());
 					%>
 					<%
 					//group을 한개씩 출력할 때 마다 counter++ 해서 3개가 출력될 때 마다 group-row로 감싸도록 한다.
@@ -281,21 +294,6 @@ if(userID == null){
 							</div>
 							<div class="info-b">
 					 			<div class="info-l"><a>Leader  <%= i.getUserID() %></a></div>
-								<%
-									//그룹에 가입한 멤버숫자 가져오기
-									MemberDAO mbDAO = new MemberDAO();
-									ArrayList<MemberDTO> mblist = mbDAO.getList(i.getGroupID());
-									
-									//해당 그룹을 만든 유저 정보 가져오기
-									GroupDTO groupuser = new GroupDAO().getGroupVO(i.getGroupID());
-									//그룹을 생성한 유저인지 확인하기
-									boolean leader = userID.equals(groupuser.getUserID());
-									
-									//해당 그룹에 유저가 이미 가입했는지 확인
-									MemberDTO member = new MemberDAO().getMemberVO(userID, i.getGroupID());
-									//해당 그룹에 유저가 이미 탈퇴했는지 확인
-									MemberDTO memberDel = new MemberDAO().getMemberDelVO(userID, i.getGroupID());
-								%>
 								<div class="info-p"><a><%= mblist.size() %>명 / <%= i.getGroupNoP() %>명</a></div>
 							</div>
 						</div>

@@ -80,11 +80,11 @@ body{
 		script.println("history.back()");
 		script.println("</script>");
 	}
-	MessageDAO msgDAO = new MessageDAO();
+	MessageDAO msg = MessageDAO.getInstance();
 	//msgID에 해당하는 글의 정보 가져오기
-	MessageDTO msg = new MessageDAO().getMsgVO(msgID);
+	MessageDTO msgvo = msg.getMsgVO(msgID);
 	//페이지 접속시 msgCheck = 1 로 변경해서 메시지 읽음으로 변경하기
-	int result = msgDAO.msgCheckUpdate(msgID, userID);
+	int result = msg.msgCheckUpdate(msgID, userID);
 	if(result == -1){
 		script.println("<script>");
 		script.println("alert('데이터베이스 오류')");
@@ -99,25 +99,25 @@ body{
 					<tbody>
 						<tr height="20%" style="border-bottom: 1px solid #C0C0C0;">
 							<%
-								if((msg.getUserID()).equals(userID)){ //보낸 메시지이면 받는사람 출력
+								if((msgvo.getUserID()).equals(userID)){ //보낸 메시지이면 받는사람 출력
 							%>
 								<td class="td" style="width:30%;"><span>받는사람</span></td>
-								<td><%=msg.getToUserID().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></td>
+								<td><%=msgvo.getToUserID().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></td>
 							<%
 								}else{ //받은 메시지이면 보낸사람 출력
 							%>
 								<td class="td" style="width:30%;"><span>보낸사람</span></td>
-								<td><%=msg.getUserID().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></td>
+								<td><%=msgvo.getUserID().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></td>
 							<%	} %>
 						</tr>
 						<tr height="20%" style="border-bottom: 1px solid #C0C0C0;">
 							<td class="td"><span>제목</span></td>
-							<td><%=msg.getMsgTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></td>
+							<td><%=msgvo.getMsgTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></td>
 						</tr>
 						<tr height="60%" valign="top">
 							<td class="td" style="padding-top: 50px;"><span>내용</span></td>
 							<!-- 특수문자 처리 -->
-							<td style="padding-top: 50px;"><%=msg.getMsgContent().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></td>
+							<td style="padding-top: 50px;"><%=msgvo.getMsgContent().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></td>
 						</tr>
 						<!-- <tr>
 							<td class="td"><span>조회수</span></td>
@@ -135,11 +135,11 @@ body{
 			<%
 				if(userID != null){
 			%>
-				<button type="button" class="btn-blue" onclick="viewMsgList('<%=msg.getGroupID()%>')"><span>목록</span></button>
+				<button type="button" class="btn-blue" onclick="viewMsgList('<%=msgvo.getGroupID()%>')"><span>목록</span></button>
 				<% 
-					if(!userID.equals(msg.getUserID()) && (!msg.getUserID().equals("manager"))){ //관리자에게 온 메시지엔 답장 불가
+					if(!userID.equals(msgvo.getUserID()) && (!msgvo.getUserID().equals("manager"))){ //관리자에게 온 메시지엔 답장 불가
 				%>
-					<button type="button" class="btn-blue" id="cmt-write-btn" onclick="writeReply('<%=msg.getMsgID()%>',<%=msg.getGroupID()%>)"><span>답장하기</span></button>
+					<button type="button" class="btn-blue" id="cmt-write-btn" onclick="writeReply('<%=msgvo.getMsgID()%>',<%=msgvo.getGroupID()%>)"><span>답장하기</span></button>
 				<%
 					}
 				%>

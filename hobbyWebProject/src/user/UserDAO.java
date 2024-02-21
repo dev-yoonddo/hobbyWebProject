@@ -1,13 +1,14 @@
 package user;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import com.toogether.session.SqlConfig;
 
 import board.BoardDAO;
 import board.BoardDTO;
@@ -25,30 +26,34 @@ import member.MemberDAO;
 import member.MemberDTO;
 import message.MessageDAO;
 import message.MessageDTO;
+import schedule.ScheduleDAO;
+import schedule.ScheduleDTO;
 
 public class UserDAO {
 
-	private Connection conn;
-	private ResultSet rs;
-
-	public UserDAO() {
-		try {
-			String dbURL = "jdbc:mysql://database-1.cxujakzvpvip.ap-southeast-2.rds.amazonaws.com:3306/hobbyWebProject?useUnicode=true&characterEncoding=UTF-8";
-			String dbID = "root";
-			String dbPassword = "qlalf9228?";
-			Class.forName("com.mysql.jdbc.Driver");
-			conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
+	// singleton : Bill Pugh Solution (LazyHolder) 기법
+	private UserDAO() {
 	}
+
+	// static 내부 클래스를 이용
+	// Holder로 만들어, 클래스가 메모리에 로드되지 않고 getInstance 메서드가 호출되어야 로드됨
+	private static class UserDAOHolder {
+		private static final UserDAO INSTANCE = new UserDAO();
+	}
+
+	public static UserDAO getInstance() {
+		return UserDAOHolder.INSTANCE;
+	}
+
+	private Connection conn = SqlConfig.getConn();
 
 //  회원 로그인
 	public int login(String userID, String userPassword, int userAvailable) {
 		String SQL = "SELECT userPassword, userSalt, userAvailable FROM user WHERE userID = ?";
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		try {
-			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
 			rs = pstmt.executeQuery();
 			// 둘 중 하나라도 입력하지 않았을 때
@@ -79,6 +84,8 @@ public class UserDAO {
 			return -1; // 입력한 아이디가 존재하지 않을때
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			SqlConfig.closeResources(null, rs, pstmt);
 		}
 		return -2; // 데이터베이스 오류
 	}
@@ -111,9 +118,10 @@ public class UserDAO {
 //			System.out.println("salt2: " + salt2);
 //			System.out.println("salt일치: " + salt.equals(salt2));
 		}
+		String SQL = "INSERT INTO user VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		PreparedStatement pstmt = null;
 		try {
-			String SQL = "INSERT INTO user VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt = conn.prepareStatement(SQL);
 			// pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, user.getUserID());
 			pstmt.setString(2, user.getUserName());
@@ -128,30 +136,37 @@ public class UserDAO {
 			return pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			SqlConfig.closeResources(null, null, pstmt);
 		}
 		return -1;
 	}
 
 //이메일 인증
 	public boolean setUserEmailChecked(String userID) {
+		String SQL = "UPDATE user SET userEmailChecked = true WHERE userID = ?";
+		PreparedStatement pstmt = null;
 		try {
-			String SQL = "UPDATE user SET userEmailChecked = true WHERE userID = ?";
-			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt = conn.prepareStatement(SQL);
 			// pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
 			pstmt.executeUpdate();
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			SqlConfig.closeResources(null, null, pstmt);
 		}
 		return false; // 데이터베이스 오류
 	}
 
 //이메일 인증 여부
 	public boolean getUserEmailChecked(String userID) {
+		String SQL = "SELECT userEmailChecked FROM user WHERE userID = ?";
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		try {
-			String SQL = "SELECT userEmailChecked FROM user WHERE userID = ?";
-			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt = conn.prepareStatement(SQL);
 			// pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
 			rs = pstmt.executeQuery();
@@ -160,15 +175,19 @@ public class UserDAO {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			SqlConfig.closeResources(null, rs, pstmt);
 		}
 		return false; // 데이터베이스 오류
 	}
 
 //이메일 가져오기
 	public String getUserEmail(String userID) {
+		String SQL = "SELECT userEmail FROM user WHERE userID = ?";
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		try {
-			String SQL = "SELECT userEmail FROM user WHERE userID = ?";
-			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt = conn.prepareStatement(SQL);
 			// pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
 			rs = pstmt.executeQuery();
@@ -177,6 +196,8 @@ public class UserDAO {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			SqlConfig.closeResources(null, rs, pstmt);
 		}
 		return null;
 	}
@@ -189,8 +210,9 @@ public class UserDAO {
 		HashMap<String, String> encryptMail = PwEncrypt.encoding(userEmail, salt);
 		String userEmailHash = encryptMail.get("hash");
 		String SQL = "UPDATE user SET userEmail = ? , userEmailHash = ? WHERE userID = ?";
+		PreparedStatement pstmt = null;
 		try {
-			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt = conn.prepareStatement(SQL);
 			// pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userEmail);
 			pstmt.setString(2, userEmailHash);
@@ -198,6 +220,8 @@ public class UserDAO {
 			return pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			SqlConfig.closeResources(null, null, pstmt);
 		}
 		return -1;// 데이터베이스 오류
 	}
@@ -206,8 +230,10 @@ public class UserDAO {
 	public ArrayList<UserDTO> getEmailList() {
 		String SQL = "SELECT userEmail FROM user WHERE userEmail IS NOT NULL AND userEmail != '' ";
 		ArrayList<UserDTO> list = new ArrayList<UserDTO>();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		try {
-			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt = conn.prepareStatement(SQL);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				UserDTO usr = new UserDTO();
@@ -216,6 +242,8 @@ public class UserDAO {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			SqlConfig.closeResources(null, rs, pstmt);
 		}
 		return list;
 	}
@@ -223,8 +251,10 @@ public class UserDAO {
 //	회원 정보 보기	
 	public UserDTO getUserVO(String userID) {
 		String SQL = "SELECT * FROM user WHERE userID = ?";
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		try {
-			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);// 물음표
 			rs = pstmt.executeQuery();// select
 			if (rs.next()) {// 결과가 있다면
@@ -243,6 +273,8 @@ public class UserDAO {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			SqlConfig.closeResources(null, rs, pstmt);
 		}
 		return null;
 	}
@@ -262,8 +294,9 @@ public class UserDAO {
 
 		String SQL = "UPDATE user SET userName = ?,userEmail = ?, userBirth = ?, userPhone = ?, userPassword = ?, userSalt = ?, userEmailHash = ?, userEmailChecked = ? WHERE userID = ?";// 특정한
 		// 바꿔준다.
+		PreparedStatement pstmt = null;
 		try {
-			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userName);
 			pstmt.setString(2, userEmail);
 			pstmt.setString(3, userBirth);
@@ -283,6 +316,8 @@ public class UserDAO {
 			return pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			SqlConfig.closeResources(null, null, pstmt);
 		}
 		return -1;// 데이터베이스 오류
 	}
@@ -300,8 +335,9 @@ public class UserDAO {
 //	userAvailable을 0으로 변경
 	public int delete(String userID) {
 		String SQL = "UPDATE user SET userAvailable = 0 WHERE userID = ? ";
+		PreparedStatement pstmt = null;
 		try {
-			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
 			// return pstmt.executeUpdate();
 			// 성공적으로 수행했다면 0이상의 결과 반환
@@ -315,59 +351,68 @@ public class UserDAO {
 					boardDAO.updateBoardVO(boardDTO);
 				}
 
-				CommentDAO commentDAO = new CommentDAO();
+				CommentDAO commentDAO = CommentDAO.getInstance();
 				List<CommentDTO> commentVOList = commentDAO.getDelCommentVOByUserID(userID);
 				for (CommentDTO commentDTO : commentVOList) {
 					commentDTO.setCmtAvailable(0);
 					commentDAO.updateCommentVO(commentDTO);
 				}
 
-				GroupDAO groupDAO = new GroupDAO();
+				GroupDAO groupDAO = GroupDAO.getInstance();
 				List<GroupDTO> groupVOList = groupDAO.getDelGroupVOByUserID(userID);
 				for (GroupDTO groupDTO : groupVOList) {
 					groupDTO.setGroupAvailable(0);
 					groupDAO.updateGroupVO(groupDTO);
 				}
 
-				MemberDAO memberDAO = new MemberDAO();
+				MemberDAO memberDAO = MemberDAO.getInstance();
 				List<MemberDTO> memberVOList = memberDAO.getDelMemberVOByUserID(userID);
 				for (MemberDTO memberDTO : memberVOList) {
 					memberDTO.setMbAvailable(0); // 모든 mbAvailable 값을 0으로 변경한다.
 					memberDAO.updateMemberVO(memberDTO); // 변경한 후 업데이트 한다.
 				}
 
-				MessageDAO messageDAO = new MessageDAO();
+				MessageDAO messageDAO = MessageDAO.getInstance();
 				List<MessageDTO> messageVOList = messageDAO.getDelMsgVOByUserID(userID);
 				for (MessageDTO messageDTO : messageVOList) {
 					messageDTO.setMsgAvailable(0); // 모든 mbAvailable 값을 0으로 변경한다.
 					messageDAO.updateMsgVO(messageDTO); // 변경한 후 업데이트 한다.
 				}
 
-				LocationDAO locationDAO = new LocationDAO();
+				ChatDAO chatDAO = ChatDAO.getInstance();
+				List<ChatDTO> chatVOList = chatDAO.getDelChatVOByUserID(userID);
+				for (ChatDTO chatDTO : chatVOList) {
+					chatDTO.setChatAvailable(0); // 모든 chatAvailable 값을 0으로 변경한다.
+					chatDAO.updateChatVO(chatDTO); // 변경한 후 업데이트 한다.
+				}
+
+				LocationDAO locationDAO = LocationDAO.getInstance();
 				List<LocationDTO> spotVOList = locationDAO.getDelSpotVOByUserID(userID);
 				for (LocationDTO locationDTO : spotVOList) {
 					locationDTO.setSpotAvailable(0); // 모든 spotAvailable 값을 0으로 변경한다.
 					locationDAO.updateSpotVO(locationDTO); // 변경한 후 업데이트 한다.
 				}
 
-				CrewDAO crewDAO = new CrewDAO();
+				CrewDAO crewDAO = CrewDAO.getInstance();
 				List<CrewDTO> crewVOList = crewDAO.getDelCrewVOByUserID(userID);
 				for (CrewDTO crewDTO : crewVOList) {
 					crewDTO.setCrewAvailable(0); // 모든 crewAvailable 값을 0으로 변경한다.
 					crewDAO.updateCrewVO(crewDTO); // 변경한 후 업데이트 한다.
 				}
-
-				ChatDAO chatDAO = new ChatDAO();
-				List<ChatDTO> chatVOList = chatDAO.getDelChatVOByUserID(userID);
-				for (ChatDTO chatDTO : chatVOList) {
-					chatDTO.setChatAvailable(0); // 모든 chatAvailable 값을 0으로 변경한다.
-					chatDAO.updateChatVO(chatDTO); // 변경한 후 업데이트 한다.
+				ScheduleDAO skedDAO = ScheduleDAO.getInstance();
+				List<ScheduleDTO> skedVOList = skedDAO.getDelScheduleByUserID(userID);
+				for (ScheduleDTO skedDTO : skedVOList) {
+					skedDTO.setSkedAvailable(0);
+					skedDAO.updateSkedVO(skedDTO);
 				}
+
 			}
 			return result;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return -1; // database error
+		} finally {
+			SqlConfig.closeResources(null, null, pstmt);
 		}
 	}
 

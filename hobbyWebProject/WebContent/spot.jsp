@@ -327,9 +327,8 @@ h3{
 	if(request.getParameter("groupID") != null){
 		groupID = Integer.parseInt(request.getParameter("groupID"));
 	}
-	LocationDAO locDAO = new LocationDAO();
 	// DB에 저장된 스팟 리스트 가져오기
-	ArrayList<LocationDTO> locationList = locDAO.getSpotInfoList();
+	ArrayList<LocationDTO> locationList = LocationDAO.getInstance().getSpotInfoList();
 	//모든 위치 데이터를 넣을 Map
     Map<String, Object> locationMap = new HashMap<>();
  
@@ -350,8 +349,8 @@ h3{
   	//저장한 데이터들을 JSON객체로 변환한다.
 	Object locationJSON = new JSONObject(locationMap);
 	
-	System.out.println(locationMap);
-	System.out.println("json :" + locationJSON);
+//	System.out.println(locationMap);
+//	System.out.println("json :" + locationJSON);
 
 	if(userID == null){
 		PrintWriter script = response.getWriter();

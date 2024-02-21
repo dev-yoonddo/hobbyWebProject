@@ -87,8 +87,8 @@ option{
 PrintWriter script = response.getWriter();
 String userID = null;
 
-UserDAO userDAO = new UserDAO();
-UserDTO userVO=new UserDAO().getUserVO(userID); //유저 정보 가져오기
+UserDAO userDAO = UserDAO.getInstance();
+UserDTO userVO=userDAO.getUserVO(userID); //유저 정보 가져오기
 ArrayList<UserDTO> list = userDAO.getEmailList(); //모든 유저 이메일 리스트 가져오기
 //for (UserDTO list : lists) {
 //    System.out.println("User Email: " + list);

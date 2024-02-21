@@ -38,13 +38,12 @@
 			script.println("window.open('loginPopUp', 'Login', 'width=500, height=550, top=50%, left=50%')");
 			script.println("<script>");
 		}else{
-			EventDAO eventDAO = new EventDAO();
 			//파라미터 값들을 배열에 저장한다.
 		    String[] userIDs = request.getParameterValues("event");
 			//배열의 길이만큼 반복한다.
 		    for(String id : userIDs){
 		    	//userID와 입력한 메시지를 raffleWinMsg() 메서드에 넘겨 저장한다.
-		    	int result = eventDAO.raffleWinMsg(id, event.getEventWinMsg());
+		    	int result = EventDAO.getInstance().raffleWinMsg(id, event.getEventWinMsg());
 		    	if(result == -1){
 					script.println("<script>");
 					script.println("alert('데이터베이스 오류')");

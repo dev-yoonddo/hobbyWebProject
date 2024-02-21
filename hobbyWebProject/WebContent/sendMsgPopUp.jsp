@@ -61,6 +61,8 @@ h2{
 	int msgID = 0;
 	int groupID = 0;
 	String qna = null;
+	GroupDAO groupDAO = GroupDAO.getInstance();
+	MessageDAO msgDAO = MessageDAO.getInstance();
 	
 	if(session.getAttribute("userID") != null){
 		userID = (String)session.getAttribute("userID");
@@ -82,9 +84,6 @@ h2{
 		script.println("window.open('loginPopUp', 'Login', 'width=500, height=550, top=50%, left=50%')");
 		script.println("</script>");
 	}
-	
-	GroupDAO groupDAO = new GroupDAO();
-	MessageDAO msgDAO = new MessageDAO();
 
 	//메시지 전송하기, 답장하기에 따라 toUserID를 저장한다.
 	String sendMsgToUser = "";

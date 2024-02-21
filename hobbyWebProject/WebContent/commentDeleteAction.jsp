@@ -19,6 +19,8 @@
 		String userID = null;
 		int boardID=0;
 		int cmtID = 0;
+ 		CommentDAO cmtDAO = CommentDAO.getInstance();
+
 		if(session.getAttribute("userID") != null){
 			userID=(String)session.getAttribute("userID");
 		}
@@ -42,7 +44,7 @@
 			script.println("history.back()");
 			script.println("</script>");
 		}			
-		CommentDTO comment = new CommentDAO().getCommentVO(cmtID);
+		CommentDTO comment = cmtDAO.getCommentVO(cmtID);
 		if(!userID.equals(comment.getUserID())){
 			PrintWriter script=response.getWriter();
 			script.println("<script>");
@@ -50,8 +52,7 @@
 			script.println("history.back()");
 			script.println("</script>");
 		} else{
-			CommentDAO commentDAO=new CommentDAO();
-			int result=commentDAO.delete(cmtID);
+			int result=cmtDAO.delete(cmtID);
 			if(result == -1){//데이터 베이스 오류
 				PrintWriter script=response.getWriter();
 				script.println("<script>");

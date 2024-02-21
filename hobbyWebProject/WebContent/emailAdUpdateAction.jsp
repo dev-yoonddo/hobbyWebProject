@@ -22,8 +22,8 @@
 <%
 	PrintWriter script = response.getWriter();
 	String userID = null;
-	UserDAO userDAO = new UserDAO();
-	UserDTO userVO=new UserDAO().getUserVO(userID); //유저 정보 가져오기
+	UserDAO userDAO = UserDAO.getInstance();
+	UserDTO userVO=userDAO.getUserVO(userID); //유저 정보 가져오기
 	if(session.getAttribute("userID") != null){
 		userID = (String) session.getAttribute("userID");
 	}
