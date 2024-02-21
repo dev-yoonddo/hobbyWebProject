@@ -50,6 +50,7 @@ public class UserTest {
 //			System.out.println(i.getBoardContent());
 		}
 		System.out.println("===========================");
+		System.out.println("Instance Count : " + BoardDAO.getInstanceCount());
 
 		System.out.println("카테고리 갯수-------------------");
 
@@ -65,13 +66,14 @@ public class UserTest {
 		System.out.println("-----------------------------------");
 
 		System.out.println("게시글 작성 -------------------");
-
-		int update = board.update(70, "수정하깅", "성공", "SPORTS", null, null);
+		BoardDAO board2 = BoardDAO.getInstance();
+		int update = board2.update(70, "안녕하세요", "가입했습니다", "SPORTS", null, null);
 		System.out.println(update);
 //		int result = board.write("반가워~", "user", "하이", "LEISURE", null, null);
 //		System.out.println("result = " + result);
 		if (update == 1) {
 			System.out.println("작성완료");
+			System.out.println("Instance Count : " + BoardDAO.getInstanceCount());
 		} else {
 			System.out.println("실패");
 		}
@@ -84,5 +86,12 @@ public class UserTest {
 			System.out.println(i.getBoardContent());
 		}
 
+		if (board == board2) {
+			System.out.println("싱글톤패턴 적용 완료");
+			System.out.println("Instance Count : " + BoardDAO.getInstanceCount());
+		} else {
+			System.out.println("싱글톤패턴 적용 실패");
+			System.out.println("Instance Count : " + BoardDAO.getInstanceCount());
+		}
 	}
 }

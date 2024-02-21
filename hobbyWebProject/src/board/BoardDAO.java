@@ -17,7 +17,7 @@ public class BoardDAO {
 	private static int instanceCount = 0; // Counter to track instance creation
 	// singleton : Bill Pugh Solution (LazyHolder) 기법
 
-	private BoardDAO() {
+	public BoardDAO() {
 		instanceCount++; // Increment counter when instance is created
 	}
 
