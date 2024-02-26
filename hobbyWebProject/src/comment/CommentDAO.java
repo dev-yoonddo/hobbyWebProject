@@ -10,6 +10,7 @@ import java.util.List;
 import com.toogether.session.SqlConfig;
 
 public class CommentDAO {
+	private Connection conn = SqlConfig.getConn();
 
 	// singleton : Bill Pugh Solution (LazyHolder) 기법
 	private CommentDAO() {
@@ -24,8 +25,6 @@ public class CommentDAO {
 	public static CommentDAO getInstance() {
 		return CommentDAOHolder.INSTANCE;
 	}
-
-	private Connection conn = SqlConfig.getConn();
 
 	public String getDate() {
 		String SQL = "SELECT NOW()";

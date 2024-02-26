@@ -14,12 +14,9 @@ import comment.CommentDTO;
 import file.FileDAO;
 
 public class BoardDAO {
-	private static int instanceCount = 0; // Counter to track instance creation
-	// singleton : Bill Pugh Solution (LazyHolder) 기법
+	Connection conn = SqlConfig.getConn();
 
-	public BoardDAO() {
-		instanceCount++; // Increment counter when instance is created
-	}
+	// singleton : Bill Pugh Solution (LazyHolder) 기법
 
 	// static 내부 클래스를 이용
 	// Holder로 만들어, 클래스가 메모리에 로드되지 않고 getInstance 메서드가 호출되어야 로드됨
@@ -27,12 +24,12 @@ public class BoardDAO {
 		private static final BoardDAO INSTANCE = new BoardDAO();
 	}
 
-	public static BoardDAO getInstance() {
-		return BoardDAOHolder.INSTANCE;
+	private BoardDAO() {
+
 	}
 
-	public static int getInstanceCount() {
-		return instanceCount;
+	public static BoardDAO getInstance() {
+		return BoardDAOHolder.INSTANCE;
 	}
 
 // singleton : Eager Initialization 기법
@@ -48,7 +45,7 @@ public class BoardDAO {
 //		return instance;
 //	}
 	private CommentDAO cmtDAO = CommentDAO.getInstance();
-	private Connection conn = SqlConfig.getConn();
+//	private Connection conn = SqlConfig.getConn();
 
 	// 날짜 가져오기
 	public String getDate() { // 현재 시간을 가져오는 함수
