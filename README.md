@@ -13,7 +13,7 @@
 - Backend : Java, Spring
 - Infra : AWS (EC2, RDS, Route53, ELB, ALB, ACM)
 
-<br><br>
+<br>
 
 ### Database ERD
 
