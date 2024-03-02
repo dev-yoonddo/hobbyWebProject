@@ -30,6 +30,7 @@ import schedule.ScheduleDAO;
 import schedule.ScheduleDTO;
 
 public class UserDAO {
+	private Connection conn = SqlConfig.getConn();
 
 	// singleton : Bill Pugh Solution (LazyHolder) 기법
 	private UserDAO() {
@@ -44,8 +45,6 @@ public class UserDAO {
 	public static UserDAO getInstance() {
 		return UserDAOHolder.INSTANCE;
 	}
-
-	private Connection conn = SqlConfig.getConn();
 
 //  회원 로그인
 	public int login(String userID, String userPassword, int userAvailable) {

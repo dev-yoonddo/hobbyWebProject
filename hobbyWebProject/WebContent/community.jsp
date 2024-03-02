@@ -389,7 +389,6 @@ th span{
 	BoardDAO boardDAO = BoardDAO.getInstance();
 	CommentDAO cmtDAO = CommentDAO.getInstance();
 	BoardDTO board = boardDAO.getBoardVO(boardID);
-	ArrayList<BoardDTO> boardlist = new ArrayList<>();
 %>
 <header>
 	<jsp:include page="/header/header.jsp"/>
@@ -426,8 +425,7 @@ th span{
 	//특정 카테고리를 검색하면 boardCategory값을 가져오므로 글 리스트 노출
 	//파라미터 값이 정상적으로 넘어오지 않았거나 노출할 리스트가 없으면 PrintWriter로 오류값 전송
 	}else{
-		boardlist = boardDAO.getSearch(boardCategory);
-
+		ArrayList<BoardDTO> boardlist = boardDAO.getSearch(boardCategory);
 	%>
 	<div class="board-container" id="board-list">
 		<div id="search-title">
