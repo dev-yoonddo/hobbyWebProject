@@ -16,11 +16,13 @@ public class SqlConfig {
 	}
 
 	public static Connection getConn() {
-		Connection conn = null;
 		try {
 			Context initContext = new InitialContext();
-			DataSource dataSource = (DataSource) initContext.lookup("java:/comp/env/jdbc/togetherDB");
-			conn = dataSource.getConnection();
+			Context envContext = (Context) initContext.lookup("java:/comp/env");
+			DataSource ds = (DataSource) envContext.lookup("jdbc/togetherDB");
+			Connection conn = ds.getConnection();
+//			DataSource dataSource = (DataSource) initContext.lookup("java:/comp/env/jdbc/togetherDB");
+//			conn = dataSource.getConnection();
 			return conn;
 //			if (conn != null && !conn.isClosed()) {
 //				System.out.println("데이터베이스 연결 성공");

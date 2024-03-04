@@ -14,7 +14,7 @@ import comment.CommentDTO;
 import file.FileDAO;
 
 public class BoardDAO {
-	private Connection conn = SqlConfig.getConn();
+	public Connection conn;
 
 	// singleton : Bill Pugh Solution (LazyHolder) 기법
 	private BoardDAO() {
@@ -74,10 +74,10 @@ public class BoardDAO {
 	// boardID 번호매기기
 	public int getNext() {
 		String SQL = "SELECT MAX(boardID) FROM board";
-
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
@@ -100,7 +100,7 @@ public class BoardDAO {
 		String SQL = "INSERT INTO board VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		PreparedStatement pstmt = null;
 		try {
-
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			int boardID = getNext();
 			pstmt.setInt(1, boardID); // board테이블에 저장된 boardID를 file테이블에도 저장하기 위해 지역변수에 저장한다.
@@ -150,6 +150,7 @@ public class BoardDAO {
 		ResultSet rs = null;
 		ArrayList<BoardDTO> list = new ArrayList<BoardDTO>();
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
@@ -184,6 +185,7 @@ public class BoardDAO {
 		ResultSet rs = null;
 		ArrayList<BoardDTO> list = new ArrayList<BoardDTO>();
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
 			rs = pstmt.executeQuery();
@@ -219,6 +221,7 @@ public class BoardDAO {
 		ResultSet rs = null;
 		ArrayList<BoardDTO> list = new ArrayList<BoardDTO>();
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, boardID);
 			rs = pstmt.executeQuery();
@@ -270,6 +273,7 @@ public class BoardDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, boardID);
 			rs = pstmt.executeQuery();
@@ -309,6 +313,7 @@ public class BoardDAO {
 		FileDAO fileDAO = FileDAO.getInstance();
 		PreparedStatement pstmt = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, boardTitle);
 			pstmt.setString(2, boardContent);
@@ -358,6 +363,7 @@ public class BoardDAO {
 
 		PreparedStatement pstmt = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, boardID);
 			// 성공적으로 수행했다면 0이상의 결과 반환
@@ -386,6 +392,7 @@ public class BoardDAO {
 
 		PreparedStatement pstmt = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
 			pstmt.executeUpdate();
@@ -404,6 +411,7 @@ public class BoardDAO {
 
 		PreparedStatement pstmt = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, boardID);
 			pstmt.executeUpdate();
@@ -422,6 +430,7 @@ public class BoardDAO {
 
 		PreparedStatement pstmt = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, boardID);
 			pstmt.executeUpdate();
@@ -440,6 +449,7 @@ public class BoardDAO {
 
 		PreparedStatement pstmt = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, viewCount);
 			pstmt.setInt(2, boardID);
@@ -459,6 +469,7 @@ public class BoardDAO {
 
 		PreparedStatement pstmt = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, boardID);
 			pstmt.setString(2, filename);
@@ -480,6 +491,7 @@ public class BoardDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
@@ -515,6 +527,7 @@ public class BoardDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
+			conn = SqlConfig.getConn();
 			SQL += " LIKE '%" + searchField2 + "%' ORDER BY boardID DESC";
 			pstmt = conn.prepareStatement(SQL);
 			rs = pstmt.executeQuery();
@@ -552,6 +565,7 @@ public class BoardDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null; // boardAvailable의 값을 가져온다.
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
 			rs = pstmt.executeQuery();
@@ -583,6 +597,7 @@ public class BoardDAO {
 
 		PreparedStatement pstmt = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, boardDTO.getBoardAvailable());
 			pstmt.setInt(2, boardDTO.getBoardID());
