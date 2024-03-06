@@ -67,7 +67,7 @@ public class downloadAction extends HttpServlet {
 
 		String filePath = null;
 		String jspPath = request.getSession().getServletContext().getRealPath("/fileupload/" + filename);
-		String awsPath = "/home/tomcat/apache-tomcat-8.5.88/webapps/fileupload/" + filename;
+		String awsPath = "/cksndbs7/tomcat/webapps/fileupload/" + filename;
 
 		if (new File(jspPath).exists()) { // jsp경로가 존재하면 jsp에서 프로젝트를 실행했음을 의미하고
 			filePath = jspPath;

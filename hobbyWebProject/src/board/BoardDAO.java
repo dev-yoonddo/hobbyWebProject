@@ -14,7 +14,6 @@ import comment.CommentDTO;
 import file.FileDAO;
 
 public class BoardDAO {
-
 	// singleton : Bill Pugh Solution (LazyHolder) 기법
 	private BoardDAO() {
 	}
@@ -31,7 +30,7 @@ public class BoardDAO {
 
 // singleton : Eager Initialization 기법
 //private static BoardDAO instance;
-//	public static BoardDAO getInstance() {
+//	public static BoardDAO getInstance(){
 //		if (instance == null) {
 //			synchronized (BoardDAO.class) {
 //				if (instance == null) {
@@ -45,18 +44,23 @@ public class BoardDAO {
 
 	// 날짜 가져오기
 	public String getDate() { // 현재 시간을 가져오는 함수
-		String SQL = "SELECT NOW()"; // 현재 시간을 가져오는 MySQL의 문장
+//		String SQL = "SELECT NOW()"; // 현재 시간을 가져오는 MySQL의 문장
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
-			Connection conn = SqlConfig.getConn();
-			pstmt = conn.prepareStatement(SQL); // SQL문장을 실행준비 단계로 만든다
+			conn = SqlConfig.getConn();
+			StringBuffer sql = new StringBuffer();
+			sql.append("SELECT NOW()");
+			pstmt = conn.prepareStatement(sql.toString()); // SQL문장을 실행준비 단계로 만든다
 			rs = pstmt.executeQuery(); // 실제로 실행했을 때 결과를 가져온다.
 			if (rs.next()) { // 결과가 있는경우
 				return rs.getString(1); // 현재의 날짜를 그대로 반환한다.
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			SqlConfig.closeResources(null, rs, pstmt);
 		}
 		return ""; // 빈 문자열을 반환함으로써 데이터베이스 오류를 알려준다.
 	}
@@ -71,12 +75,14 @@ public class BoardDAO {
 	 */
 	// boardID 번호매기기
 	public int getNext() {
-		String SQL = "SELECT MAX(boardID) FROM board";
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
-			Connection conn = SqlConfig.getConn();
-			pstmt = conn.prepareStatement(SQL);
+			conn = SqlConfig.getConn();
+			StringBuffer sql = new StringBuffer();
+			sql.append("SELECT MAX(boardID) FROM board");
+			pstmt = conn.prepareStatement(sql.toString());
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				int maxBoardID = rs.getInt(1);
@@ -96,10 +102,11 @@ public class BoardDAO {
 	public int write(String boardTitle, String userID, String boardContent, String boardCategory, String filename,
 			String fileRealname) {
 		String SQL = "INSERT INTO board VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		Connection conn = null;
 		PreparedStatement pstmt = null;
-		Connection conn = SqlConfig.getConn();
 
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			int boardID = getNext();
 			pstmt.setInt(1, boardID); // board테이블에 저장된 boardID를 file테이블에도 저장하기 위해 지역변수에 저장한다.
@@ -136,7 +143,7 @@ public class BoardDAO {
 			e.printStackTrace();
 		} finally {
 			System.out.println("close=========");
-			SqlConfig.closeResources(conn, null, pstmt);
+			SqlConfig.closeResources(null, null, pstmt);
 		}
 		return -1; // 데이터베이스 오류
 	}
@@ -144,12 +151,12 @@ public class BoardDAO {
 	// 글 전체 목록 출력 (삭제된 글, LIMIT 제외)
 	public ArrayList<BoardDTO> getList() {
 		String SQL = "SELECT * FROM board WHERE boardAvailable = 1 ORDER BY boardID DESC";
-		Connection conn = SqlConfig.getConn();
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		ArrayList<BoardDTO> list = new ArrayList<BoardDTO>();
 		try {
-
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
@@ -179,12 +186,12 @@ public class BoardDAO {
 	// 해당 userID가 작성한 글의 리스트 가져오기
 	public ArrayList<BoardDTO> getListByUser(String userID) {
 		String SQL = "SELECT * FROM board WHERE userID = ? AND boardAvailable = 1 ORDER BY boardID DESC";
-		Connection conn = SqlConfig.getConn();
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		ArrayList<BoardDTO> list = new ArrayList<BoardDTO>();
 		try {
-
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
 			rs = pstmt.executeQuery();
@@ -215,12 +222,12 @@ public class BoardDAO {
 	// 해당 글의 파일 전체 목록 출력 (삭제된 글, LIMIT 제외)
 	public ArrayList<BoardDTO> getFileList(int boardID) {
 		String SQL = "SELECT * FROM board WHERE boardID = ? AND boardAvailable = 1 AND filename IS NOT NULL";
-		Connection conn = SqlConfig.getConn();
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		ArrayList<BoardDTO> list = new ArrayList<BoardDTO>();
 		try {
-
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, boardID);
 			rs = pstmt.executeQuery();
@@ -268,11 +275,11 @@ public class BoardDAO {
 	// 작성된 게시글 보기
 	public BoardDTO getBoardVO(int boardID) {
 		String SQL = "SELECT * FROM board WHERE boardID = ?";
-		Connection conn = SqlConfig.getConn();
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
-
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, boardID);
 			rs = pstmt.executeQuery();
@@ -298,7 +305,7 @@ public class BoardDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(conn, rs, pstmt);
+			SqlConfig.closeResources(null, rs, pstmt);
 		}
 		return null;
 	}
@@ -307,12 +314,12 @@ public class BoardDAO {
 	public int update(int boardID, String boardTitle, String boardContent, String boardCategory, String filename,
 			String fileRealname) {
 		String SQL = "UPDATE board SET boardTitle = ?, boardContent = ?, boardCategory = ?, filename = ?, fileRealname = ?, fileDownCount = ? WHERE boardID = ?";
-		Connection conn = SqlConfig.getConn();
 		BoardDTO board = this.getBoardVO(boardID);
 		FileDAO fileDAO = FileDAO.getInstance();
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
-
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, boardTitle);
 			pstmt.setString(2, boardContent);
@@ -359,10 +366,10 @@ public class BoardDAO {
 	// 삭제하기 : 글을 삭제하면 글에 달린 댓글들도 삭제하기
 	public int delete(int boardID) {
 		String SQL = "UPDATE board SET boardAvailable = 0 WHERE boardID = ? ";
-		Connection conn = SqlConfig.getConn();
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
-
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, boardID);
 			// 성공적으로 수행했다면 0이상의 결과 반환
@@ -388,10 +395,10 @@ public class BoardDAO {
 	// 해당 userID데이터 삭제하기
 	public int deleteByUser(String userID) {
 		String SQL = "UPDATE board SET boardAvailable = 0 WHERE userID = ? ";
-		Connection conn = SqlConfig.getConn();
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
-
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
 			pstmt.executeUpdate();
@@ -407,10 +414,10 @@ public class BoardDAO {
 	// 좋아요 갯수
 	public int heart(int boardID) {
 		String SQL = "UPDATE board SET heartCount = heartCount + 1 WHERE boardID = ?";
-		Connection conn = SqlConfig.getConn();
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
-
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, boardID);
 			pstmt.executeUpdate();
@@ -426,10 +433,10 @@ public class BoardDAO {
 	// 좋아요 취소
 	public int heartDelete(int boardID) {
 		String SQL = "UPDATE board SET heartCount = heartCount - 1 WHERE boardID = ?";
-		Connection conn = SqlConfig.getConn();
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
-
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, boardID);
 			pstmt.executeUpdate();
@@ -445,10 +452,10 @@ public class BoardDAO {
 	// 조회수
 	public int viewCountUpdate(int viewCount, int boardID) {
 		String SQL = "UPDATE board SET viewCount = ? WHERE boardID = ?";
-		Connection conn = SqlConfig.getConn();
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
-
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, viewCount);
 			pstmt.setInt(2, boardID);
@@ -465,10 +472,10 @@ public class BoardDAO {
 	// 파일 다운로드가 완료되면 다운로드 횟수를 1증가시키는 메소드
 	public int download(int boardID, String filename) {
 		String SQL = "UPDATE board SET fileDownCount = fileDownCount + 1 WHERE boardID = ? AND filename = ?";
-		Connection conn = SqlConfig.getConn();
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
-
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, boardID);
 			pstmt.setString(2, filename);
@@ -486,11 +493,11 @@ public class BoardDAO {
 	public ArrayList<BoardDTO> getNotice() {
 		ArrayList<BoardDTO> list = new ArrayList<BoardDTO>();
 		String SQL = "SELECT * FROM board WHERE boardAvailable = 1 AND boardCategory LIKE '%NOTICE%' ORDER BY boardID DESC";
-		Connection conn = SqlConfig.getConn();
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
-
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
@@ -522,12 +529,14 @@ public class BoardDAO {
 	public ArrayList<BoardDTO> getSearch(String searchField2) {// 특정한 리스트를 받아서 반환
 		ArrayList<BoardDTO> list = new ArrayList<BoardDTO>();
 		String SQL = "SELECT * FROM board WHERE boardAvailable = 1 AND boardCategory";
-		Connection conn = SqlConfig.getConn();
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
-
+			conn = SqlConfig.getConn();
 			SQL += " LIKE '%" + searchField2 + "%' ORDER BY boardID DESC";
+//			StringBuffer sql = new StringBuffer();
+//			sql.append(SQL);
 			pstmt = conn.prepareStatement(SQL);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
@@ -560,7 +569,7 @@ public class BoardDAO {
 	public List<BoardDTO> getDelBoardVOByUserID(String userID) {
 		List<BoardDTO> boardDTOs = new ArrayList<>();
 		String SQL = "SELECT boardID, boardAvailable FROM board WHERE userID = ?";// userID가 작성한 board의 boardID와
-		Connection conn = SqlConfig.getConn();
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null; // boardAvailable의 값을 가져온다.
 		try {
@@ -593,10 +602,10 @@ public class BoardDAO {
 	// UserDAO - delete에서 삭제된 user와 관련된 정보를 업데이트 한다.
 	public void updateBoardVO(BoardDTO boardDTO) {
 		String SQL = "UPDATE board SET boardAvailable = ? WHERE boardID = ?";
-		Connection conn = SqlConfig.getConn();
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
-
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, boardDTO.getBoardAvailable());
 			pstmt.setInt(2, boardDTO.getBoardID());

@@ -92,7 +92,7 @@ section{
 				}else{
 					String id = "check";
 					//String host = "http://localhost:8080/hobbyWebProject/";
-					String host = "https://toogether.me/";
+					String host = "http://toogether.me/";
 					String from = "we.are.together.2023.03@gmail.com";
 					String to = userDAO.getUserEmail(userID);
 					HashMap<String,String> encrypt = PwEncrypt.encoding(to, userSalt);

@@ -367,6 +367,7 @@ table caption{
 	
 	//이미지 이름 가져오기
 	String filename = boardvo.getFilename();
+	String fileRealname = boardvo.getFileRealname();
 %>
 
 <!-- header -->
@@ -451,7 +452,7 @@ table caption{
 					%>
 							<td class="view-file" id="view-file-1" width="35%">
 								<button id="close-file" onclick="closeFile()">X</button>
-								<img src="/resources/fileupload/<%=filename%>" width="300px">
+								<img src="<%=request.getContextPath()%>/fileupload/<%=fileRealname%>" width="300px">
 							</td>
 					<%
 							} 
@@ -475,7 +476,7 @@ table caption{
 					%>
 							<td class="view-file" id="view-file-1" width="35%">
 								<button id="close-file" onclick="closeFile()">X</button>
-								<img src="/resources/fileupload/<%=filename%>" width="300px">
+								<img src="<%=request.getContextPath()%>/fileupload/<%=fileRealname%>" width="300px">
 							</td>
 					<%
 							}
@@ -487,7 +488,7 @@ table caption{
 					%><!-- 공지사항을 포함한 모든 게시글의 화면이 작아지면 요소를 tr로 변경해준다.-->
 						<tr class="tr" id="view-file-2" height="200px">
 							<td width="300px">
-								<img src="/resources/fileupload/<%=filename%>" >
+								<img src="<%=request.getContextPath()%>/fileupload/<%=fileRealname%>" >
 							</td>
 							<td width="50px;">
 								<button id="close-file" onclick="closeFile()">X</button>
@@ -519,7 +520,7 @@ table caption{
 					<!-- 텍스트 클릭시 다운로드를 하기 위해 onclick으로 javascript를 이용해 submit기능을 대신한다. -->
 						<div class="files" id="file_form" onclick="submit()" style="width: 300px; cursor: pointer;"> 
 							<div id="filename"><%=filename%></div>(다운로드 <%=downCount%>회)
-							<input hidden="hidden" name="file" value="<%=URLEncoder.encode(filename, "UTF-8")%>">
+							<input hidden="hidden" name="file" value="<%=URLEncoder.encode(fileRealname, "UTF-8")%>">
 							<input hidden="hidden" name="boardID" value="<%=boardID%>">
 						</div>
 					</form>

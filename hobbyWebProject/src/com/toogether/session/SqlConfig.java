@@ -8,34 +8,61 @@ import java.sql.SQLTimeoutException;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
-import javax.sql.DataSource;
+
+import org.apache.tomcat.jdbc.pool.DataSource;
 
 public class SqlConfig {
 
 	private SqlConfig() {
 	}
 
-	public static Connection getConn() {
+//	public static Connection getConn() {
+//		Connection conn = null;
+//		try {
+//			String DB_DRIVER_CLASS = "org.mariadb.jdbc.Driver";
+//			String DB_URL = "jdbc:mariadb://localhost:3306/cksndbs7";
+//			String DB_USERNAME = "cksndbs7";
+//			String DB_PASSWORD = "qlalf0720!";
+//			Class.forName(DB_DRIVER_CLASS);
+//			conn = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
+//			System.out.println("연결성공");
+//
+//		} catch (ClassNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			System.out.println("드라이브 로딩 실패");
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			System.out.println("DB 연결 실패");
+//		}
+//		return conn;
+//	}
+
+	private static Connection conn;
+	static {
 		try {
 			Context initContext = new InitialContext();
-			Context envContext = (Context) initContext.lookup("java:/comp/env");
-			DataSource ds = (DataSource) envContext.lookup("jdbc/togetherDB");
-			Connection conn = ds.getConnection();
-//			DataSource dataSource = (DataSource) initContext.lookup("java:/comp/env/jdbc/togetherDB");
+//			Context envContext = (Context) initContext.lookup("java:/comp/env");
+//			DataSource ds = (DataSource) envContext.lookup("jdbc/togetherDB");
+			DataSource ds = (DataSource) initContext.lookup("java:/comp/env/jdbc/cksndbs7");
+			conn = ds.getConnection();
 //			conn = dataSource.getConnection();
-			return conn;
-//			if (conn != null && !conn.isClosed()) {
-//				System.out.println("데이터베이스 연결 성공");
-//			} else {
-//				System.out.println("데이터베이스 연결 실패");
-//			}
+			if (conn != null && !conn.isClosed()) {
+				System.out.println("데이터베이스 연결 성공");
+			} else {
+				System.out.println("데이터베이스 연결 실패");
+			}
 		} catch (SQLTimeoutException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;
 	}
+
+	public static Connection getConn() {
+		System.out.println("Connection 요청");
+		return conn;
+	}
+
 //	static {
 //		try {
 //			System.out.println("데이터베이스 연결 시작");
@@ -60,6 +87,21 @@ public class SqlConfig {
 //
 //	public static Connection getConn() {
 //		System.out.println("Connection 요청");
+//		return conn;
+//	}
+
+//	public static Connection getConn() {
+//		Connection conn = null;
+//		try {
+//			String dbURL = "jdbc:mariadb://toogether.me:3306/cksndbs7";
+//			String dbID = "cksndbs7";
+//			String dbPassword = "qlalf0720!";
+//			Class.forName("com.mariadb.jdbc.Driver");
+//			conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
+//		} catch (ClassNotFoundException | SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 //		return conn;
 //	}
 
@@ -100,9 +142,9 @@ public class SqlConfig {
 				// System.out.println("prepared close");
 				pstmt.close();
 			}
-//			if (conn != null && !conn.isClosed()) {
-//				conn.close();
-//			}
+			if (conn != null && !conn.isClosed()) {
+				conn.close();
+			}
 		} catch (SQLException ex) {
 			ex.printStackTrace(); // Handle exception while closing resources
 		}

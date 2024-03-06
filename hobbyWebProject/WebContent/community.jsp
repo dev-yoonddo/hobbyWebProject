@@ -1,3 +1,5 @@
+<%@page import="java.sql.SQLTimeoutException"%>
+<%@page import="java.sql.SQLException"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="com.toogether.session.SqlConfig"%>
 <%@page import="comment.CommentDTO"%>
@@ -387,7 +389,6 @@ th span{
 		script.println("error");
 		script.close();
 	}
-	Connection conn = SqlConfig.getConn();
 	BoardDAO boardDAO = BoardDAO.getInstance();
 	CommentDAO cmtDAO = CommentDAO.getInstance();
 	BoardDTO board = boardDAO.getBoardVO(boardID);
@@ -401,7 +402,7 @@ th span{
 	//처음 접속시엔 boardCategory == null이기 때문에 검색창만 노출
 	if(boardCategory == null){
 	%>
-	<div class="select-hobby"><%=conn%>
+	<div class="select-hobby">
 		<form method="post" id ="searchField" action="community" onsubmit="return searchPage(search)">
 			<div id="select-sec">
 				<div class="select">

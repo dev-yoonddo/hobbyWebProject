@@ -44,7 +44,7 @@
 			//방지하기 위해 (.../hobbyWebProject/fileupload)경로를 삭제하고 FileZilla에서 외부에 경로를 따로 생성한다.
 			String path = null;
 			String jspPath = application.getRealPath("/fileupload/");
-			String awsPath = "/home/tomcat/apache-tomcat-8.5.88/webapps/fileupload/";
+			String awsPath = "/cksndbs7/tomcat/webapps/fileupload/";
 			if(jspPath.startsWith("C")){ //경로가 C로 시작하면 JSP에서 파일 업로드를 의미하기 때문에
 				path = jspPath; //path에 JSP경로를 저장하고
 			}else{ //경로가 C로 시작하지 않으면 배포 프로젝트에서 파일 업로드를 의미하기 때문에

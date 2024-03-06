@@ -89,7 +89,7 @@ public class UserTest {
 //			System.out.println("싱글톤패턴 적용 실패");
 //		}
 
-		HashMap<String, String> pw = PwEncrypt.encoding("test@naver.com", "uq9wXyHJmA6p7s1hx3cLLg==");
+		HashMap<String, String> pw = PwEncrypt.encoding("qlalf0720?", PwEncrypt.getSalt());
 		System.out.println(pw.get("salt"));
 		System.out.println(pw.get("hash"));
 	}
