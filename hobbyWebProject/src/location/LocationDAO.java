@@ -25,15 +25,15 @@ public class LocationDAO {
 		return LocationDAOHolder.INSTANCE;
 	}
 
-	private Connection conn = SqlConfig.getConn();
-
 	// 위치 정보 저장
 	public int regist(String userID, String spotName, String address, Double latitude, Double longitude) {
 		String SQL = "INSERT INTO location VALUES (?, ?, ?, ?, ?, ?, ?)";
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
-			// pstmt = conn.prepareStatement(SQL);
+			// conn = SqlConfig.getConn(); pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
 			pstmt.setString(2, spotName);
 			pstmt.setString(3, address);
@@ -45,7 +45,7 @@ public class LocationDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, null, pstmt);
+			SqlConfig.closeResources(conn, null, pstmt);
 		}
 		return -1;
 	}
@@ -53,9 +53,11 @@ public class LocationDAO {
 	// 해당 이름의 위치 정보 보기
 	public LocationDTO getLocationVO(String spotName) {
 		String SQL = "SELECT * FROM location WHERE spotName = ?";
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, spotName);// 물음표
 			rs = pstmt.executeQuery();// select
@@ -73,7 +75,39 @@ public class LocationDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, rs, pstmt);
+			SqlConfig.closeResources(conn, rs, pstmt);
+		}
+		return null;
+	}
+
+	// 유저가 생성한 스팟 리스트 가져오기
+	public ArrayList<LocationDTO> getLocationVOByUserID(String userID) {
+		String SQL = "SELECT * FROM location WHERE userID = ?";
+		ArrayList<LocationDTO> list = new ArrayList<LocationDTO>();
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = SqlConfig.getConn();
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, userID);// 물음표
+			rs = pstmt.executeQuery();// select
+			while (rs.next()) {
+				LocationDTO loc = new LocationDTO();
+				loc.setUserID(rs.getString(1));
+				loc.setSpotName(rs.getString(2));
+				loc.setAddress(rs.getString(3));
+				loc.setLatitude(rs.getDouble(4));
+				loc.setLongitude(rs.getDouble(5));
+				loc.setCrewCount(rs.getInt(6));
+				loc.setSpotAvailable(rs.getInt(7));
+				list.add(loc);
+			}
+			return list;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			SqlConfig.closeResources(conn, rs, pstmt);
 		}
 		return null;
 	}
@@ -82,9 +116,11 @@ public class LocationDAO {
 	public ArrayList<LocationDTO> getNameAdList() {
 		String SQL = "SELECT spotName , address FROM location";
 		ArrayList<LocationDTO> list = new ArrayList<LocationDTO>();
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {// 결과가 있다면
@@ -97,7 +133,7 @@ public class LocationDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, rs, pstmt);
+			SqlConfig.closeResources(conn, rs, pstmt);
 		}
 		return list;
 	}
@@ -106,9 +142,11 @@ public class LocationDAO {
 	public ArrayList<LocationDTO> getSpotInfoList() {
 		String SQL = "SELECT * FROM location WHERE spotAvailable = 1";
 		ArrayList<LocationDTO> list = new ArrayList<LocationDTO>();
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {// 결과가 있다면
@@ -125,7 +163,7 @@ public class LocationDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, rs, pstmt);
+			SqlConfig.closeResources(conn, rs, pstmt);
 		}
 		return list;
 	}
@@ -133,8 +171,10 @@ public class LocationDAO {
 	// spot 참여하기를 클릭하면 memberCount + 1
 	public int spotJoin(String spotName) {
 		String SQL = "UPDATE location SET crewCount = crewCount + 1 WHERE spotName = ? ";
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, spotName);
 			// 성공적으로 수행했다면 0이상의 결과 반환
@@ -142,7 +182,7 @@ public class LocationDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, null, pstmt);
+			SqlConfig.closeResources(conn, null, pstmt);
 		}
 		return -1; // 데이터베이스 오류
 	}
@@ -153,9 +193,11 @@ public class LocationDAO {
 		List<LocationDTO> locationDTOs = new ArrayList<>();
 		String SQL = "SELECT spotAvailable , userID FROM location WHERE userID = ?";// userID가 가입한 crew의 탈퇴여부
 																					// crewAvailable을 가져온다.
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
 			rs = pstmt.executeQuery();
@@ -172,7 +214,7 @@ public class LocationDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, rs, pstmt);
+			SqlConfig.closeResources(conn, rs, pstmt);
 		}
 		return locationDTOs;
 	}
@@ -180,8 +222,10 @@ public class LocationDAO {
 	// UserDAO - delete에서 삭제된 user와 관련된 정보를 업데이트 한다.
 	public void updateSpotVO(LocationDTO locationDTO) {
 		String SQL = "UPDATE location SET spotAvailable = ? WHERE userID = ?";
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, locationDTO.getSpotAvailable());
 			pstmt.setString(2, locationDTO.getUserID());
@@ -189,7 +233,7 @@ public class LocationDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, null, pstmt);
+			SqlConfig.closeResources(conn, null, pstmt);
 		}
 	}
 }

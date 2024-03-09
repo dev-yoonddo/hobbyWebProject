@@ -22,14 +22,14 @@ public class FileDAO {
 		return FileDAOHolder.INSTANCE;
 	}
 
-	private Connection conn = SqlConfig.getConn();
-
 	// idx 번호매기기
 	public int getNext() {
 		String SQL = "SELECT MAX(fileidx) FROM file";
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
@@ -41,7 +41,7 @@ public class FileDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, rs, pstmt);
+			SqlConfig.closeResources(conn, rs, pstmt);
 		}
 		return -1;
 	}
@@ -53,8 +53,9 @@ public class FileDAO {
 	 * 
 	 * try {
 	 * 
-	 * PreparedStatement pstmt = conn.prepareStatement(SQL); pstmt.setString(1,
-	 * fileName); pstmt.setString(2, fileRealName); return pstmt.executeUpdate();
+	 * PreparedStatement conn = SqlConfig.getConn(); pstmt =
+	 * conn.prepareStatement(SQL); pstmt.setString(1, fileName); pstmt.setString(2,
+	 * fileRealName); return pstmt.executeUpdate();
 	 * 
 	 * } catch(Exception e) { e.printStackTrace(); }
 	 * 
@@ -65,8 +66,10 @@ public class FileDAO {
 	// 파일을 업로드 할 때 마다 업로드 하는 파일 이름과 실제로 저장되는 파일 이름을 테이블에 저장하는 메서드
 	public int upload2(int boardID, String filename, String fileRealname) {
 		String SQL = "INSERT INTO file (fileidx, boardID, filename, fileRealname, downloadCount) VALUES (?, ?, ?, ?, ?)";
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, getNext());
 			pstmt.setInt(2, boardID);
@@ -79,7 +82,7 @@ public class FileDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, null, pstmt);
+			SqlConfig.closeResources(conn, null, pstmt);
 		}
 		// 오류가 발생되면 -1을 리턴시킨다.
 		return -1;
@@ -89,9 +92,11 @@ public class FileDAO {
 	public ArrayList<FileDTO> getList() {
 		ArrayList<FileDTO> list = new ArrayList<FileDTO>();
 		String SQL = "SELECT * FROM file ORDER BY fileidx DESC";
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
@@ -102,7 +107,7 @@ public class FileDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, rs, pstmt);
+			SqlConfig.closeResources(conn, rs, pstmt);
 		}
 		return list;
 	}
@@ -110,8 +115,10 @@ public class FileDAO {
 	// 파일을 다운로드가 완료되면 다운로드 횟수를 1증가시키는 메소드
 	public int hit(int boardID, String filename) {
 		String SQL = "UPDATE file SET downloadCount = downloadCount + 1 WHERE boardID = ? AND filename = ?";
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, boardID);
 			pstmt.setString(2, filename);
@@ -119,7 +126,7 @@ public class FileDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, null, pstmt);
+			SqlConfig.closeResources(conn, null, pstmt);
 		}
 		return -1;
 	}
@@ -127,9 +134,11 @@ public class FileDAO {
 	// 하나의 파일 정보 보기
 	public FileDTO getFileVO(int boardID) {
 		String SQL = "SELECT * FROM file WHERE boardID = ?";
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, boardID);
 			rs = pstmt.executeQuery();
@@ -145,7 +154,7 @@ public class FileDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, rs, pstmt);
+			SqlConfig.closeResources(conn, rs, pstmt);
 		}
 		return null;
 	}

@@ -30,9 +30,11 @@ public class GroupDAO {
 	// SQL명령어 중 GROUP 이 있기 때문에 백틱 ``을 사용해 구분을 해줘야한다.
 	public int getNext() {
 		String SQL = "SELECT groupID FROM `group` ORDER BY groupID DESC";// 마지막 게시물 반환
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
@@ -42,7 +44,7 @@ public class GroupDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, rs, pstmt);
+			SqlConfig.closeResources(conn, rs, pstmt);
 		}
 		return -1;
 	}
@@ -50,8 +52,10 @@ public class GroupDAO {
 	// 그룹 생성하기
 	public int createGroup(String groupName, String groupPassword, String userID, int groupNoP) {
 		String SQL = "INSERT INTO `group` VALUES(?, ?, ?, ?, ?, ?, ?)";
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, getNext());
 			pstmt.setString(2, groupName);
@@ -64,7 +68,7 @@ public class GroupDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, null, pstmt);
+			SqlConfig.closeResources(conn, null, pstmt);
 		}
 		return -1;
 	}
@@ -73,9 +77,11 @@ public class GroupDAO {
 	public ArrayList<GroupDTO> getList() {
 		String SQL = "SELECT * FROM `group` ORDER BY groupID desc";
 		ArrayList<GroupDTO> list = new ArrayList<GroupDTO>();
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
@@ -92,7 +98,7 @@ public class GroupDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, rs, pstmt);
+			SqlConfig.closeResources(conn, rs, pstmt);
 		}
 		return list;
 	}
@@ -101,9 +107,11 @@ public class GroupDAO {
 	public ArrayList<GroupDTO> getListByUser(String userID) {
 		String SQL = "SELECT * FROM `group` WHERE userID = ? ORDER BY groupID desc";
 		ArrayList<GroupDTO> list = new ArrayList<GroupDTO>();
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
 			rs = pstmt.executeQuery();
@@ -121,7 +129,7 @@ public class GroupDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, rs, pstmt);
+			SqlConfig.closeResources(conn, rs, pstmt);
 		}
 		return list;
 	}
@@ -130,9 +138,11 @@ public class GroupDAO {
 	public ArrayList<GroupDTO> getListActiveByUser(String userID) {
 		String SQL = "SELECT * FROM `group` WHERE userID = ? AND groupAvailable = 1 ORDER BY groupID desc";
 		ArrayList<GroupDTO> list = new ArrayList<GroupDTO>();
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
 			rs = pstmt.executeQuery();
@@ -150,7 +160,7 @@ public class GroupDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, rs, pstmt);
+			SqlConfig.closeResources(conn, rs, pstmt);
 		}
 		return list;
 	}
@@ -158,9 +168,11 @@ public class GroupDAO {
 	// 하나의 그룹 정보 가져오기
 	public GroupDTO getGroupVO(int groupID) {
 		String SQL = "SELECT * FROM `group` WHERE groupID = ?";
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, groupID);
 			rs = pstmt.executeQuery();
@@ -178,7 +190,7 @@ public class GroupDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, rs, pstmt);
+			SqlConfig.closeResources(conn, rs, pstmt);
 		}
 		return null;
 	}
@@ -194,8 +206,10 @@ public class GroupDAO {
 	// 공지사항 등록하기
 	public int noticeUpdate(int groupID, String groupNotice) {
 		String SQL = "UPDATE `group` SET groupNotice = ? WHERE groupID = ?";
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, groupNotice);
 			pstmt.setInt(2, groupID);
@@ -206,7 +220,7 @@ public class GroupDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, null, pstmt);
+			SqlConfig.closeResources(conn, null, pstmt);
 		}
 		return -1; // 데이터베이스 오류
 	}
@@ -214,8 +228,10 @@ public class GroupDAO {
 	// 삭제하기
 	public int delete(int groupID) {
 		String SQL = "UPDATE `group` SET groupAvailable = 0 WHERE groupID = ? ";
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, groupID);
 			// 성공적으로 수행했다면 0이상의 결과 반환
@@ -223,7 +239,7 @@ public class GroupDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, null, pstmt);
+			SqlConfig.closeResources(conn, null, pstmt);
 		}
 		return -1; // 데이터베이스 오류
 	}
@@ -231,8 +247,10 @@ public class GroupDAO {
 	// 해당 userID데이터 삭제하기
 	public int deleteByUser(String userID) {
 		String SQL = "UPDATE `group` SET groupAvailable = 0 WHERE userID = ? ";
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
 			// 성공적으로 수행했다면 0이상의 결과 반환
@@ -240,7 +258,7 @@ public class GroupDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, null, pstmt);
+			SqlConfig.closeResources(conn, null, pstmt);
 		}
 		return -1; // 데이터베이스 오류
 	}
@@ -259,9 +277,11 @@ public class GroupDAO {
 		List<GroupDTO> groupDTOs = new ArrayList<>();
 		String SQL = "SELECT groupID, groupAvailable FROM `group` WHERE userID = ?";// userID가 작성한 board의 boardID와
 																					// boardAvailable의 값을 가져온다.
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
 			rs = pstmt.executeQuery();
@@ -284,7 +304,7 @@ public class GroupDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, rs, pstmt);
+			SqlConfig.closeResources(conn, rs, pstmt);
 		}
 		return groupDTOs;
 	}
@@ -292,8 +312,10 @@ public class GroupDAO {
 	// UserDAO - delete에서 삭제된 user와 관련된 정보를 업데이트 한다.
 	public void updateGroupVO(GroupDTO groupDTO) {
 		String SQL = "UPDATE `group` SET groupAvailable = ? WHERE groupID = ?";
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, groupDTO.getGroupAvailable());
 			pstmt.setInt(2, groupDTO.getGroupID());
@@ -302,7 +324,7 @@ public class GroupDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, null, pstmt);
+			SqlConfig.closeResources(conn, null, pstmt);
 		}
 	}
 }

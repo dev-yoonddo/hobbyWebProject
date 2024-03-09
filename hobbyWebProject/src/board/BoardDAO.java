@@ -60,7 +60,7 @@ public class BoardDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, rs, pstmt);
+			SqlConfig.closeResources(conn, rs, pstmt);
 		}
 		return ""; // 빈 문자열을 반환함으로써 데이터베이스 오류를 알려준다.
 	}
@@ -93,15 +93,15 @@ public class BoardDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, rs, pstmt);
+			SqlConfig.closeResources(conn, rs, pstmt);
 		}
 		return -1;
 	}
 
 	// 글 작성하기
 	public int write(String boardTitle, String userID, String boardContent, String boardCategory, String filename,
-			String fileRealname) {
-		String SQL = "INSERT INTO board VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			String fileRealname, String tag) {
+		String SQL = "INSERT INTO board VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 
@@ -121,6 +121,7 @@ public class BoardDAO {
 			pstmt.setString(10, filename);
 			pstmt.setString(11, fileRealname);
 			pstmt.setInt(12, 0);
+			pstmt.setString(13, tag);
 			int result = pstmt.executeUpdate();
 			// 성공적으로 수행되고 첨부파일이 존재하면 file테이블에도 데이터를 넣어준다.
 			if (result >= 0) {
@@ -143,7 +144,7 @@ public class BoardDAO {
 			e.printStackTrace();
 		} finally {
 			System.out.println("close=========");
-			SqlConfig.closeResources(null, null, pstmt);
+			SqlConfig.closeResources(conn, null, pstmt);
 		}
 		return -1; // 데이터베이스 오류
 	}
@@ -178,7 +179,7 @@ public class BoardDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, rs, pstmt);
+			SqlConfig.closeResources(conn, rs, pstmt);
 		}
 		return list;
 	}
@@ -214,7 +215,7 @@ public class BoardDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, rs, pstmt);
+			SqlConfig.closeResources(conn, rs, pstmt);
 		}
 		return list;
 	}
@@ -250,7 +251,7 @@ public class BoardDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, rs, pstmt);
+			SqlConfig.closeResources(conn, rs, pstmt);
 		}
 		return list;
 	}
@@ -305,7 +306,7 @@ public class BoardDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, rs, pstmt);
+			SqlConfig.closeResources(conn, rs, pstmt);
 		}
 		return null;
 	}
@@ -357,7 +358,7 @@ public class BoardDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, null, pstmt);
+			SqlConfig.closeResources(conn, null, pstmt);
 		}
 		return -1; // 데이터베이스 오류
 
@@ -387,7 +388,7 @@ public class BoardDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, null, pstmt);
+			SqlConfig.closeResources(conn, null, pstmt);
 		}
 		return -1; // 데이터베이스 오류
 	}
@@ -406,7 +407,7 @@ public class BoardDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, null, pstmt);
+			SqlConfig.closeResources(conn, null, pstmt);
 		}
 		return -1; // 데이터베이스 오류
 	}
@@ -425,7 +426,7 @@ public class BoardDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, null, pstmt);
+			SqlConfig.closeResources(conn, null, pstmt);
 		}
 		return -1;
 	}
@@ -444,7 +445,7 @@ public class BoardDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, null, pstmt);
+			SqlConfig.closeResources(conn, null, pstmt);
 		}
 		return -1;
 	}
@@ -464,7 +465,7 @@ public class BoardDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, null, pstmt);
+			SqlConfig.closeResources(conn, null, pstmt);
 		}
 		return -1;// 데이터베이스 오류
 	}
@@ -484,7 +485,7 @@ public class BoardDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, null, pstmt);
+			SqlConfig.closeResources(conn, null, pstmt);
 		}
 		return -1;
 	}
@@ -519,7 +520,7 @@ public class BoardDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, rs, pstmt);
+			SqlConfig.closeResources(conn, rs, pstmt);
 		}
 		return list;// 리스트 반환
 	}
@@ -558,7 +559,7 @@ public class BoardDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, rs, pstmt);
+			SqlConfig.closeResources(conn, rs, pstmt);
 		}
 		return list;// 리스트 반환
 
@@ -594,7 +595,7 @@ public class BoardDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, rs, pstmt);
+			SqlConfig.closeResources(conn, rs, pstmt);
 		}
 		return boardDTOs;
 	}
@@ -613,7 +614,7 @@ public class BoardDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, null, pstmt);
+			SqlConfig.closeResources(conn, null, pstmt);
 		}
 	}
 }

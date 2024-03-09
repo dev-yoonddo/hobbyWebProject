@@ -28,14 +28,14 @@ public class MemberDAO {
 		return MemberDAOHolder.INSTANCE;
 	}
 
-	private Connection conn = SqlConfig.getConn();
-
 	// 날짜 가져오기
 	public String getDate() { // 현재 시간을 가져오는 함수
 		String SQL = "SELECT NOW()"; // 현재 시간을 가져오는 MySQL의 문장
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL); // SQL문장을 실행준비 단계로 만든다
 			rs = pstmt.executeQuery(); // 실제로 실행했을 때 결과를 가져온다.
 			if (rs.next()) { // 결과가 있는경우
@@ -44,7 +44,7 @@ public class MemberDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, rs, pstmt);
+			SqlConfig.closeResources(conn, rs, pstmt);
 		}
 		return ""; // 빈 문자열을 반환함으로써 데이터베이스 오류를 알려준다.
 	}
@@ -52,8 +52,10 @@ public class MemberDAO {
 	// 가입하기
 	public int join(String memberID, int groupID, String userID, String mbContent) {
 		String SQL = "INSERT INTO member VALUES (?, ?, ?, ?, ?, ?)";
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, memberID);
 			pstmt.setInt(2, groupID);
@@ -65,7 +67,7 @@ public class MemberDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, null, pstmt);
+			SqlConfig.closeResources(conn, null, pstmt);
 		}
 		return -1; // 데이터베이스 오류 , primary key인 memberid가 중복됐을때도 오류가 난다.
 	}
@@ -74,9 +76,11 @@ public class MemberDAO {
 	public ArrayList<MemberDTO> getList(int groupID) {
 		String SQL = "SELECT * FROM member WHERE groupID= ? AND mbAvailable = 1 ORDER BY groupID DESC";
 		ArrayList<MemberDTO> list = new ArrayList<MemberDTO>();
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, groupID);
 			rs = pstmt.executeQuery();
@@ -93,7 +97,7 @@ public class MemberDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, rs, pstmt);
+			SqlConfig.closeResources(conn, rs, pstmt);
 		}
 		return list;
 	}
@@ -102,9 +106,11 @@ public class MemberDAO {
 	public ArrayList<MemberDTO> getListByUser(String userID) {
 		String SQL = "SELECT * FROM member WHERE userID = ? AND mbAvailable = 1 ORDER BY mbDate DESC";
 		ArrayList<MemberDTO> list = new ArrayList<MemberDTO>();
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
 			rs = pstmt.executeQuery();
@@ -121,7 +127,7 @@ public class MemberDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, rs, pstmt);
+			SqlConfig.closeResources(conn, rs, pstmt);
 		}
 		return list;
 	}
@@ -129,9 +135,11 @@ public class MemberDAO {
 	// 해당 그룹에 유저가 가입했는지 검사
 	public MemberDTO getMemberVO(String userID, int groupID) {
 		String SQL = "SELECT * FROM member WHERE userID = ? AND groupID = ?";
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
 			pstmt.setInt(2, groupID);
@@ -149,7 +157,7 @@ public class MemberDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, rs, pstmt);
+			SqlConfig.closeResources(conn, rs, pstmt);
 		}
 		return null;
 	}
@@ -157,9 +165,11 @@ public class MemberDAO {
 	// userID와 groupID로 memberID 구하기
 	public MemberDTO getMemberIDS(String userID, int groupID) {
 		String SQL = "SELECT memberID FROM member WHERE userID = ? AND groupID = ?";
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
 			pstmt.setInt(2, groupID);
@@ -172,7 +182,7 @@ public class MemberDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, rs, pstmt);
+			SqlConfig.closeResources(conn, rs, pstmt);
 		}
 		return null;
 	}
@@ -180,9 +190,11 @@ public class MemberDAO {
 	// memberID로 userID, groupID 구하기
 	public MemberDTO getUserGroupIDS(String memberID) {
 		String SQL = "SELECT userID , groupID FROM member WHERE memberID = ?";
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, memberID);
 			rs = pstmt.executeQuery();
@@ -195,7 +207,7 @@ public class MemberDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, rs, pstmt);
+			SqlConfig.closeResources(conn, rs, pstmt);
 		}
 		return null;
 	}
@@ -203,9 +215,11 @@ public class MemberDAO {
 	// 해당 그룹에 유저가 탈퇴했는지 검사
 	public MemberDTO getMemberDelVO(String userID, int groupID) {
 		String SQL = "SELECT * FROM member WHERE userID = ? AND groupID = ? AND mbAvailable = 0";
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
 			pstmt.setInt(2, groupID);
@@ -223,7 +237,7 @@ public class MemberDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, rs, pstmt);
+			SqlConfig.closeResources(conn, rs, pstmt);
 		}
 		return null;
 	}
@@ -231,15 +245,17 @@ public class MemberDAO {
 	// 그룹 탈퇴하기 (1. 데이터 삭제)
 	public int drop(String memberID) {
 		String SQL = "DELETE FROM member WHERE memberID = ?";
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, memberID);
 			return pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, null, pstmt);
+			SqlConfig.closeResources(conn, null, pstmt);
 		}
 		return -1; // 데이터베이스 오류
 	}
@@ -247,8 +263,10 @@ public class MemberDAO {
 	// 그룹 탈퇴하기 (2. mbAvailable = 0 으로 업데이트)
 	public int delete(String memberID, String userID, int groupID) {
 		String SQL = "UPDATE member SET mbAvailable = 0 WHERE memberID = ? ";
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, memberID);
 			// 성공적으로 수행했다면 0이상의 결과 반환
@@ -269,7 +287,7 @@ public class MemberDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, null, pstmt);
+			SqlConfig.closeResources(conn, null, pstmt);
 		}
 		return -1; // 데이터베이스 오류
 	}
@@ -277,8 +295,10 @@ public class MemberDAO {
 	// 해당 userID가 가입한 그룹 전체 탈퇴하기
 	public int deleteByUser(String userID) {
 		String SQL = "UPDATE member SET mbAvailable = 0 WHERE userID = ? ";
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
 			// 성공적으로 수행했다면 0이상의 결과 반환
@@ -286,7 +306,7 @@ public class MemberDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, null, pstmt);
+			SqlConfig.closeResources(conn, null, pstmt);
 		}
 		return -1; // 데이터베이스 오류
 	}
@@ -294,9 +314,11 @@ public class MemberDAO {
 	// 특정 groupID에 해당되는 member수 구하기
 	public int getMemberCount(int groupID) {
 		String SQL = "SELECT COUNT(*) FROM member WHERE groupID = ?";
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, groupID);
 			rs = pstmt.executeQuery();
@@ -306,7 +328,7 @@ public class MemberDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, rs, pstmt);
+			SqlConfig.closeResources(conn, rs, pstmt);
 		}
 		return -1;
 	}
@@ -317,9 +339,11 @@ public class MemberDAO {
 		List<MemberDTO> memberDTOs = new ArrayList<>();
 		String SQL = "SELECT memberID, mbAvailable FROM member WHERE userID = ?";// userID가 가입한 memberID와 탈퇴여부
 																					// mbAvailable을 가져온다.
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
 			rs = pstmt.executeQuery();
@@ -339,7 +363,7 @@ public class MemberDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, rs, pstmt);
+			SqlConfig.closeResources(conn, rs, pstmt);
 		}
 		return memberDTOs;
 	}
@@ -347,8 +371,10 @@ public class MemberDAO {
 	// UserDAO - delete에서 삭제된 user와 관련된 정보를 업데이트 한다.
 	public void updateMemberVO(MemberDTO memberDTO) {
 		String SQL = "UPDATE member SET mbAvailable = ? WHERE memberID = ?";
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, memberDTO.getMbAvailable());
 			pstmt.setString(2, memberDTO.getMemberID());
@@ -356,7 +382,7 @@ public class MemberDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, null, pstmt);
+			SqlConfig.closeResources(conn, null, pstmt);
 		}
 	}
 

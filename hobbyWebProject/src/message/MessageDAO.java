@@ -26,14 +26,14 @@ public class MessageDAO {
 		return MessageDAOHolder.INSTANCE;
 	}
 
-	private Connection conn = SqlConfig.getConn();
-
 	// msgID 번호매기기
 	public int getNext() {
 		String SQL = "SELECT MAX(msgID) FROM message";
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
@@ -45,7 +45,7 @@ public class MessageDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, rs, pstmt);
+			SqlConfig.closeResources(conn, rs, pstmt);
 		}
 		return -1;
 	}
@@ -53,9 +53,11 @@ public class MessageDAO {
 	// 날짜 가져오기
 	public String getDate() { // 현재 시간을 가져오는 함수
 		String SQL = "SELECT NOW()"; // 현재 시간을 가져오는 MySQL의 문장
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL); // SQL문장을 실행준비 단계로 만든다
 			rs = pstmt.executeQuery(); // 실제로 실행했을 때 결과를 가져온다.
 			if (rs.next()) { // 결과가 있는경우
@@ -64,7 +66,7 @@ public class MessageDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, rs, pstmt);
+			SqlConfig.closeResources(conn, rs, pstmt);
 		}
 		return ""; // 빈 문자열을 반환함으로써 데이터베이스 오류를 알려준다.
 	}
@@ -74,8 +76,10 @@ public class MessageDAO {
 		String SQL = "UPDATE message SET msgCheck = 1 WHERE msgID = ? AND toUserID = ?"; // msgID만 넣으면 보낸사람이 읽어도 읽음으로
 																							// 처리되기 때문에 toUserID ==
 																							// userID일 때만 읽음처리한다.
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, msgID);
 			pstmt.setString(2, toUserID);
@@ -83,7 +87,7 @@ public class MessageDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, null, pstmt);
+			SqlConfig.closeResources(conn, null, pstmt);
 		}
 		return -1;// 데이터베이스 오류
 	}
@@ -91,8 +95,10 @@ public class MessageDAO {
 	// 메시지 전송하기
 	public int send(String userID, String toUserID, int groupID, String msgTitle, String msgContent) {
 		String SQL = "INSERT INTO message VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, getNext());
 			pstmt.setString(2, userID);
@@ -107,7 +113,7 @@ public class MessageDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, null, pstmt);
+			SqlConfig.closeResources(conn, null, pstmt);
 		}
 		return -1; // 데이터베이스 오류
 	}
@@ -116,9 +122,11 @@ public class MessageDAO {
 	public ArrayList<MessageDTO> getMessageList(String toUserID) {
 		String SQL = "SELECT * FROM message WHERE toUserID = ? AND msgAvailable = 1 ORDER BY msgDate DESC";
 		ArrayList<MessageDTO> list = new ArrayList<MessageDTO>();
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, toUserID);
 			rs = pstmt.executeQuery();
@@ -142,7 +150,7 @@ public class MessageDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, rs, pstmt);
+			SqlConfig.closeResources(conn, rs, pstmt);
 		}
 		return list;
 	}
@@ -175,9 +183,11 @@ public class MessageDAO {
 	public ArrayList<MessageDTO> getSendMessageList(String userID) {
 		String SQL = "SELECT * FROM message WHERE userID = ? AND msgAvailable = 1 ORDER BY msgDate DESC";
 		ArrayList<MessageDTO> list = new ArrayList<MessageDTO>();
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
 			rs = pstmt.executeQuery();
@@ -200,7 +210,7 @@ public class MessageDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, rs, pstmt);
+			SqlConfig.closeResources(conn, rs, pstmt);
 		}
 		return list;
 	}
@@ -208,8 +218,10 @@ public class MessageDAO {
 	// 메시지 삭제하기 (msgAvailable = 0 으로 업데이트)
 	public int delete(int msgID) {
 		String SQL = "UPDATE message SET msgAvailable = 0 WHERE msgID = ? ";
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, msgID);
 			// 성공적으로 수행했다면 0이상의 결과 반환
@@ -217,7 +229,7 @@ public class MessageDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, null, pstmt);
+			SqlConfig.closeResources(conn, null, pstmt);
 		}
 		return -1; // 데이터베이스 오류
 	}
@@ -225,8 +237,10 @@ public class MessageDAO {
 	// 삭제되지않은 메시지 갯수 구하기
 	public int msgCount(String toUserID, String userID) {
 		String SQL = "SELECT COUNT(*) FROM message WHERE toUserID = ? AND userID = ? ";
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
 			pstmt.setString(2, userID);
@@ -235,7 +249,7 @@ public class MessageDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, null, pstmt);
+			SqlConfig.closeResources(conn, null, pstmt);
 		}
 		return -1; // 데이터베이스 오류
 	}
@@ -243,8 +257,10 @@ public class MessageDAO {
 	// 받은 메시지 삭제하기 : toUserID == userID 이면 받은메시지이다.
 	public int deleteRcvMsg(String userID) {
 		String SQL = "UPDATE message SET msgAvailable = 0 WHERE toUserID = ? ";
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
 			// 성공적으로 수행했다면 0이상의 결과 반환
@@ -253,7 +269,7 @@ public class MessageDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, null, pstmt);
+			SqlConfig.closeResources(conn, null, pstmt);
 		}
 		return -1; // 데이터베이스 오류
 	}
@@ -261,8 +277,10 @@ public class MessageDAO {
 	// 받은 메시지 삭제하기
 	public int deleteSendMsg(String userID) {
 		String SQL = "UPDATE message SET msgAvailable = 0 WHERE userID = ? ";
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
 			// 성공적으로 수행했다면 0이상의 결과 반환
@@ -270,7 +288,7 @@ public class MessageDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, null, pstmt);
+			SqlConfig.closeResources(conn, null, pstmt);
 		}
 		return -1; // 데이터베이스 오류
 	}
@@ -292,9 +310,11 @@ public class MessageDAO {
 	public ArrayList<MessageDTO> getMessageCheck(String toUserID, int groupID) {
 		String SQL = "SELECT * FROM message WHERE toUserID = ? AND groupID = ? AND msgAvailable = 1 AND msgCheck = 0 ORDER BY msgDate DESC";
 		ArrayList<MessageDTO> checklist = new ArrayList<MessageDTO>();
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, toUserID);
 			pstmt.setInt(2, groupID);
@@ -318,7 +338,7 @@ public class MessageDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, rs, pstmt);
+			SqlConfig.closeResources(conn, rs, pstmt);
 		}
 		return checklist;
 	}
@@ -327,9 +347,11 @@ public class MessageDAO {
 	public ArrayList<MessageDTO> getMsgList(String toUserID, int groupID) {
 		String SQL = "SELECT * FROM message WHERE toUserID = ? AND groupID = ? AND msgAvailable = 1 ORDER BY msgDate DESC";
 		ArrayList<MessageDTO> msglist = new ArrayList<MessageDTO>();
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, toUserID);
 			pstmt.setInt(2, groupID);
@@ -353,7 +375,7 @@ public class MessageDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, rs, pstmt);
+			SqlConfig.closeResources(conn, rs, pstmt);
 		}
 		return msglist;
 	}
@@ -361,9 +383,11 @@ public class MessageDAO {
 	// 한 개의 메시지 정보
 	public MessageDTO getMsgVO(int msgID) {
 		String SQL = "SELECT * FROM message WHERE msgID = ?";
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, msgID);
 			rs = pstmt.executeQuery();
@@ -388,7 +412,7 @@ public class MessageDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, rs, pstmt);
+			SqlConfig.closeResources(conn, rs, pstmt);
 		}
 		return null;
 	}
@@ -399,9 +423,11 @@ public class MessageDAO {
 		List<MessageDTO> messageDTOs = new ArrayList<>();
 		String SQL = "SELECT msgID, msgAvailable FROM message WHERE userID = ?";// userID가 전송한 msgID와 삭제여부 msgAvailable을
 																				// 가져온다.
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
 			rs = pstmt.executeQuery();
@@ -421,7 +447,7 @@ public class MessageDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, rs, pstmt);
+			SqlConfig.closeResources(conn, rs, pstmt);
 		}
 		return messageDTOs;
 	}
@@ -429,8 +455,10 @@ public class MessageDAO {
 	// UserDAO - delete에서 삭제된 user와 관련된 정보를 업데이트 한다.
 	public void updateMsgVO(MessageDTO messageDTO) {
 		String SQL = "UPDATE message SET msgAvailable = ? WHERE msgID = ?";
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, messageDTO.getMsgAvailable());
 			pstmt.setInt(2, messageDTO.getMsgID());
@@ -438,7 +466,7 @@ public class MessageDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, null, pstmt);
+			SqlConfig.closeResources(conn, null, pstmt);
 		}
 	}
 }

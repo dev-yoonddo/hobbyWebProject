@@ -24,15 +24,15 @@ public class CrewDAO {
 		return CrewDAOHolder.INSTANCE;
 	}
 
-	private Connection conn = SqlConfig.getConn();
-
 	// 멤버 정보 저장
 	public int joinCrew(String userID, String spotName) {
 		String SQL = "INSERT INTO crew VALUES (?, ?, ?)";
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
-			// pstmt = conn.prepareStatement(SQL);
+			// conn = SqlConfig.getConn(); pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
 			pstmt.setString(2, spotName);
 			pstmt.setInt(3, 1);
@@ -40,7 +40,7 @@ public class CrewDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, null, pstmt);
+			SqlConfig.closeResources(conn, null, pstmt);
 		}
 		return -1;
 	}
@@ -49,9 +49,11 @@ public class CrewDAO {
 	public ArrayList<CrewDTO> getJoinedList(String userID, String spotName) {
 		String SQL = "SELECT * FROM crew WHERE userID = ? AND spotName = ?";
 		ArrayList<CrewDTO> list = new ArrayList<CrewDTO>();
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
 			pstmt.setString(2, spotName);
@@ -67,7 +69,7 @@ public class CrewDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, rs, pstmt);
+			SqlConfig.closeResources(conn, rs, pstmt);
 		}
 		return list;
 	}
@@ -75,9 +77,11 @@ public class CrewDAO {
 	// userID와 spotName을 받아 정상적으로 데이터가 저장되었는지 검사
 	public CrewDTO getCheckRegist(String userID, String spotName) {
 		String SQL = "SELECT * FROM crew WHERE userID = ? AND spotName = ? AND crewAvailable = 1";
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
 			pstmt.setString(2, spotName);
@@ -92,7 +96,7 @@ public class CrewDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, rs, pstmt);
+			SqlConfig.closeResources(conn, rs, pstmt);
 		}
 		return null;
 	}
@@ -103,9 +107,11 @@ public class CrewDAO {
 		List<CrewDTO> crewDTOs = new ArrayList<>();
 		String SQL = "SELECT crewAvailable , userID FROM crew WHERE userID = ?";// userID가 가입한 crew의 탈퇴여부 crewAvailable을
 																				// 가져온다.
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
 			rs = pstmt.executeQuery();
@@ -122,7 +128,7 @@ public class CrewDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, rs, pstmt);
+			SqlConfig.closeResources(conn, rs, pstmt);
 		}
 		return crewDTOs;
 	}
@@ -130,8 +136,10 @@ public class CrewDAO {
 	// UserDAO - delete에서 삭제된 user와 관련된 정보를 업데이트 한다.
 	public void updateCrewVO(CrewDTO crewDTO) {
 		String SQL = "UPDATE crew SET crewAvailable = ? WHERE userID = ?";
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, crewDTO.getCrewAvailable());
 			pstmt.setString(2, crewDTO.getUserID());
@@ -140,7 +148,7 @@ public class CrewDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, null, pstmt);
+			SqlConfig.closeResources(conn, null, pstmt);
 		}
 	}
 }

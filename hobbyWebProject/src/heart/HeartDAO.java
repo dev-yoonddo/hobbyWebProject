@@ -23,12 +23,12 @@ public class HeartDAO {
 		return HeartDAOHolder.INSTANCE;
 	}
 
-	private Connection conn = SqlConfig.getConn();
-
 	public int heart(String userID, int boardID) {
 		String SQL = "INSERT INTO heart VALUES (?, ?)";
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
 			pstmt.setInt(2, boardID);
@@ -36,15 +36,17 @@ public class HeartDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, null, pstmt);
+			SqlConfig.closeResources(conn, null, pstmt);
 		}
 		return -1;// 데이터베이스 오류
 	}
 
 	public int delete(String userID, int boardID) {
 		String SQL = "DELETE FROM heart WHERE userID = ? AND boardID = ?";
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
 			pstmt.setInt(2, boardID);
@@ -52,16 +54,18 @@ public class HeartDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, null, pstmt);
+			SqlConfig.closeResources(conn, null, pstmt);
 		}
 		return -1;// 데이터베이스 오류
 	}
 
 	public HeartDTO getHeartVO(int boardID) {
 		String SQL = "SELECT * FROM heart WHERE boardID = ?";
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, boardID);
 			rs = pstmt.executeQuery();
@@ -74,16 +78,18 @@ public class HeartDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, rs, pstmt);
+			SqlConfig.closeResources(conn, rs, pstmt);
 		}
 		return null;
 	}
 
 	public HeartDTO getHeartVOByUser(String userID, int boardID) {
 		String SQL = "SELECT * FROM heart WHERE userID = ? AND boardID = ?";
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
 			pstmt.setInt(2, boardID);
@@ -97,7 +103,7 @@ public class HeartDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, rs, pstmt);
+			SqlConfig.closeResources(conn, rs, pstmt);
 		}
 		return null;
 	}
@@ -106,9 +112,11 @@ public class HeartDAO {
 		String SQL = "SELECT * FROM heart WHERE boardID = ? AND userID IS NOT NULL"; // boardID가 일치하고 userID가 null이 아닌
 																						// heart의 리스트를 가져온다
 		ArrayList<HeartDTO> hearts = new ArrayList<HeartDTO>();
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, boardID);
 			rs = pstmt.executeQuery();
@@ -121,7 +129,7 @@ public class HeartDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, rs, pstmt);
+			SqlConfig.closeResources(conn, rs, pstmt);
 		}
 		return hearts;
 	}

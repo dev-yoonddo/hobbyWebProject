@@ -24,16 +24,16 @@ public class ScheduleDAO {
 		return ScheduleDAOHolder.INSTANCE;
 	}
 
-	private Connection conn = SqlConfig.getConn();
-
 	// 스케줄 저장
 	public int registSchedule(String userID, String spotName, int skedYear, int skedMonth, int skedDay,
 			String skedContent) {
 		String SQL = "INSERT INTO schedule VALUES (?, ?, ?, ?, ?, ?, ?)";
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
-			// pstmt = conn.prepareStatement(SQL);
+			// conn = SqlConfig.getConn(); pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
 			pstmt.setString(2, spotName);
 			pstmt.setInt(3, skedYear);
@@ -45,7 +45,7 @@ public class ScheduleDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, null, pstmt);
+			SqlConfig.closeResources(conn, null, pstmt);
 		}
 		return -1;
 	}
@@ -54,9 +54,11 @@ public class ScheduleDAO {
 	public ArrayList<ScheduleDTO> getScheduleList() {
 		String SQL = "SELECT * FROM schedule ORDER BY skedYear DESC, skedMonth DESC , skedDay DESC";
 		ArrayList<ScheduleDTO> list = new ArrayList<ScheduleDTO>();
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
@@ -73,7 +75,7 @@ public class ScheduleDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, rs, pstmt);
+			SqlConfig.closeResources(conn, rs, pstmt);
 		}
 		return list;
 	}
@@ -82,9 +84,11 @@ public class ScheduleDAO {
 	public ArrayList<ScheduleDTO> getScheduleListBySpot(String spotName) {
 		String SQL = "SELECT * FROM schedule WHERE spotName = ?";
 		ArrayList<ScheduleDTO> list = new ArrayList<ScheduleDTO>();
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, spotName);
 			rs = pstmt.executeQuery();
@@ -102,7 +106,7 @@ public class ScheduleDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, rs, pstmt);
+			SqlConfig.closeResources(conn, rs, pstmt);
 		}
 		return list;
 	}
@@ -111,9 +115,11 @@ public class ScheduleDAO {
 	public ArrayList<ScheduleDTO> getScheduleListByTime(String spotName, int skedYear, int skedMonth, int skedDay) {
 		String SQL = "SELECT * FROM schedule WHERE spotName = ? AND skedYear = ? AND skedMonth = ? AND skedDay = ?";
 		ArrayList<ScheduleDTO> list = new ArrayList<ScheduleDTO>();
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, spotName);
 			pstmt.setInt(2, skedYear);
@@ -134,7 +140,7 @@ public class ScheduleDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, rs, pstmt);
+			SqlConfig.closeResources(conn, rs, pstmt);
 		}
 		return list;
 	}
@@ -144,9 +150,11 @@ public class ScheduleDAO {
 	public List<ScheduleDTO> getDelScheduleByUserID(String userID) {
 		List<ScheduleDTO> list = new ArrayList<>();
 		String SQL = "SELECT skedAvailable FROM schedule WHERE userID = ?";
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
 			rs = pstmt.executeQuery();
@@ -160,7 +168,7 @@ public class ScheduleDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, rs, pstmt);
+			SqlConfig.closeResources(conn, rs, pstmt);
 		}
 		return list;
 	}
@@ -168,8 +176,10 @@ public class ScheduleDAO {
 	// UserDAO - delete에서 삭제된 user와 관련된 정보를 업데이트 한다.
 	public void updateSkedVO(ScheduleDTO skedDTO) {
 		String SQL = "UPDATE schedule SET skedAvailable = ? WHERE userID = ?";
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, skedDTO.getSkedAvailable());
 			pstmt.setString(2, skedDTO.getUserID());
@@ -177,7 +187,7 @@ public class ScheduleDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, null, pstmt);
+			SqlConfig.closeResources(conn, null, pstmt);
 		}
 	}
 }

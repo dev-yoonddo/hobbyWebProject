@@ -27,9 +27,11 @@ public class EventDAO {
 	// eventID 번호매기기
 	public int getNext() {
 		String SQL = "SELECT MAX(eventID) FROM event";
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
@@ -41,7 +43,7 @@ public class EventDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, rs, pstmt);
+			SqlConfig.closeResources(conn, rs, pstmt);
 		}
 		return -1;
 	}
@@ -49,8 +51,10 @@ public class EventDAO {
 	// 이벤트 응모하기
 	public int apply(String userID, String groupName, String eventContent, String userPassword) {
 		String SQL = "INSERT INTO event VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, getNext());
 			pstmt.setString(2, userID);
@@ -64,7 +68,7 @@ public class EventDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, null, pstmt);
+			SqlConfig.closeResources(conn, null, pstmt);
 		}
 		return -1; // 데이터베이스 오류
 	}
@@ -72,9 +76,11 @@ public class EventDAO {
 	// 로그인 유저에 해당하는 정보 가져오기
 	public EventDTO getEventVO(String userID) {
 		String SQL = "SELECT * FROM event WHERE userID = ?";
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);// 물음표
 			rs = pstmt.executeQuery();// select
@@ -93,7 +99,7 @@ public class EventDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, rs, pstmt);
+			SqlConfig.closeResources(conn, rs, pstmt);
 		}
 		return null;
 	}
@@ -102,9 +108,11 @@ public class EventDAO {
 	public ArrayList<EventDTO> getList() {
 		String SQL = "SELECT * FROM event WHERE eventWin = 0 ORDER BY eventID DESC";
 		ArrayList<EventDTO> list = new ArrayList<EventDTO>();
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
@@ -122,7 +130,7 @@ public class EventDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, rs, pstmt);
+			SqlConfig.closeResources(conn, rs, pstmt);
 		}
 		return list;
 	}
@@ -131,9 +139,11 @@ public class EventDAO {
 	public ArrayList<EventDTO> getListByUser(String userID) {
 		String SQL = "SELECT * FROM event WHERE userID = ?";
 		ArrayList<EventDTO> list = new ArrayList<EventDTO>();
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
 			rs = pstmt.executeQuery();
@@ -152,7 +162,7 @@ public class EventDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, rs, pstmt);
+			SqlConfig.closeResources(conn, rs, pstmt);
 		}
 		return list;
 	}
@@ -160,15 +170,17 @@ public class EventDAO {
 	// 당첨자는 eventWin 값을 1로 변경하기
 	public int raffleWin(String userID) {
 		String SQL = "UPDATE event SET eventWin = 1 WHERE userID = ?";// 특정한 아이디에 해당하는 제목과 내용을 바꿔준다.
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
 			return pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, null, pstmt);
+			SqlConfig.closeResources(conn, null, pstmt);
 		}
 		return -1;// 데이터베이스 오류
 	}
@@ -176,8 +188,10 @@ public class EventDAO {
 	// 당첨자에게 메시지 보내기
 	public int raffleWinMsg(String userID, String eventWinMsg) {
 		String SQL = "UPDATE event SET eventWinMsg = ? WHERE userID = ?";// 특정한 아이디에 해당하는 제목과 내용을 바꿔준다.
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, eventWinMsg);
 			pstmt.setString(2, userID);
@@ -185,7 +199,7 @@ public class EventDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, null, pstmt);
+			SqlConfig.closeResources(conn, null, pstmt);
 		}
 		return -1;// 데이터베이스 오류
 	}
@@ -193,9 +207,11 @@ public class EventDAO {
 	// 당첨메시지 출력하기
 	public EventDTO getEventWinMsg(String userID) {
 		String SQL = "SELECT eventWinMsg FROM event WHERE userID = ?";
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);// 물음표
 			rs = pstmt.executeQuery();// select
@@ -207,7 +223,7 @@ public class EventDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, rs, pstmt);
+			SqlConfig.closeResources(conn, rs, pstmt);
 		}
 		return null;
 	}
@@ -215,15 +231,17 @@ public class EventDAO {
 	// 당첨메시지 더이상 보지않기
 	public int raffleMsgExit(String userID) {
 		String SQL = "UPDATE event SET eventAvailable = 0 WHERE userID = ?";// 특정한 아이디에 해당하는 제목과 내용을 바꿔준다.
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
 			return pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, null, pstmt);
+			SqlConfig.closeResources(conn, null, pstmt);
 		}
 		return -1;// 데이터베이스 오류
 	}

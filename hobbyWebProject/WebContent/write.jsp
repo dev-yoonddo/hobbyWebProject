@@ -1,4 +1,7 @@
 
+<%@page import="location.LocationDTO"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="location.LocationDAO"%>
 <%@page import="java.net.URLEncoder"%>
 <%@page import="java.io.File"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -152,6 +155,54 @@ textarea{
 #btn{
 	width: 35%;
 }
+/*스팟초대 버튼*/
+#spot-sel{
+	width: 50%;
+	display: flex;
+	position: absolute;
+	left: 300px;
+}
+#invite-spot-open{
+	width: 100px;
+	height: 40px;
+}
+#invite-spot-close{
+	width: 100px;
+	height: 40px;
+	display: none;
+}
+#invite-spot-open span , #invite-spot-close span{
+	font-size: 10pt;
+}
+#spot-popup{
+	width: 240px;
+	max-height: 200px;
+	overflow-y: auto;
+	font-size: 9pt;
+	flex-direction:column-reverse;
+	z-index:55;
+	left: 20px;
+	position: relative;
+	background-color: #DBE2F7;
+	border-radius: 10px;
+	padding: 5px;
+	 
+}
+.spot-row >td{
+	border-bottom: solid 1px #C0C0C0;
+}
+#result{
+	width: 100%;
+	padding: 3px;
+	display: flex;
+}
+.sel-result{
+	width: auto;
+	padding: 5px 8px;
+	background-color: #DBE2F7;
+	border-radius: 50px;
+	margin-right: 5px;
+}
 @media screen and (max-width:900px) {
 	.board-container , .write-table , form, textarea, table, tbody, tr, th, td{
 		max-width: 650px;
@@ -215,6 +266,9 @@ if(userID == null){
 }
 //searchPage에서 글쓰기 버튼을 눌렀을 때 전달받는 카테고리 값 가져오기
 String bdcategory = request.getParameter("category");
+LocationDAO location = LocationDAO.getInstance();
+ArrayList<LocationDTO> list = location.getLocationVOByUserID(userID);
+ArrayList<String> taglist = new ArrayList<>();
 %>
 <!-- header start-->
 <header id="header">
@@ -229,27 +283,67 @@ String bdcategory = request.getParameter("category");
 		<div class="right-row">
 			<form method="post" action="writeAction" enctype="multipart/form-data">
 				<div class="category-sel" style="display: flex;">
-				<select name="boardCategory">
-					<option value="0">CATEGORY</option>
-					<option value="SPORTS" >SPORTS</option>
-					<option value="LEISURE" >LEISURE</option>
-					<option value="MUSIC" >MUSIC</option>
-					<option value="OTHER" >OTHER</option>
-				</select>
-				<div class="form-check" style="display: flex; height: 40px; align-items: center;">
-					<input type="checkbox" hidden="hidden" name="notice" value="NULL" checked="checked">
-				<!-- 관리자 계정으로 공지사항 체크박스 체크시 value값을 NOTICE로 넘긴다. -->
-				<% 
-					if(userID.equals("manager")){
-				%>
-					<input class="form-check-input" type="checkbox" name="notice" value="NOTICE" id="flexCheckDefault">
-					<label class="form-check-label" for="flexCheckDefault">
-					  공지사항
-					</label>
-				<%
-					}
-				%>
-				</div>
+					<select name="boardCategory">
+						<option value="0">CATEGORY</option>
+						<option value="SPORTS" >SPORTS</option>
+						<option value="LEISURE" >LEISURE</option>
+						<option value="MUSIC" >MUSIC</option>
+						<option value="OTHER" >OTHER</option>
+					</select>
+					<div class="form-check" style="display: flex; height: 40px; align-items: center;">
+						<!-- <input type="checkbox" hidden="hidden" name="notice" value="NULL" checked="checked"> -->
+					<!-- 관리자 계정으로 공지사항 체크박스 체크시 value값을 NOTICE로 넘긴다. -->
+					<% 
+						if(userID.equals("manager")){
+					%>
+						<input class="form-check-input" type="checkbox" name="notice" value="NOTICE" id="flexCheckDefault">
+						<label class="form-check-label" for="flexCheckDefault">
+						  공지사항
+						</label>
+					<%
+						}
+					%>
+					</div>
+					<div id="spot-sel">
+						<button type="button" id="invite-spot-open" class="btn-blue" value="초대하기" onclick="inviteSpot('open')">
+							<span>스팟 초대</span>
+						</button>
+						<button type="button" id="invite-spot-close" class="btn-blue" value="초대하기" onclick="inviteSpot('close')">
+							<span>닫기</span>
+						</button>
+						<div id="spot-popup" hidden="">
+						<div>
+							<table>
+								<thead>
+									<tr class="spot-head">
+										<th class="ttt" style="width: 30%;"><span>스팟</span></th>
+										<th class="tt" style="width: 57%;"><span>주소</span></th>
+										<th class="ttt" style="width: 13%;"><span>인원</span></th>
+									</tr>
+								</thead>
+								<% if(list.size() == 0){%>
+								<tbody>
+									<tr>
+										<td colspan="3" class="none-list">생성한 스팟이 없습니다.</td>
+									</tr>
+								</tbody>
+								<%}else{ %>
+								<tbody>
+								<% 
+									for(LocationDTO i : list){
+								%>
+									<tr class="spot-row">
+										<td><input type="checkbox" id="click" name="click" onclick="getCheckboxValue()" value="<%=i.getSpotName()%>"><%=i.getSpotName()%></td>
+										<td><%=i.getAddress()%></td>
+										<td><%=i.getCrewCount()%>명</td>
+									</tr>
+								<%} %>
+								</tbody>
+								<%} %>
+							</table>
+						</div>
+						</div>
+					</div>
 				</div>
 				<table class="write-table" style="text-align: center; border: 1px solid #dddddd">
 					<thead>
@@ -262,7 +356,11 @@ String bdcategory = request.getParameter("category");
 							<td><textarea placeholder="제목을 입력하세요" name="boardTitle" maxlength="50"></textarea></td>
 						</tr>
 						<tr>
-							<td><textarea placeholder="내용을 입력하세요" name="boardContent" maxlength="2048" style="height: 350px; "></textarea></td>
+							<td><textarea placeholder="내용을 입력하세요" name="boardContent" maxlength="2048" style="height: 350px; ">		
+							</textarea>
+							<div id="result"></div>
+							<input type="text" name="tag" hidden=""/>
+							</td>
 						</tr>
 					</tbody>
 				</table>
@@ -274,7 +372,7 @@ String bdcategory = request.getParameter("category");
 						<input type="file" id="fileupload" name="fileupload" onchange="filename(this)" >
 					</div>
 					<div id="btn">
-						<button type="submit" class="btn-blue" value="글쓰기">
+						<button type="submit" class="btn-blue" value="글쓰기" onclick="submitTag()">
 						<span>작성하기</span>
 						</button>
 					</div>
@@ -284,7 +382,7 @@ String bdcategory = request.getParameter("category");
 	</div>
 </section>
 <script>
-//체크박스 한가지만 선택되도록 하기
+/*//체크박스 한가지만 선택되도록 하기
 $(document).on('click', "input[type='checkbox']", function(){
     if(this.checked) {
         const checkboxes = $("input[type='checkbox']");
@@ -295,7 +393,7 @@ $(document).on('click', "input[type='checkbox']", function(){
     } else {
         this.checked = false;
     }
-});
+});*/
 </script>
 
 <script>
@@ -316,6 +414,58 @@ function filename(input){
     //미리 만들어 놓은 div에 text(파일 이름) 추가
     var name = document.getElementById('filename');
     name.textContent = file.name;
+}
+
+function inviteSpot(value){
+	console.log(value);
+	if(value === 'open'){
+		document.getElementById('spot-popup').style.display = 'block';
+		document.getElementById('invite-spot-open').style.display = 'none';
+		document.getElementById('invite-spot-close').style.display = 'block';
+	}else{
+		document.getElementById('spot-popup').style.display = 'none';
+		document.getElementById('invite-spot-open').style.display = 'block';
+		document.getElementById('invite-spot-close').style.display = 'none';
+
+	}
+}
+
+//선택한 스팟 값 가져오기
+function getCheckboxValue(){
+	  // 선택된 목록 가져오기
+	  const query = 'input[name="click"]:checked';
+	  const selectedEls = document.querySelectorAll(query);
+	  
+	  document.getElementById('result').innerHTML = '';
+	  selectedEls.forEach((el) => {
+		    const div = document.createElement('div');
+		    div.classList.add('sel-result');
+		    div.setAttribute('name', 'tag');
+		    div.textContent = el.value;
+
+		    document.getElementById('result').appendChild(div);
+	});
+storeValues();
+}
+const valuesArray = [];
+function storeValues() {
+	// Select all elements with class 'sel-result'
+	const elements = document.querySelectorAll('.sel-result');
+	
+	// Array to store values
+	
+	// Iterate over each element and store its value
+	elements.forEach((element) => {
+	  // Get the text content of the element and add it to the array
+	  const value = element.textContent.trim();
+	  valuesArray.push(value);
+	});
+	
+	// Output the array to the console
+	console.log(valuesArray);
+}
+function submitTag(){
+	document.getElementById('tag').innerHTML = valuesArray;
 }
 </script>
 	<!-- 부트스트랩 참조 영역 -->

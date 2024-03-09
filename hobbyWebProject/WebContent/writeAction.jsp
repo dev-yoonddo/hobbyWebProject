@@ -65,7 +65,14 @@
 			String title = multi.getParameter("boardTitle");
 			String content = multi.getParameter("boardContent");
 			String category = multi.getParameter("boardCategory");
-			String notice = multi.getParameter("notice");
+			String notice = null;
+			String tag = null;
+			if(multi.getParameter("notice") != null){
+				notice = multi.getParameter("notice");
+			}
+			if(multi.getParameter("tag") != null){
+				tag = multi.getParameter("tag");
+			}
 			String filename = multi.getOriginalFileName("fileupload");
 			String fileRealname = multi.getFilesystemName("fileupload");
 			
@@ -98,7 +105,7 @@
 				//관리자 계정으로 공지사항 등록시
 				//notice = request.getParameter("notice");
 				if(userID.equals("manager") && notice.equals("NOTICE")){
-					result = boardDAO.write(title, userID, content, notice , filename, fileRealname);
+					result = boardDAO.write(title, userID, content, notice , filename, fileRealname, tag);
 					if(result == -1 || result == -2){
 						script.println("<script>");
 						script.println("alert('글쓰기에 실패했습니다')");
@@ -113,7 +120,7 @@
 					}
 				//관리자가 아니거나 공지사항이 아닐시
 				}else{
-					result = boardDAO.write(title, userID, content, category , filename, fileRealname);
+					result = boardDAO.write(title, userID, content, category , filename, fileRealname, tag);
 					//result > 0 이면 성공적으로 글쓰기 완료
 					if(result == -1 || result == -2){
 						script.println("<script>");

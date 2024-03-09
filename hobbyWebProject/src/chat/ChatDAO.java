@@ -24,14 +24,14 @@ public class ChatDAO {
 		return ChatDAOHolder.INSTANCE;
 	}
 
-	private Connection conn = SqlConfig.getConn();
-
 	// 날짜 가져오기
 	public String getDate() { // 현재 시간을 가져오는 함수
 		String SQL = "SELECT NOW()"; // 현재 시간을 가져오는 MySQL의 문장
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL); // SQL문장을 실행준비 단계로 만든다
 			rs = pstmt.executeQuery(); // 실제로 실행했을 때 결과를 가져온다.
 			if (rs.next()) { // 결과가 있는경우
@@ -40,7 +40,7 @@ public class ChatDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, rs, pstmt);
+			SqlConfig.closeResources(conn, rs, pstmt);
 		}
 		return ""; // 빈 문자열을 반환함으로써 데이터베이스 오류를 알려준다.
 	}
@@ -48,8 +48,10 @@ public class ChatDAO {
 	// 채팅 저장하기
 	public int send(String userID, int groupID, String chatContent) {
 		String SQL = "INSERT INTO chat VALUES (?, ?, ?, ?, ?)";
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID); // board테이블에 저장된 boardID를 file테이블에도 저장하기 위해 변수에 저장한다.
 			pstmt.setInt(2, groupID);
@@ -61,7 +63,7 @@ public class ChatDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, null, pstmt);
+			SqlConfig.closeResources(conn, null, pstmt);
 		}
 		return -1; // 데이터베이스 오류
 	}
@@ -69,9 +71,11 @@ public class ChatDAO {
 	// 전송 채팅 보기
 	public ChatDTO getChatVO(int groupID) {
 		String SQL = "SELECT * FROM chat WHERE groupID = ?";
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, groupID);
 			rs = pstmt.executeQuery();
@@ -87,7 +91,7 @@ public class ChatDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, rs, pstmt);
+			SqlConfig.closeResources(conn, rs, pstmt);
 		}
 		return null;
 	}
@@ -96,9 +100,11 @@ public class ChatDAO {
 	public ArrayList<ChatDTO> getChatList(int groupID) {
 		String SQL = "SELECT * FROM chat WHERE groupID = ? ORDER BY chatDate DESC";
 		ArrayList<ChatDTO> list = new ArrayList<ChatDTO>();
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, groupID);
 			rs = pstmt.executeQuery();
@@ -114,7 +120,7 @@ public class ChatDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, rs, pstmt);
+			SqlConfig.closeResources(conn, rs, pstmt);
 		}
 		return list;
 	}
@@ -124,9 +130,11 @@ public class ChatDAO {
 	public List<ChatDTO> getDelChatVOByUserID(String userID) {
 		List<ChatDTO> chatDTOs = new ArrayList<>();
 		String SQL = "SELECT chatAvailable FROM chat WHERE userID = ?";// userID가 입력한 chat의 삭제여부 chatAvailable을 가져온다.
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
 			rs = pstmt.executeQuery();
@@ -143,7 +151,7 @@ public class ChatDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, rs, pstmt);
+			SqlConfig.closeResources(conn, rs, pstmt);
 		}
 		return chatDTOs;
 	}
@@ -151,8 +159,10 @@ public class ChatDAO {
 	// UserDAO - delete에서 삭제된 user와 관련된 정보를 업데이트 한다.
 	public void updateChatVO(ChatDTO chatDTO) {
 		String SQL = "UPDATE chat SET chatAvailable = ? WHERE userID = ?";
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, chatDTO.getChatAvailable());
 			pstmt.setString(2, chatDTO.getUserID());
@@ -160,7 +170,7 @@ public class ChatDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, null, pstmt);
+			SqlConfig.closeResources(conn, null, pstmt);
 		}
 	}
 
@@ -169,10 +179,11 @@ public class ChatDAO {
 	public List<ChatDTO> getDelChatVOByMbID(String userID, int groupID) {
 		List<ChatDTO> chatDTOs = new ArrayList<>();
 		String SQL = "SELECT chatAvailable FROM chat WHERE userID = ? AND groupID = ?";// userID가 입력한 chat의 삭제여부
-																						// chatAvailable을 가져온다.
+		Connection conn = null; // chatAvailable을 가져온다.
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
 			pstmt.setInt(2, groupID);
@@ -193,7 +204,7 @@ public class ChatDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, rs, pstmt);
+			SqlConfig.closeResources(conn, rs, pstmt);
 		}
 		return chatDTOs;
 	}
@@ -201,8 +212,10 @@ public class ChatDAO {
 	// MemberDAO - delete에서 삭제된 user와 관련된 정보를 업데이트 한다.
 	public void updateMbChatVO(ChatDTO chatDTO) {
 		String SQL = "UPDATE chat SET chatAvailable = ? WHERE userID = ? AND groupID = ?";
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, chatDTO.getChatAvailable());
 			pstmt.setString(2, chatDTO.getUserID());
@@ -211,7 +224,7 @@ public class ChatDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, null, pstmt);
+			SqlConfig.closeResources(conn, null, pstmt);
 		}
 	}
 }

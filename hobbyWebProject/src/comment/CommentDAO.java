@@ -28,9 +28,11 @@ public class CommentDAO {
 
 	public String getDate() {
 		String SQL = "SELECT NOW()";
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
@@ -39,7 +41,7 @@ public class CommentDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, rs, pstmt);
+			SqlConfig.closeResources(conn, rs, pstmt);
 		}
 		return ""; // 데이터베이스 오류
 	}
@@ -47,9 +49,11 @@ public class CommentDAO {
 	// cmtID 번호 매기기
 	public int getNext() {
 		String SQL = "SELECT cmtID FROM comment ORDER BY cmtID DESC";
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
@@ -58,7 +62,7 @@ public class CommentDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, rs, pstmt);
+			SqlConfig.closeResources(conn, rs, pstmt);
 		}
 		return 1; // 첫번째 댓글인 경우
 	}
@@ -66,8 +70,10 @@ public class CommentDAO {
 	// 작성하기
 	public int write(String cmtContent, String userID, int boardID) {
 		String SQL = "INSERT INTO comment VALUES(?, ?, ?, ?, ?, ?)";
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, cmtContent);
 			pstmt.setInt(2, getNext());
@@ -80,7 +86,7 @@ public class CommentDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, null, pstmt);
+			SqlConfig.closeResources(conn, null, pstmt);
 		}
 		return -1; // 데이터베이스 오류
 	}
@@ -96,9 +102,11 @@ public class CommentDAO {
 	public ArrayList<CommentDTO> getList(int boardID) {
 		String SQL = "SELECT * FROM comment WHERE boardID= ? AND cmtAvailable = 1 ORDER BY boardID DESC";
 		ArrayList<CommentDTO> cmtlist = new ArrayList<CommentDTO>();
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, boardID);
 			rs = pstmt.executeQuery();
@@ -115,7 +123,7 @@ public class CommentDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, rs, pstmt);
+			SqlConfig.closeResources(conn, rs, pstmt);
 		}
 		return cmtlist;
 	}
@@ -124,9 +132,11 @@ public class CommentDAO {
 	public ArrayList<CommentDTO> getListByUser(String userID) {
 		String SQL = "SELECT * FROM comment WHERE userID = ? AND cmtAvailable = 1 ORDER BY cmtID DESC"; // 삭제하지 않은 댓글
 		ArrayList<CommentDTO> list = new ArrayList<CommentDTO>();
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
 			rs = pstmt.executeQuery();
@@ -143,7 +153,7 @@ public class CommentDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, rs, pstmt);
+			SqlConfig.closeResources(conn, rs, pstmt);
 		}
 		return list;
 	}
@@ -159,9 +169,11 @@ public class CommentDAO {
 	// 하나의 댓글 정보 가져오기
 	public CommentDTO getCommentVO(int cmtID) {
 		String SQL = "SELECT * FROM comment WHERE cmtID = ?";
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, cmtID);
 			rs = pstmt.executeQuery();
@@ -178,7 +190,7 @@ public class CommentDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, rs, pstmt);
+			SqlConfig.closeResources(conn, rs, pstmt);
 		}
 		return null;
 	}
@@ -186,15 +198,17 @@ public class CommentDAO {
 	// 삭제하기
 	public int delete(int cmtID) {
 		String SQL = "UPDATE comment SET cmtAvailable = 0 WHERE cmtID = ?";
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, cmtID);
 			return pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, null, pstmt);
+			SqlConfig.closeResources(conn, null, pstmt);
 		}
 		return -1; // 데이터베이스 오류
 	}
@@ -209,15 +223,17 @@ public class CommentDAO {
 	// 해당 userID데이터 삭제하기
 	public int deleteByUser(String userID) {
 		String SQL = "DELETE FROM comment WHERE userID = ?";
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
 			return pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, null, pstmt);
+			SqlConfig.closeResources(conn, null, pstmt);
 		}
 		return -1; // 데이터베이스 오류
 	}
@@ -225,9 +241,11 @@ public class CommentDAO {
 	// 특정 boardID에 해당되는 comment의 갯수 구하기
 	public int getCommentCount(int boardID) {
 		String SQL = "SELECT COUNT(*) FROM comment WHERE boardID = ?";
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, boardID);
 			rs = pstmt.executeQuery();
@@ -237,7 +255,7 @@ public class CommentDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, rs, pstmt);
+			SqlConfig.closeResources(conn, rs, pstmt);
 		}
 		return -1;
 	}
@@ -246,9 +264,11 @@ public class CommentDAO {
 	public List<CommentDTO> getDelCommentVOByUserID(String userID) {
 		List<CommentDTO> commentDTOs = new ArrayList<>();
 		String SQL = "SELECT cmtID, cmtAvailable FROM comment WHERE userID = ?";
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
 			rs = pstmt.executeQuery();
@@ -267,7 +287,7 @@ public class CommentDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, rs, pstmt);
+			SqlConfig.closeResources(conn, rs, pstmt);
 		}
 		return commentDTOs;
 	}
@@ -275,8 +295,10 @@ public class CommentDAO {
 	// userDAO에서 변한 commetAvailable값을 업데이트 해주는 메서드
 	public void updateCommentVO(CommentDTO commentDTO) {
 		String SQL = "UPDATE comment SET cmtAvailable = ? WHERE cmtID = ?";
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, commentDTO.getCmtAvailable());
 			pstmt.setInt(2, commentDTO.getCmtID());
@@ -284,7 +306,7 @@ public class CommentDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, null, pstmt);
+			SqlConfig.closeResources(conn, null, pstmt);
 		}
 	}
 }

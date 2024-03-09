@@ -24,18 +24,26 @@
 		driverClassName = "oracle.jdbc.driver.OracleDriver"
 		url = "jdbc:oracle:thin:@localhost:1521:xe"
 	-->
+	<!-- url = "jdbc:mariadb://localhost:3306/cksndbs7"-->
+	<!-- url = "jdbc:mariadb://toogether.me:3306/cksndbs7"-->
+	<WatchedResource>WEB-INF/web.xml</WatchedResource>
 	<Resource
-		name = "jdbc/togetherDB" 
+		name = "jdbc/cksndbs7" 
 		type = "javax.sql.DataSource" 
+		driverClassName = "org.mariadb.jdbc.Driver"
+		url = "jdbc:mariadb://toogether.me:3306/cksndbs7"
 		auth = "Container"
 		initialSize = "30"
 		maxActive = "30" 
 		maxIdle = "30" 
-		maxWait = "-1" 
-		minIdle = "30"
-		username = "root" 
-		password = "qlalf9228?" 
+		maxWaitMillis = "3000"
+		minIdle = "10"
+		username = "cksndbs7" 
+		password = "qlalf0720!" 
 		factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
-		driverClassName = "com.mysql.jdbc.Driver"
-		url = "jdbc:mysql://database-1.cxujakzvpvip.ap-southeast-2.rds.amazonaws.com:3306/hobbyWebProject?useUnicode=true&amp;characterEncoding=UTF-8"/>
+		removeAbandonedOnBorrow="true"
+		logAbandoned="true"
+		validationQuery="select 1"
+		testWhileIdle="true"
+		timeBetweenEvictionRunsMillis="3600000"/>
 </Context>

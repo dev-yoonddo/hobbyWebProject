@@ -30,7 +30,6 @@ import schedule.ScheduleDAO;
 import schedule.ScheduleDTO;
 
 public class UserDAO {
-	Connection conn = SqlConfig.getConn();
 
 	// singleton : Bill Pugh Solution (LazyHolder) 기법
 	private UserDAO() {
@@ -49,9 +48,11 @@ public class UserDAO {
 //  회원 로그인
 	public int login(String userID, String userPassword, int userAvailable) {
 		String SQL = "SELECT userPassword, userSalt, userAvailable FROM user WHERE userID = ?";
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
 			rs = pstmt.executeQuery();
@@ -118,10 +119,12 @@ public class UserDAO {
 //			System.out.println("salt일치: " + salt.equals(salt2));
 		}
 		String SQL = "INSERT INTO user VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
-			// pstmt = conn.prepareStatement(SQL);
+			// conn = SqlConfig.getConn(); pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, user.getUserID());
 			pstmt.setString(2, user.getUserName());
 			pstmt.setString(3, user.getUserEmail());
@@ -142,17 +145,19 @@ public class UserDAO {
 //이메일 인증
 	public boolean setUserEmailChecked(String userID) {
 		String SQL = "UPDATE user SET userEmailChecked = true WHERE userID = ?";
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
-			// pstmt = conn.prepareStatement(SQL);
+			// conn = SqlConfig.getConn(); pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
 			pstmt.executeUpdate();
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, null, pstmt);
+			SqlConfig.closeResources(conn, null, pstmt);
 		}
 		return false; // 데이터베이스 오류
 	}
@@ -160,11 +165,13 @@ public class UserDAO {
 //이메일 인증 여부
 	public boolean getUserEmailChecked(String userID) {
 		String SQL = "SELECT userEmailChecked FROM user WHERE userID = ?";
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
-			// pstmt = conn.prepareStatement(SQL);
+			// conn = SqlConfig.getConn(); pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
@@ -181,11 +188,13 @@ public class UserDAO {
 //이메일 가져오기
 	public String getUserEmail(String userID) {
 		String SQL = "SELECT userEmail FROM user WHERE userID = ?";
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
-			// pstmt = conn.prepareStatement(SQL);
+			// conn = SqlConfig.getConn(); pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
@@ -207,10 +216,12 @@ public class UserDAO {
 		HashMap<String, String> encryptMail = PwEncrypt.encoding(userEmail, salt);
 		String userEmailHash = encryptMail.get("hash");
 		String SQL = "UPDATE user SET userEmail = ? , userEmailHash = ? WHERE userID = ?";
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
-			// pstmt = conn.prepareStatement(SQL);
+			// conn = SqlConfig.getConn(); pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userEmail);
 			pstmt.setString(2, userEmailHash);
 			pstmt.setString(3, userID);
@@ -218,7 +229,7 @@ public class UserDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, null, pstmt);
+			SqlConfig.closeResources(conn, null, pstmt);
 		}
 		return -1;// 데이터베이스 오류
 	}
@@ -227,9 +238,11 @@ public class UserDAO {
 	public ArrayList<UserDTO> getEmailList() {
 		String SQL = "SELECT userEmail FROM user WHERE userEmail IS NOT NULL AND userEmail != '' ";
 		ArrayList<UserDTO> list = new ArrayList<UserDTO>();
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
@@ -248,9 +261,11 @@ public class UserDAO {
 //	회원 정보 보기	
 	public UserDTO getUserVO(String userID) {
 		String SQL = "SELECT * FROM user WHERE userID = ?";
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);// 물음표
 			rs = pstmt.executeQuery();// select
@@ -291,8 +306,10 @@ public class UserDAO {
 
 		String SQL = "UPDATE user SET userName = ?,userEmail = ?, userBirth = ?, userPhone = ?, userPassword = ?, userSalt = ?, userEmailHash = ?, userEmailChecked = ? WHERE userID = ?";// 특정한
 		// 바꿔준다.
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userName);
 			pstmt.setString(2, userEmail);
@@ -314,7 +331,7 @@ public class UserDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			SqlConfig.closeResources(null, null, pstmt);
+			SqlConfig.closeResources(conn, null, pstmt);
 		}
 		return -1;// 데이터베이스 오류
 	}
@@ -332,8 +349,10 @@ public class UserDAO {
 //	userAvailable을 0으로 변경
 	public int delete(String userID) {
 		String SQL = "UPDATE user SET userAvailable = 0 WHERE userID = ? ";
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
+			conn = SqlConfig.getConn();
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
 			// return pstmt.executeUpdate();
@@ -409,7 +428,7 @@ public class UserDAO {
 			e.printStackTrace();
 			return -1; // database error
 		} finally {
-			SqlConfig.closeResources(null, null, pstmt);
+			SqlConfig.closeResources(conn, null, pstmt);
 		}
 	}
 
