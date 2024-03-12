@@ -65,16 +65,25 @@
 			String title = multi.getParameter("boardTitle");
 			String content = multi.getParameter("boardContent");
 			String category = multi.getParameter("boardCategory");
-			String notice = null;
-			String tag = null;
-			if(multi.getParameter("notice") != null){
-				notice = multi.getParameter("notice");
-			}
-			if(multi.getParameter("tag") != null){
-				tag = multi.getParameter("tag");
-			}
+			String notice = multi.getParameter("notice");
 			String filename = multi.getOriginalFileName("fileupload");
 			String fileRealname = multi.getFilesystemName("fileupload");
+			String tags = "";
+			String[] tagpam = null;
+			int tagCount = 0;
+	
+			//태그 저장하기
+			if(multi.getParameterValues("tag") != null){
+				tagpam = multi.getParameterValues("tag");
+				for(String i : tagpam){
+					tagCount++;
+					if(tagpam.length != tagCount){
+						tags += (i + ",");	//배열 길이와 카운트 값이 다르면 아직 저장할 파라미터 값이 존재하기 때문에 ","을 붙여준다.
+					}else{
+						tags += i;	//배열 길이와 카운트 값이 같으면 마지막 파라미터 값이기 때문에 ","을 붙이지 않는다.
+					}
+				}
+			}
 			
 			//빈칸이 있으면 알림창을 띄운다.
 			if(title.length() == 0){
@@ -105,7 +114,7 @@
 				//관리자 계정으로 공지사항 등록시
 				//notice = request.getParameter("notice");
 				if(userID.equals("manager") && notice.equals("NOTICE")){
-					result = boardDAO.write(title, userID, content, notice , filename, fileRealname, tag);
+					result = boardDAO.write(title, userID, content, notice , filename, fileRealname, tags);
 					if(result == -1 || result == -2){
 						script.println("<script>");
 						script.println("alert('글쓰기에 실패했습니다')");
@@ -120,7 +129,7 @@
 					}
 				//관리자가 아니거나 공지사항이 아닐시
 				}else{
-					result = boardDAO.write(title, userID, content, category , filename, fileRealname, tag);
+					result = boardDAO.write(title, userID, content, category , filename, fileRealname, tags);
 					//result > 0 이면 성공적으로 글쓰기 완료
 					if(result == -1 || result == -2){
 						script.println("<script>");
@@ -131,7 +140,7 @@
 					else{
 						script.println("<script>");
 						script.println("alert('작성이 완료되었습니다')");
-						script.println("location.href='searchPage?searchField2="+category+"'");
+						script.println("location.href='community?search="+category+"'");
 						script.println("</script>");
 					}
 				}

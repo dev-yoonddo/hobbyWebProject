@@ -4,10 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.SQLTimeoutException;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
+import javax.naming.NamingException;
 
 import org.apache.tomcat.jdbc.pool.DataSource;
 
@@ -37,29 +37,35 @@ public class SqlConfig {
 //		return conn;
 //	}
 
-	private static Connection conn;
+	private static DataSource ds;
 	static {
 		try {
 			Context initContext = new InitialContext();
 //			Context envContext = (Context) initContext.lookup("java:/comp/env");
 //			DataSource ds = (DataSource) envContext.lookup("jdbc/togetherDB");
-			DataSource ds = (DataSource) initContext.lookup("java:/comp/env/jdbc/cksndbs7");
-			conn = ds.getConnection();
+			ds = (DataSource) initContext.lookup("java:/comp/env/jdbc/cksndbs7");
+//			conn = ds.getConnection();
 //			conn = dataSource.getConnection();
-			if (conn != null && !conn.isClosed()) {
-				System.out.println("데이터베이스 연결 성공");
-			} else {
-				System.out.println("데이터베이스 연결 실패");
-			}
-		} catch (SQLTimeoutException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
+//			if (conn != null && !conn.isClosed()) {
+//				System.out.println("데이터베이스 연결 성공");
+//			} else {
+//				System.out.println("데이터베이스 연결 실패");
+//			}
+//		} catch (SQLTimeoutException e) {
+//			e.printStackTrace();
+		} catch (NamingException e) {
 			e.printStackTrace();
 		}
 	}
 
 	public static Connection getConn() {
 		System.out.println("Connection 요청");
+		Connection conn = null;
+		try {
+			conn = ds.getConnection();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return conn;
 	}
 
@@ -142,7 +148,7 @@ public class SqlConfig {
 				// System.out.println("prepared close");
 				pstmt.close();
 			}
-			if (conn != null && !conn.isClosed()) {
+			if (conn != null) {
 				conn.close();
 			}
 		} catch (SQLException ex) {

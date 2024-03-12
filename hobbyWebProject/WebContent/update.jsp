@@ -1,3 +1,6 @@
+<%@page import="location.LocationDAO"%>
+<%@page import="location.LocationDTO"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" errorPage="/error/errorPage.jsp"%>
 <%@ page import="java.io.PrintWriter" %>
@@ -37,6 +40,10 @@ section{
 }
 .inquiry{
 	padding-bottom: 100px;
+}
+.category-sel{
+	display: flex;
+	position: relative;
 }
 .write-table{
 	width: 1000px;
@@ -180,6 +187,55 @@ textarea{
 	align-items: center;
 	justify-content: center;
 }
+/* 스팟 초대 버튼 */
+
+#spot-sel{
+	width: 50%;
+	display: flex;
+	position: absolute;
+	left: 220px;
+}
+#invite-spot-open{
+	width: 100px;
+	height: 40px;
+}
+#invite-spot-close{
+	width: 100px;
+	height: 40px;
+	display: none;
+}
+#invite-spot-open span , #invite-spot-close span{
+	font-size: 10pt;
+}
+#spot-popup{
+	width: 240px;
+	max-height: 200px;
+	overflow-y: auto;
+	font-size: 9pt;
+	flex-direction:column-reverse;
+	z-index:55;
+	left: 20px;
+	position: relative;
+	background-color: #DBE2F7;
+	border-radius: 10px;
+	padding: 5px;
+	 
+}
+.spot-row >td{
+	border-bottom: solid 1px #C0C0C0;
+}
+#result{
+	width: 100%;
+	padding: 3px;
+	display: flex;
+}
+.sel-result{
+	width: auto;
+	padding: 5px 8px;
+	background-color: #DBE2F7;
+	border-radius: 50px;
+	margin-right: 5px;
+}
 @media screen and (max-width:900px) {
 	.board-container , .write-table , form, textarea, table, tbody, tr, th, td{
 		max-width: 700px;
@@ -279,7 +335,11 @@ textarea{
 		boardID = Integer.parseInt(request.getParameter("boardID"));
 	}
 	BoardDAO boardDAO = BoardDAO.getInstance();
+	LocationDAO location = LocationDAO.getInstance();
+
 	BoardDTO board = boardDAO.getBoardVO(boardID);
+	ArrayList<LocationDTO> list = location.getLocationVOByUserID(userID);
+	ArrayList<String> taglist = new ArrayList<>();
 %>
 <!-- header -->
 <header id="header">
@@ -293,19 +353,60 @@ textarea{
 			<div class="right-row">
 				<form method="post" action="updateAction" enctype="multipart/form-data">
 					<div class="category-sel">
-					<input type="text" name="boardID" value="<%=boardID%>" hidden="hidden"/>
-					<select name="boardCategory">
-						<% if(board.getBoardCategory().equals("NOTICE")){ //공지사항 수정시 카테고리 변경 불가 %>
-						<option value="NOTICE">NOTICE</option>
-						<%}else{ %>
-						<option value="0">CATEGORY</option>
-						<option value="SPORTS" >SPORTS</option>
-						<option value="LEISURE" >LEISURE</option>
-						<option value="MUSIC" >MUSIC</option>
-						<option value="OTHER" >OTHER</option>
-						<%} %>
-					</select>
+						<input type="text" name="boardID" value="<%=boardID%>" hidden="hidden"/>
+						<select name="boardCategory">
+							<% if(board.getBoardCategory().equals("NOTICE")){ //공지사항 수정시 카테고리 변경 불가 %>
+							<option value="NOTICE">NOTICE</option>
+							<%}else{ %>
+							<option value="0">CATEGORY</option>
+							<option value="SPORTS" >SPORTS</option>
+							<option value="LEISURE" >LEISURE</option>
+							<option value="MUSIC" >MUSIC</option>
+							<option value="OTHER" >OTHER</option>
+							<%} %>
+						</select>
+						<div id="spot-sel">
+							<button type="button" id="invite-spot-open" class="btn-blue" value="초대하기" onclick="inviteSpot('open')">
+								<span>스팟 초대</span>
+							</button>
+							<button type="button" id="invite-spot-close" class="btn-blue" value="초대하기" onclick="inviteSpot('close')">
+								<span>닫기</span>
+							</button>
+							<div id="spot-popup" hidden="">
+							<div>
+								<table>
+									<thead>
+										<tr class="spot-head">
+											<th class="ttt" style="width: 42%;"><span>스팟</span></th>
+											<th class="tt" style="width: 45%;"><span>주소</span></th>
+											<th class="ttt" style="width: 13%;"><span>인원</span></th>
+										</tr>
+									</thead>
+									<% if(list.size() == 0){%>
+									<tbody>
+										<tr>
+											<td colspan="3" class="none-list">생성한 스팟이 없습니다.</td>
+										</tr>
+									</tbody>
+									<%}else{ %>
+									<tbody>
+									<% 
+										for(LocationDTO i : list){
+									%>
+										<tr class="spot-row">
+											<td><input type="checkbox" id="tagbox" name="tag" onclick="getCheckboxValue()" value="<%=i.getSpotName()%>"><%=i.getSpotName()%></td>
+											<td><%=i.getAddress()%></td>
+											<td><%=i.getCrewCount()%>명</td>
+										</tr>
+									<%} %>
+									</tbody>
+									<%} %>
+								</table>
+							</div>
+						</div>
 					</div>
+					</div>
+					
 					<table class="write-table" style="text-align: center; border: 1px solid #dddddd">
 						<thead>
 							<tr translate="yes">
@@ -318,6 +419,11 @@ textarea{
 							</tr>
 							<tr>
 								<td><textarea placeholder="내용을 입력하세요" name="boardContent" maxlength="2048" style="height: 350px;"><%= board.getBoardContent() %></textarea></td>
+							</tr>
+							<tr>
+								<td>
+									<div id="result"></div>
+								</td>
 							</tr>
 						</tbody>
 					</table>
@@ -358,6 +464,7 @@ textarea{
 </footer>
 <!-- footer -->
 <script>
+
 //글을 작성할 때 선택했던 카테고리가 수정할 때 선택되어있도록 한다.
 let boardCategory = '<%= board.getBoardCategory() %>';
 
@@ -369,13 +476,53 @@ for (let i = 0; i < selectBox.options.length; i++) {
     break;
   }
 }
+let tag = '<%=board.getTag()%>';
+const loadedValues = tag.split(",").map(value => value.trim());
+const checkboxes = document.querySelectorAll('input[name="tag"]');
+
+checkboxes.forEach((checkbox) => {
+    // Check if the value of the checkbox is in the loadedValues array
+    if (loadedValues.includes(checkbox.value.trim())) {
+        // If the value is in the loadedValues array, check the checkbox
+        checkbox.checked = true;
+        getCheckboxValue();
+    }
+});
 
 function filename(input){
 	var file = input.files[0];	//선택된 파일 가져오기
-
     //미리 만들어 놓은 div에 text(파일 이름) 추가
     var name = document.getElementById('filename');
     name.textContent = file.name;
+}
+function inviteSpot(value){
+	if(value === 'open'){
+		document.getElementById('spot-popup').style.display = 'block';
+		document.getElementById('invite-spot-open').style.display = 'none';
+		document.getElementById('invite-spot-close').style.display = 'block';
+	}else{
+		document.getElementById('spot-popup').style.display = 'none';
+		document.getElementById('invite-spot-open').style.display = 'block';
+		document.getElementById('invite-spot-close').style.display = 'none';
+
+	}
+}
+
+//선택한 스팟 값 가져오기
+function getCheckboxValue(){
+	  // 선택된 목록 가져오기
+	  const query = 'input[name="tag"]:checked';
+	  const selectedEls = document.querySelectorAll(query);
+
+	  document.getElementById('result').innerHTML = '';
+	  selectedEls.forEach((el) => {
+		    const div = document.createElement('div');
+		    div.classList.add('sel-result');
+		    div.setAttribute('name', 'sel-tag');
+		    div.textContent = el.value;
+
+		    document.getElementById('result').appendChild(div);
+	});
 }
 </script>
 </body>

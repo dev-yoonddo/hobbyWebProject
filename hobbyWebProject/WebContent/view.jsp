@@ -234,6 +234,23 @@ table caption{
 	padding:20px;
 	padding-left: 0;
 }
+#result{
+	width: 100%;
+	padding: 3px;
+	display: flex;
+}
+.sel-result{
+	width: auto;
+	padding: 5px 8px;
+	background-color: #DBE2F7;
+	border-radius: 50px;
+	margin-right: 5px;
+	cursor: pointer;
+}
+.sel-result:hover{
+	text-decoration: underline 0.5px;
+	color: grey;
+}
 @media screen and (max-width:650px) {
 	.board-container{
 		max-width:  400px;
@@ -482,6 +499,22 @@ table caption{
 							}
 					%>
 						</tr>
+						<%if(boardvo.getTag() != null && !boardvo.getTag().equals("")) {
+							String tagdata = boardvo.getTag();
+							String[] tags = tagdata.split(",");
+						%>
+						<tr class="tr">
+							<td colspan="2">
+								<div id="result">
+								<%for(String tag : tags){%>
+									<div class="sel-result" name="sel-tag"  onclick="spotAccessViewPage('<%=tag%>')">
+										<%=tag%>
+									</div>
+								<%} %>
+								</div>
+							</td>
+						</tr>
+						<%} %>
 					<%
 						}
 					if(filename != null && (filename.endsWith(".jpg") || filename.endsWith(".JPG") || filename.endsWith(".jpeg") || filename.endsWith(".JPEG") || filename.endsWith(".png") || filename.endsWith(".PNG"))){
@@ -542,7 +575,7 @@ table caption{
 				<%
 					}else{ //모든 사용자에게 목록 버튼 노출
 				%>
-					<button type="button" id="list" class="btn-blue" onclick="location.href= 'searchPage?searchField2=<%=boardvo.getBoardCategory()%>'"><span>목록</span></button>
+					<button type="button" id="list" class="btn-blue" onclick="location.href='community?search=<%=boardvo.getBoardCategory()%>'"><span>목록</span></button>
 				<%	} //로그인된 모든 유저에게 댓글쓰기 버튼 노출
 					if(userID != null){
 				%>
@@ -632,7 +665,7 @@ table caption{
 </div>
 </footer>
 <!-- footer end -->
-
+<script type="text/javascript" src="js/spot.js"></script>
 <script>
 //댓글쓰기를 클릭하면 댓글 입력 창 보이기
 function cmtAction(){
@@ -681,6 +714,14 @@ function closeFile(){
 	document.getElementById('view-file-1').style.display = 'none';
 	document.getElementById('view-file-2').style.display = 'none';
 }
+
+function spotAccessViewPage(tag){
+	let accessTag = tag;
+	clickleader = '<%=boardvo.getUserID()%>';
+	clickname = accessTag;
+	joinSpot();
+}
+
 </script>
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>	

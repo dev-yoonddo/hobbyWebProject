@@ -60,7 +60,24 @@
 			String notice = multi.getParameter("notice");
 			String filename = multi.getOriginalFileName("fileupload");
 			String fileRealname = multi.getFilesystemName("fileupload");
-			
+			String tags = "";
+			String[] tagpam = null;
+			int tagCount = 0;
+			if(multi.getParameter("notice") != null){
+				notice = multi.getParameter("notice");
+			}
+			//태그 저장하기
+			if(multi.getParameterValues("tag") != null){
+				tagpam = multi.getParameterValues("tag");
+				for(String i : tagpam){
+					tagCount++;
+					if(tagpam.length != tagCount){
+						tags += (i + ",");	//배열 길이와 카운트 값이 다르면 아직 저장할 파라미터 값이 존재하기 때문에 ","을 붙여준다.
+					}else{
+						tags += i;	//배열 길이와 카운트 값이 같으면 마지막 파라미터 값이기 때문에 ","을 붙이지 않는다.
+					}
+				}
+			}
 			//빈칸이 있으면 알림창을 띄운다.
 			if(title.length() == 0){
 				script.println("<script>");
@@ -87,7 +104,7 @@
 			}else{
 				int result = 0;
 				BoardDAO boardDAO = BoardDAO.getInstance();
-					result = boardDAO.update(boardID, title, content, category , filename, fileRealname);
+					result = boardDAO.update(boardID, title, content, category , filename, fileRealname, tags);
 					if(result == -1 || result == -2){
 						script.println("<script>");
 						script.println("alert('글쓰기에 실패했습니다')");

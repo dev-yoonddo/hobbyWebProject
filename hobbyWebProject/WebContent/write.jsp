@@ -45,6 +45,11 @@ section{
 .write-table{
 	width: 1000px;
 }
+.category-sel{
+	display: flex;
+	position: relative;
+	
+}
 select{
 	width: 200px;
 	height: 40px;
@@ -160,7 +165,7 @@ textarea{
 	width: 50%;
 	display: flex;
 	position: absolute;
-	left: 300px;
+	left: 220px;
 }
 #invite-spot-open{
 	width: 100px;
@@ -282,7 +287,7 @@ ArrayList<String> taglist = new ArrayList<>();
 	<h3 style="font-weight: bold; color: #646464;"><%= userID %>님 안녕하세요</h3><br>
 		<div class="right-row">
 			<form method="post" action="writeAction" enctype="multipart/form-data">
-				<div class="category-sel" style="display: flex;">
+				<div class="category-sel">
 					<select name="boardCategory">
 						<option value="0">CATEGORY</option>
 						<option value="SPORTS" >SPORTS</option>
@@ -316,8 +321,8 @@ ArrayList<String> taglist = new ArrayList<>();
 							<table>
 								<thead>
 									<tr class="spot-head">
-										<th class="ttt" style="width: 30%;"><span>스팟</span></th>
-										<th class="tt" style="width: 57%;"><span>주소</span></th>
+										<th class="ttt" style="width: 42%;"><span>스팟</span></th>
+										<th class="tt" style="width: 45;"><span>주소</span></th>
 										<th class="ttt" style="width: 13%;"><span>인원</span></th>
 									</tr>
 								</thead>
@@ -333,7 +338,7 @@ ArrayList<String> taglist = new ArrayList<>();
 									for(LocationDTO i : list){
 								%>
 									<tr class="spot-row">
-										<td><input type="checkbox" id="click" name="click" onclick="getCheckboxValue()" value="<%=i.getSpotName()%>"><%=i.getSpotName()%></td>
+										<td><input type="checkbox" id="tagbox" name="tag" onclick="getCheckboxValue()" value="<%=i.getSpotName()%>"><%=i.getSpotName()%></td>
 										<td><%=i.getAddress()%></td>
 										<td><%=i.getCrewCount()%>명</td>
 									</tr>
@@ -356,11 +361,12 @@ ArrayList<String> taglist = new ArrayList<>();
 							<td><textarea placeholder="제목을 입력하세요" name="boardTitle" maxlength="50"></textarea></td>
 						</tr>
 						<tr>
-							<td><textarea placeholder="내용을 입력하세요" name="boardContent" maxlength="2048" style="height: 350px; ">		
-							</textarea>
+							<td><textarea placeholder="내용을 입력하세요" name="boardContent" maxlength="2048" style="height: 350px; "></textarea></td>
+						</tr>
+						<tr>
+						<td>
 							<div id="result"></div>
-							<input type="text" name="tag" hidden=""/>
-							</td>
+						</td>
 						</tr>
 					</tbody>
 				</table>
@@ -433,14 +439,14 @@ function inviteSpot(value){
 //선택한 스팟 값 가져오기
 function getCheckboxValue(){
 	  // 선택된 목록 가져오기
-	  const query = 'input[name="click"]:checked';
+	  const query = 'input[name="tag"]:checked';
 	  const selectedEls = document.querySelectorAll(query);
 	  
 	  document.getElementById('result').innerHTML = '';
 	  selectedEls.forEach((el) => {
 		    const div = document.createElement('div');
 		    div.classList.add('sel-result');
-		    div.setAttribute('name', 'tag');
+		    div.setAttribute('name', 'sel-tag');
 		    div.textContent = el.value;
 
 		    document.getElementById('result').appendChild(div);
@@ -449,20 +455,11 @@ storeValues();
 }
 const valuesArray = [];
 function storeValues() {
-	// Select all elements with class 'sel-result'
 	const elements = document.querySelectorAll('.sel-result');
-	
-	// Array to store values
-	
-	// Iterate over each element and store its value
 	elements.forEach((element) => {
-	  // Get the text content of the element and add it to the array
 	  const value = element.textContent.trim();
 	  valuesArray.push(value);
 	});
-	
-	// Output the array to the console
-	console.log(valuesArray);
 }
 function submitTag(){
 	document.getElementById('tag').innerHTML = valuesArray;

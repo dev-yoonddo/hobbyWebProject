@@ -29,14 +29,14 @@
 	if(request.getParameter("name") != null){
 		spotName = request.getParameter("name");
 	}
-	if(request.getParameter("address") != null){
-		address = request.getParameter("address");
-	}
+//	if(request.getParameter("address") != null){
+//		address = request.getParameter("address");
+//	}
 
 	if(userID == null){
 		script.print("null");
 	    script.flush();
-	}else if(spotName == null || address == null){
+	}else if(spotName == null){
 		script.print("Information Error");
         script.flush();
 	}else{

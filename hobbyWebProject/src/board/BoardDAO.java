@@ -174,6 +174,7 @@ public class BoardDAO {
 				board.setFilename(rs.getString(10));
 				board.setFileRealname(rs.getString(11));
 				board.setFileDownCount(rs.getInt(12));
+				board.setTag(rs.getString(13));
 				list.add(board);
 			}
 		} catch (Exception e) {
@@ -210,6 +211,7 @@ public class BoardDAO {
 				board.setFilename(rs.getString(10));
 				board.setFileRealname(rs.getString(11));
 				board.setFileDownCount(rs.getInt(12));
+				board.setTag(rs.getString(13));
 				list.add(board);
 			}
 		} catch (Exception e) {
@@ -246,6 +248,7 @@ public class BoardDAO {
 				board.setFilename(rs.getString(10));
 				board.setFileRealname(rs.getString(11));
 				board.setFileDownCount(rs.getInt(12));
+				board.setTag(rs.getString(13));
 				list.add(board);
 			}
 		} catch (Exception e) {
@@ -301,6 +304,7 @@ public class BoardDAO {
 				board.setFilename(rs.getString(10));
 				board.setFileRealname(rs.getString(11));
 				board.setFileDownCount(rs.getInt(12));
+				board.setTag(rs.getString(13));
 				return board;
 			}
 		} catch (Exception e) {
@@ -313,8 +317,8 @@ public class BoardDAO {
 
 	// 업데이트
 	public int update(int boardID, String boardTitle, String boardContent, String boardCategory, String filename,
-			String fileRealname) {
-		String SQL = "UPDATE board SET boardTitle = ?, boardContent = ?, boardCategory = ?, filename = ?, fileRealname = ?, fileDownCount = ? WHERE boardID = ?";
+			String fileRealname, String tag) {
+		String SQL = "UPDATE board SET boardTitle = ?, boardContent = ?, boardCategory = ?, filename = ?, fileRealname = ?, fileDownCount = ?, tag = ? WHERE boardID = ?";
 		BoardDTO board = this.getBoardVO(boardID);
 		FileDAO fileDAO = FileDAO.getInstance();
 		Connection conn = null;
@@ -336,7 +340,8 @@ public class BoardDAO {
 				pstmt.setString(5, board.getFileRealname());
 				pstmt.setInt(6, board.getFileDownCount());
 			}
-			pstmt.setInt(7, boardID);
+			pstmt.setString(7, tag);
+			pstmt.setInt(8, boardID);
 			// 성공적으로 수행했다면 0이상의 결과 반환
 			int result = pstmt.executeUpdate();
 			// 성공적으로 수행되고 첨부파일이 존재하면 file테이블에도 데이터를 넣어준다.
@@ -515,6 +520,7 @@ public class BoardDAO {
 				board.setFilename(rs.getString(10));
 				board.setFileRealname(rs.getString(11));
 				board.setFileDownCount(rs.getInt(12));
+				board.setTag(rs.getString(13));
 				list.add(board);// list에 해당 인스턴스를 담는다.
 			}
 		} catch (Exception e) {
@@ -554,6 +560,7 @@ public class BoardDAO {
 				board.setFilename(rs.getString(10));
 				board.setFileRealname(rs.getString(11));
 				board.setFileDownCount(rs.getInt(12));
+				board.setTag(rs.getString(13));
 				list.add(board);// list에 해당 인스턴스를 담는다.
 			}
 		} catch (Exception e) {
