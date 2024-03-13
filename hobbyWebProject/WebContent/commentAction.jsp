@@ -10,6 +10,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" errorPage="/error/errorPage.jsp"%>
 <jsp:useBean id="comment" class="comment.CommentDTO" scope="page"/>
 <jsp:setProperty name="comment" property="cmtContent"/>
+<jsp:setProperty name="comment" property="cmtTag"/>
 
 <!DOCTYPE html>
 <html>
@@ -35,6 +36,7 @@
  		script.println("</script>");
  	} 
  	else{
+ 		System.out.println(comment.getCmtTag());
 	 	int boardID = 0; 
 	 	if (request.getParameter("boardID") != null){
 	 		boardID = Integer.parseInt(request.getParameter("boardID"));
@@ -53,7 +55,7 @@
 	 		script.println("history.back()");
 	 		script.println("</script>");
 	 	} else {
-	 		int result = cmtDAO.write(comment.getCmtContent(), userID, boardID);
+	 		int result = cmtDAO.write(comment.getCmtContent(), userID, boardID, comment.getCmtTag());
 	 		if (result == -1){
 		 		PrintWriter script = response.getWriter();
 		 		script.println("<script>");

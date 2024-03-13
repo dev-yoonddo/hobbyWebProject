@@ -10,7 +10,6 @@ import java.util.List;
 import com.toogether.session.SqlConfig;
 
 public class CommentDAO {
-	Connection conn = SqlConfig.getConn();
 
 	// singleton : Bill Pugh Solution (LazyHolder) 기법
 	private CommentDAO() {
@@ -68,8 +67,8 @@ public class CommentDAO {
 	}
 
 	// 작성하기
-	public int write(String cmtContent, String userID, int boardID) {
-		String SQL = "INSERT INTO comment VALUES(?, ?, ?, ?, ?, ?)";
+	public int write(String cmtContent, String userID, int boardID, String cmtTag) {
+		String SQL = "INSERT INTO comment VALUES(?, ?, ?, ?, ?, ?, ?)";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
@@ -79,8 +78,9 @@ public class CommentDAO {
 			pstmt.setInt(2, getNext());
 			pstmt.setString(3, userID);
 			pstmt.setInt(4, 1);
-			pstmt.setString(5, getDate());
-			pstmt.setInt(6, boardID);
+			pstmt.setInt(5, boardID);
+			pstmt.setString(6, getDate());
+			pstmt.setString(7, cmtTag);
 			pstmt.executeUpdate();
 			return getNext();
 		} catch (Exception e) {
@@ -116,8 +116,9 @@ public class CommentDAO {
 				cmt.setCmtID(rs.getInt(2));
 				cmt.setUserID(rs.getString(3));
 				cmt.setCmtAvailable(rs.getInt(4));
-				cmt.setCmtDate(rs.getString(5));
-				cmt.setBoardID(rs.getInt(6));
+				cmt.setBoardID(rs.getInt(5));
+				cmt.setCmtDate(rs.getString(6));
+				cmt.setCmtTag(rs.getString(7));
 				cmtlist.add(cmt);
 			}
 		} catch (Exception e) {
@@ -146,8 +147,9 @@ public class CommentDAO {
 				cmt.setCmtID(rs.getInt(2));
 				cmt.setUserID(rs.getString(3));
 				cmt.setCmtAvailable(rs.getInt(4));
-				cmt.setCmtDate(rs.getString(5));
-				cmt.setBoardID(rs.getInt(6));
+				cmt.setBoardID(rs.getInt(5));
+				cmt.setCmtDate(rs.getString(6));
+				cmt.setCmtTag(rs.getString(7));
 				list.add(cmt);
 			}
 		} catch (Exception e) {
@@ -183,8 +185,9 @@ public class CommentDAO {
 				cmt.setCmtID(rs.getInt(2));
 				cmt.setUserID(rs.getString(3));
 				cmt.setCmtAvailable(rs.getInt(4));
-				cmt.setCmtDate(rs.getString(5));
-				cmt.setBoardID(rs.getInt(6));
+				cmt.setBoardID(rs.getInt(5));
+				cmt.setCmtDate(rs.getString(6));
+				cmt.setCmtTag(rs.getString(7));
 				return cmt;
 			}
 		} catch (Exception e) {

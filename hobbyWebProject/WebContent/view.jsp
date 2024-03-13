@@ -251,6 +251,19 @@ table caption{
 	text-decoration: underline 0.5px;
 	color: grey;
 }
+.cmt-user-id:hover{
+	cursor: pointer;
+	font-weight: bold;
+}
+#men-id{
+	height: 20px;
+}
+.tag-icon{
+	font-weight: 300;
+	background-color: #DBE2F7;
+	border-radius: 50px;
+	padding: 2px 5px;
+}
 @media screen and (max-width:650px) {
 	.board-container{
 		max-width:  400px;
@@ -601,12 +614,16 @@ table caption{
 		<h5 style="font-size: 15pt; color: #646464; float: left;">댓글 (<%= cmtlist.size() %>)<br></h5><hr id="cmt-line" style="width: 1000px;"><br>
 		
         <!-- 답변쓰기 버튼을 눌렀을 때만 답변쓰기 섹션이 나타나도록 설정 -->
-		<div id="cmt-write" style="display: none; width: 600px; height: 220px;"> 
+		<div id="cmt-write" style="display: none; width: 600px; height: 250px;"> 
 	          <form method="post" action="commentAction.jsp?boardID=<%= boardID %>">
-		          <table class="cmt-table" style="height: 100px; border-style: none;">
+		          <table class="cmt-table" style="height: 70px; border-style: none;">
 		             <tbody>
+			             <tr>
+			             	<td id="mention"></td>
+			             </tr>
 		                <tr>
-		                   <td><input type="text" placeholder="댓글을 입력하세요" name="cmtContent" maxlength="60" style="width: 600px; height: 150px; font-size: 12pt;"></td>
+		                   <td><input type="text" placeholder="댓글을 입력하세요" name="cmtContent" maxlength="60" style="width: 600px; height: 120px; font-size: 12pt;">
+		                   </td>
 		                </tr>
 		             </tbody>
 		          </table>
@@ -628,11 +645,16 @@ table caption{
 		               	
 		               	<table class="cmt-table" style="width: 600px;">
 		               		<tr style="height: 30px; table-layout:fixed; ">
-		               			<td align="left" style="width:30%;"><%= cmtlist.get(i).getUserID() %></td>
+		               			<td class="cmt-user-id" align="left" style="width:30%;" onclick="getMentionValue('<%= cmtlist.get(i).getUserID() %>')"><%= cmtlist.get(i).getUserID() %></td>
 		               			<td align="right" style="width:70%;"><%= cmtlist.get(i).getCmtDate().substring(0,11)+cmtlist.get(i).getCmtDate().substring(11,13)+"시"+cmtlist.get(i).getCmtDate().substring(14,16)+"분" %></td>
 		               		</tr>
 		               		<tr style="height: auto; font-weight: 550;">
-		               			<td colspan="2"><%= cmtlist.get(i).getCmtContent() %></td>
+		               			<td colspan="2">
+		               			<%if(cmtlist.get(i).getCmtTag() != null){%>
+		               				<span class="tag-icon">@<%=cmtlist.get(i).getCmtTag()%></span>
+		               			<%} %>
+		               			<%= cmtlist.get(i).getCmtContent() %>
+		               			</td>
 		               		</tr>		               		
 			           	</table>
 		           	</div>
@@ -714,7 +736,7 @@ function closeFile(){
 	document.getElementById('view-file-1').style.display = 'none';
 	document.getElementById('view-file-2').style.display = 'none';
 }
-
+//태그 스팟 접속하기 : spot.js 파일과 연동
 function spotAccessViewPage(tag){
 	let accessTag = tag;
 	clickleader = '<%=boardvo.getUserID()%>';
@@ -722,6 +744,62 @@ function spotAccessViewPage(tag){
 	joinSpot();
 }
 
+//이미 태그 한 아이디가 있는지 검사하고 태그 추가하기
+let beforeid = null; //새로운 태그가 이전태그와 같은 아이디인지 검사
+const parents = document.getElementById('mention'); //태그의 부모요소 가져오기
+
+//아이디 클릭 시 아이디 값 가져오기
+function getMentionValue(id){
+	let newid = id; //새로운 아이디를 가져올 때 마다 저장
+	const child = document.querySelectorAll('.men-id'); //값이 존재하면 태그가 이미 존재
+	console.log(child);
+	//태그값이 존재하지 않고(menCount == 0 && child == null) 이전 태그값과 새로운 태그값이 다르면
+	if(child === null && beforeid !== newid){
+		//태그 추가
+		plusMention(id);
+		//beforeid에 newid값 넣어주기
+		beforeid = newid;
+	//태그값이 존재하고 (child != null) 이전 태그값과 새로운 태그값이 다르면
+	}else if(child != null && beforeid !== newid){
+		//자식 노드 삭제하고
+		removeMention(child);
+		//parents.removeChild(child);
+		//새로운 아이디 추가하기
+		plusMention(id);
+		//beforeid에 newid값 넣어주기
+		beforeid = newid;
+	//태그값이 존재하지만 이전 태그값과 새로운 태그값이 같으면
+	}else{
+		//자식노드 삭제하기
+		removeMention(child);
+		//같은 아이디를 클릭했을 때 태그가 취소되고 다시 태그하기 위해 beforeid = null
+		beforeid = null;
+		
+	}	
+}
+//태그 추가
+function plusMention(id){
+	const a = document.createElement('a'); //화면에 보일 요소 생성
+	const input = document.createElement('input'); //파라미터 값으로 넘길 input 요소 생성
+	
+	//id=men-id이고 name=men-id인 a요소에 id값을 넣고 자식노드로 추가하기
+	a.setAttribute('class', 'men-id');
+	a.setAttribute('name', 'cmtTag');
+	a.textContent = '@'+id;
+	parents.appendChild(a);
+	
+	input.setAttribute('class', 'men-id');
+	input.setAttribute('name', 'cmtTag');
+	input.setAttribute('value', id);
+	input.setAttribute('hidden', '');
+	parents.appendChild(input);
+}
+//태그 삭제 (a태그와 input태그 모두 삭제)
+function removeMention(child){
+	for(const i of child){
+		parents.removeChild(i);
+	}
+}
 </script>
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>	
