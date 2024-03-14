@@ -36,7 +36,6 @@
  		script.println("</script>");
  	} 
  	else{
- 		System.out.println(comment.getCmtTag());
 	 	int boardID = 0; 
 	 	if (request.getParameter("boardID") != null){
 	 		boardID = Integer.parseInt(request.getParameter("boardID"));

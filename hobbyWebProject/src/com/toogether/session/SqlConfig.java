@@ -59,7 +59,7 @@ public class SqlConfig {
 	}
 
 	public static Connection getConn() {
-		System.out.println("Connection 요청");
+		// System.out.println("Connection 요청");
 		Connection conn = null;
 		try {
 			conn = ds.getConnection();

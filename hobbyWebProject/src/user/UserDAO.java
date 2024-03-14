@@ -67,8 +67,6 @@ public class UserDAO {
 				// 사용자가 입력한 비밀번호와 기존 salt값을 encoding메서드로 넘겨 암호화 값을 구하고
 				// 일치하면 로그인 성공 처리한다.
 				HashMap<String, String> checkPW = PwEncrypt.encoding(userPassword, salt);
-				System.out.println("로그인 요청!!" + salt);
-				System.out.println("로그인 요청!!" + checkPW.get("hash"));
 				if (available == 1) {
 					if (password.equals(checkPW.get("hash"))) { // userAvailable == 1이고 password 값이 일치하면
 						return 1; // 로그인 성공

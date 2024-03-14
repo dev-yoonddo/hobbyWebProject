@@ -236,15 +236,17 @@ table caption{
 }
 #result{
 	width: 100%;
+	max-height: 200px;
 	padding: 3px;
 	display: flex;
+	flex-wrap: wrap;
 }
 .sel-result{
 	width: auto;
 	padding: 5px 8px;
 	background-color: #DBE2F7;
 	border-radius: 50px;
-	margin-right: 5px;
+	margin: 5px;
 	cursor: pointer;
 }
 .sel-result:hover{
@@ -334,6 +336,10 @@ table caption{
 	}
 	#tr2{
 		height: auto; 
+	}
+	#tr3{
+		height: 100px;
+		max-height: 200px;
 	}
 	#close-file{
 		top: 0;
@@ -516,7 +522,7 @@ table caption{
 							String tagdata = boardvo.getTag();
 							String[] tags = tagdata.split(",");
 						%>
-						<tr class="tr">
+						<tr class="tr" id="tr3" >
 							<td colspan="2">
 								<div id="result">
 								<%for(String tag : tags){%>
@@ -645,7 +651,11 @@ table caption{
 		               	
 		               	<table class="cmt-table" style="width: 600px;">
 		               		<tr style="height: 30px; table-layout:fixed; ">
+		               			<%if(userID != null && !userID.equals(cmtlist.get(i).getUserID())){%>
 		               			<td class="cmt-user-id" align="left" style="width:30%;" onclick="getMentionValue('<%= cmtlist.get(i).getUserID() %>')"><%= cmtlist.get(i).getUserID() %></td>
+		               			<%}else{ %>
+		               			<td class="cmt-user-id-n" align="left" style="width:30%;"><%= cmtlist.get(i).getUserID() %></td>
+		               			<%} %>
 		               			<td align="right" style="width:70%;"><%= cmtlist.get(i).getCmtDate().substring(0,11)+cmtlist.get(i).getCmtDate().substring(11,13)+"시"+cmtlist.get(i).getCmtDate().substring(14,16)+"분" %></td>
 		               		</tr>
 		               		<tr style="height: auto; font-weight: 550;">
@@ -752,7 +762,6 @@ const parents = document.getElementById('mention'); //태그의 부모요소 가
 function getMentionValue(id){
 	let newid = id; //새로운 아이디를 가져올 때 마다 저장
 	const child = document.querySelectorAll('.men-id'); //값이 존재하면 태그가 이미 존재
-	console.log(child);
 	//태그값이 존재하지 않고(menCount == 0 && child == null) 이전 태그값과 새로운 태그값이 다르면
 	if(child === null && beforeid !== newid){
 		//태그 추가

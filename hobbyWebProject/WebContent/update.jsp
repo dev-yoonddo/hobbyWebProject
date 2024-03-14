@@ -226,15 +226,17 @@ textarea{
 }
 #result{
 	width: 100%;
+	max-height: 200px;
 	padding: 3px;
 	display: flex;
+	flex-wrap: wrap;
 }
 .sel-result{
 	width: auto;
 	padding: 5px 8px;
 	background-color: #DBE2F7;
 	border-radius: 50px;
-	margin-right: 5px;
+	margin: 5px;
 }
 @media screen and (max-width:900px) {
 	.board-container , .write-table , form, textarea, table, tbody, tr, th, td{
@@ -334,11 +336,9 @@ textarea{
 	if(request.getParameter("boardID") != null){
 		boardID = Integer.parseInt(request.getParameter("boardID"));
 	}
-	BoardDAO boardDAO = BoardDAO.getInstance();
-	LocationDAO location = LocationDAO.getInstance();
 
-	BoardDTO board = boardDAO.getBoardVO(boardID);
-	ArrayList<LocationDTO> list = location.getLocationVOByUserID(userID);
+	BoardDTO board = BoardDAO.getInstance().getBoardVO(boardID);
+	ArrayList<LocationDTO> list = LocationDAO.getInstance().getLocationVOByUserID(userID);
 	ArrayList<String> taglist = new ArrayList<>();
 %>
 <!-- header -->

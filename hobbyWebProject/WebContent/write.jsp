@@ -196,17 +196,23 @@ textarea{
 .spot-row >td{
 	border-bottom: solid 1px #C0C0C0;
 }
+#result-td{
+	max-height: 200px;
+}
 #result{
 	width: 100%;
+	max-height: 200px;
 	padding: 3px;
 	display: flex;
+	flex-wrap: wrap;
 }
 .sel-result{
-	width: auto;
+	max-width: 150px;
+	max-height: 20px;
 	padding: 5px 8px;
 	background-color: #DBE2F7;
 	border-radius: 50px;
-	margin-right: 5px;
+	margin: 5px;
 }
 @media screen and (max-width:900px) {
 	.board-container , .write-table , form, textarea, table, tbody, tr, th, td{
@@ -253,6 +259,29 @@ textarea{
 		float:right;
 		margin-top: 10px;
 	}
+	select{
+		width: 150px;
+		height: 40px;
+		margin-bottom: 10px;
+		text-align: center;
+		font-size: 15pt;
+		font-weight: 500;
+		color: #B3C1EE;
+	
+	}
+	#spot-sel{
+		width: 200px;
+		display: inline-block;
+		position: absolute;
+		left: 160px;
+	}
+	#spot-popup{
+		width: 200px;
+		position: relative;
+	}
+	#tagbox{
+		
+	}
 }
 </style>
 <body>
@@ -271,8 +300,7 @@ if(userID == null){
 }
 //searchPage에서 글쓰기 버튼을 눌렀을 때 전달받는 카테고리 값 가져오기
 String bdcategory = request.getParameter("category");
-LocationDAO location = LocationDAO.getInstance();
-ArrayList<LocationDTO> list = location.getLocationVOByUserID(userID);
+ArrayList<LocationDTO> list = LocationDAO.getInstance().getLocationVOByUserID(userID);
 ArrayList<String> taglist = new ArrayList<>();
 %>
 <!-- header start-->
@@ -364,7 +392,7 @@ ArrayList<String> taglist = new ArrayList<>();
 							<td><textarea placeholder="내용을 입력하세요" name="boardContent" maxlength="2048" style="height: 350px; "></textarea></td>
 						</tr>
 						<tr>
-						<td>
+						<td id="result-td">
 							<div id="result"></div>
 						</td>
 						</tr>
@@ -435,25 +463,42 @@ function inviteSpot(value){
 
 	}
 }
+let valuesArray = [];
 
 //선택한 스팟 값 가져오기
 function getCheckboxValue(){
 	  // 선택된 목록 가져오기
 	  const query = 'input[name="tag"]:checked';
 	  const selectedEls = document.querySelectorAll(query);
+
+	  const resultName = 'result';
 	  
-	  document.getElementById('result').innerHTML = '';
+//	  if(valuesArray.length % 4 === 0){
+//		  line++;
+//		  const newline = document.createElement('div');
+//		  resultName = 'result'+line;
+//		  newline.setAttribute('id', resultName);
+//	  }
+	  document.getElementById(resultName).innerHTML = '';
 	  selectedEls.forEach((el) => {
 		    const div = document.createElement('div');
 		    div.classList.add('sel-result');
 		    div.setAttribute('name', 'sel-tag');
 		    div.textContent = el.value;
-
-		    document.getElementById('result').appendChild(div);
+		    document.getElementById(resultName).appendChild(div);
+			valuesArray.push(el.value);
 	});
-storeValues();
+	    updateValuesArray();
+	    console.log(valuesArray.length);
+		  console.log(valuesArray);
 }
-const valuesArray = [];
+function updateValuesArray() {
+    valuesArray = []; // Clear the valuesArray
+    const selectedCheckboxes = document.querySelectorAll('input[name="tag"]:checked');
+    selectedCheckboxes.forEach((checkbox) => {
+        valuesArray.push(checkbox.value); // Add value to the array
+    });
+}
 function storeValues() {
 	const elements = document.querySelectorAll('.sel-result');
 	elements.forEach((element) => {

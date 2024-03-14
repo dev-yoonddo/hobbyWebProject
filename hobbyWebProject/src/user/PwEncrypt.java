@@ -33,17 +33,17 @@ public class PwEncrypt {
 			md.update((shaAndSalt).getBytes());
 
 			byte[] encodeData = md.digest();
-			System.out.println("digest: " + md.digest());
+			// System.out.println("digest: " + md.digest());
 
 			for (int i = 0; i < encodeData.length; i++) {
 				encodeString += Integer.toHexString(encodeData[i] & 0xFF); // 10진수 정수 배열을 16진수 문자열로 변환한다.
 			}
 
 			// 확인
-			System.out.println("str = " + str);
-			System.out.println("salt = " + salt);
-			System.out.println("str + salt 암호화 전 = " + shaAndSalt);
-			System.out.println("str + salt 암호화 후 = " + encodeString);
+//			System.out.println("str = " + str);
+//			System.out.println("salt = " + salt);
+//			System.out.println("str + salt 암호화 전 = " + shaAndSalt);
+//			System.out.println("str + salt 암호화 후 = " + encodeString);
 
 //			if (encodeString.equals("317d7d8884d5f0871a2e7761ff4382a57fd70a47dba3dad65a087149bbb1cdd")) {
 //				System.out.println("평문+솔트 암호화 일치");
@@ -67,12 +67,12 @@ public class PwEncrypt {
 //			SecureRandom sha = SecureRandom.getInstance("SHA1PRNG"); 위와 같은 결과가 나온다.
 			byte[] bytes = new byte[16];
 			random.nextBytes(bytes);
-			System.out.println("random : " + random);
-			System.out.println("bytes : " + bytes);
+//			System.out.println("random : " + random);
+//			System.out.println("bytes : " + bytes);
 			// create salt
 			String salt = new String(Base64.getEncoder().encode(bytes)); // 배열을 다시 문자열로 변경
 
-			System.out.println(salt);
+//			System.out.println(salt);
 			return salt;
 		} catch (Exception e) {
 			e.printStackTrace();

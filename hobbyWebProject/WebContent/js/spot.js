@@ -419,7 +419,7 @@
             	}else if(response.includes("database error")){
             		alert('데이터베이스 오류');
             	}else{
-            		alert('정보 오류');	            		
+            		alert('로그인 후 접속하세요');	            		
             	}
             },
 	        error: function (xhr, status, error) {
