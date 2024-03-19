@@ -6,7 +6,7 @@
 
 ## ❔ Tech Skills
 
-- Backend : Java, Spring
+- Backend : Java
 - Frontend : JavaScript, HTML5, CSS3, JQuery <br>
 - IDE : Eclipse, DBeaver
 - RDBMS : MySQL 5.5<br>
