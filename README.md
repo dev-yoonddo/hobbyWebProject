@@ -15,7 +15,7 @@
 
 <br>
 
-### Database ERD
+### ERD 설계도
 
 ![ERD](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/b6be40dc-cdc8-4d13-8c8f-d9aa8cf20b79)
 
