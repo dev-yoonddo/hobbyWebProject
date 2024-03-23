@@ -9,7 +9,7 @@
 - Backend : Java
 - Frontend : JavaScript, HTML5, CSS3, JQuery <br>
 - IDE : Eclipse, DBeaver
-- RDBMS : MySQL 5.5<br>
+- RDBMS : MySQL 5.5
 - WAS : Apache Tomcat 8.5
 - Infra : AWS (EC2, RDS, Route53, ELB, ALB, ACM)
 
