@@ -158,7 +158,7 @@ section{
 <script>
   setTimeout('pageStart()', 3000); //3초후에 move_page함수실행
   function pageStart(){
-  location.href="mainPage"  // 페이지 이동
+  location.href="community"  // 페이지 이동
   }
 </script>
 <script>

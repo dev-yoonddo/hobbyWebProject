@@ -38,7 +38,7 @@
 		maxIdle = "30" 
 		maxWaitMillis = "3000"
 		minIdle = "10"
-		username = "cksndbs7" 
+		username = "cksndbs7"
 		password = "qlalf0720!" 
 		factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
 		removeAbandonedOnBorrow="true"
