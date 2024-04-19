@@ -1,26 +1,27 @@
 # 취미는 갖고 싶은데 혼자는 싫을 때 TOGETHER 🏊‍♂️🏋️‍♀️🚴‍♀️
 
-## https://toogether.me <br><br> 테스트 아이디 : test / 비밀번호 : 1234
-## DB Mapping 구조 변경중
+## http://toogether.me <br><br> 테스트 아이디 : test / 비밀번호 : 1234
+
 <br>
 
 ## ❔ Tech Skills
 
+- Backend : Java8
+- Frontend : JavaScript, HTML5, CSS3, JQuery <br>
 - IDE : Eclipse, DBeaver
-- RDBMS : MySQL 5.5<br>
+- RDBMS : MySQL 5.5
 - WAS : Apache Tomcat 8.5
-- Frontend : JavaScript, HTML5, CSS3, JQuery, Ajax, Bootstrap <br>
-- Backend : Java, Spring
 - Infra : AWS (EC2, RDS, Route53, ELB, ALB, ACM)
 
 <br>
 
-### Database ERD
+### ERD 설계도
 
-![ERD](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/85a42eea-260b-426b-9696-5924f4ad9cf3)
+![ERD](https://github.com/dev-yoonddo/hobbyWebProject/assets/84071666/b6be40dc-cdc8-4d13-8c8f-d9aa8cf20b79)
 
 <br>
 
+<!--
 ### 배포
 1. AWS EC2 인스턴스 생성 후 퍼블릭ip를 발급받아 인스턴스와 연결
 2. FileZilla를 사용해 AWS EC2 인스턴스에 업로드
@@ -28,6 +29,7 @@
 4. 주소 뒤 8080을 생략하기 위해 80 to 8080 포트포워딩
 5. 가비아에서 구매한 도메인을 AWS Route53에서 호스팅영역을 생성한 뒤 연결
 6. AWS ACM에서 발급받은 SSL인증서를 사용하여 ELB(ALB)를 통해 HTTPS를 적용
+-->
 
 <hr>
 
@@ -37,7 +39,6 @@
 
 <br>
 
-⚫ [메인](#--메인-)
 
 ⚫ [회원가입](#--회원가입-)
 
@@ -61,62 +62,6 @@
 
 ⚫ [스팟등록/가입](#--스팟등록-및-가입-)
 
-
-# - 메인 📍
-
-<br><br>
-
-### ⚙ 메인페이지로 이동 전 시작페이지
-### ① 아이콘 무한 롤링 배너, ② 텍스트 타이핑, ③ 로딩 아이콘 생성 및 5초 뒤 mainPage로 이동
-
-<br>
-
-![startPage](https://user-images.githubusercontent.com/84071666/236174666-eef5a6e4-0ad2-4547-ad0e-cec6905c45fd.PNG)
-
-<br><br>
-
-### ⚙ 1 ) 스크롤시 색상이 변하는 header, 움직이는 텍스트, 페이지 상/하단으로 이동가능한 버튼
-
-<br>
-
-![main1](https://user-images.githubusercontent.com/84071666/235856720-931bbcfe-f645-4da8-94f6-073cac83c57d.PNG)
-
-<br><br>
-
-### ⚙ 2 ) 자동으로 움직이는 슬라이드, 해당 카테고리로 이동하는 TOGETHER 버튼
-
-<br>
-
-![main2](https://user-images.githubusercontent.com/84071666/235856706-4bf89328-0714-458b-acaf-949b3e27fd71.PNG)
-![main-slide1](https://user-images.githubusercontent.com/84071666/235861314-90be116c-a03e-468c-b468-af6f17107124.PNG)
-![main-slide2](https://user-images.githubusercontent.com/84071666/235861327-7ebd513d-0e4a-4446-8790-2b86da1c1db1.PNG)
-![main-slide3](https://user-images.githubusercontent.com/84071666/235861330-83a73d36-305a-4889-b4f0-63bb82244baf.PNG)
-![main-slide4](https://user-images.githubusercontent.com/84071666/235861333-b5f8b6c5-7269-4d6b-9639-86a3c2192db0.PNG)
-
-<br><br>
-
-### ⚙ 3 ) 이미지 무한 롤링 애니메이션
-
-<br>
-
-![main3](https://user-images.githubusercontent.com/84071666/235856717-9570fcc1-ce42-4365-b25f-73d00786c687.PNG)
-
-<br><br>
-
-### ⚙ 4 ) 화면 축소 디자인
-
-<br>
-
-<div style="display: flex;">
-<img src="https://user-images.githubusercontent.com/84071666/235858895-45401786-3627-4c3f-952c-0470a7179159.PNG" width="32%" height="450px">
-<img src="https://user-images.githubusercontent.com/84071666/235858897-2353fc7f-2503-49b2-b950-fa9782cd91c6.PNG" width="32%" height="450px">
-<img src="https://user-images.githubusercontent.com/84071666/235858889-3c1e81be-81fd-4606-8d12-6be50a1ea776.PNG" width="32%" height="450px">
-</div>
-<br><br>
-
----
-
-<br><br>
 
 # - 회원가입 📍
 
