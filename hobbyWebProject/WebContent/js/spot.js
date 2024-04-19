@@ -19,8 +19,9 @@
 	
     //사용자의 현재위치 데이터를 success와 error에 넘겨주기
 	function view(){
+		alert('cafe24 서버 이관으로 인해 현재 사용하실 수 없습니다 \n 주소 검색을 이용해주세요.');
 		//navigator.geolocation.getCurrentPosition(success, error, options);
-		navigator.geolocation.getCurrentPosition(success, error);
+		//navigator.geolocation.getCurrentPosition(success, error); --사용
 		//$('#search').hide();
 	}
 
