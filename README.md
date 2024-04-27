@@ -6,7 +6,7 @@
 
 ## ❔ Tech Skills
 
-- Backend : Java8
+- Backend : Java (jdk 1.8)
 - Frontend : JavaScript, HTML5, CSS3, JQuery <br>
 - IDE : Eclipse, DBeaver
 - RDBMS : MySQL 5.5
